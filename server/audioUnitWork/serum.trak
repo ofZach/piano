@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Active Patch</key>
+	<integer>0</integer>
+	<key>DocumentMaxChannelsKey</key>
+	<integer>2</integer>
+	<key>DocumentVersionCompatibilityKey</key>
+	<real>1</real>
+	<key>Input Bus Info</key>
+	<array>
+		<dict>
+			<key>Bus Name</key>
+			<string>Midi Device</string>
+			<key>Color</key>
+			<data>
+			BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2Jq
+			ZWN0AIWEAWMBhARmZmZmg3J/iT6Dj3DiPoPPaSU/g83MTD+G
+			</data>
+			<key>isCollapsed</key>
+			<false/>
+		</dict>
+	</array>
+	<key>Output Bus Info</key>
+	<dict>
+		<key>Bus Name</key>
+		<string>Master Out</string>
+		<key>Color</key>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWE
+		AWMChARmZmZmg3WTmD6D/tS4PoNSuN4+g83MTD+G
+		</data>
+		<key>Track Names</key>
+		<array>
+			<string>Output 1</string>
+		</array>
+		<key>Track Types</key>
+		<array>
+			<integer>1</integer>
+		</array>
+		<key>device ID</key>
+		<integer>48</integer>
+		<key>isCollapsed</key>
+		<false/>
+	</dict>
+	<key>Patches</key>
+	<array/>
+	<key>Send Bus Info</key>
+	<array/>
+	<key>Session Data</key>
+	<dict>
+		<key>audio device used</key>
+		<dict>
+			<key>audio device uid</key>
+			<string>AppleHDAEngineOutput:1B,0,1,1:0</string>
+			<key>device model uid</key>
+			<string>AppleHDA:94</string>
+			<key>in channels</key>
+			<integer>0</integer>
+			<key>io num frames</key>
+			<integer>512</integer>
+			<key>name</key>
+			<string>Built-in Output</string>
+			<key>out channels</key>
+			<integer>2</integer>
+			<key>out channels map</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
+		<key>midi sources used</key>
+		<array>
+			<dict>
+				<key>midi source uid</key>
+				<integer>-1322779348</integer>
+				<key>name</key>
+				<string>IAC Driver Bus 1</string>
+			</dict>
+		</array>
+		<key>output stage</key>
+		<dict>
+			<key>au layout tags</key>
+			<array>
+				<integer>0</integer>
+			</array>
+			<key>channels</key>
+			<array>
+				<integer>2</integer>
+			</array>
+			<key>constrained</key>
+			<array>
+				<integer>1</integer>
+			</array>
+			<key>layouts</key>
+			<array>
+				<dict>
+					<key>acl tag</key>
+					<integer>6619138</integer>
+					<key>descriptions</key>
+					<array>
+						<dict>
+							<key>coords 0</key>
+							<real>-30</real>
+							<key>coords 1</key>
+							<real>0.0</real>
+							<key>coords 2</key>
+							<real>1</real>
+							<key>flags</key>
+							<integer>2</integer>
+							<key>label</key>
+							<integer>1</integer>
+						</dict>
+						<dict>
+							<key>coords 0</key>
+							<real>30</real>
+							<key>coords 1</key>
+							<real>0.0</real>
+							<key>coords 2</key>
+							<real>1</real>
+							<key>flags</key>
+							<integer>2</integer>
+							<key>label</key>
+							<integer>2</integer>
+						</dict>
+					</array>
+				</dict>
+			</array>
+			<key>mute</key>
+			<array>
+				<integer>0</integer>
+			</array>
+			<key>strips</key>
+			<array>
+				<dict/>
+			</array>
+			<key>volume</key>
+			<array>
+				<real>1</real>
+			</array>
+		</dict>
+		<key>synth list</key>
+		<array>
+			<dict>
+				<key>aupreset</key>
+				<dict>
+					<key>ProgramNumber</key>
+					<integer>0</integer>
+					<key>manufacturer</key>
+					<integer>1481000274</integer>
+					<key>name</key>
+					<string>PR gamelan tweak [GS]</string>
+					<key>subtype</key>
+					<integer>1483109208</integer>
+					<key>type</key>
+					<integer>1635085685</integer>
+					<key>version</key>
+					<integer>1</integer>
+					<key>vstdata</key>
+					<data>
+					Q2NuSwAAEdNGUENoAAAAAVhmc1gAAAABAAAA
+					41BSIGdhbWVsYW4gdHdlYWsgW0dTXQAAAAAA
+					AAAAABGfeAHtWwlslEUUnl2uAgq0BpASYSnh
+					qpSmoCDHP4+CHEWQSwGLgAspsG2pQMshRvJj
+					FStFjhCxiIpAxNqKSDhEjkBtDCgF0aqgYGgt
+					CC1YQCBFjanz5p+3++8KuEoCCTuvnf3mHfNm
+					5s373/7Zf5f1/ms3Y+Ze0YApqiUwgtWXnGmy
+					auxkd9jeq7L1I8LG364Rq6vsHNKu/NIGbtn4
+					7GpKC4eyc0o7ZLbmHFa2UsVqCIhlMcwp/kyz
+					htcu0B/amWypHGSaNaXdyg77jdwtOX7+cF70
+					h2Satbz+EovGgOVTquS897Pmyq422QkbJN8+
+					kFvEyhCEvzpB2oUFaVc3SLt6QdrVD9LuniDt
+					7g3SrkGQdg3JrqS6+iSIkGrUcdB5oK8DXQd0
+					HdB1QNcBqgPyfst6KcG8EHRRY0jFQW5Wvqy5
+					kiD+N6nz/1jhvgA8oHjCI4on/FbxhMcUT3hC
+					8YSUd4Q/Kz3hKcUT/qJ4wrOKJ6xQPOF5xRNW
+					Kp5Q57svA+w9Og8dHysqoRIHew5gX+dBaJ0/
+					5TnlwY14kmu8u/ODsW1bJcFcSUfU+2fgue8D
+					j6RSZXfei5RJ1ni6bwgcT1aEN9Zb85xW851W
+					66FxhHS/cAqKv0FaF4CViq+EFpKWeNHy4Juf
+					9h8oDy2e4kpxCeRJrvHuzovAcw/k9fnf3edP
+					58uY0+V0zmpSLJ4LMazBsjkEUUYg+jE2O7Sv
+					DqB4IbQ3HP8fiT7X0Kg/58R81Hmg80Dngb4O
+					dB3QdQDrgI3oPkajFZRQiYMtBWQ3VPat9+mf
+					5zoP/OMRqvmh80DngT0H6DogGfEaQyNPAs89
+					kNd5oPMAI6DzQOeBzoPQuQ7Es4yAZxtW/t+5
+					134N8TdDkgR+730O82pWFt+0drfge0PBCy8p
+					uQnTWzrQXrTeCn3PbXx+pA5ZtBFkkq3oO6mv
+					dIyltN8k/X80oNSQ5mLcp0tLjIQ5uUIuxyox
+					Y+Xr6kubUv4ijhGEess/je/8di2vb5JVhZ/g
+					h6Zv5HsW/sYDnzdZfph3zLHVJsd2qKiIv7mq
+					GWDD/pXix7z9U6dqyr4YCx3XJPPCq7l86WdX
+					5drirPlh1eEF/I/5eaJFS1v0g/aqqWnl+tVe
+					pMiml/sSQpPioHR2ueXvUNFgGoeoxkgd9nH9
+					uDbYmfgWz49sBIvj+vdUcRNilxiDjUF4+Hga
+					D/kVUZBdngq72wzjaeMqjb0Lr8j9DR/fF8rX
+					Zct+ywLDa4/jMU643jYJEUpOaxBaPzKFnppd
+					Ycny8+pBfl4Ff754tYyN2J/AfSoOaMMCm82J
+					CVXhT9v8mxCzoYsfX9GxreRjJqcqOfojv7eC
+					cqxYCyI129J8XaG/JfL6v7CnyhuX/LxoAxt5
+					Dng8GjKs2D/FR+YPxYOwcdPIastGSrxngfLG
+					TZlopDfB10efRF65EuA1apG0v44P2zVKpujP
+					7vMmPphcB13HvnHBrwOvfVwbXuPWnlxibmxI
+					pqoJjGF9QIlD/KGdeP5uiwfz1gUcY68Nlk8c
+					aSfLhz2mVC+xTmKNpLqJ46/jQ6zlnz7EDGoP
+					TK7RNiOu3Vtvqf6i3vLv24u9jv1zXhN8tc3n
+					3fLhoHXKuWisQhk7ERsZaxpp1UXG8Dev0oeK
+					KX63wSka/mYWdXVEw9/31hYtTDTr17uMPeqZ
+					4slwp8b2nTkrferoWRM7zXHPFmpNOgI6AiEQ
+					gfiMDPeklPQJQzzpk2KnJYlS4MrwTEpxxelC
+					EAKnb30HDm/e6L0C+1G0c6ejF3Mu6MUyCwQ6
+					jGV9WhmNMuONZYVuI8y5wBgYtdzI6rPWODBx
+					sxGWWWAMXP+1kVVYahwpuyT0Dt4+oi4fGBXO
+					p3ZuxrP6tOK5IzrwAxPj+NmZ3XlYZjzvuCKB
+					D14/nKdueYovLnTzD4s9vKhsBj9/+Tle27mA
+					N6n3Mm8b8SrvGvka7x+1nI+Jfl34WsXn9nhb
+					+FvLcwa9J3x+wHckbhR+N/NjyduE70/5tXl7
+					hP8CHpn9OY9e8QXvsfoQH7T+a56Y/x1P3vID
+					n7frJ76osJS/efA0zysu5zuP/8q/LLvEfzx3
+					lVdc/p3/8edfYn4HNKhdA5rUqwUtGtSBthF1
+					oVOT+tA18l7gLRpC/6hweLztfTAqujGM79QU
+					JnduBmldm8PsHg/AfN4SFvZpBUv6t4aVg9rA
+					O4+3gw0jOsBHox6E7YkxsHd8LOyfGAdfTe4C
+					R5MfhpNp3eDMzO5wYXZPqJpnQPV8gDqZ8dDw
+					lb7QNLsftFw6ANqtSIDYNx6DbquHQO81Q2Hg
+					+uEw7P2RMCb/SXhm02iYuuUpmP7JWJi7axyY
+					eydAVqEblu2fBDkHk+Ddr6ZAbrEHPj6aAjuO
+					T4N9J5+FA2Uz4MiZdDh2bhaUXJgDZy8/Bxer
+					nodrf74gm0wBff6hfP76e0n+30uiqiiQPl8v
+					UffktwttS5DdO70Omp/WdbviQPPQvHd+Hf7f
+					LKd1KXQhDhvhmuKelpTqTnNlzElyp7jGDhg5
+					ThlYcH74DvH5iilzakBSWrLHNdIz0+1J9/hZ
+					XZ9xXV98M2kjFjMl52YG/0c3+NH4fk8kDhoy
+					JL7viKGuuBu6sPSd/0Xf5V/0D91QrxU6AjoC
+					OgI6AqEZgb8BzsEF/ngBHdR3GLb1/Mbxs733
+					3k97772/7b333ns92pOPJEmSJEnySJIkSZKk
+					PpIkSZIkySNJkiRJQn6vfvdxvO7397yu+7j/
+					uP64knc/tYGvDZNBMYlmMtkomZ0JrMZgVw5l
+					IsUlXME1TOJmbudumod5nKeZzEu8xltk42Rq
+					pmdmZmdu5mdhJrAUy7ESq7EW67ERgy3Zlh3Z
+					lT3ZlwM5lCM5lhOZyOmczfkUF3IRF3MJl3IZ
+					l3MFV3IVV3MN13Id1zOJG7iRm7iZW7iV27id
+					O7iTu7ibe7iX+2ge4EEe4mEe4VEe43Ge4Eme
+					4mme4VmeYzLP8wIv8hIv8wqv8hqv8wZv8hZv
+					8x/eIZskUzAlUzE10zAt0zE9MzAjMzEzszAr
+					szE7czAnczE38zAv8zE/C7AgC7Ewi7AoizGB
+					xVmCJVmKpVmGZVmO5VmBFVmJlVmFVVmN1VmD
+					NVmLtVmHdVmP9dmADdmIjdmETRlsxuZswZZs
+					xdZsw7Zsx/bswI7sxM7swq7sxu7swZ7sxd7s
+					w77sx/4cwIEcxMEcwqEcxuEcwZEcxdEcw7Ec
+					x/GcwImcxMmcwkTew6mcxumcwZmcxdmcw7mc
+					x/lcwHt5H7VJirxfyYVKPqDkIiUfVHKxkg8p
+					uUTJh5VcquQjSi5T8lEllyv5mJIrlHxcyZVK
+					PqHkKiWfVHK1kk8puUbJp5Vcq+QzSq5T8lkl
+					1yv5nJJJSj6v5AYlX1Byo5IvKrlJyZeU3Kzk
+					y0puUfIVJbcq+aqS25R8TcntSr6u5A4l31By
+					p5JvKrlLybeU3K3k20ruUfIdJfcq+a6S+5Tc
+					r6SVfE/JA0q+r+RBJT9Q8pCSHyp5WMmPlDyi
+					5MdKHlXyEyWPKfmpkseV/EzJE0p+ruRJJb9Q
+					8pSSXyp5WsmvlDyj5NdKnlXyGyXPKfmtkslK
+					fqfkeSW/V/KCkj8oeVHJH5W8pORPSl5W8mcl
+					ryj5i5JXlfxVyWtK/qbkdSV/V/KGkn8oeVPJ
+					P5W8peRfSt5W8m8l/1HyXyXvKPmf4iWYQdFk
+					CpuiyZQ2RZOpbIomU9sUTaaxKZpMa1M0mc6m
+					aDK9TdFkBpuiyYw2RZOZbIomM9sUTWaxKZrM
+					alM0mc2maDK7TdFkDpuiyZw2RZO5bIomc9sU
+					TeaxKZrMa1M0mc+maDK/TdFkAZuiyYI2RZOF
+					bIomC9sUTRaxKZosalM0WcymaDLBpmiyuE3R
+					ZAmbosmSNkWTpWyKJkvbFE2WsSmaLGtTNFnO
+					pmiyvE3RZAWbosmKNkWTlWyKJivbFE1WsSma
+					rGpTNFnNpmiyuk3RZA2bosmaNkWTtWyKJmvb
+					FE3WsSmarGtTNFnPpmiyvk3RZAObosmGNkWT
+					jWyKJhvbFE02sSmabGpTNEYGRZPNbIomm9sU
+					TbawKZpsaVM02cqmaLK1TdFkG5uiybY2RZPt
+					bIom29sUTXawKZrsaFM02cmmaLKzTdFkF5ui
+					ya42RZPdbIomu9sUTfawKZrsaVM02cumaLK3
+					TdFkH5uiyb42RZP9bIom+9sUTQ6wKZocaFM0
+					OcimaHKwTdHkEJuiyaE2RZPDbIomh9sUTY6w
+					KZocaVM0OcqmaHK0TdHkGJuiybE2RZPjbIom
+					x9sUTU6wKZqcaFM0OcmmaHKyTdHkFJuiyUSb
+					osl7bIomp9oUTU6zKZqcblM0OcOmaHKmTdHk
+					LJuiydk2RZNzbIom59oUTc6zKZqcb1M0ucCm
+					aPJem6LJ+2yK/n/3O9/v2v3u3e83NoPQF9gM
+					Qp9vMwh9ns0g9Lk2g9Dn2AxCn20zCH2WzSD0
+					mTaD0GfYDEKfbjMIfZrNIPSpNoPQ77EZhJ5o
+					Mwh9is0g9Mk2g9An2QxCn2gzCH2CzSD08TaD
+					0MfZDEIfazMIfYzNIPTRNoPQR9kMQh9pMwh9
+					hM0g9OE2g9CH2QxCH2ozCH2IzSD0wTaD0AfZ
+					DEIfaDMIfYDNIPT+NoPQ+9kMQu9rMwi9j80g
+					9N42g9B72QxC72kzCL2HzSD07jaD0LvZDELv
+					ajMIvYvNIPTONoPQO9kMQu9oMwi9g80g9PY2
+					g9Db2QxCb2szCL2NzSD01jaD0FvZDEJvaTMI
+					vYXNIPTmNoPQm9kMQg+bQehNbQahN7EZhN7Y
+					ZhB6I5tB6A1tBqE3sBmEXt9mEHo9m0HodW0G
+					odexGYRe22YQei2bQeg1bQah17AZhF7dZhB6
+					NZtB6FVtBqFXsRmEXtlmEHolm0HoFW0GoVew
+					GYRe3mYQejmbQehlbQahl7EZhF7aZhB6KZtB
+					6CVtBqGXsBmEXtxmEHqCzSD0YjaD0IvaDEIv
+					YjMIvbDNIPRCNoPQC9oMQi9gMwg9v80g9Hw2
+					g9Dz2gxCz2MzCD23zSD0XDaD0HPaDELPYTMI
+					PbvNIPRsNoPQs9oMQs9iMwg9s80g9Ew2g9Az
+					2gxCz2AzCD29zSD0dDaD0NPaDEJPYzMIPbXN
+					IPRUNoPQU9oMQk9hMwgdm0HePf/vvoR6R6n/
+					KvUfpf6t1NtK/Uupt5T6p1JvKvUPpd5Q6u9K
+					va7U35R6Tam/KvWqUn9R6hWl/qzUy0r9SamX
+					lPqjUi8q9QelXlDq90o9r9TvlJqs1G+Vek6p
+					3yj1rFK/VuoZpX6l1NNK/VKpp5T6hVJPKvVz
+					pZ5Q6mdKPa7UT5V6TKmfKPWoUj9W6hGlfqTU
+					w0r9UKmHlPqBUg8q9X2lHlDqe0q1UvcrdZ9S
+					31XqXqW+o9Q9Sn1bqbuV+pZSdyn1TaXuVOob
+					St2h1NeVul2pryl1m1JfVepWpb6i1C1KfVmp
+					m5X6klI3KfVFpW5U6gtK3aDU55WapNTnlLpe
+					qc8qdZ1Sn1HqWqU+rdQ1Sn1KqauV+qRSVyn1
+					CaWuVOrjSl2h1MeUulypjyp1mVIfUepSpT6s
+					1CVKfUipi5X6oFIXKfUBpS5U6v1Klb7rfbyX
+					Czif8ziXczibsziTMzid0ziV9zCRUziZkziR
+					Ezie4ziWYziaoziSIzicwziUQziYgziQA9if
+					/diXfdibvdiTPdid3diVXdiZndiRHdie7diW
+					bdiardiSLdiczRhsyiZszEZsyAasz3qsyzqs
+					zVqsyRqszmqsyiqszEqsyAosz3IsyzIszVIs
+					yRIszgQWY1EWYWEWYkEWYH7mY17mYW7mYk7m
+					YHZmY1ZmYWZmYkZmYHqmY1qmYWqmYkqmILzz
+					Xe953uYt3uQNXuc1XuUVXuYlXuQFnmcyz/Es
+					z/A0T/EkT/A4j/Eoj/AwD/EgD9Dcx73cw93c
+					xZ3cwe3cxq3cws3cxI3cwCSu5zqu5Rqu5iqu
+					5Aou5zIu5RIu5iIupDifszmdiZzIsRzJoRzI
+					vuzJruzItmzJYCPWYy1WYyWWYykmsDDzMzez
+					MzPTMzXhrXs9Z15iMk/zOA/T3M3t3MwkruEK
+					LqGYyKHsymA1JjA7YfJ3/A+TKAZ593yP5v8A
+					aVc/wJ8HAAA=
+					</data>
+				</dict>
+				<key>connections</key>
+				<array>
+					<dict>
+						<key>element ID</key>
+						<integer>0</integer>
+						<key>format</key>
+						<dict>
+							<key>channel bits</key>
+							<integer>32</integer>
+							<key>format</key>
+							<integer>1819304813</integer>
+							<key>format flags</key>
+							<integer>41</integer>
+							<key>frame bytes</key>
+							<integer>4</integer>
+							<key>frame channels</key>
+							<integer>2</integer>
+							<key>frame packets</key>
+							<integer>1</integer>
+							<key>packet bytes</key>
+							<integer>4</integer>
+							<key>sample rate</key>
+							<real>44100</real>
+						</dict>
+						<key>scope</key>
+						<integer>2</integer>
+					</dict>
+				</array>
+				<key>midi</key>
+				<dict>
+					<key>midi source uid</key>
+					<integer>-1322779348</integer>
+					<key>midi thru connection</key>
+					<dict>
+						<key>midi thru data</key>
+						<data>
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAA////////
+						////////////AAAAfwAAAAAAAAAA
+						AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+						AAAABgAAAAAAAAAAAAAAAAAHAAAA
+						AAAAAAEAAAAAAAAABAAAAAAAAAAD
+						AAAAAAAAAAsAAAAAAAAAQAAAAAAA
+						</data>
+						<key>name</key>
+						<string>Midi Device</string>
+					</dict>
+					<key>name</key>
+					<string>IAC Driver Bus 1</string>
+				</dict>
+				<key>name</key>
+				<string>Midi Device</string>
+				<key>unit</key>
+				<dict>
+					<key>manufacturer</key>
+					<integer>1481000274</integer>
+					<key>name</key>
+					<string>Xfer Records: Serum</string>
+					<key>subtype</key>
+					<integer>1483109208</integer>
+					<key>type</key>
+					<integer>1635085685</integer>
+				</dict>
+			</dict>
+		</array>
+		<key>track mixer</key>
+		<dict>
+			<key>strips</key>
+			<array>
+				<dict>
+					<key>active</key>
+					<integer>1</integer>
+					<key>mute</key>
+					<integer>0</integer>
+					<key>name</key>
+					<string>Instrument 1</string>
+					<key>output assignments</key>
+					<array>
+						<integer>1</integer>
+					</array>
+					<key>pan angle</key>
+					<real>1</real>
+					<key>pan azimuth</key>
+					<real>0.0</real>
+					<key>pan distance</key>
+					<real>1</real>
+					<key>pan elevation</key>
+					<real>0.0</real>
+					<key>pan mode</key>
+					<integer>4</integer>
+					<key>solo</key>
+					<integer>0</integer>
+					<key>synth source</key>
+					<dict>
+						<key>source elementID</key>
+						<integer>0</integer>
+						<key>source index</key>
+						<integer>0</integer>
+					</dict>
+					<key>user data</key>
+					<dict>
+						<key>Track Identifier</key>
+						<string>MIDI 0 0</string>
+					</dict>
+					<key>volume</key>
+					<real>1</real>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>User Data</key>
+	<dict>
+		<key>View Settings</key>
+		<dict>
+			<key>Active Tab Identifier</key>
+			<string>patches</string>
+			<key>Doc Drawer Open</key>
+			<false/>
+			<key>Filter flags</key>
+			<integer>1</integer>
+		</dict>
+		<key>Window Frame</key>
+		<string>{{0, 22}, {355, 577}}</string>
+		<key>Window Max</key>
+		<string>{2560, 1622}</string>
+		<key>Window Min</key>
+		<string>{360, 540}</string>
+		<key>kAUInspectorListKey</key>
+		<array>
+			<dict>
+				<key>kAUInspectorStateKey_BusIndex</key>
+				<integer>0</integer>
+				<key>kAUInspectorStateKey_BusType</key>
+				<string>kBusType_Input</string>
+				<key>kAUInspectorStateKey_Bypassed</key>
+				<false/>
+				<key>kAUInspectorStateKey_CurrentViewName</key>
+				<string>Xfer Records: Serum AUView</string>
+				<key>kAUInspectorStateKey_EffectIndex</key>
+				<integer>-1</integer>
+				<key>kAUInspectorStateKey_PresetDrawerExpandedItems</key>
+				<array/>
+				<key>kAUInspectorStateKey_PresetDrawerShowing</key>
+				<false/>
+				<key>kAUInspectorStateKey_TrackIndex</key>
+				<integer>0</integer>
+				<key>kAUInspectorStateKey_WindowLevel</key>
+				<integer>2147483647</integer>
+				<key>kAUInspectorStateKey_WindowRect</key>
+				<string>{{441, 76}, {901, 767}}</string>
+			</dict>
+		</array>
+	</dict>
+</dict>
+</plist>
