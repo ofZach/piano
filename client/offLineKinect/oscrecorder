@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'osc-ruby'
+require 'yaml'
+require 'openwfe/util/scheduler'
+require 'trollop'
+
+@scheduler = OpenWFE::Scheduler.new
+@messages = []
+@messages_mutex = Mutex.new
+
+# trollop for better options parsing
+opts = Trollop::options do
+    version "oscrecorder 1.0 by Tom Lieber, Mark Cerqueira, Spencer Salazar"
+    banner <<-EOS
+oscrecorder is a utilty that records OSC messages.
+
+Usage:
+  oscrecorder [options]
+  
+  where [options] are:
+EOS
+  opt :port, "Integer specifying the port to listen for OSC messages", :type => :int, :default => -1
+  opt :filename, "String specifying the filename to write encoded data to", :type => :string
+  opt :forward, "Flag specifying whether recorded messages should be forwarded to destination. Note - if messages " +
+  "are forwarded, destination should listen on (port + 2) because you cannot bind two separate OSC clients to the same port."
+end
+
+# abort if port was not sent by user
+Trollop::die :port, "must be defined" if opts[:port] < 0 or opts[:port] > 65535
+
+# server that grabs and caches our OSC messages (optionally forwarding if -o flag defined)
+@server = OSC::Server.new(opts[:port])
+@server.add_method // do | message |  
+  @messages_mutex.synchronize do
+     @messages << { :message => message.encode, :time => Time.now - @start, :address => message.address, :content => message.to_a }      
+  end
+  
+  if opts[:forward]
+    client = OSC::Client.new(message.ip_address, opts[:port]+2)  
+    client.send(message)
+  end
+end
+
+# method to flush out the @messages array
+def flushMessages()  
+  @messages_mutex.synchronize do
+    if @messages.size > 0
+      # if filename was not specified, just write to stdout
+      if @file.nil?
+        puts @messages.to_yaml
+      else
+        @file.write @messages.to_yaml
+      end
+      
+      @messages.clear
+    end
+  end
+end
+
+# if a filename is specified, first check to see the file does not exist, then open it
+@file = nil
+if opts.has_key?(:filename) and !opts[:filename].nil?
+  filename = opts[:filename]
+  if File.exists? filename
+    puts "Error: file with name #{filename} already exists."
+    puts "Try using a filename that is not already used."
+    exit
+  end
+  
+  @file = File.open(filename, 'w+')
+  
+  # from the Ruby docs: when sync mode is true, all output is immediately flushed to the underlying operating system and is not buffered internally
+  # we don't want to close and re-open the file after every call to flushMessages(), but we may want to see the data being written to the file as we are recording
+  # if performance becomes an issue, this can be set to false (or removed) and the file will be closed on the SystemExit/Interrupt catch below
+  @file.sync = true
+end
+
+begin  
+  # schedule messages to be flushed every 2 seconds
+  @scheduler.start  
+  @scheduler.schedule_every('2s') { flushMessages() }
+  
+  # record current time and start the server 
+  @start = Time.now
+  @server.run
+    
+# catch any interrupts and flushes any remaining data  
+rescue SystemExit, Interrupt
+  flushMessages()
+  
+  @file.close
+end
+
+
+
