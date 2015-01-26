@@ -41,9 +41,15 @@ public:
     ofParameter <bool> bLoadNewUDP;
     
     
+    ofParameter <float> cameraHeight;
+    ofParameter <float> cameraRadius;
+    ofParameter <float> cameraAngle;
+    
+    
+    
     ofxPanel gui;
     
-    ofEasyCam cam;
+    ofCamera cam;
     
     ofPolyline leftHandHistory;
     ofPolyline rightHandHistory;

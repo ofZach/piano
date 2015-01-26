@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-        
+    
 
     ofTrueTypeFont smallFont, largeFont;
     
@@ -30,19 +30,17 @@ void ofApp::setup(){
     gui.add(bUseUdpPlayer.set("use udp player", false));
     gui.add(bLoadNewUDP.set("load udp", false));
     
+    gui.add(cameraHeight.set("camera height", 800,0, 2000));
+    gui.add(cameraRadius.set("camera radius", 800,0, 2000));
+    gui.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
     
     
     
     gui.loadFromFile("settings.xml");
     
-    
-    cam.disableMouseMiddleButton();
-    
     KS.setup();
     KSA.setup();
-    
-    
-       
+ 
  
 }
 
@@ -85,10 +83,6 @@ void ofApp::update(){
         KSA.analyze(KS);
     }
     
-    if (ofGetFrameNum() < 10){
-        cam.setPosition(698.314, 1647.53, -28.9273);
-        cam.setOrientation(ofPoint(-112.963, -90.1957, 1.08879));
-    }
     
     // there is no kinect is frame new...
     
@@ -122,6 +116,10 @@ void ofApp::draw(){
     ofBackground(ofColor::darkGray);
     
     
+    ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
+    cam.setPosition(position);
+    cam.lookAt( ofPoint(0,0,0));
+    
     cam.begin();
     
     ofSetColor(255,255,255,127);
@@ -149,10 +147,6 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    if (key == ' '){
-        cam.setPosition(698.314, 1647.53, -28.9273);
-        cam.setOrientation(ofPoint(-112.963, -90.1957, 1.08879));
-    }
     
     
     if (key == 's'){
