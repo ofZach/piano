@@ -26,13 +26,20 @@ void kinectSkeletonAnalyzer::setup(){
     oldVelocity.assign(27, ofPoint());
     acceleration.assign(27, ofPoint());
     mag.assign(27, 0);
-    
-    
-    
+
     historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-left", 100, false));
     nameToHistoryPlot["arm-left"] = historyPlots.back();
+    
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-left-accel", 100, false));
+    nameToHistoryPlot["arm-left-accel"] = historyPlots.back();
+    
     historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-right", 100, false));
     nameToHistoryPlot["arm-right"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-right-accel", 100, false));
+    nameToHistoryPlot["arm-right-accel"] = historyPlots.back();
+    
     historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-left", 100, false));
     nameToHistoryPlot["foot-left"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-right", 100, false));
@@ -54,8 +61,7 @@ void kinectSkeletonAnalyzer::setup(){
     historyPlots.push_back(new ofxHistoryPlot( NULL, "Angle Right Elbow", 100, false));
     nameToHistoryPlot["angleRightElbow"] = historyPlots.back();
     
-    
-    
+
     for (auto hp : historyPlots){
         
         hp->setRange(0, 1); //hard range, will not adapt to values off-scale
@@ -238,6 +244,41 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     
     nameToHistoryPlot["arm-left"]->update(armLeftExtendedPct);;
     nameToHistoryPlot["arm-right"]->update(armRightExtendedPct);
+    
+    ofxHistoryPlot * ra = nameToHistoryPlot["arm-right"];
+    ofxHistoryPlot * la = nameToHistoryPlot["arm-left"];
+    
+    if (ra->getValues().size() > 1){
+        
+        float diffr = ra->getValues()[ra->getValues().size()-2] - ra->getValues()[ra->getValues().size()-1];
+        float diffl = la->getValues()[la->getValues().size()-2] - la->getValues()[la->getValues().size()-1];
+        
+        
+        // todo: parametize accel scale
+        diffl = ofClamp(fabs(diffl) * 35.0, 0, 1);
+        diffr = ofClamp(fabs(diffr) * 35.0, 0, 1);
+        
+        if (nameToHistoryPlot["arm-left-accel"]->getValues().size() > 0){
+            float lastVall = nameToHistoryPlot["arm-left-accel"]->getValues().back();
+            float lastValr = nameToHistoryPlot["arm-right-accel"]->getValues().back();
+            
+            // todo: parametize accel smoothing
+            
+            diffl = 0.1f * diffl + 0.9 *lastVall;
+            diffr = 0.1f * diffr + 0.9 *lastValr;
+            
+        }
+        
+        
+        nameToHistoryPlot["arm-left-accel"]->update(diffl);;
+        nameToHistoryPlot["arm-right-accel"]->update(diffr);;
+        
+    }
+    
+    
+    
+    
+    
     nameToHistoryPlot["foot-left"]->update(footLeftExtendedPct);
     nameToHistoryPlot["foot-right"]->update(footRightExtendedPct);
     nameToHistoryPlot["hand-to-hip-left"]->update(leftHandVHip);
