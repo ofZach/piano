@@ -35,7 +35,7 @@ void kinectSkeletonAnalyzer::setup(){
     rightHandHip = new ofxHistoryPlot( NULL, "hand-to-hip-right", 100, false);
     footToFoot = new ofxHistoryPlot( NULL, "Foot To Foot", 100, false);
     
-    armleft->setRange(0, 1); //hard range, will not adapt to values off-scale
+    armleft->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     armleft->setColor( ofColor(0,255,0) ); //color of the plot line
     armleft->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -48,7 +48,7 @@ void kinectSkeletonAnalyzer::setup(){
     armleft->setGridUnit(14);
     
     
-    armright->setRange(0, 1); //hard range, will not adapt to values off-scale
+    armright->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     armright->setColor( ofColor(0,255,0) ); //color of the plot line
     armright->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -61,7 +61,7 @@ void kinectSkeletonAnalyzer::setup(){
     armright->setGridUnit(14);
     
     
-    footLeft->setRange(0, 1); //hard range, will not adapt to values off-scale
+    footLeft->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     footLeft->setColor( ofColor(0,255,0) ); //color of the plot line
     footLeft->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -75,7 +75,7 @@ void kinectSkeletonAnalyzer::setup(){
     
     
     
-    footRight->setRange(0, 1); //hard range, will not adapt to values off-scale
+    footRight->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     footRight->setColor( ofColor(0,255,0) ); //color of the plot line
     footRight->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -88,7 +88,7 @@ void kinectSkeletonAnalyzer::setup(){
     footRight->setGridUnit(14);
     
     
-    leftHandHip->setRange(0, 1); //hard range, will not adapt to values off-scale
+    leftHandHip->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     leftHandHip->setColor( ofColor(0,255,0) ); //color of the plot line
     leftHandHip->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -100,7 +100,7 @@ void kinectSkeletonAnalyzer::setup(){
     leftHandHip->setGridColor(ofColor(30)); //grid lines color
     leftHandHip->setGridUnit(14);
     
-    rightHandHip->setRange(0, 1); //hard range, will not adapt to values off-scale
+    rightHandHip->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     rightHandHip->setColor( ofColor(0,255,0) ); //color of the plot line
     rightHandHip->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -115,7 +115,7 @@ void kinectSkeletonAnalyzer::setup(){
     
     center = new ofxHistoryPlot( NULL, "Center", 100, false);
     
-    center->setRange(0, 1); //hard range, will not adapt to values off-scale
+    center->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     center->setColor( ofColor(0,255,0) ); //color of the plot line
     center->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -128,7 +128,7 @@ void kinectSkeletonAnalyzer::setup(){
     center->setGridUnit(14);
     
     
-    footToFoot->setRange(0, 1); //hard range, will not adapt to values off-scale
+    footToFoot->setRange(-1, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
     footToFoot->setColor( ofColor(0,255,0) ); //color of the plot line
     footToFoot->setShowNumericalInfo(true);  //show the current value and the scale in the plot
@@ -139,7 +139,9 @@ void kinectSkeletonAnalyzer::setup(){
     footToFoot->setDrawGrid(true);
     footToFoot->setGridColor(ofColor(30)); //grid lines color
     footToFoot->setGridUnit(14);
+
 }
+
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     dt = dt - ofGetElapsedTimef();
     

@@ -4,9 +4,9 @@
 #include "ofMain.h"
 #include "ofxKinectV2OSC.h"
 #include "ofxGui.h"
-
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
+#include "udpPacketReplayer.h"
 
 class ofApp : public ofBaseApp{
     
@@ -36,6 +36,11 @@ public:
     ofParameter <float> rotationY;
     ofParameter <float> rotationZ;
     ofParameter <ofVec3f> offset;
+    
+    ofParameter <bool> bUseUdpPlayer;
+    ofParameter <bool> bLoadNewUDP;
+    
+    
     ofxPanel gui;
     
     ofEasyCam cam;
@@ -48,8 +53,6 @@ public:
     kinectSkeleton KS;
     
     kinectSkeletonAnalyzer KSA;
-    
-
-
+    udpPacketReplayer UDPR;
 };
 

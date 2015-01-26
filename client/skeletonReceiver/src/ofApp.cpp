@@ -4,6 +4,8 @@
 void ofApp::setup(){
     
     
+    UDPR.setup();
+    
     string jointNames[26] =
     {   "ThumbRight",
         "SpineBase",
@@ -58,6 +60,10 @@ void ofApp::setup(){
     gui.add(rotationX.set("rotationX", 0,-180,180));
     gui.add(rotationY.set("rotationY", 0,-180,180));
     gui.add(rotationZ.set("rotationZ", 0,-180,180));
+    gui.add(bUseUdpPlayer.set("use udp player", false));
+    gui.add(bLoadNewUDP.set("load udp", false));
+    
+    
     
     
     gui.loadFromFile("settings.xml");
@@ -76,7 +82,23 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
+
+    if (bLoadNewUDP == true){
+        string folder = ofSystemLoadDialog("", true).getPath();
+        if (folder != ""){
+            UDPR.parseFolder(folder);
+        }
+        bLoadNewUDP = false;
+    }
+    
+    if (bUseUdpPlayer){
+        UDPR.update();
+    }
+    
+    
+
     
     mat.makeIdentityMatrix();
     ofPoint offsetPt = offset;
@@ -152,7 +174,9 @@ void ofApp::draw(){
     cam.end();
     
     gui.draw();
+
     KSA.drawDebug();
+    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 //--------------------------------------------------------------
