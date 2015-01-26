@@ -16,13 +16,9 @@ public:
     vector < int > trackingStates;
     vector < string > skipList;
     
+
     
-    typedef struct {
-        int a;
-        int b;
-    } connection;
     
-    vector < connection > connections;
     map < string, int > nameToIndex;
     map < int, string> indexToName;
     

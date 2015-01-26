@@ -3,6 +3,18 @@
 
 #include "kinectSkeleton.h"
 #include "ofxHistoryPlot.h"
+
+
+// todo:
+
+// (a) is leg on the ground
+// (b) is this joint moving "fast" -- maybe a threshold ?
+// (c) reset on no skeleton...
+// (d) history of each joint for last n frames
+// (e) smoothing for vel needed?
+
+
+
 class kinectSkeletonAnalyzer {
     
 public:
