@@ -12,6 +12,20 @@
 // (c) reset on no skeleton...
 // (d) history of each joint for last n frames
 // (e) smoothing for vel needed?
+// (f) add a gui for thresholds and smoothing vals
+
+// higher level:
+
+// (a) did we just punch
+// (b) did we just kick
+// (c) did we jump
+// (d) did we do a circular movement with our hands
+
+// global:
+
+// (a) how much overall movement is there
+// (b) std dev on velocity
+// (c) size of non axis aligned bounds (maybe the convex hull 3d of point set)
 
 
 
