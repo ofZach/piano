@@ -59,6 +59,10 @@ public:
     float leftHandVHip;
     float rightHandVHip;
     
+    float distFootLeft, distFootRight;
+    float maxDistLeft, maxDistRight;
+    float minDistLeft, minDistRight;
+    
     deque<vector<ofPoint> > ptsHistory;
     vector<ofPoint> velocity, oldVelocity;
     vector<ofPoint> acceleration;
@@ -68,6 +72,9 @@ public:
 
     float maxMag, minMag;
     
+    ofVec3f groundPlane;
+    ofVec3f orientation;
+    float angle;
     
     float avgDiffCenter;
     float dt;
@@ -75,6 +82,7 @@ public:
     kinectSkeleton old;
     bool set;
     bool setV;
+
     
 
     vector < ofxHistoryPlot * > historyPlots;

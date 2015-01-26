@@ -20,8 +20,12 @@ void kinectSkeletonAnalyzer::setup(){
     minFeet = FLT_MAX;
     minMag = FLT_MAX;
     maxMag = FLT_MIN;
+    minDistLeft = FLT_MAX;
+    maxDistLeft = FLT_MIN;
+    minDistRight = FLT_MAX;
+    maxDistRight = FLT_MIN;
     dt = ofGetElapsedTimef();
-    
+
     velocity.assign(27, ofPoint());
     oldVelocity.assign(27, ofPoint());
     acceleration.assign(27, ofPoint());
@@ -60,6 +64,12 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["angleLeftElbow"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "Angle Right Elbow", 100, false));
     nameToHistoryPlot["angleRightElbow"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "Right Foot to Ground", 100, false));
+    nameToHistoryPlot["rightFootToGround"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "Left Foot to Ground", 100, false));
+    nameToHistoryPlot["leftFootToGround"] = historyPlots.back();
     
 
     for (auto hp : historyPlots){
@@ -217,6 +227,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             }
         }
         setV = true;
+        
+        
     }
     
     
@@ -275,9 +287,22 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
     }
     
+    orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
+    
+    angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
     
     
+    distFootLeft = (feet[0] - ofVec3f(feet[0].x, groundPlane.y, feet[0].z)).length();
+    distFootRight = (feet[1] - ofVec3f(feet[1].x, groundPlane.y, feet[1].z)).length();
     
+    minDistLeft = MIN(minDistLeft, distFootLeft);
+    maxDistLeft = MAX(maxDistLeft, distFootLeft);
+    
+    minDistRight = MIN(minDistRight, distFootRight);
+    maxDistRight = MAX(maxDistRight, distFootRight);
+    
+    distFootLeft = ofMap(distFootLeft, minDistLeft, maxDistLeft, 0, 1);
+    distFootRight = ofMap(distFootRight, minDistRight, maxDistRight, 0, 1);
     
     nameToHistoryPlot["foot-left"]->update(footLeftExtendedPct);
     nameToHistoryPlot["foot-right"]->update(footRightExtendedPct);
@@ -289,6 +314,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     nameToHistoryPlot["Knee Angle Right"]->update(angleRightKnee);
     nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
     nameToHistoryPlot["angleRightElbow"]->update(angleRightElbow);
+    nameToHistoryPlot["rightFootToGround"]->update(distFootRight);
+    nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
     
 }
 
@@ -336,10 +363,15 @@ void kinectSkeletonAnalyzer::draw(){
             }
         }
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        
+        ofPushMatrix();
+        ofTranslate(old.pts[old.nameToIndex["SpineMid"]]);
+        ofRotate(angle, orientation.x, orientation.y, orientation.z);
+        ofDrawAxis(20);
+        ofPopMatrix();
     }
     
-   
-    
+
 }
 
 
@@ -348,7 +380,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
     
     int count = 0;
     for (auto hp : historyPlots){
-        hp->draw((count >= 6 ? 300: 0), 400 + (count%6)*75, 200, 70);
+        hp->draw((count >= 8 ? 300: 0), 400 + (count%8)*75, 200, 70);
         count++;
     }
     
