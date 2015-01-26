@@ -6,41 +6,8 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-    string jointNames[26] =
-    {   "ThumbRight",
-        "SpineBase",
-        "SpineMid",
-        "Neck",
-        "Head",
-        "ShoulderLeft",
-        "ElbowLeft",
-        "WristLeft",
-        "HandLeft",
-        "ShoulderRight",
-        "ElbowRight",
-        "WristRight",
-        "HandRight",
-        "HipLeft",
-        "KneeLeft",
-        "AnkleLeft",
-        "FootLeft",
-        "HipRight",
-        "KneeRight",
-        "AnkleRight",
-        "FootRight",
-        "SpineShoulder",
-        "HandTipLeft",
-        "ThumbLeft",
-        "HandTipRight"};
-    
-    
-    for (int i = 0; i < 26; i++){
-        cout << "pts[nameToIndex[\"" << jointNames[i] << "\"]].set(sk.get" << jointNames[i] << "().getPoint())" << endl;
-    }
-    
-    
-    
-    
+        
+
     ofTrueTypeFont smallFont, largeFont;
     
     smallFont.loadFont("selena.otf", 16); //http://openfontlibrary.org/en/font/selena
