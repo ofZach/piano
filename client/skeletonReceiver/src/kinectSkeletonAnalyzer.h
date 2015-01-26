@@ -17,6 +17,8 @@
 // higher level:
 
 // (a) did we just punch
+//                          ( did our arm extension go under a threshold then over a threshold ) ?
+//                          is it higher then our stomach?
 // (b) did we just kick
 // (c) did we jump
 // (d) did we do a circular movement with our hands
