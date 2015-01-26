@@ -62,6 +62,7 @@
 		F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */; };
 		F8C594EDF5A25FA2F042074C /* ofxKinectV2OSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1E489615DA9497A4B4D8CEA /* ofxKinectV2OSC.cpp */; };
 		FD2C02601A76894900154052 /* kinectSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2C025E1A76894900154052 /* kinectSkeleton.cpp */; };
+		FDA7B5B61A76A34A00F4CF2C /* kinectSkeletonAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDA7B5B41A76A34A00F4CF2C /* kinectSkeletonAnalyzer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,8 @@
 		FC5DA1C87211D4F6377DA719 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		FD2C025E1A76894900154052 /* kinectSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeleton.cpp; sourceTree = "<group>"; };
 		FD2C025F1A76894900154052 /* kinectSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeleton.h; sourceTree = "<group>"; };
+		FDA7B5B41A76A34A00F4CF2C /* kinectSkeletonAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeletonAnalyzer.cpp; sourceTree = "<group>"; };
+		FDA7B5B51A76A34A00F4CF2C /* kinectSkeletonAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonAnalyzer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +481,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				FD2C025E1A76894900154052 /* kinectSkeleton.cpp */,
 				FD2C025F1A76894900154052 /* kinectSkeleton.h */,
+				FDA7B5B41A76A34A00F4CF2C /* kinectSkeletonAnalyzer.cpp */,
+				FDA7B5B51A76A34A00F4CF2C /* kinectSkeletonAnalyzer.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -653,6 +658,7 @@
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
+				FDA7B5B61A76A34A00F4CF2C /* kinectSkeletonAnalyzer.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,
 				DF0E23207448D9B0A01099DE /* Hand.cpp in Sources */,
 				C0788BDE2AA497B48C2B6F85 /* Interpreter.cpp in Sources */,

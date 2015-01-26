@@ -6,6 +6,8 @@
 #include "ofxGui.h"
 
 #include "kinectSkeleton.h"
+#include "kinectSkeletonAnalyzer.h"
+
 
 
 class ofApp : public ofBaseApp{
@@ -47,6 +49,7 @@ class ofApp : public ofBaseApp{
     
         kinectSkeleton KS;
     
+        kinectSkeletonAnalyzer KSA;
     
     
 };

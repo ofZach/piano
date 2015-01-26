@@ -67,6 +67,7 @@ void ofApp::setup(){
     cam.disableMouseMiddleButton();
     
     KS.setup();
+    KSA.setup();
     
 
 }
@@ -89,6 +90,8 @@ void ofApp::update(){
     
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
+        KSA.analyze(KS);
+        
     }
     
     if (ofGetFrameNum() < 10){
