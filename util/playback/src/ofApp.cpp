@@ -1,33 +1,69 @@
 #include "ofApp.h"
 
 
-ofDirectory dir;
 
-//--------------------------------------------------------------
-void ofApp::setup(){
+string fileName (const std::string& str){
+    unsigned found = str.find_last_of("/");
+    return str.substr(found+1);
+}
 
+string timeOf (const std::string& str){
+    unsigned found = str.find_last_of("_");
+    return str.substr(0,found);
+}
+
+
+void ofApp::parseFolder( string _folderName ){
     
-   dir.listDir("2015-01-21-16-44-12-974");
-
-    cout << dir.size() << endl;
-    for (int i = 0; i < dir.size();  i+=27){
+    folderName = _folderName;
+    
+    timeStamps.clear();
+    timeToFileNames.clear();
+    
+    
+    ofDirectory dir;
+    
+    dir.listDir(folderName);
+    
+    //cout << dir.size() << endl;
+    
+    string realFolderName = fileName(folderName);
+    
+    
+    for (int i = 0; i < dir.size();  i++){
         string name = dir.getPath(i);
-        cout << name << endl;
-        string time = ofSplitString(ofSplitString(name, "/")[1], "_")[0];
-        cout << time << endl;
+        string realFileName = fileName(name);
+        string time = timeOf(realFileName);
+        
         timeStamps.push_back(ofToInt(time));
+        // make this unique (there's likely a better way here)
+        std::vector<int>::iterator it;
+        it = std::unique (timeStamps.begin(), timeStamps.end());
+        timeStamps.resize( std::distance(timeStamps.begin(),it) );
+        
+        timeToFileNames[ofToInt(time)].push_back( name );
         
     }
     
     ofSort(timeStamps);
     
+    loadTimeMillis = ofGetElapsedTimeMillis();
+    
+}
+
+
+//--------------------------------------------------------------
+void ofApp::setup(){
+
     
     
-    //create the socket and set to send to 127.0.0.1:11999
+    parseFolder( "recordings/dancing" );
+
 	udpConnection.Create();
 	udpConnection.Connect("127.0.0.1",12345);
 	udpConnection.SetNonBlocking(true);
-    
+
+    loadTimeMillis = 0;
 
     
 }
@@ -38,7 +74,7 @@ void ofApp::update(){
 
     
     int wholeTime = timeStamps[timeStamps.size()-1] + 30;
-    int millis = ofGetElapsedTimeMillis() % wholeTime;
+    int millis = (ofGetElapsedTimeMillis()- loadTimeMillis) % wholeTime;
     
     int who = -1;
     for (int i = 0; i+1 <timeStamps.size(); i++){
@@ -48,28 +84,39 @@ void ofApp::update(){
         }
     }
     
-    cout << timeStamps[who] << " " << who << " " << millis << endl;
-    
     if (who != lastWho){
             
+        vector < string > & files = timeToFileNames[timeStamps[who]];
         
-        for (int i= 0; i  < 27; i++){
-            string fileName = "2015-01-21-16-44-12-974/" + ofToString(timeStamps[who]) + "_" +ofToString(i) + ".bin";
-        
+        for (int i= 0; i  < files.size(); i++){
+            string fileName = files[i];
             ofBuffer buff = ofBufferFromFile(fileName);
             udpConnection.Send(buff.getBinaryBuffer(), buff.size());
         }
-        
-        
-        
     }
     lastWho = who;
-    
+//
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    
+    ofSetColor(255);
+    ofDrawBitmapStringHighlight(folderName, ofPoint(30,30));
+    
+    
+    int wholeTime = timeStamps[timeStamps.size()-1] + 30;
+    int millis = (ofGetElapsedTimeMillis()- loadTimeMillis) % wholeTime;
+    float pct = (float) millis  / (float) wholeTime;
+    
+    ofSetColor(255,0,0);
+    ofNoFill();
+    ofRect(0, ofGetHeight()/2, ofGetWidth(), ofGetHeight());
+    ofFill();
+    ofRect(0, ofGetHeight()/2, ofGetWidth() * pct, ofGetHeight());
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -114,5 +161,8 @@ void ofApp::gotMessage(ofMessage msg){
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+    
+    string fileName = dragInfo.files[0];
+    parseFolder(fileName);
+    
 }

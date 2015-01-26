@@ -1,0 +1,14 @@
+<panel>
+	<box_start>0, 0, 0</box_start>
+	<box_end>0, 0, 46.9388</box_end>
+	<nDivisions>12</nDivisions>
+<panel/>
+	<box_dimensions>65.3061, 200, 116.327</box_dimensions>
+	<box_pos_start>20.4081, -173.469, 673.469</box_pos_start>
+	<box_pos_end>0, -178.571, -765.306</box_pos_end>
+<scale>1, 1, 42.1498</scale>
+	<offset>-479.592, 693.878, 397.959</offset>
+	<rotationX>180</rotationX>
+	<rotationY>1.8</rotationY>
+	<rotationZ>0</rotationZ>
+</panel>

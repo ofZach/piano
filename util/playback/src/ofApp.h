@@ -19,11 +19,17 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
+    
+        void parseFolder( string folder );
+    
         vector < int > timeStamps;
+        map < int, vector < string >  > timeToFileNames;
     
-    ofxUDPManager udpConnection;
+        ofxUDPManager udpConnection;
     
+        string folderName;
+    
+        int loadTimeMillis;
     
 };
 
