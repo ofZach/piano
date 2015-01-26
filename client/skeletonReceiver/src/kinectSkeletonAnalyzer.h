@@ -11,6 +11,7 @@ public:
     
     void setup();
     void analyze( kinectSkeleton & KS);
+    void draw();
     
     
     float armLeftExtendedPct;
@@ -18,13 +19,21 @@ public:
     float footLeftExtendedPct;
     float footRightExtendedPct;
     
+    float leftFootSpan, rightFootSpan, maxFeet, minFeet;
+    float leftHandSpan, rightHandSpan, maxHands, minHands;
+    
     float leftHandVHip;
     float rightHandVHip;
     
     deque<vector<ofPoint> > ptsHistory;
-    vector<ofPoint> diff;
+    vector<ofPoint> velocity;
+    vector<ofPoint> dir;
+    vector<float> mag;
+
+    float maxMag, minMag;
     
-    float diffCenter, min, max;
+    float dt;
+    float diffCenter, minCenter, maxCenter;
     kinectSkeleton old;
     bool set;
 };

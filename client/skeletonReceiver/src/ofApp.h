@@ -55,11 +55,10 @@ public:
     ofxHistoryPlot * armright;
     ofxHistoryPlot * footLeft;
     ofxHistoryPlot * footRight;
-    
     ofxHistoryPlot * leftHandHip;
     ofxHistoryPlot * rightHandHip;
-    
     ofxHistoryPlot * center;
+    ofxHistoryPlot * footToFoot;
 
 };
 

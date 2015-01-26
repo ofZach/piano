@@ -13,14 +13,17 @@ void kinectSkeletonAnalyzer::setup(){
     armLeftExtendedPct = 0;
     armRightExtendedPct = 0;
     set = false;
-    min = FLT_MAX;
-    max = FLT_MIN;
-    
-    
+    minCenter = FLT_MAX;
+    maxCenter = FLT_MIN;
+    maxFeet = FLT_MIN;
+    minFeet = FLT_MAX;
+    minMag = FLT_MAX;
+    maxMag = FLT_MIN;
+    dt = ofGetElapsedTimef();
     
 }
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
-    
+    dt = dt - ofGetElapsedTimef();
     
     //    ptsHistory.push_back(KS.pts);
     //    if(ptsHistory.size() > 2){
@@ -59,6 +62,18 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     armLeftExtendedPct = handDist[0] / totalDist[0];
     armRightExtendedPct = handDist[1] / totalDist[1];
     
+    
+    
+    float handtohandDist[2];
+    float totalDistHands[2];
+    
+    for (int i = 0; i < 2; i++){
+        
+        handtohandDist[i] =   (hands[0].normalized() - hands[1].normalized()).length();
+    }
+    
+    leftHandSpan = handtohandDist[0];
+    rightHandSpan = handtohandDist[1];
     
     //    cout << armLeftExtendedPct << " " << armRightExtendedPct << endl;
     
@@ -114,14 +129,59 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     if(set){
         diffCenter = (old.pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length();
         
-        max = MAX(max, diffCenter);
-        min = MIN(min, diffCenter);
+        maxCenter = MAX(maxCenter, diffCenter);
+        minCenter = MIN(minCenter, diffCenter);
         
-        diffCenter = ofMap(diffCenter, min, max, 0, 1, true);
+        diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
+        
+        mag.resize(KS.pts.size());
+        dir.resize(KS.pts.size());
+        velocity.resize((KS.pts.size()));
+        for(int i = 0; i < KS.pts.size(); i++){
+            dir[i] = (old.pts[i] - KS.pts[i]).normalized();
+            mag[i] = (old.pts[i] - KS.pts[i]).length();
+            velocity[i] = (dir[i]*mag[i])+KS.pts[i];
+        }
     }
+    
+
+    float footToFootDist[2];
+    float totalDistFeet[2];
+    
+    for (int i = 0; i < 2; i++){
+        
+        footToFootDist[i] =   (feet[0] - feet[1]).length();
+        maxFeet = MAX(maxFeet, footToFootDist[i]);
+        minFeet = MIN(minFeet, footToFootDist[i]);
+    }
+    
+    
+
+    
+    leftFootSpan = ofMap(footToFootDist[0], minFeet, maxFeet, 0, 1, true);
+    rightFootSpan = ofMap(footToFootDist[1], minFeet, maxFeet, 0, 1, true);
+    
+    
+
     
     
     old = KS;
     set = true;
+    
+
 }
 
+
+void kinectSkeletonAnalyzer::draw(){
+    for(int i = 0; i < velocity.size(); i++){
+        if(mag[i] > 0){
+            ofSetColor(ofColor::green, abs(mag[i]));
+        }else{
+            ofSetColor(ofColor::orange, abs(mag[i]));
+        }
+        ofPushMatrix();
+        ofTranslate(velocity[i]);
+        ofDrawSphere(0, 0, 10);
+        ofPopMatrix();
+    }
+}

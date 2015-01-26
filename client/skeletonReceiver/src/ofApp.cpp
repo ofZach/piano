@@ -73,10 +73,9 @@ void ofApp::setup(){
     armright = new ofxHistoryPlot( NULL, "arm-right", 100, false);
     footLeft = new ofxHistoryPlot( NULL, "foot-left", 100, false);
     footRight = new ofxHistoryPlot( NULL, "foot-right", 100, false);
-    
     leftHandHip = new ofxHistoryPlot( NULL, "hand-to-hip-left", 100, false);
     rightHandHip = new ofxHistoryPlot( NULL, "hand-to-hip-right", 100, false);
-    
+    footToFoot = new ofxHistoryPlot( NULL, "Foot To Foot", 100, false);
     
     armleft->setRange(0, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
@@ -170,11 +169,26 @@ void ofApp::setup(){
     center->setGridColor(ofColor(30)); //grid lines color
     center->setGridUnit(14);
     
+    
+    footToFoot->setRange(0, 1); //hard range, will not adapt to values off-scale
+    //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
+    footToFoot->setColor( ofColor(0,255,0) ); //color of the plot line
+    footToFoot->setShowNumericalInfo(true);  //show the current value and the scale in the plot
+    footToFoot->setRespectBorders(true);	   //dont let the plot draw on top of text
+    footToFoot->setLineWidth(1);				//plot line width
+    footToFoot->setBackgroundColor(ofColor(0,220)); //custom bg color
+    //custom grid setup
+    footToFoot->setDrawGrid(true);
+    footToFoot->setGridColor(ofColor(30)); //grid lines color
+    footToFoot->setGridUnit(14);
+    
  
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     mat.makeIdentityMatrix();
     ofPoint offsetPt = offset;
@@ -200,6 +214,7 @@ void ofApp::update(){
         leftHandHip->update(KSA.leftHandVHip);
         rightHandHip->update(KSA.rightHandVHip);
         center->update(KSA.diffCenter);
+        footToFoot->update((KSA.leftHandSpan+KSA.rightFootSpan)/2.0);
         
     }
     
@@ -254,7 +269,7 @@ void ofApp::draw(){
     
     
     KS.draw();
-    
+    KSA.draw();
     
     cam.end();
     
@@ -268,6 +283,7 @@ void ofApp::draw(){
     leftHandHip->draw(200, 400);
     rightHandHip->draw(200, 500);
     center->draw(200, 600);
+    footToFoot->draw(200, 700);
 }
 
 //--------------------------------------------------------------
