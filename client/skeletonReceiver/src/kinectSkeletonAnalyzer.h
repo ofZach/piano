@@ -2,9 +2,8 @@
 #pragma once
 
 #include "kinectSkeleton.h"
-
+#include "ofxHistoryPlot.h"
 class kinectSkeletonAnalyzer {
-    
     
 public:
     
@@ -12,6 +11,7 @@ public:
     void setup();
     void analyze( kinectSkeleton & KS);
     void draw();
+    void drawDebug();
     
     
     float armLeftExtendedPct;
@@ -37,4 +37,14 @@ public:
     float diffCenter, minCenter, maxCenter;
     kinectSkeleton old;
     bool set;
+    bool setV;
+    
+    ofxHistoryPlot * armleft;
+    ofxHistoryPlot * armright;
+    ofxHistoryPlot * footLeft;
+    ofxHistoryPlot * footRight;
+    ofxHistoryPlot * leftHandHip;
+    ofxHistoryPlot * rightHandHip;
+    ofxHistoryPlot * center;
+    ofxHistoryPlot * footToFoot;
 };

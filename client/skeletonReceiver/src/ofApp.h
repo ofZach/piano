@@ -7,8 +7,6 @@
 
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
-#include "ofxHistoryPlot.h"
-
 
 class ofApp : public ofBaseApp{
     
@@ -51,14 +49,7 @@ public:
     
     kinectSkeletonAnalyzer KSA;
     
-    ofxHistoryPlot * armleft;
-    ofxHistoryPlot * armright;
-    ofxHistoryPlot * footLeft;
-    ofxHistoryPlot * footRight;
-    ofxHistoryPlot * leftHandHip;
-    ofxHistoryPlot * rightHandHip;
-    ofxHistoryPlot * center;
-    ofxHistoryPlot * footToFoot;
+
 
 };
 
