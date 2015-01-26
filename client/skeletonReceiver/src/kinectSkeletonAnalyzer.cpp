@@ -12,11 +12,17 @@
 void kinectSkeletonAnalyzer::setup(){
     armLeftExtendedPct = 0;
     armRightExtendedPct = 0;
+    set = false;
     
     
 }
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     
+    
+    //    ptsHistory.push_back(KS.pts);
+    //    if(ptsHistory.size() > 2){
+    //        ptsHistory.pop_front();
+    //    }
     
     ofPoint elbows[2];
     ofPoint hands[2];
@@ -32,6 +38,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
     }
     
+    
+    
     float handDist[2];
     float totalDist[2];
     
@@ -39,18 +47,73 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         handDist[i] =   (spine - hands[i]).length();
         totalDist[i] =  (spine - shoulders[i]).length() +
-                        (shoulders[i] - elbows[i]).length() +
-                        (elbows[i] - hands[i]).length();
+        (shoulders[i] - elbows[i]).length() +
+        (elbows[i] - hands[i]).length();
         
-    
+        
     }
     
     armLeftExtendedPct = handDist[0] / totalDist[0];
     armRightExtendedPct = handDist[1] / totalDist[1];
     
     
-    cout << armLeftExtendedPct << " " << armRightExtendedPct << endl;
+    //    cout << armLeftExtendedPct << " " << armRightExtendedPct << endl;
     
     
+    
+    ofPoint knee[2];
+    ofPoint feet[2];
+    ofPoint hips[2];
+    
+    
+    spine =  KS.pts[  KS.nameToIndex[ "SpineBase" ]];
+    
+    for (int i = 0; i < 2; i++){
+        hips[i] = KS.pts[  KS.nameToIndex[ (i == 0 ? "HipLeft" : "HipRight")]];
+        knee[i] = KS.pts[  KS.nameToIndex[ (i == 0 ? "KneeLeft" : "KneeRight")]];
+        feet[i] = KS.pts[  KS.nameToIndex[ (i == 0 ? "FootLeft" : "FootRight")]];
+        
+    }
+    
+    
+    float feetDist[2];
+    float totalFeetDist[2];
+    
+    for (int i = 0; i < 2; i++){
+        
+        feetDist[i] =   (spine - feet[i]).length();
+        totalDist[i] =  (spine - hips[i]).length() +
+        (hips[i] - knee[i]).length() +
+        (knee[i] - feet[i]).length();
+    }
+    
+    footLeftExtendedPct = feetDist[0] / totalDist[0];
+    footRightExtendedPct = feetDist[1] / totalDist[1];
+    
+    
+    
+    float handSpineDist[2];
+    float totalHipDist[2];
+    
+    for (int i = 0; i < 2; i++){
+        
+        handSpineDist[i] = (hips[i] - hands[i]).length();
+        totalHipDist[i] =  (spine - shoulders[i]).length() +
+        (shoulders[i] - elbows[i]).length() +
+        (elbows[i] - hands[i]).length();
+        ;
+    }
+    
+    
+    leftHandVHip = handSpineDist[0]/totalDist[0];
+    rightHandVHip = handSpineDist[1]/totalDist[1];
+    
+    if(set){
+        diffCenter = (old.pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length()/KS.pts[KS.nameToIndex[ "SpineMid" ]].length();
+    }
+    
+    
+    old = KS;
+    set = true;
 }
 

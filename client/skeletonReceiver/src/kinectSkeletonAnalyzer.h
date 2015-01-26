@@ -15,9 +15,16 @@ public:
     
     float armLeftExtendedPct;
     float armRightExtendedPct;
+    float footLeftExtendedPct;
+    float footRightExtendedPct;
     
+    float leftHandVHip;
+    float rightHandVHip;
     
+    deque<vector<ofPoint> > ptsHistory;
+    vector<ofPoint> diff;
     
-    
-    
+    float diffCenter;
+    kinectSkeleton old;
+    bool set;
 };
