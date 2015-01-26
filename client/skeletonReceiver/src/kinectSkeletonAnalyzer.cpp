@@ -15,10 +15,8 @@ void kinectSkeletonAnalyzer::setup(){
     set = false;
     min = FLT_MAX;
     max = FLT_MIN;
-    
-    
-    
 }
+
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     
     

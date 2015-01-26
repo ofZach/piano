@@ -8,6 +8,8 @@
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
 #include "ofxHistoryPlot.h"
+#include "udpPacketReplayer.h"
+
 
 
 class ofApp : public ofBaseApp{
@@ -38,6 +40,11 @@ public:
     ofParameter <float> rotationY;
     ofParameter <float> rotationZ;
     ofParameter <ofVec3f> offset;
+    
+    ofParameter <bool> bUseUdpPlayer;
+    ofParameter <bool> bLoadNewUDP;
+    
+    
     ofxPanel gui;
     
     ofEasyCam cam;
@@ -55,11 +62,12 @@ public:
     ofxHistoryPlot * armright;
     ofxHistoryPlot * footLeft;
     ofxHistoryPlot * footRight;
-    
     ofxHistoryPlot * leftHandHip;
     ofxHistoryPlot * rightHandHip;
-    
     ofxHistoryPlot * center;
+    
+    udpPacketReplayer UDPR;
+    
 
 };
 
