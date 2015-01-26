@@ -24,7 +24,7 @@ public:
     deque<vector<ofPoint> > ptsHistory;
     vector<ofPoint> diff;
     
-    float diffCenter;
+    float diffCenter, min, max;
     kinectSkeleton old;
     bool set;
 };

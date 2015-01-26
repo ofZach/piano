@@ -13,6 +13,9 @@ void kinectSkeletonAnalyzer::setup(){
     armLeftExtendedPct = 0;
     armRightExtendedPct = 0;
     set = false;
+    min = FLT_MAX;
+    max = FLT_MIN;
+    
     
     
 }
@@ -109,7 +112,12 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     rightHandVHip = handSpineDist[1]/totalDist[1];
     
     if(set){
-        diffCenter = (old.pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length()/KS.pts[KS.nameToIndex[ "SpineMid" ]].length();
+        diffCenter = (old.pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length();
+        
+        max = MAX(max, diffCenter);
+        min = MIN(min, diffCenter);
+        
+        diffCenter = ofMap(diffCenter, min, max, 0, 1, true);
     }
     
     
