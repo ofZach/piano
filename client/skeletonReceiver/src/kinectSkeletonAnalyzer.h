@@ -70,12 +70,15 @@ public:
     bool set;
     bool setV;
     
-    ofxHistoryPlot * armleft;
-    ofxHistoryPlot * armright;
-    ofxHistoryPlot * footLeft;
-    ofxHistoryPlot * footRight;
-    ofxHistoryPlot * leftHandHip;
-    ofxHistoryPlot * rightHandHip;
-    ofxHistoryPlot * center;
-    ofxHistoryPlot * footToFoot;
+    vector < ofxHistoryPlot * > historyPlots;
+    map < string, ofxHistoryPlot * > nameToHistoryPlot;
+    
+//    ofxHistoryPlot * armleft;
+//    ofxHistoryPlot * armright;
+//    ofxHistoryPlot * footLeft;
+//    ofxHistoryPlot * footRight;
+//    ofxHistoryPlot * leftHandHip;
+//    ofxHistoryPlot * rightHandHip;
+//    ofxHistoryPlot * center;
+//    ofxHistoryPlot * footToFoot;
 };
