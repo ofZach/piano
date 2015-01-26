@@ -26,7 +26,8 @@ public:
     float rightHandVHip;
     
     deque<vector<ofPoint> > ptsHistory;
-    vector<ofPoint> velocity;
+    vector<ofPoint> velocity, oldVelocity;
+    vector<ofPoint> acceleration;
     vector<ofPoint> dir;
     vector<float> mag;
 

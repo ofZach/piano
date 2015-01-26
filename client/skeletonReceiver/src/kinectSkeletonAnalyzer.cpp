@@ -134,13 +134,14 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
         
+        oldVelocity = velocity;
         mag.resize(KS.pts.size());
         dir.resize(KS.pts.size());
         velocity.resize((KS.pts.size()));
         for(int i = 0; i < KS.pts.size(); i++){
             dir[i] = (old.pts[i] - KS.pts[i]).normalized();
             mag[i] = (old.pts[i] - KS.pts[i]).length();
-            velocity[i] = (dir[i]*mag[i])+KS.pts[i];
+            velocity[i] = (dir[i]*mag[i]);
         }
     }
     
@@ -180,7 +181,7 @@ void kinectSkeletonAnalyzer::draw(){
             ofSetColor(ofColor::orange, abs(mag[i]));
         }
         ofPushMatrix();
-        ofTranslate(velocity[i]);
+        ofTranslate(velocity[i]+old.pts[i]);
         ofDrawSphere(0, 0, 10);
         ofPopMatrix();
     }
