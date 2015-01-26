@@ -10,6 +10,9 @@ public:
     
     void setup();
     void analyze( kinectSkeleton & KS);
+    void calculateVelocities();
+    void distHands();
+    void distFeet();
     void draw();
     void drawDebug();
     
