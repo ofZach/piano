@@ -113,7 +113,7 @@ void kinectSkeletonAnalyzer::setup(){
     rightHandHip->setGridUnit(14);
     
     
-    center = new ofxHistoryPlot( NULL, "Center", 100, false);
+    center = new ofxHistoryPlot(NULL, "Center", 100, false);
     
     center->setRange(0, 1); //hard range, will not adapt to values off-scale
     //plot->addHorizontalGuide(ofGetHeight()/2, ofColor(255,0,0)); //add custom reference guides
@@ -139,7 +139,7 @@ void kinectSkeletonAnalyzer::setup(){
     footToFoot->setDrawGrid(true);
     footToFoot->setGridColor(ofColor(30)); //grid lines color
     footToFoot->setGridUnit(14);
-
+    
 }
 
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
@@ -255,7 +255,7 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
         
         oldVelocity = velocity;
-
+        
         if(setV){
             mag.resize(KS.pts.size());
             dir.resize(KS.pts.size());
@@ -266,6 +266,15 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
                 mag[i] = (old.pts[i] - KS.pts[i]).length();
                 velocity[i] = (dir[i]*mag[i]);
                 acceleration[i] = velocity[i]-oldVelocity[i];
+            }
+            
+            
+            for(int i = 0; i < KS.bonesList.size(); i++){
+                
+                for(int j = 0; j < KS.bones[KS.bonesList[i]].size(); j++){
+                    limbAcceleration[KS.bonesList[i]]+=acceleration[KS.bones[KS.bonesList[i]][j]];
+                }
+                limbAcceleration[KS.bonesList[i]] = limbAcceleration[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
             }
         }
         setV = true;
@@ -318,29 +327,46 @@ void kinectSkeletonAnalyzer::distHands(){
 
 void kinectSkeletonAnalyzer::draw(){
     if(set && setV){
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
         for(int i = 0; i < velocity.size(); i++){
-            if(mag[i] > 0){
-                ofSetColor(ofColor::green, abs(mag[i]));
-            }else{
-                ofSetColor(ofColor::orange, abs(mag[i]));
-            }
+            //            if(mag[i] > 0){
+            //                ofSetColor(ofColor::green, abs(velocity[i].length()));
+            //            }else{
+            ofSetColor(ofColor::red, abs(velocity[i].length()));
+            //            }
             ofPushMatrix();
             ofTranslate(velocity[i]+old.pts[i]);
             ofDrawSphere(0, 0, 10);
             ofPopMatrix();
             
             
-            if(acceleration[i].length() > 0){
-                ofSetColor(ofColor::green, abs(mag[i]));
-            }else{
-                ofSetColor(ofColor::orange, abs(mag[i]));
-            }
+            //            if(acceleration[i].length() > 0){
+            //                ofSetColor(ofColor::blue, (acceleration[i].length()));
+            //            }else{
+            ofSetColor(ofColor::blue, (acceleration[i].length()));
+            //            }
             
             ofPushMatrix();
             ofTranslate(acceleration[i]+old.pts[i]);
             ofDrawSphere(0, 0, 10);
             ofPopMatrix();
         }
+        
+        
+        for(int i = 0; i < old.bonesList.size() > 0; i++){
+            for(int i = 0; i < old.bones.size() > 0; i++){
+                ofPoint p;
+                for(int j = 0; j < old.bones[old.bonesList[i]].size(); j++){
+                     ofSetColor(ofColor::blue, (limbAcceleration[old.bonesList[i]].length()));
+                    ofPushMatrix();
+                    ofTranslate(limbAcceleration[old.bonesList[i]]+old.pts[old.bones[old.bonesList[i]][j]]);
+                    ofDrawSphere(0, 0, 10);
+                    ofPopMatrix();
+                }
+            }
+        }
+        
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     }
 }
 

@@ -32,6 +32,7 @@ public:
     vector<ofPoint> velocity, oldVelocity;
     vector<ofPoint> acceleration;
     vector<ofPoint> dir;
+    map<string, ofPoint> limbAcceleration;
     vector<float> mag;
 
     float maxMag, minMag;
@@ -50,4 +51,7 @@ public:
     ofxHistoryPlot * rightHandHip;
     ofxHistoryPlot * center;
     ofxHistoryPlot * footToFoot;
+    
+    
+    
 };
