@@ -3,7 +3,7 @@
 
 #include "kinectSkeleton.h"
 #include "ofxHistoryPlot.h"
-
+#include "ofEvents.h"
 
 // todo:
 
@@ -44,7 +44,6 @@ public:
     void draw();
     void drawDebug();
     
-    
     float armLeftExtendedPct;
     float armRightExtendedPct;
     float footLeftExtendedPct;
@@ -52,6 +51,10 @@ public:
     
     float leftFootSpan, rightFootSpan, maxFeet, minFeet;
     float leftHandSpan, rightHandSpan, maxHands, minHands;
+
+    
+    float angleLeftKnee, angleRightKnee;
+    float angleLeftElbow, angleRightElbow;
     
     float leftHandVHip;
     float rightHandVHip;
@@ -65,6 +68,8 @@ public:
 
     float maxMag, minMag;
     
+    
+    float avgDiffCenter;
     float dt;
     float diffCenter, minCenter, maxCenter;
     kinectSkeleton old;
@@ -75,4 +80,6 @@ public:
     vector < ofxHistoryPlot * > historyPlots;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
     
+    
+    ofEvent<int> aboveThreshold;
 };

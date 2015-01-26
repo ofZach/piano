@@ -132,7 +132,7 @@ void ofApp::draw(){
     
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
-    
+
     KS.draw();
     KSA.draw();
     
