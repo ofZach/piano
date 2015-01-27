@@ -14,16 +14,6 @@ void kinectSkeletonAnalyzer::setup(){
     armRightExtendedPct = 0;
     set = false;
     setV = false;
-    minCenter = FLT_MAX;
-    maxCenter = FLT_MIN;
-    maxFeet = FLT_MIN;
-    minFeet = FLT_MAX;
-    minMag = FLT_MAX;
-    maxMag = FLT_MIN;
-    minDistLeft = FLT_MAX;
-    maxDistLeft = FLT_MIN;
-    minDistRight = FLT_MAX;
-    maxDistRight = FLT_MIN;
     dt = ofGetElapsedTimef();
     
     velocity.assign(27, ofPoint());
@@ -31,42 +21,50 @@ void kinectSkeletonAnalyzer::setup(){
     acceleration.assign(27, ofPoint());
     mag.assign(27, 0);
     
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-left", 100, false));
-    nameToHistoryPlot["arm-left"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-left-accel", 100, false));
-    nameToHistoryPlot["arm-left-accel"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-right", 100, false));
-    nameToHistoryPlot["arm-right"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-right-accel", 100, false));
-    nameToHistoryPlot["arm-right-accel"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-left", 100, false));
-    nameToHistoryPlot["foot-left"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-right", 100, false));
-    nameToHistoryPlot["foot-right"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-left", 100, false));
-    nameToHistoryPlot["foot-left-accel"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-right", 100, false));
-    nameToHistoryPlot["foot-right-accel"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "hand-to-hip-left", 100, false));
-    nameToHistoryPlot["hand-to-hip-left"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "hand-to-hip-right", 100, false));
-    nameToHistoryPlot["hand-to-hip-right"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Foot To Foot", 100, false));
-    nameToHistoryPlot["Foot To Foot"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Center", 100, false));
-    nameToHistoryPlot["Center"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Knee Angle Left", 100, false));
-    nameToHistoryPlot["Knee Angle Left"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Knee Angle Right", 100, false));
-    nameToHistoryPlot["Knee Angle Right"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Angle Left Elbow", 100, false));
-    nameToHistoryPlot["angleLeftElbow"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Angle Right Elbow", 100, false));
-    nameToHistoryPlot["angleRightElbow"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Right Foot to Ground", 100, false));
-    nameToHistoryPlot["rightFootToGround"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "Left Foot to Ground", 100, false));
-    nameToHistoryPlot["leftFootToGround"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-ext-lt", 100, false));
+    nameToHistoryPlot["arm-ext-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-diff-lt", 100, false));
+    nameToHistoryPlot["arm-diff-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-ext-rt", 100, false));
+    nameToHistoryPlot["arm-ext-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "arm-diff-rt", 100, false));
+    nameToHistoryPlot["arm-diff-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "leg-ext-lt", 100, false));
+    nameToHistoryPlot["leg-ext-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "leg-ext-right", 100, false));
+    nameToHistoryPlot["leg-ext-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "leg-diff-lt", 100, false));
+    nameToHistoryPlot["leg-diff-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "leg-diff-rt", 100, false));
+    nameToHistoryPlot["leg-diff-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-hand-to-hip-lt", 100, false));
+    nameToHistoryPlot["dist-hand-to-hip-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-hand-to-hip-rt", 100, false));
+    nameToHistoryPlot["dist-hand-to-hip-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-foot-to-foot", 100, false));
+    nameToHistoryPlot["dist-foot-to-foot"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "movement-center", 100, false));
+    nameToHistoryPlot["movement-center"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-lt", 100, false));
+    nameToHistoryPlot["knee-angle-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-rt", 100, false));
+    nameToHistoryPlot["knee-angle-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "elbow-angle-lt", 100, false));
+    nameToHistoryPlot["elbow-angle-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "elbow-angle-rt", 100, false));
+    nameToHistoryPlot["elbow-angle-rt"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "elbow-diff-lt", 100, false));
+    nameToHistoryPlot["elbow-diff-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "elbow-diff-rt", 100, false));
+    nameToHistoryPlot["elbow-diff-rt"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-foot-head-rt", 100, false));
+    nameToHistoryPlot["dist-foot-head-rt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-foot-head-lt", 100, false));
+    nameToHistoryPlot["dist-foot-head-lt"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-hand-to-hand", 100, false));
+    nameToHistoryPlot["dist-hand-to-hand"] = historyPlots.back();
     
     
     for (auto hp : historyPlots){
@@ -84,11 +82,28 @@ void kinectSkeletonAnalyzer::setup(){
         hp->setGridUnit(14);
         
     }
-    nFrames = 30;
     
+    nameToHistoryPlot["elbow-angle-lt"]->setRange(0, 180);
+    nameToHistoryPlot["elbow-angle-rt"]->setRange(0, 180);
+    nameToHistoryPlot["elbow-diff-lt"]->setRange(0, 180);
+    nameToHistoryPlot["elbow-diff-rt"]->setRange(0, 180);
+    
+    nameToHistoryPlot["knee-angle-lt"]->setRange(0, 180);
+    nameToHistoryPlot["knee-angle-rt"]->setRange(0, 180);
+    nFrames = 30;
+    setSmoothing(0.9);
+    setSmoothingScale(35.0);
     
     
     historyPlotsFBO.allocate(400,2000);
+}
+
+void kinectSkeletonAnalyzer::setSmoothing(float _smoothing){
+    smoothing = _smoothing;
+}
+
+void kinectSkeletonAnalyzer::setSmoothingScale(float _scale){
+    scale = _scale;
 }
 
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
@@ -123,7 +138,7 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             limbVelocity[KS.bonesList[i]] = limbVelocity[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
         }
         
-
+        
         
         
         orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
@@ -134,87 +149,104 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         calculateStance();
         
         
-        nameToHistoryPlot["arm-left"]->update(armLeftExtendedPct);;
-        nameToHistoryPlot["foot-left"]->update(legLeftExtendedPct);
-        nameToHistoryPlot["hand-to-hip-left"]->update(leftHandVHip);
-        nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
-        nameToHistoryPlot["Knee Angle Left"]->update(angleLeftKnee);
-        nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
+        nameToHistoryPlot["arm-ext-lt"]->update(armLeftExtendedPct);;
+        nameToHistoryPlot["leg-ext-lt"]->update(legLeftExtendedPct);
+        nameToHistoryPlot["dist-hand-to-hip-lt"]->update(leftHandVHip);
+        nameToHistoryPlot["elbow-angle-lt"]->update(angleLeftElbow);
+        nameToHistoryPlot["knee-angle-lt"]->update(angleLeftKnee);
+        nameToHistoryPlot["dist-foot-head-lt"]->update(distFootLeft);
         
-        nameToHistoryPlot["Foot To Foot"]->update((leftHandSpan+rightFootSpan)/2.0);
-        nameToHistoryPlot["Center"]->update(diffCenter);
+        nameToHistoryPlot["dist-foot-to-foot"]->update((leftFootSpan+rightFootSpan)/2.0);
+        nameToHistoryPlot["movement-center"]->update(diffCenter);
         
-        nameToHistoryPlot["arm-right"]->update(armRightExtendedPct);
-        nameToHistoryPlot["foot-right"]->update(legRightExtendedPct);
-        nameToHistoryPlot["Knee Angle Right"]->update(angleRightKnee);
-        nameToHistoryPlot["angleRightElbow"]->update(angleRightElbow);
-        nameToHistoryPlot["rightFootToGround"]->update(distFootRight);
-        nameToHistoryPlot["hand-to-hip-right"]->update(rightHandVHip);
+        nameToHistoryPlot["arm-ext-rt"]->update(armRightExtendedPct);
+        nameToHistoryPlot["leg-ext-rt"]->update(legRightExtendedPct);
+        nameToHistoryPlot["knee-angle-rt"]->update(angleRightKnee);
+        nameToHistoryPlot["elbow-angle-rt"]->update(angleRightElbow);
+        nameToHistoryPlot["dist-foot-head-rt"]->update(distFootRight);
+        nameToHistoryPlot["dist-hand-to-hip-rt"]->update(rightHandVHip);
+        nameToHistoryPlot["dist-hand-to-hand"]->update((leftHandSpan+rightHandSpan)/2.0);
         
         
         
+        ofxHistoryPlot * rf = nameToHistoryPlot["leg-ext-lt"];
+        ofxHistoryPlot * lf = nameToHistoryPlot["leg-ext-rt"];
         
-        ofxHistoryPlot * rf = nameToHistoryPlot["foot-left"];
-        ofxHistoryPlot * lf = nameToHistoryPlot["foot-right"];
-        
-        ofxHistoryPlot * ra = nameToHistoryPlot["arm-right"];
-        ofxHistoryPlot * la = nameToHistoryPlot["arm-left"];
+        ofxHistoryPlot * ra = nameToHistoryPlot["arm-ext-rt"];
+        ofxHistoryPlot * la = nameToHistoryPlot["arm-ext-lt"];
         
         if (ra->getValues().size() > 1){
             
             float diffr = ra->getValues()[ra->getValues().size()-2] - ra->getValues()[ra->getValues().size()-1];
             float diffl = la->getValues()[la->getValues().size()-2] - la->getValues()[la->getValues().size()-1];
             
+            diffl = ofClamp(fabs(diffl) * scale, 0, 1);
+            diffr = ofClamp(fabs(diffr) * scale, 0, 1);
             
-            // todo: parametize accel scale
-            diffl = ofClamp(fabs(diffl) * 35.0, 0, 1);
-            diffr = ofClamp(fabs(diffr) * 35.0, 0, 1);
-            
-            if (nameToHistoryPlot["arm-left-accel"]->getValues().size() > 0){
-                float lastVall = nameToHistoryPlot["arm-left-accel"]->getValues().back();
-                float lastValr = nameToHistoryPlot["arm-right-accel"]->getValues().back();
+            if (nameToHistoryPlot["arm-diff-lt"]->getValues().size() > 0){
+                float lastVall = nameToHistoryPlot["arm-diff-lt"]->getValues().back();
+                float lastValr = nameToHistoryPlot["arm-diff-rt"]->getValues().back();
                 
-                // todo: parametize accel smoothing
-                
-                diffl = 0.1f * diffl + 0.9 *lastVall;
-                diffr = 0.1f * diffr + 0.9 *lastValr;
+                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
+                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
                 
             }
             
             
-            nameToHistoryPlot["arm-left-accel"]->update(diffl);;
-            nameToHistoryPlot["arm-right-accel"]->update(diffr);;
+            nameToHistoryPlot["arm-diff-lt"]->update(diffl);;
+            nameToHistoryPlot["arm-diff-rt"]->update(diffr);;
             
         }
-
+        
         
         if (rf->getValues().size() > 1){
             
             float diffr = rf->getValues()[rf->getValues().size()-2] - rf->getValues()[rf->getValues().size()-1];
             float diffl = lf->getValues()[lf->getValues().size()-2] - lf->getValues()[lf->getValues().size()-1];
             
+            diffl = ofClamp(fabs(diffl) * scale, 0, 1);
+            diffr = ofClamp(fabs(diffr) * scale, 0, 1);
             
-            // todo: parametize accel scale
-            diffl = ofClamp(fabs(diffl) * 35.0, 0, 1);
-            diffr = ofClamp(fabs(diffr) * 35.0, 0, 1);
-            
-            if (nameToHistoryPlot["foot-left-accel"]->getValues().size() > 0){
-                float lastVall = nameToHistoryPlot["foot-left-accel"]->getValues().back();
-                float lastValr = nameToHistoryPlot["foot-right-accel"]->getValues().back();
+            if (nameToHistoryPlot["leg-diff-lt"]->getValues().size() > 0){
+                float lastVall = nameToHistoryPlot["leg-diff-lt"]->getValues().back();
+                float lastValr = nameToHistoryPlot["leg-diff-rt"]->getValues().back();
                 
-                // todo: parametize accel smoothing
-                
-                diffl = 0.1f * diffl + 0.9 *lastVall;
-                diffr = 0.1f * diffr + 0.9 *lastValr;
+                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
+                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
                 
             }
             
             
-            nameToHistoryPlot["foot-left-accel"]->update(diffl);;
-            nameToHistoryPlot["foot-right-accel"]->update(diffr);;
+            nameToHistoryPlot["leg-diff-lt"]->update(diffl);;
+            nameToHistoryPlot["leg-diff-rt"]->update(diffr);;
             
         }
         
+        ofxHistoryPlot * eAL = nameToHistoryPlot["elbow-angle-lt"];
+        ofxHistoryPlot * eAR = nameToHistoryPlot["elbow-angle-rt"];
+        
+        
+        if (eAL->getValues().size() > 1){
+            float diffl = eAL->getValues()[eAL->getValues().size()-2] - eAL->getValues()[eAL->getValues().size()-1];
+            float diffr = eAR->getValues()[eAR->getValues().size()-2] - eAR->getValues()[eAR->getValues().size()-1];
+            
+            
+            diffl = ofClamp(fabs(diffl) * scale, 0, 180);
+            diffr = ofClamp(fabs(diffr) * scale, 0, 180);
+            
+            if (nameToHistoryPlot["elbow-diff-lt"]->getValues().size() > 0){
+                float lastVall = nameToHistoryPlot["elbow-diff-lt"]->getValues().back();
+                float lastValr = nameToHistoryPlot["elbow-diff-rt"]->getValues().back();
+                
+                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
+                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
+                
+            }
+            
+            
+            nameToHistoryPlot["elbow-diff-lt"]->update(diffl);
+            nameToHistoryPlot["elbow-diff-rt"]->update(diffr);
+        }
     }
     
     skeletons.push_back(KS);
@@ -255,20 +287,20 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     armLeftExtendedPct = handDist[0] / totalDist[0];
     armRightExtendedPct = handDist[1] / totalDist[1];
     
-    
-    
+    ofPoint spineShoulder =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
+    ofPoint spineBase =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineBase" ]];
     float handtohandDist[2];
     float totalDistHands[2];
     
     for (int i = 0; i < 2; i++){
         
-        handtohandDist[i] =   (hands[i%2].normalized() - hands[i%2].normalized()).length();
+        handtohandDist[i] =   (hands[(i+1)%2].normalized() - hands[i].normalized()).length();
+        totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+i)%2]).length()+(hands[(i+1)%2]-hands[(i+i)%2]).length();
     }
     
-    leftHandSpan = handtohandDist[0];
-    rightHandSpan = handtohandDist[1];
+    leftHandSpan = handtohandDist[0]/totalDistHands[0];
+    rightHandSpan = handtohandDist[1]/totalDistHands[1];
     
-    //    cout << armLeftExtendedPct << " " << armRightExtendedPct << endl;
     
     float handSpineDist[2];
     float totalHipDist[2];
@@ -276,34 +308,34 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     for (int i = 0; i < 2; i++){
         
         handSpineDist[i] = (hips[i] - hands[i]).length();
-        totalHipDist[i] =  (spine - shoulders[i]).length() +
+        totalHipDist[i] =  (hips[i] - spineBase[i]).length() +
+        (spineShoulder - spineBase).length()+
+        (spineShoulder - shoulders[i]).length() +
         (shoulders[i] - elbows[i]).length() +
         (elbows[i] - hands[i]).length();
         
     }
     
     
-    leftHandVHip = handSpineDist[0]/totalDist[0];
-    rightHandVHip = handSpineDist[1]/totalDist[1];
-    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0])/180;
-    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1])/180;
-    
-    
+    leftHandVHip = handSpineDist[0]/totalHipDist[0];
+    rightHandVHip = handSpineDist[1]/totalHipDist[1];
+    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0]);
+    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1]);
 }
 
 void kinectSkeletonAnalyzer::calculateStance(){
     ofPoint knee[2];
     ofPoint feet[2];
     ofPoint hips[2];
+    ofPoint head = skeletons.back().pts[  skeletons.back().nameToIndex[ "Head" ]];
     
-    
-    ofPoint spine =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineBase" ]];
+    ofPoint spineBase =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineBase" ]];
+    ofPoint spineShoulders =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulders" ]];
     
     for (int i = 0; i < 2; i++){
         hips[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "HipLeft" : "HipRight")]];
         knee[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "KneeLeft" : "KneeRight")]];
         feet[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "FootLeft" : "FootRight")]];
-        
     }
     
     
@@ -311,45 +343,41 @@ void kinectSkeletonAnalyzer::calculateStance(){
     float totalFeetDist[2];
     
     for (int i = 0; i < 2; i++){
-        
-        feetDist[i] =   (spine - feet[i]).length();
-        totalFeetDist[i] =  (spine - hips[i]).length() +
-        (hips[i] - knee[i]).length() +
+        feetDist[i] =   (hips[i] - feet[i]).length();
+        totalFeetDist[i] = (hips[i] - knee[i]).length() +
         (knee[i] - feet[i]).length();
     }
     
     legLeftExtendedPct = feetDist[0] / totalFeetDist[0];
     legRightExtendedPct = feetDist[1] / totalFeetDist[1];
     
-    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0])/180;
-    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1])/180;
+    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0]);
+    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1]);
     
     float footToFootDist[2];
-    float totalDistFeet[2];
     
     for (int i = 0; i < 2; i++){
         
         footToFootDist[i] =   (feet[0] - feet[1]).length();
-        maxFeet = MAX(maxFeet, footToFootDist[i]);
-        minFeet = MIN(minFeet, footToFootDist[i]);
+        totalFeetDist[i] = (spineBase - hips[i]).length() +
+        (hips[i] - knee[i]).length() +
+        (knee[i] - feet[i]).length();
     }
     
     
-    leftFootSpan = ofMap(footToFootDist[0], minFeet, maxFeet, 0, 1, true);
-    rightFootSpan = ofMap(footToFootDist[1], minFeet, maxFeet, 0, 1, true);
+    leftFootSpan = footToFootDist[0]/totalFeetDist[0];
+    rightFootSpan = footToFootDist[1]/totalFeetDist[1];
     
-    distFootLeft = (feet[0] - ofVec3f(feet[0].x, groundPlane.y, feet[0].z)).length();
-    distFootRight = (feet[1] - ofVec3f(feet[1].x, groundPlane.y, feet[1].z)).length();
+    for (int i = 0; i < 2; i++){
+        
+        footToFootDist[i] =   (feet[i] - head).length();
+        totalFeetDist[i] = (head-spineBase).length()+(spineBase - hips[i]).length() +
+        (hips[i] - knee[i]).length() +
+        (knee[i] - feet[i]).length();
+    }
     
-    minDistLeft = MIN(minDistLeft, distFootLeft);
-    maxDistLeft = MAX(maxDistLeft, distFootLeft);
-    
-    minDistRight = MIN(minDistRight, distFootRight);
-    maxDistRight = MAX(maxDistRight, distFootRight);
-    
-    distFootLeft = ofMap(distFootLeft, minDistLeft, maxDistLeft, 0, 1);
-    distFootRight = ofMap(distFootRight, minDistRight, maxDistRight, 0, 1);
-    
+    distFootLeft = footToFootDist[0]/totalFeetDist[0];
+    distFootRight = footToFootDist[1]/totalFeetDist[1];
 }
 
 void kinectSkeletonAnalyzer::calculateShoulderWidth(){
@@ -361,19 +389,19 @@ void kinectSkeletonAnalyzer::draw(){
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     if(skeletons.size() > 0){
         for(int i = 0; i < velocity.size(); i++){
-            if(mag[i] > velocityThresh || velHistory.back()[i].lengthSquared()-velocity[i].lengthSquared() > diffThresh){
-                ofSetColor(ofColor::red, ofClamp(mag[i], 0., 255.0));
-                ofPushMatrix();
-                ofTranslate(velocity[i]+skeletons.back().pts[i]);
-                ofDrawSphere(0, 0, 10);
-                ofPopMatrix();
-                
-                ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
-                ofPushMatrix();
-                ofTranslate(acceleration[i]+skeletons.back().pts[i]);
-                ofDrawSphere(0, 0, 10);
-                ofPopMatrix();
-            }
+            //if(mag[i] > velocityThresh || velHistory.back()[i].lengthSquared()-velocity[i].lengthSquared() > diffThresh){
+            ofSetColor(ofColor::red, ofClamp(mag[i], 0., 255.0));
+            ofPushMatrix();
+            ofTranslate(velocity[i]+skeletons.back().pts[i]);
+            ofDrawSphere(0, 0, 10);
+            ofPopMatrix();
+            
+            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
+            ofPushMatrix();
+            ofTranslate(acceleration[i]+skeletons.back().pts[i]);
+            ofDrawSphere(0, 0, 10);
+            ofPopMatrix();
+            //}
         }
         
         
@@ -424,29 +452,31 @@ void kinectSkeletonAnalyzer::drawDebug(){
     ofClear(127,127,127,50);
     
     if(skeletons.size() > 0){
-    nameToHistoryPlot["arm-left"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["arm-left-accel"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["angleLeftElbow"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["hand-to-hip-left"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["Knee Angle Left"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["foot-left"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["foot-left-accel"]->draw(200, height * count++, 190, height-5);
-    nameToHistoryPlot["leftFootToGround"]->draw(200, height * count++, 190, height-5);
-    
-    count = 0;
-    nameToHistoryPlot["arm-right"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["arm-right-accel"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["angleRightElbow"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["hand-to-hip-right"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["Knee Angle Right"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["foot-right"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["foot-right-accel"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["rightFootToGround"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["arm-ext-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["arm-diff-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["elbow-angle-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["elbow-diff-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["dist-hand-to-hip-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["knee-angle-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["leg-ext-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["leg-diff-lt"]->draw(200, height * count++, 190, height-5);
+        nameToHistoryPlot["dist-foot-head-lt"]->draw(200, height * count++, 190, height-5);
+        
+        count = 0;
+        nameToHistoryPlot["arm-ext-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["arm-diff-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["elbow-angle-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["elbow-diff-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["dist-hand-to-hip-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["knee-angle-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["leg-ext-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["leg-diff-rt"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["dist-foot-head-rt"]->draw(0, height * count++, 190, height-5);
         
         
         
-    nameToHistoryPlot["Foot To Foot"]->draw(0, height * count++, 190, height-5);
-    nameToHistoryPlot["Center"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["dist-foot-to-foot"]->draw(0, height * count++, 190, height-5);
+        nameToHistoryPlot["movement-center"]->draw(0, height * count++, 190, height-5);
         
     }
     
@@ -458,40 +488,40 @@ void kinectSkeletonAnalyzer::drawDebug(){
     historyPlotsFBO.draw(0,0);
     
     
-//    if(skeletons.size() > 0){
-//        
-//        
-//        ofPushMatrix();
-//        ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
-//        nameToHistoryPlot["arm-left"]->draw(0, 0);
-//        nameToHistoryPlot["arm-left-accel"]->draw(-160, 0);
-//        nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
-//        nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
-//        nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
-//        nameToHistoryPlot["foot-left"]->draw(0, 480);
-//        nameToHistoryPlot["foot-left-accel"]->draw(-160, 480);
-//        nameToHistoryPlot["leftFootToGround"]->draw(0, 600);
-//        ofPopMatrix();
-//        
-//        ofPushMatrix();
-//        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, 0, 0));
-//        nameToHistoryPlot["Foot To Foot"]->draw(0, 0);
-//        ofPopMatrix();
-//        ofPushMatrix();
-//        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, ofGetHeight()-120.0, 0));
-//        nameToHistoryPlot["Center"]->draw(0, 0);
-//        ofPopMatrix();
-//        
-//        ofPushMatrix();
-//        ofTranslate(ofVec3f(0, 0, 0));
-//        nameToHistoryPlot["arm-right"]->draw(0,0);
-//        nameToHistoryPlot["arm-right-accel"]->draw(160, 0);
-//        nameToHistoryPlot["angleRightElbow"]->draw(0, 120);
-//        nameToHistoryPlot["hand-to-hip-right"]->draw(0,240);
-//        nameToHistoryPlot["Knee Angle Right"]->draw(0, 360);
-//        nameToHistoryPlot["foot-right"]->draw(0, 480);
-//        nameToHistoryPlot["foot-right-accel"]->draw(160, 480);
-//        nameToHistoryPlot["rightFootToGround"]->draw(0, 600);
-//        ofPopMatrix();
-//    }
+    //    if(skeletons.size() > 0){
+    //
+    //
+    //        ofPushMatrix();
+    //        ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
+    //        nameToHistoryPlot["arm-left"]->draw(0, 0);
+    //        nameToHistoryPlot["arm-left-accel"]->draw(-160, 0);
+    //        nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
+    //        nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
+    //        nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
+    //        nameToHistoryPlot["foot-left"]->draw(0, 480);
+    //        nameToHistoryPlot["foot-left-accel"]->draw(-160, 480);
+    //        nameToHistoryPlot["leftFootToGround"]->draw(0, 600);
+    //        ofPopMatrix();
+    //
+    //        ofPushMatrix();
+    //        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, 0, 0));
+    //        nameToHistoryPlot["Foot To Foot"]->draw(0, 0);
+    //        ofPopMatrix();
+    //        ofPushMatrix();
+    //        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, ofGetHeight()-120.0, 0));
+    //        nameToHistoryPlot["Center"]->draw(0, 0);
+    //        ofPopMatrix();
+    //
+    //        ofPushMatrix();
+    //        ofTranslate(ofVec3f(0, 0, 0));
+    //        nameToHistoryPlot["arm-right"]->draw(0,0);
+    //        nameToHistoryPlot["arm-right-accel"]->draw(160, 0);
+    //        nameToHistoryPlot["angleRightElbow"]->draw(0, 120);
+    //        nameToHistoryPlot["hand-to-hip-right"]->draw(0,240);
+    //        nameToHistoryPlot["Knee Angle Right"]->draw(0, 360);
+    //        nameToHistoryPlot["foot-right"]->draw(0, 480);
+    //        nameToHistoryPlot["foot-right-accel"]->draw(160, 480);
+    //        nameToHistoryPlot["rightFootToGround"]->draw(0, 600);
+    //        ofPopMatrix();
+    //    }
 }

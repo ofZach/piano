@@ -7,7 +7,7 @@
 
 // todo:
 
-//// (a) is leg on the ground
+// (a) is leg on the ground
 //// (b) is this joint moving "fast" -- maybe a threshold ?
 // -(c) reset on no skeleton...
 // -(d) history of each joint for last n frames
@@ -41,6 +41,8 @@ public:
     void calculateWingspan();
     void calculateStance();
     void calculateShoulderWidth();
+    void setSmoothing(float _smoothing);
+    void setSmoothingScale(float _scale);
     void draw();
     void drawDebug();
     
@@ -51,8 +53,8 @@ public:
     float legLeftExtendedPct;
     float legRightExtendedPct;
     
-    float leftFootSpan, rightFootSpan, maxFeet, minFeet;
-    float leftHandSpan, rightHandSpan, maxHands, minHands;
+    float leftFootSpan, rightFootSpan;
+    float leftHandSpan, rightHandSpan;
 
     
     float angleLeftKnee, angleRightKnee;
@@ -62,8 +64,6 @@ public:
     float rightHandVHip;
     
     float distFootLeft, distFootRight;
-    float maxDistLeft, maxDistRight;
-    float minDistLeft, minDistRight;
     deque<kinectSkeleton> skeletons;
     deque<vector<ofPoint> > ptsHistory;
     deque<vector<ofPoint> > velHistory;
@@ -84,6 +84,9 @@ public:
     float dt;
     float diffCenter, minCenter, maxCenter;
 
+    float scale;
+    float smoothing;
+    
     bool set;
     bool setV;
 
