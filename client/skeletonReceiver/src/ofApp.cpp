@@ -41,7 +41,10 @@ void ofApp::setup(){
     KS.setup();
     KSA.setup();
  
- 
+    fooFbo.allocate(1024, 728, GL_RGBA);
+    fooFbo.begin();
+    ofClear(0, 0, 0, 0);
+    fooFbo.end();
 }
 
 //--------------------------------------------------------------
@@ -114,14 +117,17 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(ofColor::darkGray);
-    
+
     
     ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
-    
+ 
+    //fooFbo.begin();
+
+    //ofClear(0, 0, 0);
+    //cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     cam.begin();
-    
     ofSetColor(255,255,255,127);
     
     ofPushMatrix();
@@ -133,13 +139,18 @@ void ofApp::draw(){
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
 
-    //KS.draw();
+    KS.draw();
     KSA.draw();
     
     cam.end();
+    //fooFbo.end();
+    
+    
+    //fooFbo.draw(gui.getWidth(), 0);
+    
     
     gui.draw();
-
+ 
     KSA.drawDebug();
     UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }

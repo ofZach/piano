@@ -329,8 +329,7 @@ void kinectSkeletonAnalyzer::calculateSholderWidth(){
 
 
 void kinectSkeletonAnalyzer::draw(){
-    if(skeletons.size() > 1){
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
+    if(skeletons.size() > 0){
         for(int i = 0; i < velocity.size(); i++){
             //if(mag[i] > 100){
             ofSetColor(ofColor::red);
@@ -339,7 +338,7 @@ void kinectSkeletonAnalyzer::draw(){
             ofDrawSphere(0, 0, 10);
             ofPopMatrix();
             
-            ofSetColor(ofColor::blue, (acceleration[i].length()));
+            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
             ofPushMatrix();
             ofTranslate(acceleration[i]+skeletons.back().pts[i]);
             ofDrawSphere(0, 0, 10);
@@ -353,7 +352,7 @@ void kinectSkeletonAnalyzer::draw(){
                 ofPoint p;
                 for(int j = 0; j < skeletons.back().bones[skeletons.back().bonesList[i]].size(); j++){
                     if(limbVelocity[skeletons.back().bonesList[i]].length() > 10){
-                        ofSetColor(ofColor::blue);
+                        ofSetColor(ofColor::blue, ofClamp(limbVelocity[skeletons.back().bonesList[i]].length(), 0.0, 255.0));
                         ofPushMatrix();
                         ofTranslate(limbVelocity[skeletons.back().bonesList[i]]+skeletons.back().pts[skeletons.back().bones[skeletons.back().bonesList[i]][j]]);
                         ofDrawSphere(0, 0, 10);
@@ -362,11 +361,11 @@ void kinectSkeletonAnalyzer::draw(){
                 }
             }
         }
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         
         ofPushMatrix();
+        ofSetColor(255, 255, 255);
         ofTranslate(skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
-        ofRotate(angle, orientation.x, orientation.y, orientation.z);
+        ofRotate(0, orientation.x, orientation.y, orientation.z);
         ofDrawAxis(20);
         ofPopMatrix();
     }

@@ -45,7 +45,7 @@ public:
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
     
-    
+    ofFbo fooFbo;
     
     ofxPanel gui;
     
