@@ -73,12 +73,4 @@ public:
     vector < ofxHistoryPlot * > historyPlots;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
     
-//    ofxHistoryPlot * armleft;
-//    ofxHistoryPlot * armright;
-//    ofxHistoryPlot * footLeft;
-//    ofxHistoryPlot * footRight;
-//    ofxHistoryPlot * leftHandHip;
-//    ofxHistoryPlot * rightHandHip;
-//    ofxHistoryPlot * center;
-//    ofxHistoryPlot * footToFoot;
 };
