@@ -20,27 +20,61 @@ void ofApp::setup(){
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
-    gui.setup("panel");
-    
-    gui.add(scale.set("scale", ofPoint(1,1,1), ofPoint(0.01,0.01,0.01), ofPoint(140,140,140)));
-    gui.add(offset.set("offset", ofPoint(0,0,0), ofPoint(-2000,-2000,-2000), ofPoint(2000,2000,2000)));
-    gui.add(rotationX.set("rotationX", 0,-180,180));
-    gui.add(rotationY.set("rotationY", 0,-180,180));
-    gui.add(rotationZ.set("rotationZ", 0,-180,180));
-    gui.add(bUseUdpPlayer.set("use udp player", false));
-    gui.add(bLoadNewUDP.set("load udp", false));
-    gui.add(udpDuration.set("Playback Pos", 0, 0, 1));
-    
-    gui.add(cameraHeight.set("camera height", 800,0, 2000));
-    gui.add(cameraRadius.set("camera radius", 800,0, 2000));
-    gui.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
-    
-    
-    
-    gui.loadFromFile("settings.xml");
+    //gui.setup("panel");
     
     KS.setup();
     KSA.setup();
+    
+   
+
+    
+    
+    skeletonTransform.setName("skeleton transform");
+    skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
+    skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
+    skeletonTransform.add(scaleZ.set("scaleZ", 1.0,0.01, 140));
+    skeletonTransform.add(offsetX.set("offsetX", 0, -2000,2000));
+    skeletonTransform.add(offsetY.set("offsetY", 0, -2000,2000));
+    skeletonTransform.add(offsetZ.set("offsetZ", 0, -2000,2000));
+    skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
+    skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
+    skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
+   
+    dataPlayer.setName("dataPlayer");
+    dataPlayer.add(bUseUdpPlayer.set("use udp player", false));
+    dataPlayer.add(bLoadNewUDP.set("load udp", false));
+    dataPlayer.add(udpDuration.set("Playback Pos", 0, 0, 1));
+    
+    cameraControl.setName("camera control");
+    cameraControl.add(cameraHeight.set("camera height", 800,0, 2000));
+    cameraControl.add(cameraRadius.set("camera radius", 800,0, 2000));
+    cameraControl.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
+    
+    gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
+    gui.addPanel("main control", 4, false);
+    gui.addPanel("analysis", 4, false);
+    gui.setWhichPanel(0);
+    gui.setWhichColumn(0);
+    
+    gui.addGroup(skeletonTransform);
+    gui.addGroup(dataPlayer);
+    gui.addGroup(cameraControl);
+    
+    gui.setWhichPanel(1);
+    gui.setWhichColumn(0);
+    gui.addGroup(KSA.anlaysisParams);
+    
+    status = "first frame";
+    gui.setStatusMessage(status);
+    
+    gui.loadSettings("settings.xml");
+    gui.setupEvents();
+    gui.enableEvents();
+    
+    
+    //ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
+
+    
  
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
@@ -51,6 +85,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    gui.update();
+
 
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
@@ -71,16 +107,15 @@ void ofApp::update(){
 
     
     mat.makeIdentityMatrix();
-    ofPoint offsetPt = offset;
+    ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
     mat.glRotate(rotationX, 1,0,0);
     mat.glRotate(rotationY, 0,1,0);
     mat.glRotate(rotationZ, 0,0,1);
-    ofPoint scaleTemp = scale;
+    ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
-    
-    
+
     kinect.update();
     
     if (skeletons->size() >= 1){
@@ -89,30 +124,7 @@ void ofApp::update(){
     }
     
     
-    // there is no kinect is frame new...
-    
-    if (skeletons->size() >= 1){
-        
-        ofPoint rightHand = skeletons->at(0).getHandRight().getPoint() * mat;
-        ofPoint leftHand = skeletons->at(0).getHandLeft().getPoint() * mat;
-        
-        leftHandHistory.addVertex(leftHand);
-        rightHandHistory.addVertex(rightHand);
-        
-        if (leftHandHistory.size() > 100){
-            leftHandHistory.getVertices().erase(leftHandHistory.getVertices().begin());
-        }
-        
-        if (rightHandHistory.size() > 100){
-            rightHandHistory.getVertices().erase(rightHandHistory.getVertices().begin());
-        }
-        
-    } else {
-        
-        leftHandHistory.clear();
-        rightHandHistory.clear();
-        
-    }
+
 }
 
 //--------------------------------------------------------------
@@ -162,7 +174,7 @@ void ofApp::keyPressed(int key){
     
     
     if (key == 's'){
-        gui.saveToFile("settings.xml");
+        gui.saveSettings("settings.xml");
     }
 }
 

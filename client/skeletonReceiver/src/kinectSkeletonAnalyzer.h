@@ -41,8 +41,8 @@ public:
     void calculateWingspan();
     void calculateStance();
     void calculateShoulderWidth();
-    void setSmoothing(float _smoothing);
-    void setSmoothingScale(float _scale);
+//    void setSmoothing(float _smoothing);
+//    void setSmoothingScale(float _scale);
     void draw();
     void drawDebug();
     
@@ -84,8 +84,8 @@ public:
     float dt;
     float diffCenter, minCenter, maxCenter;
 
-    float scale;
-    float smoothing;
+//    float scale;
+//    float smoothing;
     
     bool set;
     bool setV;
@@ -104,8 +104,8 @@ public:
     
     ofFbo historyPlotsFBO;
     
-    
-    
-    
-    
+    ofParameterGroup anlaysisParams;
+    ofParameter <float> smoothing;
+    ofParameter <float> scale;
+
 };

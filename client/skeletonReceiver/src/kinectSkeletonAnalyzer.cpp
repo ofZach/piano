@@ -91,21 +91,15 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["knee-angle-lt"]->setRange(0, 180);
     nameToHistoryPlot["knee-angle-rt"]->setRange(0, 180);
     nFrames = 30;
-    setSmoothing(0.9);
-    setSmoothingScale(35.0);
+
+    anlaysisParams.setName("analysis");
+    anlaysisParams.add(smoothing.set("smoothing", 0.9, 0, 1));
+    anlaysisParams.add(scale.set("scale", 35, 2.0, 60.0));
+
     
     
     historyPlotsFBO.allocate(400,2000);
 }
-
-void kinectSkeletonAnalyzer::setSmoothing(float _smoothing){
-    smoothing = _smoothing;
-}
-
-void kinectSkeletonAnalyzer::setSmoothingScale(float _scale){
-    scale = _scale;
-}
-
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     dt = dt - ofGetElapsedTimef();
     if(skeletons.size() > 0){
@@ -187,8 +181,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
                 float lastVall = nameToHistoryPlot["arm-diff-lt"]->getValues().back();
                 float lastValr = nameToHistoryPlot["arm-diff-rt"]->getValues().back();
                 
-                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
-                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
+                diffl = (smoothing) * diffl + (1.0-smoothing)  *lastVall;
+                diffr = (smoothing) * diffr + (1.0-smoothing)  *lastValr;
                 
             }
             
@@ -211,9 +205,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
                 float lastVall = nameToHistoryPlot["leg-diff-lt"]->getValues().back();
                 float lastValr = nameToHistoryPlot["leg-diff-rt"]->getValues().back();
                 
-                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
-                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
-                
+                diffl = (smoothing) * diffl + (1.0-smoothing)  *lastVall;
+                diffr = (smoothing) * diffr + (1.0-smoothing)  *lastValr;
             }
             
             
@@ -238,9 +231,8 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
                 float lastVall = nameToHistoryPlot["elbow-diff-lt"]->getValues().back();
                 float lastValr = nameToHistoryPlot["elbow-diff-rt"]->getValues().back();
                 
-                diffl = (1.0-smoothing) * diffl + smoothing *lastVall;
-                diffr = (1.0-smoothing) * diffr + smoothing *lastValr;
-                
+                diffl = (smoothing) * diffl + (1.0-smoothing) *lastVall;
+                diffr = (smoothing) * diffr + (1.0-smoothing) *lastValr;
             }
             
             
@@ -284,8 +276,8 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
         
     }
     
-    armLeftExtendedPct = handDist[0] / totalDist[0];
-    armRightExtendedPct = handDist[1] / totalDist[1];
+    armLeftExtendedPct = handDist[0] / totalDist[0]*smoothing+armLeftExtendedPct*(1.0-smoothing);
+    armRightExtendedPct = handDist[1] / totalDist[1]*smoothing+armRightExtendedPct*(1.0-smoothing);
     
     ofPoint spineShoulder =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
     ofPoint spineBase =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineBase" ]];
@@ -298,8 +290,10 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
         totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+i)%2]).length()+(hands[(i+1)%2]-hands[(i+i)%2]).length();
     }
     
-    leftHandSpan = handtohandDist[0]/totalDistHands[0];
-    rightHandSpan = handtohandDist[1]/totalDistHands[1];
+    leftHandSpan = handtohandDist[0]/totalDistHands[0]*smoothing+leftHandSpan*(1.0-smoothing);
+
+    rightHandSpan = handtohandDist[1]/totalDistHands[1]*smoothing+leftHandSpan*(1.0-smoothing);
+
     
     
     float handSpineDist[2];
@@ -317,10 +311,10 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     }
     
     
-    leftHandVHip = handSpineDist[0]/totalHipDist[0];
-    rightHandVHip = handSpineDist[1]/totalHipDist[1];
-    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0]);
-    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1]);
+    leftHandVHip = handSpineDist[0]/totalHipDist[0]*smoothing+leftHandVHip*(1.0-smoothing);
+    rightHandVHip = handSpineDist[1]/totalHipDist[1]*smoothing+rightHandVHip*(1.0-smoothing);
+    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0])*smoothing+angleLeftElbow*(1.0-smoothing);
+    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1])*smoothing+angleRightElbow*(1.0-smoothing);
 }
 
 void kinectSkeletonAnalyzer::calculateStance(){
@@ -348,11 +342,13 @@ void kinectSkeletonAnalyzer::calculateStance(){
         (knee[i] - feet[i]).length();
     }
     
-    legLeftExtendedPct = feetDist[0] / totalFeetDist[0];
-    legRightExtendedPct = feetDist[1] / totalFeetDist[1];
+    legLeftExtendedPct = feetDist[0] / totalFeetDist[0]*smoothing+legLeftExtendedPct*(1.0-smoothing);
+
+    legRightExtendedPct = feetDist[1] / totalFeetDist[1]*smoothing+legRightExtendedPct*(1.0-smoothing);
+
     
-    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0]);
-    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1]);
+    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0])*smoothing+angleLeftKnee*(1.0-smoothing);
+    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1])*smoothing+angleRightKnee*(1.0-smoothing);
     
     float footToFootDist[2];
     
@@ -365,8 +361,8 @@ void kinectSkeletonAnalyzer::calculateStance(){
     }
     
     
-    leftFootSpan = footToFootDist[0]/totalFeetDist[0];
-    rightFootSpan = footToFootDist[1]/totalFeetDist[1];
+    leftFootSpan = footToFootDist[0]/totalFeetDist[0]*smoothing+leftFootSpan*(1.0-smoothing);
+    rightFootSpan = footToFootDist[1]/totalFeetDist[1]*smoothing+rightFootSpan*(1.0-smoothing);
     
     for (int i = 0; i < 2; i++){
         
@@ -376,8 +372,8 @@ void kinectSkeletonAnalyzer::calculateStance(){
         (knee[i] - feet[i]).length();
     }
     
-    distFootLeft = footToFootDist[0]/totalFeetDist[0];
-    distFootRight = footToFootDist[1]/totalFeetDist[1];
+    distFootLeft = footToFootDist[0]/totalFeetDist[0]*smoothing+armRightExtendedPct*(1.0-smoothing);
+    distFootRight = footToFootDist[1]/totalFeetDist[1]*smoothing+armRightExtendedPct*(1.0-smoothing);
 }
 
 void kinectSkeletonAnalyzer::calculateShoulderWidth(){

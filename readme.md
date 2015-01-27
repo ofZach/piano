@@ -11,6 +11,12 @@ requires ofxHistoryPlot, ofxKinectV2-OSC:
 https://github.com/armadillu/ofxHistoryPlot
 https://github.com/microcosm/ofxKinectV2-OSC
 
+also ofxControlPanel -- with the ofParamter branch
+
+- git clone https://github.com/ofTheo/ofxControlPanel
+- cd ofxControlPanel
+- git checkout -b ofParamter remotes/origin/ofParameter
+
 recordings are not in the repo, some are here: 
 https://dl.dropboxusercontent.com/u/92337283/forMicrosoft/recordings.zip
  

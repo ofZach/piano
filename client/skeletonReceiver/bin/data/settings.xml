@@ -1,20 +1,66 @@
 <panel>
-	<box_start>0, 0, 0</box_start>
-	<box_end>0, 0, 46.9388</box_end>
-	<nDivisions>12</nDivisions>
-<panel/>
-	<box_dimensions>65.3061, 200, 116.327</box_dimensions>
-	<box_pos_start>20.4081, -173.469, 673.469</box_pos_start>
-	<box_pos_end>0, -178.571, -765.306</box_pos_end>
-<scale>1, 1, 42.1498</scale>
-	<offset>-479.592, 428.572, 571.428</offset>
-	<rotationX>180</rotationX>
-	<rotationY>0</rotationY>
-	<rotationZ>0</rotationZ>
-<use_udp_player>1</use_udp_player>
-	<load_udp>0</load_udp>
-	<camera_height>0</camera_height>
-	<camera_radius>760</camera_radius>
-	<camera_angle>-2.01062</camera_angle>
-<Playback_Pos>0.573189</Playback_Pos>
+    <<<<<<< HEAD
+	<box_start>0, 0, 0
 </panel>
+<skeleton_transform>
+    <scaleX>
+        <val_0>1</val_0>
+    </scaleX>
+    <scaleY>
+        <val_0>1</val_0>
+    </scaleY>
+    <scaleZ>
+        <val_0>1</val_0>
+    </scaleZ>
+    <offsetX>
+        <val_0>0</val_0>
+    </offsetX>
+    <offsetY>
+        <val_0>400</val_0>
+    </offsetY>
+    <offsetZ>
+        <val_0>0</val_0>
+    </offsetZ>
+    <rotationX>
+        <val_0>180</val_0>
+    </rotationX>
+    <rotationY>
+        <val_0>-180</val_0>
+    </rotationY>
+    <rotationZ>
+        <val_0>-1.38461</val_0>
+    </rotationZ>
+</skeleton_transform>
+<dataPlayer>
+    <use_udp_player>
+        <val_0>1</val_0>
+    </use_udp_player>
+    <load_udp>
+        <val_0>0</val_0>
+    </load_udp>
+    <Playback_Pos>
+        <val_0>0.978893</val_0>
+    </Playback_Pos>
+</dataPlayer>
+<camera_control>
+    <camera_height>
+        <val_0>0</val_0>
+    </camera_height>
+    <camera_radius>
+        <val_0>1046.15</val_0>
+    </camera_radius>
+    <camera_angle>
+        <val_0>1.73996</val_0>
+    </camera_angle>
+</camera_control>
+<analysis>
+    <smoothing>
+        <val_0>0.0423077</val_0>
+    </smoothing>
+    <scale>
+        <val_0>35.0154</val_0>
+    </scale>
+    <smoothing_diff>
+        <val_0>0.469231</val_0>
+    </smoothing_diff>
+</analysis>
