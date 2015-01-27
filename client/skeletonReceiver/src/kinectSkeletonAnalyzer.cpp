@@ -102,14 +102,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     dt = dt - ofGetElapsedTimef();
     if(skeletons.size() > 0){
         
-        diffCenter = (skeletons.back().pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length();
-        
-        maxCenter = MAX(maxCenter, diffCenter);
-        minCenter = MIN(minCenter, diffCenter);
-        
-        diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
-        avgDiffCenter +=diffCenter;
-        avgDiffCenter = avgDiffCenter/2.0;
+        //
+        // calculates magnitute and direction of the velocity & acceleration vectors
+        //
         
         mag.resize(KS.pts.size());
         dir.resize(KS.pts.size());
@@ -130,17 +125,27 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             limbVelocity[KS.bonesList[i]] = limbVelocity[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
         }
         
-        
-        
-        
+        //
+        // update orientations
+        //
         orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
         angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
+        //
+        // update arm calculations
+        //
         calculateWingspan();
+        //
+        // update arm leg
+        //
         calculateStance();
         
         
+        
+        //
+        // update History Plots
+        //
         nameToHistoryPlot["arm-ext-lt"]->update(armLeftExtendedPct);;
         nameToHistoryPlot["leg-ext-lt"]->update(legLeftExtendedPct);
         nameToHistoryPlot["dist-hand-to-hip-lt"]->update(leftHandVHip);
@@ -160,6 +165,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         
         
+        //
+        // calculate diff for arms
+        //
         ofxHistoryPlot * rf = nameToHistoryPlot["leg-ext-lt"];
         ofxHistoryPlot * lf = nameToHistoryPlot["leg-ext-rt"];
         
@@ -189,7 +197,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
-        
+        //
+        // calculate diff for legs
+        //
         if (rf->getValues().size() > 1){
             
             float diffr = rf->getValues()[rf->getValues().size()-2] - rf->getValues()[rf->getValues().size()-1];
@@ -212,6 +222,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
+        //
+        // calculate diff for elbow angles
+        //
         ofxHistoryPlot * eAL = nameToHistoryPlot["elbow-angle-lt"];
         ofxHistoryPlot * eAR = nameToHistoryPlot["elbow-angle-rt"];
         

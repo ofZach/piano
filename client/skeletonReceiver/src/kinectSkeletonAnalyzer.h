@@ -37,7 +37,7 @@ public:
     
     void setup();
     void analyze( kinectSkeleton & KS);
-    void calculateVelocities();
+
     void calculateWingspan();
     void calculateStance();
     void calculateShoulderWidth();
