@@ -193,10 +193,10 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         }
 
         
-        if (ra->getValues().size() > 1){
+        if (rf->getValues().size() > 1){
             
-            float diffr = ra->getValues()[ra->getValues().size()-2] - ra->getValues()[ra->getValues().size()-1];
-            float diffl = la->getValues()[la->getValues().size()-2] - la->getValues()[la->getValues().size()-1];
+            float diffr = rf->getValues()[rf->getValues().size()-2] - rf->getValues()[rf->getValues().size()-1];
+            float diffl = lf->getValues()[lf->getValues().size()-2] - lf->getValues()[lf->getValues().size()-1];
             
             
             // todo: parametize accel scale
