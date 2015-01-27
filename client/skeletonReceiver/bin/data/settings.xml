@@ -7,13 +7,13 @@
 	<box_pos_start>20.4081, -173.469, 673.469</box_pos_start>
 	<box_pos_end>0, -178.571, -765.306</box_pos_end>
 <scale>1, 1, 42.1498</scale>
-	<offset>-479.592, 387.755, 571.428</offset>
+	<offset>-479.592, 428.572, 571.428</offset>
 	<rotationX>180</rotationX>
 	<rotationY>0</rotationY>
 	<rotationZ>0</rotationZ>
 <use_udp_player>1</use_udp_player>
 	<load_udp>0</load_udp>
-	<camera_height>190</camera_height>
-	<camera_radius>2000</camera_radius>
-	<camera_angle>-1.00531</camera_angle>
+	<camera_height>0</camera_height>
+	<camera_radius>760</camera_radius>
+	<camera_angle>-2.01062</camera_angle>
 </panel>

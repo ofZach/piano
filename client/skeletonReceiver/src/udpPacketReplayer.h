@@ -19,4 +19,5 @@ public:
     string folderName;
     int loadTimeMillis;
     int lastWho = -1;
+    float pct;
 };
