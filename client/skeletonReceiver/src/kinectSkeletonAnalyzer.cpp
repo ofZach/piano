@@ -421,7 +421,7 @@ void kinectSkeletonAnalyzer::draw(){
 void kinectSkeletonAnalyzer::drawDebug(){
     if(skeletons.size() > 0){
         ofPushMatrix();
-        ofTranslate(ofVec3f(0, 0, 0));
+        ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
         nameToHistoryPlot["arm-left"]->draw(0, 0);
         nameToHistoryPlot["arm-left-accel"]->draw(160, 0);
         nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
@@ -442,7 +442,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         ofPopMatrix();
         
         ofPushMatrix();
-        ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
+        ofTranslate(ofVec3f(0, 0, 0));
         nameToHistoryPlot["arm-right"]->draw(0,0);
         nameToHistoryPlot["arm-right-accel"]->draw(-160, 0);
         nameToHistoryPlot["angleRightElbow"]->draw(0, 120);
