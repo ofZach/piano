@@ -43,8 +43,6 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["dist-hand-to-hip-rt"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-foot-to-foot", 100, false));
     nameToHistoryPlot["dist-foot-to-foot"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "movement-center", 100, false));
-    nameToHistoryPlot["movement-center"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-lt", 100, false));
     nameToHistoryPlot["knee-angle-lt"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-rt", 100, false));
@@ -151,7 +149,6 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["dist-foot-head-lt"]->update(distFootLeft);
         
         nameToHistoryPlot["dist-foot-to-foot"]->update((leftFootSpan+rightFootSpan)/2.0);
-        nameToHistoryPlot["movement-center"]->update(diffCenter);
         
         nameToHistoryPlot["arm-ext-rt"]->update(armRightExtendedPct);
         nameToHistoryPlot["leg-ext-rt"]->update(legRightExtendedPct);
@@ -469,8 +466,6 @@ void kinectSkeletonAnalyzer::drawDebug(){
         
         
         nameToHistoryPlot["dist-foot-to-foot"]->draw(0, height * count++, 190, height-5);
-        nameToHistoryPlot["movement-center"]->draw(0, height * count++, 190, height-5);
-        
     }
     
     
