@@ -133,14 +133,13 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
         //
-        // update arm calculations
+        // update arm values
         //
         calculateWingspan();
         //
-        // update arm leg
+        // update leg values
         //
         calculateStance();
-        
         
         
         //
@@ -162,7 +161,6 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["dist-foot-head-rt"]->update(distFootRight);
         nameToHistoryPlot["dist-hand-to-hip-rt"]->update(rightHandVHip);
         nameToHistoryPlot["dist-hand-to-hand"]->update((leftHandSpan+rightHandSpan)/2.0);
-        
         
         
         //
@@ -431,6 +429,10 @@ void kinectSkeletonAnalyzer::draw(){
         ofPopMatrix();
     }
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    
+    //
+    // push back to history
+    //
     velHistory.push_back(velocity);
     accHistory.push_back(acceleration);
     if(ptsHistory.size() > nFrames){
