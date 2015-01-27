@@ -3,10 +3,10 @@
 #include "ofMain.h"
 #include "ofMain.h"
 #include "ofxKinectV2OSC.h"
-#include "ofxGui.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
 #include "udpPacketReplayer.h"
+#include "ofxControlPanel.h"
 
 class ofApp : public ofBaseApp{
     
@@ -31,25 +31,30 @@ public:
     
     BodyRenderer renderer;
     
-    ofParameter <ofVec3f> scale;
+    ofParameterGroup skeletonTransform;
+    ofParameter <float> scaleX;
+    ofParameter <float> scaleY;
+    ofParameter <float> scaleZ;
     ofParameter <float> rotationX;
     ofParameter <float> rotationY;
     ofParameter <float> rotationZ;
-    ofParameter <ofVec3f> offset;
+    ofParameter <float> offsetX;
+    ofParameter <float> offsetY;
+    ofParameter <float> offsetZ;
     
+    ofParameterGroup dataPlayer;
     ofParameter <bool> bUseUdpPlayer;
     ofParameter <bool> bLoadNewUDP;
+    ofParameter<float> udpDuration;
     
-    
+    ofParameterGroup cameraControl;
     ofParameter <float> cameraHeight;
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
     
-    ofParameter<float> udpDuration;
-    
     ofFbo fooFbo;
     
-    ofxPanel gui;
+    ofxControlPanel gui;
     
     ofCamera cam;
     
@@ -57,6 +62,7 @@ public:
     ofPolyline rightHandHistory;
     ofMatrix4x4 mat;
     
+    ofParameter <string> status;
     
     kinectSkeleton KS;
     

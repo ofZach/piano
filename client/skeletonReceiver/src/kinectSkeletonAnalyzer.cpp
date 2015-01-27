@@ -86,6 +86,10 @@ void kinectSkeletonAnalyzer::setup(){
     }
     nFrames = 30;
     
+    anlaysisParams.setName("analysis");
+    anlaysisParams.add(smoothing.set("smoothing", 0.9, 0, 1));
+        
+    
     
     
     historyPlotsFBO.allocate(400,2000);

@@ -151,12 +151,12 @@ public:
             
             if (std::find(skipList.begin(), skipList.end(), indexToName[i] )!=skipList.end()){
                 continue;
-                
             }
             if (trackingStates[i] == TRACKED) ofSetColor(255,255,255);
             else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127);
             else ofSetColor(255,0,0);
             ofPushMatrix();
+            
             ofTranslate(pts[i]);
             mesh.draw();
             ofPopMatrix();

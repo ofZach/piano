@@ -101,8 +101,7 @@ public:
     
     ofFbo historyPlotsFBO;
     
-    
-    
-    
-    
+    ofParameterGroup anlaysisParams;
+    ofParameter <float> smoothing;
+
 };
