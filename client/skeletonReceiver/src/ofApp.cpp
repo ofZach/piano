@@ -23,7 +23,7 @@ void ofApp::setup(){
     gui.setup("panel");
     
     gui.add(scale.set("scale", ofPoint(1,1,1), ofPoint(0.01,0.01,0.01), ofPoint(140,140,140)));
-    gui.add(offset.set("offset", ofPoint(0,0,0), ofPoint(-1000,-1000,-1000), ofPoint(1000,1000,1000)));
+    gui.add(offset.set("offset", ofPoint(0,0,0), ofPoint(-2000,-2000,-2000), ofPoint(2000,2000,2000)));
     gui.add(rotationX.set("rotationX", 0,-180,180));
     gui.add(rotationY.set("rotationY", 0,-180,180));
     gui.add(rotationZ.set("rotationZ", 0,-180,180));
@@ -132,7 +132,7 @@ void ofApp::draw(){
     
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
-    
+
     KS.draw();
     KSA.draw();
     

@@ -17,7 +17,9 @@ public:
     vector < string > skipList;
     
 
-    
+    map<string , vector<int> > bones;
+    vector<string> bonesList;
+
     
     map < string, int > nameToIndex;
     map < int, string> indexToName;
@@ -99,7 +101,46 @@ public:
         trackingStates[nameToIndex["HandTipRight"]] = sk.getHandTipRight().getTrackingState();
         
         
+        bonesList.clear();
         
+        bonesList.push_back("LeftLeg");
+        bonesList.push_back("RightLeg");
+        bonesList.push_back("RightArm");
+        bonesList.push_back("LeftArm");
+        bonesList.push_back("Torso");
+
+        bones["LeftLeg"].clear();
+        bones["LeftLeg"].push_back(nameToIndex["HipLeft"]);
+        bones["LeftLeg"].push_back(nameToIndex["KneeLeft"]);
+        bones["LeftLeg"].push_back(nameToIndex["AnkleLeft"]);
+        
+        bones["RightArm"].clear();
+        bones["RightArm"].push_back(nameToIndex["ShoulderRight"]);
+        bones["RightArm"].push_back(nameToIndex["ElbowRight"]);
+        bones["RightArm"].push_back(nameToIndex["HandRight"]);
+        
+        bones["RightLeg"].clear();
+        bones["RightLeg"].push_back(nameToIndex["HipRight"]);
+        bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
+        bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
+        
+        
+        bones["LeftArm"].clear();
+        bones["LeftArm"].push_back(nameToIndex["ShoulderLeft"]);
+        bones["LeftArm"].push_back(nameToIndex["ElbowLeft"]);
+        bones["LeftArm"].push_back(nameToIndex["HandLeft"]);
+        
+        
+        bones["Torso"].clear();
+        bones["Torso"].push_back(nameToIndex["Head"]);
+        bones["Torso"].push_back(nameToIndex["Neck"]);
+        bones["Torso"].push_back(nameToIndex["SpineShoulder"]);
+        bones["Torso"].push_back(nameToIndex["ShoulderRight"]);
+        bones["Torso"].push_back(nameToIndex["ShoulderLeft"]);
+        bones["Torso"].push_back(nameToIndex["SpineMid"]);
+        bones["Torso"].push_back(nameToIndex["SpineBase"]);
+        bones["Torso"].push_back(nameToIndex["HipRight"]);
+        bones["Torso"].push_back(nameToIndex["HipLeft"]);
     }
     
     void draw(){
@@ -146,27 +187,29 @@ public:
     void drawRightArm(){
         drawBone(nameToIndex["ShoulderRight"], nameToIndex["ElbowRight"]);
         drawBone(nameToIndex["ElbowRight"], nameToIndex["HandRight"]);
+        
+
        
     }
     
     void drawLeftArm(){
         drawBone(nameToIndex["ShoulderLeft"], nameToIndex["ElbowLeft"]);
         drawBone(nameToIndex["ElbowLeft"], nameToIndex["HandLeft"]);
-  //      drawBone(nameToIndex["WristLeft"], nameToIndex["HandLeft"]);
-   //     drawBone(nameToIndex["HandLeft"], nameToIndex["HandTipLeft"]);
-   //     drawBone(nameToIndex["WristLeft"], nameToIndex["ThumbLeft"]);
+ 
     }
     
     void drawRightLeg(){
         drawBone(nameToIndex["HipRight"], nameToIndex["KneeRight"]);
         drawBone(nameToIndex["KneeRight"], nameToIndex["AnkleRight"]);
-        //drawBone(nameToIndex["AnkleRight"], nameToIndex["FootRight"]);
+       
+
     }
     
     void drawLeftLeg(){
         drawBone(nameToIndex["HipLeft"], nameToIndex["KneeLeft"]);
         drawBone(nameToIndex["KneeLeft"], nameToIndex["AnkleLeft"]);
-        //drawBone(nameToIndex["AnkleLeft"], nameToIndex["FootLeft"]);
+        
+
     }
     
     void drawBone(int indexA, int indexB){
