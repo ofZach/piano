@@ -323,8 +323,8 @@ void kinectSkeletonAnalyzer::calculateStance(){
     
 }
 
-void kinectSkeletonAnalyzer::calculateSholderWidth(){
-    
+void kinectSkeletonAnalyzer::calculateShoulderWidth(){
+    shouldersWidth = skeletons.back().pts[skeletons.back().nameToIndex["ShoulderLeft"]-skeletons.back().nameToIndex["ShoulderLeft"]].length();
 }
 
 

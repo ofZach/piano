@@ -40,10 +40,12 @@ public:
     void calculateVelocities();
     void calculateWingspan();
     void calculateStance();
-    void calculateSholderWidth();
+    void calculateShoulderWidth();
     void draw();
     void drawDebug();
     
+    
+    float shouldersWidth;
     float armLeftExtendedPct;
     float armRightExtendedPct;
     float legLeftExtendedPct;

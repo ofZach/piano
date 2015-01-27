@@ -123,10 +123,9 @@ void ofApp::draw(){
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
  
-    //fooFbo.begin();
-
-    //ofClear(0, 0, 0);
-    //cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
+    fooFbo.begin();
+    ofClear(0, 0, 0);
+    cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     cam.begin();
     ofSetColor(255,255,255,127);
     
@@ -143,10 +142,10 @@ void ofApp::draw(){
     KSA.draw();
     
     cam.end();
-    //fooFbo.end();
+    fooFbo.end();
     
     
-    //fooFbo.draw(gui.getWidth(), 0);
+    fooFbo.draw(0, 0);
     
     
     gui.draw();
