@@ -48,6 +48,12 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["foot-left"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-right", 100, false));
     nameToHistoryPlot["foot-right"] = historyPlots.back();
+    
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-left", 100, false));
+    nameToHistoryPlot["foot-left-accel"] = historyPlots.back();
+    historyPlots.push_back(new ofxHistoryPlot( NULL, "foot-right", 100, false));
+    nameToHistoryPlot["foot-right-accel"] = historyPlots.back();
+    
     historyPlots.push_back(new ofxHistoryPlot( NULL, "hand-to-hip-left", 100, false));
     nameToHistoryPlot["hand-to-hip-left"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "hand-to-hip-right", 100, false));
@@ -122,9 +128,39 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             limbVelocity[KS.bonesList[i]] = limbVelocity[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
         }
         
+
+        
+        
+        orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
+        
+        angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
+        
+        calculateWingspan();
+        calculateStance();
+        
         
         nameToHistoryPlot["arm-left"]->update(armLeftExtendedPct);;
+        nameToHistoryPlot["foot-left"]->update(legLeftExtendedPct);
+        nameToHistoryPlot["hand-to-hip-left"]->update(leftHandVHip);
+        nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
+        nameToHistoryPlot["Knee Angle Left"]->update(angleLeftKnee);
+        nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
+        
+        nameToHistoryPlot["Foot To Foot"]->update((leftHandSpan+rightFootSpan)/2.0);
+        nameToHistoryPlot["Center"]->update(diffCenter);
+        
         nameToHistoryPlot["arm-right"]->update(armRightExtendedPct);
+        nameToHistoryPlot["foot-right"]->update(legRightExtendedPct);
+        nameToHistoryPlot["Knee Angle Right"]->update(angleRightKnee);
+        nameToHistoryPlot["angleRightElbow"]->update(angleRightElbow);
+        nameToHistoryPlot["rightFootToGround"]->update(distFootRight);
+        nameToHistoryPlot["hand-to-hip-right"]->update(rightHandVHip);
+        
+        
+        
+        
+        ofxHistoryPlot * rf = nameToHistoryPlot["foot-left"];
+        ofxHistoryPlot * lf = nameToHistoryPlot["foot-right"];
         
         ofxHistoryPlot * ra = nameToHistoryPlot["arm-right"];
         ofxHistoryPlot * la = nameToHistoryPlot["arm-left"];
@@ -155,30 +191,34 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             nameToHistoryPlot["arm-right-accel"]->update(diffr);;
             
         }
+
         
-        orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
-        
-        angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
-        
-        calculateWingspan();
-        calculateStance();
-        
-        
-        nameToHistoryPlot["foot-left"]->update(legLeftExtendedPct);
-        nameToHistoryPlot["hand-to-hip-left"]->update(leftHandVHip);
-        nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
-        nameToHistoryPlot["Knee Angle Left"]->update(angleLeftKnee);
-        nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
-        
-        nameToHistoryPlot["Foot To Foot"]->update((leftHandSpan+rightFootSpan)/2.0);
-        nameToHistoryPlot["Center"]->update(diffCenter);
-        
-        nameToHistoryPlot["foot-right"]->update(legRightExtendedPct);
-        nameToHistoryPlot["Knee Angle Right"]->update(angleRightKnee);
-        nameToHistoryPlot["angleRightElbow"]->update(angleRightElbow);
-        nameToHistoryPlot["rightFootToGround"]->update(distFootRight);
-        nameToHistoryPlot["hand-to-hip-right"]->update(rightHandVHip);
-        
+        if (ra->getValues().size() > 1){
+            
+            float diffr = ra->getValues()[ra->getValues().size()-2] - ra->getValues()[ra->getValues().size()-1];
+            float diffl = la->getValues()[la->getValues().size()-2] - la->getValues()[la->getValues().size()-1];
+            
+            
+            // todo: parametize accel scale
+            diffl = ofClamp(fabs(diffl) * 35.0, 0, 1);
+            diffr = ofClamp(fabs(diffr) * 35.0, 0, 1);
+            
+            if (nameToHistoryPlot["foot-left-accel"]->getValues().size() > 0){
+                float lastVall = nameToHistoryPlot["foot-left-accel"]->getValues().back();
+                float lastValr = nameToHistoryPlot["foot-right-accel"]->getValues().back();
+                
+                // todo: parametize accel smoothing
+                
+                diffl = 0.1f * diffl + 0.9 *lastVall;
+                diffr = 0.1f * diffr + 0.9 *lastValr;
+                
+            }
+            
+            
+            nameToHistoryPlot["foot-left-accel"]->update(diffl);;
+            nameToHistoryPlot["foot-right-accel"]->update(diffr);;
+            
+        }
         
     }
     
@@ -383,10 +423,12 @@ void kinectSkeletonAnalyzer::drawDebug(){
         ofPushMatrix();
         ofTranslate(ofVec3f(0, 0, 0));
         nameToHistoryPlot["arm-left"]->draw(0, 0);
+        nameToHistoryPlot["arm-left-accel"]->draw(160, 0);
         nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
         nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
         nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
         nameToHistoryPlot["foot-left"]->draw(0, 480);
+        nameToHistoryPlot["foot-left-accel"]->draw(160, 480);
         nameToHistoryPlot["leftFootToGround"]->draw(0, 600);
         ofPopMatrix();
         
@@ -395,17 +437,19 @@ void kinectSkeletonAnalyzer::drawDebug(){
         nameToHistoryPlot["Foot To Foot"]->draw(0, 0);
         ofPopMatrix();
         ofPushMatrix();
-        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, ofGetHeight()-160.0, 0));
+        ofTranslate(ofVec3f(ofGetWidth()/2-80.0, ofGetHeight()-120.0, 0));
         nameToHistoryPlot["Center"]->draw(0, 0);
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
         nameToHistoryPlot["arm-right"]->draw(0,0);
+        nameToHistoryPlot["arm-right-accel"]->draw(-160, 0);
         nameToHistoryPlot["angleRightElbow"]->draw(0, 120);
         nameToHistoryPlot["hand-to-hip-right"]->draw(0,240);
         nameToHistoryPlot["Knee Angle Right"]->draw(0, 360);
         nameToHistoryPlot["foot-right"]->draw(0, 480);
+        nameToHistoryPlot["foot-right-accel"]->draw(-160, 480);
         nameToHistoryPlot["rightFootToGround"]->draw(0, 600);
         ofPopMatrix();
     }
