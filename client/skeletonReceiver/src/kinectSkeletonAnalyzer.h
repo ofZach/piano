@@ -7,21 +7,20 @@
 
 // todo:
 
-// (a) is leg on the ground
-// (b) is this joint moving "fast" -- maybe a threshold ?
-// (c) reset on no skeleton...
-// (d) history of each joint for last n frames
-// (e) smoothing for vel needed?
-// (f) add a gui for thresholds and smoothing vals
+//// (a) is leg on the ground
+//// (b) is this joint moving "fast" -- maybe a threshold ?
+// -(c) reset on no skeleton...
+// -(d) history of each joint for last n frames
+// -(e) smoothing for vel needed?
+// -(f) add a gui for thresholds and smoothing vals
 
-// higher level:
-
-// (a) did we just punch
+// higher level:s
+// - (a) did we just punch
 //                          ( did our arm extension go under a threshold then over a threshold ) ?
 //                          is it higher then our stomach?
-// (b) did we just kick
-// (c) did we jump
-// (d) did we do a circular movement with our hands
+// - (b) did we just kick
+// - (c) did we jump
+// - (d) did we do a circular movement with our hands
 
 // global:
 
@@ -64,6 +63,8 @@ public:
     float minDistLeft, minDistRight;
     
     deque<vector<ofPoint> > ptsHistory;
+    deque<vector<ofPoint> > velHistory;
+    deque<vector<ofPoint> > accHistory;
     vector<ofPoint> velocity, oldVelocity;
     vector<ofPoint> acceleration;
     vector<ofPoint> dir;
@@ -83,8 +84,8 @@ public:
     bool set;
     bool setV;
 
+    int nFrames;
     
-
     vector < ofxHistoryPlot * > historyPlots;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
 

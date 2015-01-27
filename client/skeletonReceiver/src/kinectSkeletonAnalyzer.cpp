@@ -85,16 +85,21 @@ void kinectSkeletonAnalyzer::setup(){
         hp->setGridUnit(14);
         
     }
-    
+    nFrames = 30;
 }
 
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     dt = dt - ofGetElapsedTimef();
     
-    //    ptsHistory.push_back(KS.pts);
-    //    if(ptsHistory.size() > 2){
-    //        ptsHistory.pop_front();
-    //    }
+    ptsHistory.push_back(KS.pts);
+    velHistory.push_back(velocity);
+    accHistory.push_back(acceleration);
+    if(ptsHistory.size() > nFrames){
+        ptsHistory.pop_front();
+        velHistory.pop_front();
+        accHistory.pop_front();
+    }
+    
     
     ofPoint elbows[2];
     ofPoint hands[2];
@@ -284,6 +289,7 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["arm-right-accel"]->update(diffr);;
         
     }
+    
     
     orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
     
