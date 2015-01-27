@@ -97,6 +97,8 @@ void udpPacketReplayer::update(){
             }
         }
         lastWho = who;
+        
+         pct = (float) millis  / (float) wholeTime;
     }
     
 }
@@ -116,7 +118,7 @@ void udpPacketReplayer::draw(ofRectangle bounds){
         
         int wholeTime = timeStamps[timeStamps.size()-1] + 30;
         int millis = (ofGetElapsedTimeMillis()- loadTimeMillis) % wholeTime;
-        float pct = (float) millis  / (float) wholeTime;
+        pct = (float) millis  / (float) wholeTime;
         
         ofSetColor(255,0,0);
         ofNoFill();

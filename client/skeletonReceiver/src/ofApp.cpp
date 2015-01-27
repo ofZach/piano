@@ -29,6 +29,7 @@ void ofApp::setup(){
     gui.add(rotationZ.set("rotationZ", 0,-180,180));
     gui.add(bUseUdpPlayer.set("use udp player", false));
     gui.add(bLoadNewUDP.set("load udp", false));
+    gui.add(udpDuration.set("Playback Pos", 0, 0, 1));
     
     gui.add(cameraHeight.set("camera height", 800,0, 2000));
     gui.add(cameraRadius.set("camera radius", 800,0, 2000));
@@ -41,7 +42,10 @@ void ofApp::setup(){
     KS.setup();
     KSA.setup();
  
- 
+    fooFbo.allocate(1024, 728, GL_RGBA, 4);
+    fooFbo.begin();
+    ofClear(0, 0, 0, 0);
+    fooFbo.end();
 }
 
 //--------------------------------------------------------------
@@ -60,6 +64,7 @@ void ofApp::update(){
     
     if (bUseUdpPlayer){
         UDPR.update();
+        udpDuration.set(UDPR.pct);
     }
     
     
@@ -114,14 +119,16 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(ofColor::darkGray);
-    
+
     
     ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
-    
+ 
+    fooFbo.begin();
+    ofClear(0, 0, 0);
+    cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     cam.begin();
-    
     ofSetColor(255,255,255,127);
     
     ofPushMatrix();
@@ -135,13 +142,18 @@ void ofApp::draw(){
 
     KS.draw();
     KSA.draw();
-    
+
     cam.end();
+    fooFbo.end();
+    
+    
+    fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
+    KSA.drawDebug();
     
     gui.draw();
+ 
 
-    KSA.drawDebug();
-    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
+//    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 //--------------------------------------------------------------

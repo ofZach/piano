@@ -38,15 +38,18 @@ public:
     void setup();
     void analyze( kinectSkeleton & KS);
     void calculateVelocities();
-    void distHands();
-    void distFeet();
+    void calculateWingspan();
+    void calculateStance();
+    void calculateShoulderWidth();
     void draw();
     void drawDebug();
     
+    
+    float shouldersWidth;
     float armLeftExtendedPct;
     float armRightExtendedPct;
-    float footLeftExtendedPct;
-    float footRightExtendedPct;
+    float legLeftExtendedPct;
+    float legRightExtendedPct;
     
     float leftFootSpan, rightFootSpan, maxFeet, minFeet;
     float leftHandSpan, rightHandSpan, maxHands, minHands;
@@ -61,14 +64,14 @@ public:
     float distFootLeft, distFootRight;
     float maxDistLeft, maxDistRight;
     float minDistLeft, minDistRight;
-    
+    deque<kinectSkeleton> skeletons;
     deque<vector<ofPoint> > ptsHistory;
     deque<vector<ofPoint> > velHistory;
     deque<vector<ofPoint> > accHistory;
     vector<ofPoint> velocity, oldVelocity;
     vector<ofPoint> acceleration;
     vector<ofPoint> dir;
-    map<string, ofPoint> limbAcceleration;
+    map<string, ofPoint> limbVelocity;
     vector<float> mag;
 
     float maxMag, minMag;
@@ -80,7 +83,7 @@ public:
     float avgDiffCenter;
     float dt;
     float diffCenter, minCenter, maxCenter;
-    kinectSkeleton old;
+
     bool set;
     bool setV;
 
@@ -91,4 +94,7 @@ public:
 
     
     ofEvent<int> aboveThreshold;
+    
+    float velocityThresh;
+    float diffThresh;
 };
