@@ -138,7 +138,8 @@ void ofApp::draw(){
     cam.lookAt( ofPoint(0,0,0));
  
     fooFbo.begin();
-    ofClear(0, 0, 0);
+    ofBackground(ofColor::darkGray);
+    //ofClear(0, 0, 0);
     cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     cam.begin();
     ofSetColor(255,255,255,127);
@@ -156,6 +157,7 @@ void ofApp::draw(){
     KSA.draw();
 
     cam.end();
+    ofClearAlpha();
     fooFbo.end();
     
     
