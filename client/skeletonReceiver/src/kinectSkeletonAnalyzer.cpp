@@ -276,7 +276,7 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
         
     }
     
-    armLeftExtendedPct = handDist[0] / totalDist[0]
+    armLeftExtendedPct = handDist[0] / totalDist[0];
     armRightExtendedPct = handDist[1] / totalDist[1];
     
     ofPoint spineShoulder =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
