@@ -423,7 +423,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         ofPushMatrix();
         ofTranslate(ofVec3f(ofGetWidth()-160, 0, 0));
         nameToHistoryPlot["arm-left"]->draw(0, 0);
-        nameToHistoryPlot["arm-left-accel"]->draw(160, 0);
+        nameToHistoryPlot["arm-left-accel"]->draw(-160, 0);
         nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
         nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
         nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
@@ -444,7 +444,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         ofPushMatrix();
         ofTranslate(ofVec3f(0, 0, 0));
         nameToHistoryPlot["arm-right"]->draw(0,0);
-        nameToHistoryPlot["arm-right-accel"]->draw(-160, 0);
+        nameToHistoryPlot["arm-right-accel"]->draw(160, 0);
         nameToHistoryPlot["angleRightElbow"]->draw(0, 120);
         nameToHistoryPlot["hand-to-hip-right"]->draw(0,240);
         nameToHistoryPlot["Knee Angle Right"]->draw(0, 360);
