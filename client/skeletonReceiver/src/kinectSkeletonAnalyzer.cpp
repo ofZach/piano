@@ -428,7 +428,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
         nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
         nameToHistoryPlot["foot-left"]->draw(0, 480);
-        nameToHistoryPlot["foot-left-accel"]->draw(160, 480);
+        nameToHistoryPlot["foot-left-accel"]->draw(-160, 480);
         nameToHistoryPlot["leftFootToGround"]->draw(0, 600);
         ofPopMatrix();
         
@@ -449,7 +449,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         nameToHistoryPlot["hand-to-hip-right"]->draw(0,240);
         nameToHistoryPlot["Knee Angle Right"]->draw(0, 360);
         nameToHistoryPlot["foot-right"]->draw(0, 480);
-        nameToHistoryPlot["foot-right-accel"]->draw(-160, 480);
+        nameToHistoryPlot["foot-right-accel"]->draw(160, 480);
         nameToHistoryPlot["rightFootToGround"]->draw(0, 600);
         ofPopMatrix();
     }
