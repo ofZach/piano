@@ -94,4 +94,7 @@ public:
     
     
     ofEvent<int> aboveThreshold;
+    
+    float velocityThresh;
+    float diffThresh;
 };

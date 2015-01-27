@@ -41,7 +41,7 @@ void ofApp::setup(){
     KS.setup();
     KSA.setup();
  
-    fooFbo.allocate(1024, 728, GL_RGBA);
+    fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
@@ -145,7 +145,7 @@ void ofApp::draw(){
     fooFbo.end();
     
     
-    fooFbo.draw(0, 0);
+    fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
     
     
     gui.draw();

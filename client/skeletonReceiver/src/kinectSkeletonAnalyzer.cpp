@@ -102,7 +102,6 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
         avgDiffCenter +=diffCenter;
         avgDiffCenter = avgDiffCenter/2.0;
-        oldVelocity = velocity;
         
         mag.resize(KS.pts.size());
         dir.resize(KS.pts.size());
@@ -166,31 +165,26 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         
         nameToHistoryPlot["foot-left"]->update(legLeftExtendedPct);
-        nameToHistoryPlot["foot-right"]->update(legRightExtendedPct);
         nameToHistoryPlot["hand-to-hip-left"]->update(leftHandVHip);
-        nameToHistoryPlot["hand-to-hip-right"]->update(rightHandVHip);
+        nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
+        nameToHistoryPlot["Knee Angle Left"]->update(angleLeftKnee);
+        nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
+        
         nameToHistoryPlot["Foot To Foot"]->update((leftHandSpan+rightFootSpan)/2.0);
         nameToHistoryPlot["Center"]->update(diffCenter);
-        nameToHistoryPlot["Knee Angle Left"]->update(angleLeftKnee);
+
+        nameToHistoryPlot["foot-right"]->update(legRightExtendedPct);
         nameToHistoryPlot["Knee Angle Right"]->update(angleRightKnee);
-        nameToHistoryPlot["angleLeftElbow"]->update(angleLeftElbow);
         nameToHistoryPlot["angleRightElbow"]->update(angleRightElbow);
         nameToHistoryPlot["rightFootToGround"]->update(distFootRight);
-        nameToHistoryPlot["leftFootToGround"]->update(distFootLeft);
+        nameToHistoryPlot["hand-to-hip-right"]->update(rightHandVHip);
+     
         
     }
     
     skeletons.push_back(KS);
     
-    ptsHistory.push_back(KS.pts);
-    velHistory.push_back(velocity);
-    accHistory.push_back(acceleration);
-    if(ptsHistory.size() > nFrames){
-        ptsHistory.pop_front();
-        velHistory.pop_front();
-        accHistory.pop_front();
-        skeletons.pop_front();
-    }
+
     
 }
 
@@ -331,19 +325,19 @@ void kinectSkeletonAnalyzer::calculateShoulderWidth(){
 void kinectSkeletonAnalyzer::draw(){
     if(skeletons.size() > 0){
         for(int i = 0; i < velocity.size(); i++){
-            //if(mag[i] > 100){
-            ofSetColor(ofColor::red);
-            ofPushMatrix();
-            ofTranslate(velocity[i]+skeletons.back().pts[i]);
-            ofDrawSphere(0, 0, 10);
-            ofPopMatrix();
-            
-            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
-            ofPushMatrix();
-            ofTranslate(acceleration[i]+skeletons.back().pts[i]);
-            ofDrawSphere(0, 0, 10);
-            ofPopMatrix();
-            //s}
+            if(mag[i] > velocityThresh || velHistory.back()[i].lengthSquared()-velocity[i].lengthSquared() > diffThresh){
+                ofSetColor(ofColor::red);
+                ofPushMatrix();
+                ofTranslate(velocity[i]+skeletons.back().pts[i]);
+                ofDrawSphere(0, 0, 10);
+                ofPopMatrix();
+                
+                ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
+                ofPushMatrix();
+                ofTranslate(acceleration[i]+skeletons.back().pts[i]);
+                ofDrawSphere(0, 0, 10);
+                ofPopMatrix();
+            }
         }
         
         
@@ -369,20 +363,38 @@ void kinectSkeletonAnalyzer::draw(){
         ofDrawAxis(20);
         ofPopMatrix();
     }
+    
+    velHistory.push_back(velocity);
+    accHistory.push_back(acceleration);
+    if(ptsHistory.size() > nFrames){
+        ptsHistory.pop_front();
+        velHistory.pop_front();
+        accHistory.pop_front();
+        skeletons.pop_front();
+    }
+
 }
 
 
 
 void kinectSkeletonAnalyzer::drawDebug(){
     
-    int count = 0;
-    for (auto hp : historyPlots){
-        hp->draw((count >= 8 ? 300: 0), 400 + (count%8)*75, 200, 70);
-        count++;
-    }
+
+    nameToHistoryPlot["arm-left"]->draw(0, 0);
+    nameToHistoryPlot["angleLeftElbow"]->draw(0, 120);
+    nameToHistoryPlot["hand-to-hip-left"]->draw(0, 240);
+    nameToHistoryPlot["Knee Angle Left"]->draw(0, 360);
+    nameToHistoryPlot["foot-left"]->draw(0, 480);
+    nameToHistoryPlot["leftFootToGround"]->draw(0, 600);
+
     
-    //    if(diffCenter > avgDiffCenter){
-    //        ofSetColor(ofColor::red);
-    //        ofRect(ofGetWidth()/2, ofGetHeight()/2, 10, 10);
-    //    }
+    nameToHistoryPlot["Foot To Foot"]->draw(ofGetWidth()/2-80, ofGetHeight()-120);
+    nameToHistoryPlot["Center"]->draw(ofGetWidth()/2-80, 0);
+    
+    nameToHistoryPlot["arm-right"]->draw(ofGetWidth()-160,0);
+    nameToHistoryPlot["angleRightElbow"]->draw(ofGetWidth()-160, 120);
+    nameToHistoryPlot["hand-to-hip-right"]->draw(ofGetWidth()-160,240);
+    nameToHistoryPlot["foot-right"]->draw(ofGetWidth()-160, 360);
+    nameToHistoryPlot["Knee Angle Right"]->draw(ofGetWidth()-160, 480);
+    nameToHistoryPlot["rightFootToGround"]->draw(ofGetWidth()-160, 600);
 }
