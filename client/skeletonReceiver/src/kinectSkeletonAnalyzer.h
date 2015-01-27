@@ -97,4 +97,12 @@ public:
     
     float velocityThresh;
     float diffThresh;
+    
+    
+    ofFbo historyPlotsFBO;
+    
+    
+    
+    
+    
 };
