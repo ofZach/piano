@@ -29,7 +29,7 @@ void ofApp::setup(){
     gui.add(rotationZ.set("rotationZ", 0,-180,180));
     gui.add(bUseUdpPlayer.set("use udp player", false));
     gui.add(bLoadNewUDP.set("load udp", false));
-    gui.add(udpDuration.set("Playback Pos", 1, 0, 0));
+    gui.add(udpDuration.set("Playback Pos", 0, 0, 1));
     
     gui.add(cameraHeight.set("camera height", 800,0, 2000));
     gui.add(cameraRadius.set("camera radius", 800,0, 2000));
