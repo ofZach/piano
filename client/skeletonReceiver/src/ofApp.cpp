@@ -64,6 +64,10 @@ void ofApp::setup(){
     gui.setWhichColumn(0);
     gui.addGroup(KSA.anlaysisParams);
     
+    
+    gui.setWhichPanel(2);
+    gui.setWhichPanel(0);
+    
     status = "first frame";
     gui.setStatusMessage(status);
     
@@ -121,6 +125,7 @@ void ofApp::update(){
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
         KSA.analyze(KS);
+        KSAI.analyze(KSA, KS);
     }
     
     

@@ -5,6 +5,7 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
+#include "kinectSkeletonAnalyzerInterpreter.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
 
@@ -65,7 +66,7 @@ public:
     ofParameter <string> status;
     
     kinectSkeleton KS;
-    
+    kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyzer KSA;
     udpPacketReplayer UDPR;
 };

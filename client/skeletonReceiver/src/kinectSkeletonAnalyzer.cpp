@@ -276,8 +276,8 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
         
     }
     
-    armLeftExtendedPct = handDist[0] / totalDist[0]*smoothing+armLeftExtendedPct*(1.0-smoothing);
-    armRightExtendedPct = handDist[1] / totalDist[1]*smoothing+armRightExtendedPct*(1.0-smoothing);
+    armLeftExtendedPct = handDist[0] / totalDist[0]
+    armRightExtendedPct = handDist[1] / totalDist[1];
     
     ofPoint spineShoulder =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
     ofPoint spineBase =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineBase" ]];
@@ -290,9 +290,9 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
         totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+i)%2]).length()+(hands[(i+1)%2]-hands[(i+i)%2]).length();
     }
     
-    leftHandSpan = handtohandDist[0]/totalDistHands[0]*smoothing+leftHandSpan*(1.0-smoothing);
+    leftHandSpan = handtohandDist[0]/totalDistHands[0];
 
-    rightHandSpan = handtohandDist[1]/totalDistHands[1]*smoothing+leftHandSpan*(1.0-smoothing);
+    rightHandSpan = handtohandDist[1]/totalDistHands[1];
 
     
     
@@ -311,10 +311,10 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     }
     
     
-    leftHandVHip = handSpineDist[0]/totalHipDist[0]*smoothing+leftHandVHip*(1.0-smoothing);
-    rightHandVHip = handSpineDist[1]/totalHipDist[1]*smoothing+rightHandVHip*(1.0-smoothing);
-    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0])*smoothing+angleLeftElbow*(1.0-smoothing);
-    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1])*smoothing+angleRightElbow*(1.0-smoothing);
+    leftHandVHip = handSpineDist[0]/totalHipDist[0];
+    rightHandVHip = handSpineDist[1]/totalHipDist[1];
+    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0]);
+    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1]);
 }
 
 void kinectSkeletonAnalyzer::calculateStance(){
@@ -342,14 +342,11 @@ void kinectSkeletonAnalyzer::calculateStance(){
         (knee[i] - feet[i]).length();
     }
     
-    legLeftExtendedPct = feetDist[0] / totalFeetDist[0]*smoothing+legLeftExtendedPct*(1.0-smoothing);
-
-    legRightExtendedPct = feetDist[1] / totalFeetDist[1]*smoothing+legRightExtendedPct*(1.0-smoothing);
-
+    legLeftExtendedPct = feetDist[0] / totalFeetDist[0];
+    legRightExtendedPct = feetDist[1] / totalFeetDist[1];
     
-    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0])*smoothing+angleLeftKnee*(1.0-smoothing);
-    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1])*smoothing+angleRightKnee*(1.0-smoothing);
-    
+    angleLeftKnee = (feet[0]-knee[0]).angle(knee[0]-hips[0]);
+    angleRightKnee = (feet[1]-knee[1]).angle(knee[1]-hips[1]);
     float footToFootDist[2];
     
     for (int i = 0; i < 2; i++){
@@ -361,8 +358,8 @@ void kinectSkeletonAnalyzer::calculateStance(){
     }
     
     
-    leftFootSpan = footToFootDist[0]/totalFeetDist[0]*smoothing+leftFootSpan*(1.0-smoothing);
-    rightFootSpan = footToFootDist[1]/totalFeetDist[1]*smoothing+rightFootSpan*(1.0-smoothing);
+    leftFootSpan = footToFootDist[0]/totalFeetDist[0];
+    rightFootSpan = footToFootDist[1]/totalFeetDist[1];
     
     for (int i = 0; i < 2; i++){
         
@@ -372,8 +369,8 @@ void kinectSkeletonAnalyzer::calculateStance(){
         (knee[i] - feet[i]).length();
     }
     
-    distFootLeft = footToFootDist[0]/totalFeetDist[0]*smoothing+armRightExtendedPct*(1.0-smoothing);
-    distFootRight = footToFootDist[1]/totalFeetDist[1]*smoothing+armRightExtendedPct*(1.0-smoothing);
+    distFootLeft = footToFootDist[0]/totalFeetDist[0];
+    distFootRight = footToFootDist[1]/totalFeetDist[1];
 }
 
 void kinectSkeletonAnalyzer::calculateShoulderWidth(){
