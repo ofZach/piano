@@ -101,6 +101,7 @@ void kinectSkeletonAnalyzer::setup(){
     historyPlotsFBO.allocate(400,2000);
 }
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
+    
     dt = dt - ofGetElapsedTimef();
     if(skeletons.size() > 0){
         
@@ -135,7 +136,16 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         
         
-        orientation = KS.pts[KS.nameToIndex["SpineMid"]].crossed(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
+        
+        ofPoint spineDiff = (KS.pts[KS.nameToIndex["SpineMid"]] - KS.pts[KS.nameToIndex["SpineBase"]]);
+        ofPoint shoulderDiff = (KS.pts[KS.nameToIndex["ShoulderRight"]] - KS.pts[KS.nameToIndex["ShoulderLeft"]]);
+        spineDiff.normalize();
+        shoulderDiff.normalize();
+        
+        
+        orientation = shoulderDiff.cross(spineDiff);
+        cout << orientation << endl;
+        
         
         angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
@@ -379,6 +389,9 @@ void kinectSkeletonAnalyzer::calculateShoulderWidth(){
 
 
 void kinectSkeletonAnalyzer::draw(){
+    
+    ofNode n;
+    
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     if(skeletons.size() > 0){
         for(int i = 0; i < velocity.size(); i++){
@@ -413,12 +426,38 @@ void kinectSkeletonAnalyzer::draw(){
             }
         }
         
+        
+        
         ofPushMatrix();
         ofSetColor(255, 255, 255);
         ofTranslate(skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
+        
+        
         ofRotate(0, orientation.x, orientation.y, orientation.z);
-        ofDrawAxis(20);
+        
+//        ofBoxPrimitive p(100,100,100);
+//        p.drawWireframe();
+//        
+//        ofDrawAxis(20);
         ofPopMatrix();
+
+        n.setPosition( skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
+        ofQuaternion q;
+        
+        q.makeRotate( ofPoint(0,0,1), orientation);
+        n.setOrientation(q);
+        n.draw();
+        
+        ofSetLineWidth(1);
+        ofPushMatrix();
+        ofMultMatrix(n.getGlobalTransformMatrix());
+        ofBoxPrimitive p(400,400,400);
+        ofSetColor(255,255,255,50);
+        p.drawWireframe();
+        ofPopMatrix();
+        ofSetLineWidth(2);
+        ofSetColor(255);
+        
     }
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     velHistory.push_back(velocity);
