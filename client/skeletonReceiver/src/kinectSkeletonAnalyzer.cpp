@@ -43,8 +43,6 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["dist-hand-to-hip-rt"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "dist-foot-to-foot", 100, false));
     nameToHistoryPlot["dist-foot-to-foot"] = historyPlots.back();
-    historyPlots.push_back(new ofxHistoryPlot( NULL, "movement-center", 100, false));
-    nameToHistoryPlot["movement-center"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-lt", 100, false));
     nameToHistoryPlot["knee-angle-lt"] = historyPlots.back();
     historyPlots.push_back(new ofxHistoryPlot( NULL, "knee-angle-rt", 100, false));
@@ -105,14 +103,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
     dt = dt - ofGetElapsedTimef();
     if(skeletons.size() > 0){
         
-        diffCenter = (skeletons.back().pts[KS.nameToIndex["SpineMid"]] - KS.pts[  KS.nameToIndex[ "SpineMid" ]]).length();
-        
-        maxCenter = MAX(maxCenter, diffCenter);
-        minCenter = MIN(minCenter, diffCenter);
-        
-        diffCenter = ofMap(diffCenter, minCenter, maxCenter, 0, 1, true);
-        avgDiffCenter +=diffCenter;
-        avgDiffCenter = avgDiffCenter/2.0;
+        //
+        // calculates magnitute and direction of the velocity & acceleration vectors
+        //
         
         mag.resize(KS.pts.size());
         dir.resize(KS.pts.size());
@@ -133,9 +126,7 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             limbVelocity[KS.bonesList[i]] = limbVelocity[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
         }
         
-        
-        
-        
+
         
         ofPoint spineDiff = (KS.pts[KS.nameToIndex["SpineMid"]] - KS.pts[KS.nameToIndex["SpineBase"]]);
         ofPoint shoulderDiff = (KS.pts[KS.nameToIndex["ShoulderRight"]] - KS.pts[KS.nameToIndex["ShoulderLeft"]]);
@@ -146,13 +137,22 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         orientation = shoulderDiff.cross(spineDiff);
         cout << orientation << endl;
         
-        
+
         angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
+        //
+        // update arm values
+        //
         calculateWingspan();
+        //
+        // update leg values
+        //
         calculateStance();
         
         
+        //
+        // update History Plots
+        //
         nameToHistoryPlot["arm-ext-lt"]->update(armLeftExtendedPct);;
         nameToHistoryPlot["leg-ext-lt"]->update(legLeftExtendedPct);
         nameToHistoryPlot["dist-hand-to-hip-lt"]->update(leftHandVHip);
@@ -161,7 +161,6 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["dist-foot-head-lt"]->update(distFootLeft);
         
         nameToHistoryPlot["dist-foot-to-foot"]->update((leftFootSpan+rightFootSpan)/2.0);
-        nameToHistoryPlot["movement-center"]->update(diffCenter);
         
         nameToHistoryPlot["arm-ext-rt"]->update(armRightExtendedPct);
         nameToHistoryPlot["leg-ext-rt"]->update(legRightExtendedPct);
@@ -172,7 +171,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["dist-hand-to-hand"]->update((leftHandSpan+rightHandSpan)/2.0);
         
         
-        
+        //
+        // calculate diff for arms
+        //
         ofxHistoryPlot * rf = nameToHistoryPlot["leg-ext-lt"];
         ofxHistoryPlot * lf = nameToHistoryPlot["leg-ext-rt"];
         
@@ -202,7 +203,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
-        
+        //
+        // calculate diff for legs
+        //
         if (rf->getValues().size() > 1){
             
             float diffr = rf->getValues()[rf->getValues().size()-2] - rf->getValues()[rf->getValues().size()-1];
@@ -225,6 +228,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
+        //
+        // calculate diff for elbow angles
+        //
         ofxHistoryPlot * eAL = nameToHistoryPlot["elbow-angle-lt"];
         ofxHistoryPlot * eAR = nameToHistoryPlot["elbow-angle-rt"];
         
@@ -460,6 +466,10 @@ void kinectSkeletonAnalyzer::draw(){
         
     }
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    
+    //
+    // push back to history
+    //
     velHistory.push_back(velocity);
     accHistory.push_back(acceleration);
     if(ptsHistory.size() > nFrames){
@@ -508,8 +518,6 @@ void kinectSkeletonAnalyzer::drawDebug(){
         
         
         nameToHistoryPlot["dist-foot-to-foot"]->draw(0, height * count++, 190, height-5);
-        nameToHistoryPlot["movement-center"]->draw(0, height * count++, 190, height-5);
-        
     }
     
     
