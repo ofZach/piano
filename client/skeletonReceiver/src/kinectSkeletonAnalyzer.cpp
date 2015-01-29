@@ -303,7 +303,7 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     for (int i = 0; i < 2; i++){
         
         handtohandDist[i] =   (hands[(i+1)%2] - hands[i]).length();
-        totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+i)%2]).length()+(hands[(i+1)%2]-hands[(i+i)%2]).length();
+        totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+1)%2]).length()+(hands[(i+1)%2]-hands[(i)]).length();
     }
     
     leftHandSpan = handtohandDist[0]/totalDistHands[0];
@@ -457,18 +457,14 @@ void kinectSkeletonAnalyzer::draw(){
         ofSetColor(ofFloatColor(ofColor::green, rightHandVHip));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "HipRight"]]);
         
-        ofSetColor(ofFloatColor(ofColor::blue, distFootLeft));
+        ofSetColor(ofFloatColor(ofColor::blue, 1.0-distFootLeft));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "Head"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
         
-        ofSetColor(ofFloatColor(ofColor::blue, distFootRight));
+        ofSetColor(ofFloatColor(ofColor::blue, 1.0-distFootRight));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "Head"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
         
-        ofSetColor(ofFloatColor(ofColor::yellowGreen, (leftFootSpan+rightFootSpan)/2.0));
+        ofSetColor(ofFloatColor(ofColor::violet, (leftFootSpan+rightFootSpan)/2.0));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
-        
-        ofSetColor(ofFloatColor(ofColor::yellowGreen, (leftFootSpan+rightFootSpan)/2.0));
-        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
-        
         
         ofSetColor(ofFloatColor(ofColor::blueViolet, legLeftExtendedPct));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HipLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
@@ -574,7 +570,7 @@ void kinectSkeletonAnalyzer::drawDebug(){
         nameToHistoryPlot["leg-ext-lt"]->draw(200, height * count++, 190, height-5);
         nameToHistoryPlot["leg-diff-lt"]->draw(200, height * count++, 190, height-5);
         nameToHistoryPlot["dist-foot-head-lt"]->draw(200, height * count++, 190, height-5);
-        
+        nameToHistoryPlot["dist-hand-to-hand"]->draw(200, height * count++, 190, height-5);
         count = 0;
         nameToHistoryPlot["arm-ext-rt"]->draw(0, height * count++, 190, height-5);
         nameToHistoryPlot["arm-diff-rt"]->draw(0, height * count++, 190, height-5);
