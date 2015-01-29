@@ -3,7 +3,6 @@
 
 #include "kinectSkeleton.h"
 #include "ofxHistoryPlot.h"
-#include "ofEvents.h"
 
 // todo:
 
@@ -37,13 +36,13 @@ public:
     
     void setup();
     void analyze( kinectSkeleton & KS);
-
+    void update();
     void calculateWingspan();
     void calculateStance();
     void calculateShoulderWidth();
 //    void setSmoothing(float _smoothing);
 //    void setSmoothingScale(float _scale);
-    void draw();
+    void draw(bool boundingbox);
     void drawDebug();
     
     
@@ -59,6 +58,7 @@ public:
     
     float angleLeftKnee, angleRightKnee;
     float angleLeftElbow, angleRightElbow;
+    float angleHandToHand;
     
     float leftHandVHip;
     float rightHandVHip;

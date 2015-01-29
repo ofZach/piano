@@ -41,6 +41,10 @@ public:
     ofParameter <float> offsetX;
     ofParameter <float> offsetY;
     ofParameter <float> offsetZ;
+    ofParameterGroup debugView;
+    ofParameter <bool> drawSkeleton;
+    ofParameter <bool> drawAnalyzer;
+    ofParameter <bool> drawBoundingCube;
     
     ofParameterGroup dataPlayer;
     ofParameter <bool> bUseUdpPlayer;

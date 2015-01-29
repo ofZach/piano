@@ -13,7 +13,7 @@ void ofApp::setup(){
     smallFont.loadFont("selena.otf", 16); //http://openfontlibrary.org/en/font/selena
     largeFont.loadFont("selena.otf", 48);
     
-    ofSetLineWidth(8);
+
     ofSetFrameRate(60);
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
@@ -48,6 +48,12 @@ void ofApp::setup(){
     cameraControl.add(cameraRadius.set("camera radius", 800,0, 2000));
     cameraControl.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
     
+    
+    debugView.setName("DebugView");
+    debugView.add(drawSkeleton.set("Draw Skeleton", true));
+    debugView.add(drawAnalyzer.set("Draw Analyzer", true));
+    debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
+    
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
     gui.addPanel("analysis", 4, false);
@@ -57,6 +63,8 @@ void ofApp::setup(){
     gui.addGroup(skeletonTransform);
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
+    gui.addGroup(debugView);
+
     
     gui.setWhichPanel(1);
     gui.setWhichColumn(0);
@@ -146,7 +154,7 @@ void ofApp::draw(){
     cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     cam.begin();
     ofSetColor(255,255,255,127);
-    
+    ofSetLineWidth(3);
     ofPushMatrix();
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
@@ -155,14 +163,16 @@ void ofApp::draw(){
     
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
-
-    KS.draw();
-    KSA.draw();
-
+    if(drawSkeleton){
+        KS.draw();
+    }
+    if(drawAnalyzer){
+        KSA.draw(drawBoundingCube);
+    }
     cam.end();
     ofClearAlpha();
     fooFbo.end();
-    
+    ofSetLineWidth(1);
     
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
     KSA.drawDebug();
