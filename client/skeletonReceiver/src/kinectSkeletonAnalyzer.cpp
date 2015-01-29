@@ -329,8 +329,8 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     
     leftHandVHip = handSpineDist[0]/totalHipDist[0];
     rightHandVHip = handSpineDist[1]/totalHipDist[1];
-    angleLeftElbow = (hands[0] - elbows[0]).angle(elbows[0]-shoulders[0]);
-    angleRightElbow = (hands[1] - elbows[1]).angle(elbows[1]-shoulders[1]);
+    angleLeftElbow = (hands[0] - elbows[0]).normalized().angle((elbows[0]-shoulders[0]).normalized());
+    angleRightElbow = (hands[1] - elbows[1]).normalized().angle((elbows[1]-shoulders[1]).normalized());
 }
 
 void kinectSkeletonAnalyzer::calculateStance(){
@@ -477,7 +477,34 @@ void kinectSkeletonAnalyzer::draw(){
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HipRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
         
         
-    
+        ofSpherePrimitive primitve(15,15);
+        ofVboMesh mesh = primitve.getMesh();
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
+        ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "KneeRight"]]);
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleLeftKnee, 0, 180, 0, 1, true)));
+        ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "KneeLeft"]]);
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+        ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "ElbowRight"]]);
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleLeftElbow, 0, 180, 0, 1, true)));
+        ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "ElbowLeft"]]);
+        mesh.draw();
+        ofPopMatrix();
+        
+
+        
         ofPushMatrix();
         ofSetColor(255, 255, 255);
         ofTranslate(skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
