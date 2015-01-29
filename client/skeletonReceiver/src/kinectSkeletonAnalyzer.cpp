@@ -423,7 +423,13 @@ void kinectSkeletonAnalyzer::draw(){
             }
             ofSetColor(ofColor::red, ofClamp(mag[i], 100., 255.0));
             ofPushMatrix();
-            ofTranslate(skeletons.back().pts[i]);
+            ofTranslate(skeletons.back().pts[i]+velocity[i]);
+            mesh.draw();
+            ofPopMatrix();
+            
+            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 100., 255.0));
+            ofPushMatrix();
+            ofTranslate(skeletons.back().pts[i]+acceleration[i]);
             mesh.draw();
             ofPopMatrix();
         }
@@ -433,13 +439,13 @@ void kinectSkeletonAnalyzer::draw(){
             for(int i = 0; i < skeletons.back().bones.size() > 0; i++){
                 ofPoint p;
                 for(int j = 0; j < skeletons.back().bones[skeletons.back().bonesList[i]].size(); j++){
-                    if(limbVelocity[skeletons.back().bonesList[i]].length() > 10){
+                    //if(limbVelocity[skeletons.back().bonesList[i]].length() > 10){
                         ofSetColor(ofColor::blue, ofClamp(limbVelocity[skeletons.back().bonesList[i]].length(), 0.0, 255.0));
                         ofPushMatrix();
                         ofTranslate(limbVelocity[skeletons.back().bonesList[i]]+skeletons.back().pts[skeletons.back().bones[skeletons.back().bonesList[i]][j]]);
-                        ofDrawSphere(0, 0, 10);
+                        mesh.draw();
                         ofPopMatrix();
-                    }
+                    //}
                 }
             }
         }
@@ -488,25 +494,25 @@ void kinectSkeletonAnalyzer::draw(){
         primitve.set(15,15);
         mesh = primitve.getMesh();
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
+        ofSetColor(ofFloatColor(ofColor::purple, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
         ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "KneeRight"]]);
         mesh.draw();
         ofPopMatrix();
         
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleLeftKnee, 0, 180, 0, 1, true)));
+        ofSetColor(ofFloatColor(ofColor::purple, ofMap(angleLeftKnee, 0, 180, 0, 1, true)));
         ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "KneeLeft"]]);
         mesh.draw();
         ofPopMatrix();
         
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+        ofSetColor(ofFloatColor(ofColor::maroon, ofMap(angleRightElbow, 0, 180, 0, 1, true)));
         ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "ElbowRight"]]);
         mesh.draw();
         ofPopMatrix();
         
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::red, ofMap(angleLeftElbow, 0, 180, 0, 1, true)));
+        ofSetColor(ofFloatColor(ofColor::maroon, ofMap(angleLeftElbow, 0, 180, 0, 1, true)));
         ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "ElbowLeft"]]);
         mesh.draw();
         ofPopMatrix();
