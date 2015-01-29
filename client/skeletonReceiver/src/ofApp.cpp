@@ -24,10 +24,8 @@ void ofApp::setup(){
     
     KS.setup();
     KSA.setup();
-    
-   
+    KSAI.setup();
 
-    
     
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));

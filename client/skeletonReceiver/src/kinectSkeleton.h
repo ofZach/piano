@@ -216,12 +216,12 @@ public:
     void drawBone(int indexA, int indexB){
         
         
-//        if (std::find(skipList.begin(), skipList.end(), indexToName[indexA] )!=skipList.end() ||
-//            std::find(skipList.begin(), skipList.end(), indexToName[indexB] )!=skipList.end() ){
-//            
-//            return;
-//            
-//        }
+        if (std::find(skipList.begin(), skipList.end(), indexToName[indexA] )!=skipList.end() ||
+            std::find(skipList.begin(), skipList.end(), indexToName[indexB] )!=skipList.end() ){
+            
+            return;
+            
+        }
         
         
         

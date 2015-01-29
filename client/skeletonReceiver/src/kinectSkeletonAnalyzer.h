@@ -96,7 +96,7 @@ public:
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
 
     
-    ofEvent<int> aboveThreshold;
+//    ofEvent<int> aboveThreshold;
     
     float velocityThresh;
     float diffThresh;

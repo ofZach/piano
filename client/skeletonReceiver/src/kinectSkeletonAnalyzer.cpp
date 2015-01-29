@@ -89,11 +89,11 @@ void kinectSkeletonAnalyzer::setup(){
     nameToHistoryPlot["knee-angle-lt"]->setRange(0, 180);
     nameToHistoryPlot["knee-angle-rt"]->setRange(0, 180);
     nFrames = 30;
-
+    
     anlaysisParams.setName("analysis");
     anlaysisParams.add(smoothing.set("smoothing", 0.9, 0, 1));
     anlaysisParams.add(scale.set("scale", 35, 2.0, 60.0));
-
+    
     
     
     historyPlotsFBO.allocate(400,2000);
@@ -126,7 +126,7 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             limbVelocity[KS.bonesList[i]] = limbVelocity[KS.bonesList[i]]/KS.bones[KS.bonesList[i]].size();
         }
         
-
+        
         
         ofPoint spineDiff = (KS.pts[KS.nameToIndex["SpineMid"]] - KS.pts[KS.nameToIndex["SpineBase"]]);
         ofPoint shoulderDiff = (KS.pts[KS.nameToIndex["ShoulderRight"]] - KS.pts[KS.nameToIndex["ShoulderLeft"]]);
@@ -135,9 +135,9 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         
         
         orientation = shoulderDiff.cross(spineDiff);
-        cout << orientation << endl;
+        //        cout << orientation << endl;
         
-
+        
         angle = KS.pts[KS.nameToIndex["SpineMid"]].angle(KS.pts[KS.nameToIndex["ShoulderRight"]]+KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         
         //
@@ -302,14 +302,14 @@ void kinectSkeletonAnalyzer::calculateWingspan(){
     
     for (int i = 0; i < 2; i++){
         
-        handtohandDist[i] =   (hands[(i+1)%2].normalized() - hands[i].normalized()).length();
+        handtohandDist[i] =   (hands[(i+1)%2] - hands[i]).length();
         totalDistHands[i] =  (hands[i] - elbows[i]).length()+(elbows[i]-shoulders[i]).length()+(shoulders[i]-spineShoulder).length()+(spineShoulder-shoulders[(i+i)%2]).length()+(elbows[(i+1)%2]-shoulders[(i+i)%2]).length()+(hands[(i+1)%2]-hands[(i+i)%2]).length();
     }
     
     leftHandSpan = handtohandDist[0]/totalDistHands[0];
-
+    
     rightHandSpan = handtohandDist[1]/totalDistHands[1];
-
+    
     
     
     float handSpineDist[2];
@@ -345,7 +345,7 @@ void kinectSkeletonAnalyzer::calculateStance(){
     for (int i = 0; i < 2; i++){
         hips[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "HipLeft" : "HipRight")]];
         knee[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "KneeLeft" : "KneeRight")]];
-        feet[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "FootLeft" : "FootRight")]];
+        feet[i] = skeletons.back().pts[  skeletons.back().nameToIndex[ (i == 0 ? "FootLeft" : "AnkleRight")]];
     }
     
     
@@ -433,7 +433,51 @@ void kinectSkeletonAnalyzer::draw(){
         }
         
         
+        ofPoint elbows[2];
+        ofPoint hands[2];
+        ofPoint shoulders[2];
+        ofPoint hips[2];
+        ofPoint spine =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
         
+        
+        ofSetColor(ofFloatColor(ofColor::orange, (leftHandSpan+rightHandSpan)/2.0));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "HandRight"]]);
+        
+        
+        ofSetColor(ofFloatColor(ofColor::red, (armLeftExtendedPct)));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "ShoulderLeft"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::red, (armRightExtendedPct)));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "ShoulderRight"]]);
+        
+        
+        ofSetColor(ofFloatColor(ofColor::green, leftHandVHip));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "HipLeft"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::green, rightHandVHip));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "HipRight"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::blue, distFootLeft));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "Head"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::blue, distFootRight));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "Head"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::yellowGreen, (leftFootSpan+rightFootSpan)/2.0));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::yellowGreen, (leftFootSpan+rightFootSpan)/2.0));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
+        
+        
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legLeftExtendedPct));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HipLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleLeft"]]);
+        
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legRightExtendedPct));
+        ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HipRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
+        
+        
+    
         ofPushMatrix();
         ofSetColor(255, 255, 255);
         ofTranslate(skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
@@ -441,12 +485,12 @@ void kinectSkeletonAnalyzer::draw(){
         
         ofRotate(0, orientation.x, orientation.y, orientation.z);
         
-//        ofBoxPrimitive p(100,100,100);
-//        p.drawWireframe();
-//        
-//        ofDrawAxis(20);
+        //        ofBoxPrimitive p(100,100,100);
+        //        p.drawWireframe();
+        //
+        //        ofDrawAxis(20);
         ofPopMatrix();
-
+        
         n.setPosition( skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
         ofQuaternion q;
         

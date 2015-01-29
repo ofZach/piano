@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofMain.h"
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyzer.h"
