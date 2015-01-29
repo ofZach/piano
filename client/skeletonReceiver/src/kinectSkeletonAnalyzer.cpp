@@ -400,20 +400,32 @@ void kinectSkeletonAnalyzer::draw(){
     
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     if(skeletons.size() > 0){
-        for(int i = 0; i < velocity.size(); i++){
-            //if(mag[i] > velocityThresh || velHistory.back()[i].lengthSquared()-velocity[i].lengthSquared() > diffThresh){
-            ofSetColor(ofColor::red, ofClamp(mag[i], 0., 255.0));
+        //        for(int i = 0; i < velocity.size(); i++){
+        //            //if(mag[i] > velocityThresh || velHistory.back()[i].lengthSquared()-velocity[i].lengthSquared() > diffThresh){
+        //            ofSetColor(ofColor::red, ofClamp(mag[i], 100., 255.0));
+        //            ofPushMatrix();
+        //            ofTranslate(velocity[i]+skeletons.back().pts[i]);
+        //            ofDrawSphere(0, 0, 10);
+        //            ofPopMatrix();
+        //
+        //            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
+        //            ofPushMatrix();
+        //            ofTranslate(acceleration[i]+skeletons.back().pts[i]);
+        //            ofDrawSphere(0, 0, 10);
+        //            ofPopMatrix();
+        //            //}
+        //        }
+        ofSpherePrimitive primitve(10,10);
+        ofVboMesh mesh = primitve.getMesh();
+        for (int i = 0; i < velocity.size(); i++){
+            if (std::find(skeletons.back().skipList.begin(), skeletons.back().skipList.end(), skeletons.back().indexToName[i] )!=skeletons.back().skipList.end()){
+                continue;
+            }
+            ofSetColor(ofColor::red, ofClamp(mag[i], 100., 255.0));
             ofPushMatrix();
-            ofTranslate(velocity[i]+skeletons.back().pts[i]);
-            ofDrawSphere(0, 0, 10);
+            ofTranslate(skeletons.back().pts[i]);
+            mesh.draw();
             ofPopMatrix();
-            
-            ofSetColor(ofColor::blue, ofClamp(acceleration[i].length(), 0., 255.0));
-            ofPushMatrix();
-            ofTranslate(acceleration[i]+skeletons.back().pts[i]);
-            ofDrawSphere(0, 0, 10);
-            ofPopMatrix();
-            //}
         }
         
         
@@ -473,8 +485,8 @@ void kinectSkeletonAnalyzer::draw(){
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HipRight"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "AnkleRight"]]);
         
         
-        ofSpherePrimitive primitve(15,15);
-        ofVboMesh mesh = primitve.getMesh();
+        primitve.set(15,15);
+        mesh = primitve.getMesh();
         ofPushMatrix();
         ofSetColor(ofFloatColor(ofColor::red, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
         ofTranslate(skeletons.back().pts[  skeletons.back().nameToIndex[ "KneeRight"]]);
@@ -499,7 +511,7 @@ void kinectSkeletonAnalyzer::draw(){
         mesh.draw();
         ofPopMatrix();
         
-
+        
         
         ofPushMatrix();
         ofSetColor(255, 255, 255);

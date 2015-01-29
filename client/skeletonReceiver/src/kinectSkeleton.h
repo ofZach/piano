@@ -152,9 +152,9 @@ public:
             if (std::find(skipList.begin(), skipList.end(), indexToName[i] )!=skipList.end()){
                 continue;
             }
-            if (trackingStates[i] == TRACKED) ofSetColor(255,255,255);
-            else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127);
-            else ofSetColor(255,0,0);
+            if (trackingStates[i] == TRACKED) ofSetColor(255,255,255, 100);
+            else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127, 100);
+            else ofSetColor(255,0,0, 100);
             ofPushMatrix();
             
             ofTranslate(pts[i]);
@@ -241,11 +241,11 @@ public:
         
         if(trackingState == TRACKED) {
             ofSetLineWidth(2);
-            ofSetColor(ofColor::white);
+            ofSetColor(ofColor::white, 100);
             ofLine( pts[indexA], pts[indexB] );
         } else if(trackingState == INFERRED) {
             ofSetLineWidth(2);
-            ofSetColor(ofColor::white);
+            ofSetColor(ofColor::white, 100);
             ofLine( pts[indexA], pts[indexB] );
         }
     }
