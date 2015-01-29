@@ -450,14 +450,6 @@ void kinectSkeletonAnalyzer::draw(){
             }
         }
         
-        
-        ofPoint elbows[2];
-        ofPoint hands[2];
-        ofPoint shoulders[2];
-        ofPoint hips[2];
-        ofPoint spine =  skeletons.back().pts[  skeletons.back().nameToIndex[ "SpineShoulder" ]];
-        
-        
         ofSetColor(ofFloatColor(ofColor::orange, (leftHandSpan+rightHandSpan)/2.0));
         ofLine(skeletons.back().pts[  skeletons.back().nameToIndex[ "HandLeft"]], skeletons.back().pts[  skeletons.back().nameToIndex[ "HandRight"]]);
         
