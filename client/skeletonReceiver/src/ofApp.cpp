@@ -82,7 +82,7 @@ void ofApp::setup(){
     gui.enableEvents();
     
     
-    //ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
+    ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
 
     
  
@@ -181,6 +181,10 @@ void ofApp::draw(){
  
 
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
+}
+
+void ofApp::newGesture(Gesture &newGest){
+    ofLog()<<newGest.name<<endl;
 }
 
 //--------------------------------------------------------------

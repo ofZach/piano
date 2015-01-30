@@ -25,6 +25,8 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    void newGesture(Gesture & newGest);
+    
     ofxKinectV2OSC kinect;
     Skeleton* skeleton;
     vector<Skeleton>* skeletons;
