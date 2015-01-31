@@ -72,5 +72,9 @@ public:
     kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyzer KSA;
     udpPacketReplayer UDPR;
+    
+
+    
+    
 };
 

@@ -94,19 +94,48 @@ void kinectSkeletonAnalyzer::setup(){
     anlaysisParams.setName("analysis");
     anlaysisParams.add(smoothing.set("smoothing", 0.9, 0, 1));
     anlaysisParams.add(scale.set("scale", 35, 2.0, 60.0));
+    anlaysisParams.add(twoDSkelCamDistance.set("twoDSkelCamDistance", 1000, 50,2000));
+    
     
     
     
     historyPlotsFBO.allocate(400,2000);
+
+
+    //ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
+    
+    normFbo.allocate(640, 480, GL_RGBA, 4);
+    normFbo.begin();
+    ofClear(0, 0, 0, 0);
+    normFbo.end();
+    
+    
+
+
+
+
 }
+
+
+
+
+
+
 void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
+    
+    // this skeleton recording logic is weird;
+    
     
     dt = dt - ofGetElapsedTimef();
     if(skeletons.size() > 0){
-        
+
+
+        //---------------------------------------------------------------------------------------
         //
         // calculates magnitute and direction of the velocity & acceleration vectors
         //
+        //---------------------------------------------------------------------------------------
+        
         
         mag.resize(KS.pts.size());
         dir.resize(KS.pts.size());
@@ -133,21 +162,31 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         ofPoint shoulderDiff = (KS.pts[KS.nameToIndex["ShoulderRight"]] - KS.pts[KS.nameToIndex["ShoulderLeft"]]);
         spineDiff.normalize();
         shoulderDiff.normalize();
-        
-        
         orientation = shoulderDiff.cross(spineDiff);
+        centerNode.setPosition( KS.pts[skeletons.back().nameToIndex["SpineMid"]]);
+        ofQuaternion q;
+        q.makeRotate( ofPoint(0,0,1), orientation);
+        centerNode.setOrientation(q);
+        
         //        cout << orientation << endl;
         
         
         angle = spineDiff.angle(shoulderDiff);
         
+        //---------------------------------------------------------------------------------------
         //
         // update arm values
         //
+        //---------------------------------------------------------------------------------------
+        
         calculateWingspan();
+        
+        //---------------------------------------------------------------------------------------
         //
         // update leg values
         //
+        //---------------------------------------------------------------------------------------
+        
         calculateStance();
         
         
@@ -173,10 +212,12 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         nameToHistoryPlot["dist-hand-to-hip-rt"]->update(rightHandVHip);
         nameToHistoryPlot["dist-hand-to-hand"]->update((leftHandSpan+rightHandSpan)/2.0);
         
-        
+        //---------------------------------------------------------------------------------------
         //
         // calculate diff for arms
         //
+        //---------------------------------------------------------------------------------------
+        
         ofxHistoryPlot * rf = nameToHistoryPlot["leg-ext-lt"];
         ofxHistoryPlot * lf = nameToHistoryPlot["leg-ext-rt"];
         
@@ -206,9 +247,12 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
+        //---------------------------------------------------------------------------------------
         //
         // calculate diff for legs
         //
+        //---------------------------------------------------------------------------------------
+        
         if (rf->getValues().size() > 1){
             
             float diffr = rf->getValues()[rf->getValues().size()-2] - rf->getValues()[rf->getValues().size()-1];
@@ -231,9 +275,12 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
             
         }
         
+        //---------------------------------------------------------------------------------------
         //
         // calculate diff for elbow angles
         //
+        //---------------------------------------------------------------------------------------
+        
         ofxHistoryPlot * eAL = nameToHistoryPlot["elbow-angle-lt"];
         ofxHistoryPlot * eAR = nameToHistoryPlot["elbow-angle-rt"];
         
@@ -260,7 +307,64 @@ void kinectSkeletonAnalyzer::analyze( kinectSkeleton & KS){
         }
     }
     
+    
     skeletons.push_back(KS);
+  
+    
+    velHistory.push_back(velocity);
+    accHistory.push_back(acceleration);
+    
+    if(ptsHistory.size() > nFrames){
+        ptsHistory.pop_front();
+        velHistory.pop_front();
+        accHistory.pop_front();
+        skeletons.pop_front();
+    }
+    
+    
+    
+    // 2d stuff:
+    
+    normCam.setPosition(  centerNode.getPosition() + ofPoint(0,0,-twoDSkelCamDistance));
+    normCam.lookAt(centerNode, centerNode.getUpDir());
+    normCam.draw();
+    
+    
+    normFbo.begin();
+    ofClear(255,255,255,255);
+    ofSetColor(255,255,255);
+    ofRect(0,0,100,100);
+    
+    
+    
+    //normCam.setOrientation( KSA.centerNode.getGlobalOrientation());
+    
+    //    //normCam.dolly( mouseX * 10);
+    //    //normCam.lookAt(KSA.centerNode);
+    //
+    //
+    normCam.begin();
+    KS.draw();
+    normCam.end();
+    normFbo.end();
+    //ofSetColor(255,255,255);
+    //normFbo.draw(0,0);
+    
+    
+    
+    ks2d.clear();
+    for (int i= 0; i < KS.pts.size(); i++){
+        ks2d.push_back(normCam.worldToScreen(KS.pts[i], ofRectangle(0,0,640,480)));
+        
+    }
+    
+    normFbo.begin();
+    
+//    for (int i= 0; i < ks2d.size(); i++){
+//        ofCircle(ks2d[i], 20);
+//    }
+
+    normFbo.end();
     
     
     
@@ -401,7 +505,7 @@ void kinectSkeletonAnalyzer::calculateShoulderWidth(){
 
 void kinectSkeletonAnalyzer::draw(bool boundingbox){
     //ofPushStyle();
-    ofNode n;
+    
     
     
     if(skeletons.size() > 0){
@@ -558,16 +662,12 @@ void kinectSkeletonAnalyzer::draw(bool boundingbox){
         //        ofDrawAxis(20);
         ofPopMatrix();
         
-        n.setPosition( skeletons.back().pts[skeletons.back().nameToIndex["SpineMid"]]);
-        ofQuaternion q;
-        
-        q.makeRotate( ofPoint(0,0,1), orientation);
-        n.setOrientation(q);
-        n.draw();
+       
+        centerNode.draw();
         if(boundingbox){
             ofSetLineWidth(1);
             ofPushMatrix();
-            ofMultMatrix(n.getGlobalTransformMatrix());
+            ofMultMatrix(centerNode.getGlobalTransformMatrix());
             ofBoxPrimitive p(400,400,400);
             ofSetColor(255,255,255,50);
             p.drawWireframe();
@@ -579,19 +679,7 @@ void kinectSkeletonAnalyzer::draw(bool boundingbox){
     }
     
     
-    //ofPopStyle();
-    //
-    // push back to history
-    //
-    velHistory.push_back(velocity);
-    accHistory.push_back(acceleration);
-    if(ptsHistory.size() > nFrames){
-        ptsHistory.pop_front();
-        velHistory.pop_front();
-        accHistory.pop_front();
-        skeletons.pop_front();
-    }
-    
+
 }
 
 
@@ -599,12 +687,20 @@ void kinectSkeletonAnalyzer::draw(bool boundingbox){
 void kinectSkeletonAnalyzer::drawDebug(){
     
     
+    
+    
     historyPlotsFBO.begin();
+    
+    
+    ofClear(127,127,127,50);
+    
+    
+    ofSetColor(255);
+    normFbo.draw(0,0, 400, 400 * (480.0/640.0));
+    ofTranslate(0, 400 * (480.0/640.0));
     
     float height = 75;
     int count = 0;
-    
-    ofClear(127,127,127,50);
     
     if(skeletons.size() > 0){
         nameToHistoryPlot["arm-ext-lt"]->draw(200, height * count++, 190, height-5);

@@ -69,6 +69,7 @@ void ofApp::setup(){
     gui.setWhichPanel(1);
     gui.setWhichColumn(0);
     gui.addGroup(KSA.anlaysisParams);
+    gui.addGroup(KSAI.interpreterParams);
     
     
     gui.setWhichPanel(2);
@@ -81,11 +82,9 @@ void ofApp::setup(){
     gui.setupEvents();
     gui.enableEvents();
     
-    
-    //ofAddListener(gui.guiEvent, this, &ofApp::eventsIn);
 
     
- 
+    
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
@@ -135,6 +134,11 @@ void ofApp::update(){
     }
     
     
+    
+    KSAI.drawEvents( KSA.normFbo);
+    
+    
+    
 
 }
 
@@ -169,7 +173,14 @@ void ofApp::draw(){
     if(drawAnalyzer){
         KSA.draw(drawBoundingCube);
     }
+    
+    
+    
+    
     cam.end();
+    
+    
+    
     ofClearAlpha();
     fooFbo.end();
     ofSetLineWidth(1);
@@ -179,6 +190,9 @@ void ofApp::draw(){
     
     gui.draw();
  
+    
+    
+    
 
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }

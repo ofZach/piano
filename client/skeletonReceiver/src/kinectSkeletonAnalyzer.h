@@ -28,6 +28,43 @@
 // (c) size of non axis aligned bounds (maybe the convex hull 3d of point set)
 
 
+/*
+ 
+ 
+ bones["LeftLeg"].clear();
+ bones["LeftLeg"].push_back(nameToIndex["HipLeft"]);
+ bones["LeftLeg"].push_back(nameToIndex["KneeLeft"]);
+ bones["LeftLeg"].push_back(nameToIndex["AnkleLeft"]);
+ 
+ bones["RightArm"].clear();
+ bones["RightArm"].push_back(nameToIndex["ShoulderRight"]);
+ bones["RightArm"].push_back(nameToIndex["ElbowRight"]);
+ bones["RightArm"].push_back(nameToIndex["HandRight"]);
+ 
+ bones["RightLeg"].clear();
+ bones["RightLeg"].push_back(nameToIndex["HipRight"]);
+ bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
+ bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
+ 
+ 
+ bones["LeftArm"].clear();
+ bones["LeftArm"].push_back(nameToIndex["ShoulderLeft"]);
+ bones["LeftArm"].push_back(nameToIndex["ElbowLeft"]);
+ bones["LeftArm"].push_back(nameToIndex["HandLeft"]);
+ 
+ 
+ bones["Torso"].clear();
+
+ 
+ 
+ 
+ */
+
+
+
+
+
+
 
 class kinectSkeletonAnalyzer {
     
@@ -55,7 +92,7 @@ public:
     float leftFootSpan, rightFootSpan;
     float leftHandSpan, rightHandSpan;
 
-    
+
     float angleLeftKnee, angleRightKnee;
     float angleLeftElbow, angleRightElbow;
     float angleHandToHand;
@@ -87,6 +124,18 @@ public:
 //    float scale;
 //    float smoothing;
     
+    ofNode centerNode;
+    
+    
+    // zach todo: 
+    // get velocities
+    float rightLegVel;
+    float leftLegVel;
+    float rightArmVel;
+    float leftArmVel;
+    float torsoAvgVel;
+    float totalAvgVel;
+
     bool set;
     bool setV;
 
@@ -107,5 +156,22 @@ public:
     ofParameterGroup anlaysisParams;
     ofParameter <float> smoothing;
     ofParameter <float> scale;
+    ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
+    
+    vector < ofPoint > ks2d;        // 2d sekeleton points 
+    
+    
+    
+    ofCamera normCam;
+    ofFbo normFbo;
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 };
