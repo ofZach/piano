@@ -83,6 +83,8 @@ void ofApp::setup(){
     gui.enableEvents();
     
 
+    //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
+
     
     
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
@@ -196,6 +198,10 @@ void ofApp::draw(){
 
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
+
+//void ofApp::newGesture(Gesture &newGest){
+//    ofLog()<<newGest.name<<endl;
+//}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
