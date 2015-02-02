@@ -164,12 +164,15 @@ void ofApp::update(){
 
     kinect.update();
     
+    cout << skeletons->size() << endl;
+    
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
-            KSA.update(KS);
+			KSA.analyze(KB.getLastSkeleton());
+			KBA.analyze(KB);
 			
 //			float spacing = ofClamp(KS.shouldersWidth, 140, 175);
 			float spacing = 150;
@@ -195,6 +198,7 @@ void ofApp::update(){
 				buttons[i].setTriggerScale(buttonTriggerScale);
 				buttons[i].update(hands);
 			}
+			
         }
         //KSAI.analyze(KSA, KS);
     }
@@ -228,10 +232,10 @@ void ofApp::draw(){
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
     if(drawSkeleton){
-        KS.draw();
+        KB.draw();
     }
     if(drawAnalyzer){
-        KS.drawDebug(drawBoundingCube);
+        KB.drawDebug(drawBoundingCube);
     }
 	
 	for(auto& button : buttons) {
@@ -246,6 +250,7 @@ void ofApp::draw(){
     fooFbo.end();
     ofSetLineWidth(1);
     
+    ofSetColor(255,255,255);
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
     //KSA.drawDebug();
     

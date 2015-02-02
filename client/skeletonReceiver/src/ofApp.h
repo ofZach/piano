@@ -4,11 +4,11 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyser.h"
-//#include "kinectSkeletonAnalyzerInterpreter.h"
 #include "kinectButton.h"
+#include "kinectBody.h"
+#include "kinectBodyAnalyser.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
-#include "kinectBody.h"
 #include "ofxMidi.h"
 
 class ofApp : public ofBaseApp{
@@ -80,6 +80,7 @@ public:
     
     kinectSkeleton KS;
     kinectBody KB;
+	kinectBodyAnalyser KBA;
     
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;

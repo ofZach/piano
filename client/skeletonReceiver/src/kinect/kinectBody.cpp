@@ -20,6 +20,17 @@ kinectBody::kinectBody(){
 }
 
 
+kinectSkeleton & kinectBody::getLastSkeleton(){
+    
+    if (history.size() > 0){
+        return history.back();
+    } else {
+        ofLogError() << "get last skeleton is empty ??" << endl;
+        return;
+    }
+}
+
+
 bool kinectBody::addSkeleton( kinectSkeleton & KS){
 
     bool bNewFrame = true;
