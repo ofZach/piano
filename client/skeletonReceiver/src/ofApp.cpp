@@ -213,7 +213,7 @@ void ofApp::update(){
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
-                updateAudio(KS, body);
+                updateAudio(body);
             }
         }
     }else{
@@ -289,24 +289,24 @@ void ofApp::draw(){
 }
 
 
-void ofApp::updateAudio(kinectSkeleton &skeleton, kinectBody &body) {
+void ofApp::updateAudio(kinectBody &body) {
     float spacing = 150;
     
     vector< pair<ofPoint, float> > activePoints;
     
     const float velNorm = 30;
     
-    activePoints.push_back( make_pair(skeleton.getLeftPoint(::hand),
-                                      body.velocity[skeleton.leftEnumsToIndex[::hand]].length() / velNorm ));
+    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::hand),
+                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::hand]].length() / velNorm ));
     
-    activePoints.push_back( make_pair(skeleton.getRightPoint(::hand),
-                                      body.velocity[skeleton.rightEnumsToIndex[::hand]].length() / velNorm ));
+    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::hand),
+                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::hand]].length() / velNorm ));
     
-    activePoints.push_back( make_pair(skeleton.getLeftPoint(::foot),
-                                      body.velocity[skeleton.leftEnumsToIndex[::foot]].length() / velNorm ));
+    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::foot),
+                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::foot]].length() / velNorm ));
     
-    activePoints.push_back( make_pair(skeleton.getRightPoint(::foot),
-                                      body.velocity[skeleton.rightEnumsToIndex[::foot]].length() / velNorm ));
+    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::foot),
+                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::foot]].length() / velNorm ));
     
     for(int i = 0; i < buttons.size(); i++) {
         int interval = i % (midiNotes.size() + 1);
@@ -318,7 +318,7 @@ void ofApp::updateAudio(kinectSkeleton &skeleton, kinectBody &body) {
         float z = cos(t);
         float y = ofMap(octave, 0, 3, -0.75, 1);
         
-        buttons[i].setParent(skeleton.centerPoint);
+        buttons[i].setParent(body.getLastSkeleton().centerPoint);
         buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
         
         buttons[i].setRadius(buttonRadius);
