@@ -24,26 +24,47 @@ public:
     ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
     
     
+    float rightLegVel;
+    float leftLegVel;
+    float rightArmVel;
+    float leftArmVel;
+    float torsoAvgVel;
+    float totalAvgVel;
+    
+    // ---------------------------------------------------
+    // make this a parameter
+    
     int nFramesHistory;
     
     kinectBody();
     bool addSkeleton( kinectSkeleton & KS);
     void update();
-    void draw();
+    void drawHistory();
     
     ofFbo historyPlotsFBO;
     ofFbo normFbo;
     ofCamera normCam;
+
     
-    kinectSkeleton & getLastSkeleton(){
+    // ---------------------------------------------------
+    
+//                        kinectBody();
+//    bool                addSkeleton( kinectSkeleton & KS);
+    kinectSkeleton &    getLastSkeleton();
+    
+    // ---------------------------------------------------
+
+    
+    void draw(){
         if (history.size() > 0){
-            return history.back();
-        } else {
-            return;
+            getLastSkeleton().draw();
         }
-        
     }
     
-    
-    
+    void drawDebug(bool bDrawBox){
+        if (history.size() > 0){
+            getLastSkeleton().drawDebug( bDrawBox );
+        }
+    }
+
 };

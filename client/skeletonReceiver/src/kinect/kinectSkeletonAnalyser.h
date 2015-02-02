@@ -8,19 +8,15 @@
 
 #pragma once
 #include "ofMain.h"
-#include "kinectSkeleton.h"
+#include "kinectskeleton.h"
 class kinectSkeletonAnalyser{
 public:
     
-    kinectSkeleton * skeleton;
+    ofCamera normCam;
     
-    void update(kinectSkeleton & currentSkeleton){
-        skeleton = &currentSkeleton;
-        analyze();
-    }
     
-    void analyze()
-    {
+    // This MUST be a pointer to a kinectSkeleton so you can store the in that kinect object
+    void analyze(kinectSkeleton * skeleton){
         
         
         //---------------------------------------------------------------------------------------
@@ -137,8 +133,7 @@ public:
 
         skeleton->shouldersWidth = (shoulders[0] - shoulders[1]).length();
         
-        
-        
+    
         //---------------------------------------------------------------------------------------
         //
         // update orientation
@@ -156,6 +151,14 @@ public:
         ofQuaternion q;
         q.makeRotate(ofPoint(0, 0, 1), skeleton->orientation);
         skeleton->centerPoint.setOrientation(q);
-
+        
+        
+        // make 2d points:
+        normCam.setPosition(skeleton->centerPoint.getPosition() + ofPoint(0, 0, -1000));
+        normCam.lookAt(skeleton->centerPoint, skeleton->centerPoint.getUpDir());
+        for (int i = 0; i < skeleton->pts.size(); i++) {
+            skeleton->pts2d[i] = normCam.worldToScreen(skeleton->pts[i], ofRectangle(0, 0, 640, 480));
+        }
+  
     }
 };

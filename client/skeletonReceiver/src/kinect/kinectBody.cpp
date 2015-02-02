@@ -105,6 +105,17 @@ kinectBody::kinectBody(){
 }
 
 
+kinectSkeleton & kinectBody::getLastSkeleton(){
+    
+    if (history.size() > 0){
+        return history.back();
+    } else {
+        ofLogError() << "get last skeleton is empty ??" << endl;
+        return;
+    }
+}
+
+
 bool kinectBody::addSkeleton( kinectSkeleton & KS){
     
     bool bNewFrame = true;
@@ -284,7 +295,7 @@ void kinectBody::update(){
 
 
 
-void kinectBody::draw(){
+void kinectBody::drawHistory(){
     
     if(history.size() > 0){
         normCam.setPosition(history.back().centerPoint.getPosition() + ofPoint(0, 0, -twoDSkelCamDistance/2.0));

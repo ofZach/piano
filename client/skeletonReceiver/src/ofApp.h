@@ -4,7 +4,7 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyser.h"
-//#include "kinectSkeletonAnalyzerInterpreter.h"
+#include "kinectBodyAnalyser.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
 #include "kinectBody.h"

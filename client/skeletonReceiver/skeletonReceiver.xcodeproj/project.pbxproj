@@ -79,6 +79,7 @@
 		FD5DA16F1A7FE68F00FE6303 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD5DA1601A7FE68F00FE6303 /* ofxMidiMessage.cpp */; };
 		FD5DA1701A7FE68F00FE6303 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD5DA1621A7FE68F00FE6303 /* ofxMidiOut.cpp */; };
 		FD5DA1761A7FE69B00FE6303 /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD5DA1741A7FE69B00FE6303 /* RtMidi.cpp */; };
+		FD5DA1791A7FEFAC00FE6303 /* kinectBodyAnalyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD5DA1771A7FEFAC00FE6303 /* kinectBodyAnalyser.cpp */; };
 		FDD5CE4A1A78334100EC1272 /* guiBaseObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE151A78334100EC1272 /* guiBaseObject.cpp */; };
 		FDD5CE4B1A78334100EC1272 /* guiCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE171A78334100EC1272 /* guiCallback.cpp */; };
 		FDD5CE4C1A78334100EC1272 /* guiCallbackValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE191A78334100EC1272 /* guiCallbackValue.cpp */; };
@@ -300,6 +301,8 @@
 		FD5DA1731A7FE69B00FE6303 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
 		FD5DA1741A7FE69B00FE6303 /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtMidi.cpp; sourceTree = "<group>"; };
 		FD5DA1751A7FE69B00FE6303 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
+		FD5DA1771A7FEFAC00FE6303 /* kinectBodyAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectBodyAnalyser.cpp; sourceTree = "<group>"; };
+		FD5DA1781A7FEFAC00FE6303 /* kinectBodyAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectBodyAnalyser.h; sourceTree = "<group>"; };
 		FDD5CE151A78334100EC1272 /* guiBaseObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiBaseObject.cpp; sourceTree = "<group>"; };
 		FDD5CE161A78334100EC1272 /* guiBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiBaseObject.h; sourceTree = "<group>"; };
 		FDD5CE171A78334100EC1272 /* guiCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiCallback.cpp; sourceTree = "<group>"; };
@@ -737,6 +740,8 @@
 			children = (
 				FD5DA13B1A7FE64D00FE6303 /* kinectBody.cpp */,
 				FD5DA13C1A7FE64D00FE6303 /* kinectBody.h */,
+				FD5DA1771A7FEFAC00FE6303 /* kinectBodyAnalyser.cpp */,
+				FD5DA1781A7FEFAC00FE6303 /* kinectBodyAnalyser.h */,
 				FD5DA13D1A7FE64D00FE6303 /* kinectSkeleton.cpp */,
 				FD5DA13E1A7FE64D00FE6303 /* kinectSkeleton.h */,
 				FD5DA13F1A7FE64D00FE6303 /* kinectSkeletonAnalyser.cpp */,
@@ -1051,6 +1056,7 @@
 				66BBA05BD1EC05BD23DCBD7E /* Skeleton.cpp in Sources */,
 				EF7D9DE651311EAEAB5DE8EC /* Logger.cpp in Sources */,
 				FDD5CE581A78334100EC1272 /* guiTypeSlider.cpp in Sources */,
+				FD5DA1791A7FEFAC00FE6303 /* kinectBodyAnalyser.cpp in Sources */,
 				9780A09AECE86A91413F1249 /* Mapper.cpp in Sources */,
 				6847664D0060F42AEBB4E101 /* Parser.cpp in Sources */,
 				C99C59EB5A00132F22624A2D /* BodyRenderer.cpp in Sources */,

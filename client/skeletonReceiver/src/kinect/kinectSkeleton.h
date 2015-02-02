@@ -49,6 +49,8 @@ public:
     
     
     vector < ofPoint > pts;
+    vector < ofPoint > pts2d;           // normalized 2d points for this body
+    
     vector < int > trackingStates;
     vector < string > skipList;
     
@@ -76,17 +78,10 @@ public:
     float leftHandVHip;
     float rightHandVHip;
     float distFootLeft, distFootRight;
+    
     ofVec3f orientation;
     
-    // zach todo:
-    // get velocities
-    float rightLegVel;
-    float leftLegVel;
-    float rightArmVel;
-    float leftArmVel;
-    float torsoAvgVel;
-    float totalAvgVel;
-    
+
     void setup(){
         
         string jointNames[25] = { "ThumbRight", "SpineBase", "SpineMid", "Neck", "Head", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "SpineShoulder", "HandTipLeft", "ThumbLeft", "HandTipRight"};
@@ -96,6 +91,7 @@ public:
             indexToName[i] = jointNames[i];
             pts.push_back(ofPoint(0,0,0));
             trackingStates.push_back(0);
+            pts2d.push_back(ofPoint(0,0,0));
         }
         
         
@@ -185,7 +181,6 @@ public:
             
             if (leftEnumsToIndex.find(name) != leftEnumsToIndex.end()){
                 //ofLog(OF_LOG_NOTICE) << "found"<< endl;
-                
                 return pts[leftEnumsToIndex[name]];
             }
         } else if (side == ::right){
@@ -291,59 +286,63 @@ public:
             ofPopMatrix();
         }
         
+        ofSetColor(255,255,255,255);
         drawBones();
     }
     
     void drawDebug(bool boundingbox){
+        
+        float alpha = 0.3;
+        
         // draw HandToHandVector
         ofSetColor(
-                   ofFloatColor(ofColor::orange, (leftHandSpan + rightHandSpan) / 2.0));
+                   ofFloatColor(ofColor::orange, ((leftHandSpan + rightHandSpan) / 2.0) * alpha));
         ofLine(getLeftPoint(hand),
                getRightPoint(hand));
         
         // Draw Left Arm Extended
-        ofSetColor(ofFloatColor(ofColor::red, (armLeftExtendedPct)));
+        ofSetColor(ofFloatColor(ofColor::red, (armLeftExtendedPct*alpha)));
         ofLine(getLeftPoint(hand),
                getLeftPoint(shoulder));
         
         // Draw Right Arm Extended
-        ofSetColor(ofFloatColor(ofColor::red, (armRightExtendedPct)));
+        ofSetColor(ofFloatColor(ofColor::red, (armRightExtendedPct*alpha)));
         ofLine(getRightPoint(hand),
                getRightPoint(shoulder));
         
         // Draw Left Arm To Hip
-        ofSetColor(ofFloatColor(ofColor::green, leftHandVHip));
+        ofSetColor(ofFloatColor(ofColor::green, leftHandVHip*alpha));
         ofLine(getLeftPoint(hand),
                getLeftPoint(hip));
         
         // Draw Left Arm To Hip
-        ofSetColor(ofFloatColor(ofColor::green, rightHandVHip));
+        ofSetColor(ofFloatColor(ofColor::green, rightHandVHip*alpha));
         ofLine(getRightPoint(hand),
                getRightPoint(hip));
         
         // Draw Head to Feet
-        ofSetColor(ofFloatColor(ofColor::darkBlue, 1.0 - distFootLeft));
+        ofSetColor(ofFloatColor(ofColor::darkBlue, (1.0 - distFootLeft)*alpha));
         ofLine(getCenterPoint(head),
                getLeftPoint(ankle));
         
         // Draw Head to Feet
-        ofSetColor(ofFloatColor(ofColor::darkBlue, 1.0 - distFootRight));
+        ofSetColor(ofFloatColor(ofColor::darkBlue, (1.0 - distFootRight)*alpha));
         ofLine(getCenterPoint(head),
                getRightPoint(ankle));
         
         // Draw Foot to Foot
         ofSetColor(
-                   ofFloatColor(ofColor::violet, (leftFootSpan + rightFootSpan) / 2.0));
+                   ofFloatColor(ofColor::violet, ((leftFootSpan + rightFootSpan) / 2.0)*alpha));
         ofLine(getLeftPoint(ankle),
                getRightPoint(ankle));
         
         // Draw Left Hip to Foot
-        ofSetColor(ofFloatColor(ofColor::blueViolet, legLeftExtendedPct));
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legLeftExtendedPct*alpha));
         ofLine(getLeftPoint(hip),
                getLeftPoint(ankle));
         
         // Draw Right Hip to Foot
-        ofSetColor(ofFloatColor(ofColor::blueViolet, legRightExtendedPct));
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legRightExtendedPct*alpha));
         ofLine(getRightPoint(hip),
                getRightPoint(ankle));
         
@@ -352,7 +351,7 @@ public:
         ofVboMesh mesh = primitve.getMesh();
         ofPushMatrix();
         ofSetColor(
-                   ofFloatColor(ofColor::blue, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
+                   ofFloatColor(ofColor::blue, ofMap(angleRightKnee, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getRightPoint(knee));
         mesh.draw();
@@ -366,7 +365,7 @@ public:
         // Draw Angle Left Knee
         ofPushMatrix();
         ofSetColor(
-                   ofFloatColor(ofColor::blue, ofMap(angleLeftKnee, 0, 180, 0, 1, true)));
+                   ofFloatColor(ofColor::blue, ofMap(angleLeftKnee, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getLeftPoint(knee));
         mesh.draw();
@@ -380,7 +379,7 @@ public:
         // Draw Elbow Left Elbow
         ofPushMatrix();
         ofSetColor(ofFloatColor(ofColor::blue,
-                                ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+                                ofMap(angleRightElbow, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getLeftPoint(elbow));
         mesh.draw();
@@ -394,7 +393,7 @@ public:
         // Draw Elbow Right Elbow
         ofPushMatrix();
         ofSetColor(ofFloatColor(ofColor::blue,
-                                ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+                                ofMap(angleRightElbow, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getRightPoint(elbow));
         mesh.draw();
@@ -425,7 +424,7 @@ public:
             ofPushMatrix();
             ofMultMatrix(centerPoint.getGlobalTransformMatrix());
             ofBoxPrimitive p(400, 400, 400);
-            ofSetColor(255, 255, 255, 50);
+            ofSetColor(255, 255, 255, 255*alpha);
             p.drawWireframe();
             ofPopMatrix();
             ofSetLineWidth(2);

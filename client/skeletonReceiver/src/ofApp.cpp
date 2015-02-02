@@ -130,13 +130,20 @@ void ofApp::update(){
 
     kinect.update();
     
+//    cout << skeletons->size() << endl;
+    
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
-            KSA.update(KS);
+            //Analyze the Kinect Skeleton
+            // This MUST be a pointer to a kinectSkeleton so you can store the in that kinect object
+            KSA.analyze(&KS);
+            //Update the Body After Analyzing the Skeleton
             KB.update();
+          
+            
         }
         //KSAI.analyze(KSA, KS);
     }
@@ -164,7 +171,6 @@ void ofApp::draw(){
     ofBackground(ofColor::darkGray);
     //ofClear(0, 0, 0);
     cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
-    cam.begin();
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
     ofPushMatrix();
@@ -176,10 +182,10 @@ void ofApp::draw(){
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
     if(drawSkeleton){
-        KS.draw();
+        KB.draw();
     }
     if(drawAnalyzer){
-        KS.drawDebug(drawBoundingCube);
+        KB.drawDebug(drawBoundingCube);
     }
     
     
@@ -193,8 +199,9 @@ void ofApp::draw(){
     fooFbo.end();
     ofSetLineWidth(1);
     
+    ofSetColor(255,255,255);
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    KB.draw();
+    KB.drawHistory();
     
     gui.draw();
  
