@@ -16,7 +16,7 @@ class ofApp : public ofBaseApp{
 public:
     void setup();
     void update();
-	void updateAudio();
+	void updateAudio(kinectSkeleton &skeleton, kinectBody &body);
     void draw();
     
     void keyPressed(int key);
@@ -67,6 +67,7 @@ public:
 	ofParameter<bool> buttonDraw;
 	ofParameter<float> buttonRadius;
 	ofParameter<float> buttonTriggerScale;
+	ofParameter<float> buttonApproachScale;
     
     ofFbo fooFbo;
     

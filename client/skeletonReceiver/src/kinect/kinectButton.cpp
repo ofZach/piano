@@ -9,9 +9,10 @@
 #include "kinectButton.h"
 #include "of3dGraphics.h"
 
-kinectButton::kinectButton() : _radius(10), _triggerScale(0.6), _isActive(false), _triggered(false) {
+kinectButton::kinectButton() : _radius(10), _triggerScale(0.6), _approachScale(1.2), _isTriggered(false), _isApproached(false) {
 	updateHitbox();
-	_block = ^(bool b, float f){ };
+	_triggerBlock = Block_copy(^(bool b, float f){ });
+	_approachBlock = Block_copy(_triggerBlock);
 }
 
 #pragma mark - Hitbox
@@ -26,36 +27,62 @@ void kinectButton::setTriggerScale(float triggerScale) {
 	updateHitbox();
 }
 
+void kinectButton::setApproachScale(float approachScale) {
+	_approachScale = approachScale;
+	updateHitbox();
+}
+
 void kinectButton::updateHitbox() {
+	_radiusSquared = pow(_radius, 2);
 	_triggerRadiusSquared = pow(_radius * _triggerScale, 2);
+	_approachRadiusSquared = pow(_radius * _approachScale, 2);
 }
 
 #pragma mark - Hit Testing
 
-void kinectButton::update(const vector<ofVec3f> &points) {
+void kinectButton::update(const vector< pair<ofVec3f, float> > &points) {
+	
 	bool isHit = false;
+	bool isApproached = false;
+	
+	float velocity = 0;
+	float hitRadiusSquared = _isTriggered ? _radiusSquared : _triggerRadiusSquared;
+	
 	for(auto& p : points) {
-		if(hitTest(p)) {
+		
+		if(hitTest(p.first, hitRadiusSquared)) {
 			isHit = true;
+			isApproached = true;
+			velocity = p.second;
 			break;
+		} else if(hitTest(p.first, _approachRadiusSquared)) {
+			isApproached = true;
+			velocity = p.second;
 		}
 	}
 	
-	if(isHit != _isActive) {
-		_block(isHit, 1);
+	if(isHit != _isTriggered) {
+		_triggerBlock(isHit, velocity);
 	}
 	
-	setIsActive(isHit);
+	if(isApproached != _isApproached) {
+//		_approachBlock(isApproached, velocity);
+	}
+	
+	setIsTriggered(isHit);
+	setIsApproached(isApproached);
 }
 
-bool kinectButton::hitTest(const ofVec3f& v) const {
-	ofVec3f self = getGlobalPosition();
-	float hitDist = _isActive ? pow(_radius, 2) : _triggerRadiusSquared;
-	return self.distanceSquared(v) < hitDist;
+bool kinectButton::hitTest(const ofVec3f& v, float distSquared) const {
+	return getGlobalPosition().distanceSquared(v) < distSquared;
 }
 
-void kinectButton::setIsActive(bool active) {
-	_isActive = active;
+void kinectButton::setIsTriggered(bool isTriggered) {
+	_isTriggered = isTriggered;
+}
+
+void kinectButton::setIsApproached(bool isApproached) {
+	_isApproached = isApproached;
 }
 
 #pragma mark - Debug
@@ -63,10 +90,13 @@ void kinectButton::setIsActive(bool active) {
 void kinectButton::customDraw() {
 	ofPushStyle();
 	
-	ofSetColor(_isActive ? ofColor::lightBlue : ofColor::white, _isActive ? 70 : 30);
+	ofSetColor(ofColor::purple, 10);
+	ofDrawSphere(_radius * _approachScale);
+	
+	ofSetColor(_isTriggered ? ofColor::lightBlue : ofColor::white, _isTriggered ? 70 : 30);
 	ofDrawSphere(_radius);
 	
-	ofSetColor(_isActive ? ofColor::red : ofColor::green, 50);
+	ofSetColor(_isTriggered ? ofColor::red : ofColor::green, 50);
 	ofDrawSphere(_radius * _triggerScale);
 	
 	ofPopStyle();
@@ -75,6 +105,9 @@ void kinectButton::customDraw() {
 #pragma mark - Trigger
 
 void kinectButton::setTriggerBlock(ButtonBlock block) {
-	_block = Block_copy(block);
-	
+	_triggerBlock = Block_copy(block);
+}
+
+void kinectButton::setApproachBlock(ButtonBlock block) {
+	_approachBlock = Block_copy(block);
 }

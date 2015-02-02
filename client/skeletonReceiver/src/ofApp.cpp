@@ -58,6 +58,7 @@ void ofApp::setup(){
 	buttonControl.add(buttonDraw.set("Draw Buttons", false));
 	buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
 	buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
+	buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
@@ -118,7 +119,7 @@ void ofApp::setup(){
 			int octave = i / midiNotes.size();
 			int interval = i % midiNotes.size();
 			int note = midiNotes[interval] + (octave * 12) + midiRoot;
-			int velocity = ofMap(vel, 0, 1, 40, 120);
+			int velocity = ofMap(vel, 0, 1, 40, 120, true);
 			
 			if(on) {
 				midiOut.sendNoteOn(1, note, velocity);
@@ -173,7 +174,7 @@ void ofApp::update(){
         if (bNewFrame){
             KSA.analyze(&KB.getLastSkeleton());
             KBA.analyze(KB);
-			updateAudio();
+			updateAudio(KS, KB);
         }
         //KSAI.analyze(KSA, KS);
     }
@@ -239,14 +240,26 @@ void ofApp::draw(){
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
-void ofApp::updateAudio() {
+void ofApp::updateAudio(kinectSkeleton &skeleton, kinectBody &body) {
 	float spacing = 150;
-	vector<ofPoint> hands;
-	hands.push_back(KS.getRightPoint(::hand));
-	hands.push_back(KS.getLeftPoint(::hand));
+	
+	vector< pair<ofPoint, float> > activePoints;
+	
+	const float velNorm = 30;
+	
+	activePoints.push_back( make_pair(skeleton.getLeftPoint(::hand),
+									  body.velocity[skeleton.leftEnumsToIndex[::hand]].length() / velNorm ));
+	
+	activePoints.push_back( make_pair(skeleton.getRightPoint(::hand),
+									  body.velocity[skeleton.rightEnumsToIndex[::hand]].length() / velNorm ));
+	
+	activePoints.push_back( make_pair(skeleton.getLeftPoint(::foot),
+									  body.velocity[skeleton.leftEnumsToIndex[::foot]].length() / velNorm ));
+	
+	activePoints.push_back( make_pair(skeleton.getRightPoint(::foot),
+									  body.velocity[skeleton.rightEnumsToIndex[::foot]].length() / velNorm ));
 	
 	for(int i = 0; i < buttons.size(); i++) {
-		
 		int interval = i % (midiNotes.size() + 1);
 		int octave = i / (midiNotes.size() + 1);
 		
@@ -261,7 +274,8 @@ void ofApp::updateAudio() {
 		
 		buttons[i].setRadius(buttonRadius);
 		buttons[i].setTriggerScale(buttonTriggerScale);
-		buttons[i].update(hands);
+		buttons[i].setApproachScale(buttonApproachScale);
+		buttons[i].update(activePoints);
 	}
 }
 
@@ -271,9 +285,6 @@ void ofApp::updateAudio() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-    
-    
     if (key == 's'){
         gui.saveSettings("settings.xml");
     }
