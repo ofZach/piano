@@ -165,8 +165,6 @@ void ofApp::update(){
 
     kinect.update();
     
-    cout << skeletons->size() << endl;
-    
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
