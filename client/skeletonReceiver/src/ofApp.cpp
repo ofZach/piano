@@ -24,7 +24,6 @@ void ofApp::setup(){
     
     KS.setup();
     
-    //KSA.setup();
     //KSAI.setup();
 
     
@@ -136,7 +135,7 @@ void ofApp::update(){
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
-            //KSA.analyze(KS);
+            KSA.update(KS);
             
         }
         //KSAI.analyze(KSA, KS);
@@ -180,7 +179,7 @@ void ofApp::draw(){
         KS.draw();
     }
     if(drawAnalyzer){
-        //KSA.draw(drawBoundingCube);
+        KS.drawDebug(drawBoundingCube);
     }
     
     

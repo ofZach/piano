@@ -55,19 +55,15 @@ public:
     float armRightExtendedPct;
     float legLeftExtendedPct;
     float legRightExtendedPct;
-    
     float leftFootSpan, rightFootSpan;
     float leftHandSpan, rightHandSpan;
-
-
     float angleLeftKnee, angleRightKnee;
     float angleLeftElbow, angleRightElbow;
     float angleHandToHand;
-    
     float leftHandVHip;
     float rightHandVHip;
-    
     float distFootLeft, distFootRight;
+    
     deque<kinectSkeleton> skeletons;
     deque<vector<ofPoint> > ptsHistory;
     deque<vector<ofPoint> > velHistory;
@@ -94,7 +90,7 @@ public:
     ofNode centerNode;
     
     
-    // zach todo: 
+    // zach todo:
     // get velocities
     float rightLegVel;
     float leftLegVel;
