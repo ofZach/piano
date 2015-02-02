@@ -105,19 +105,6 @@ void ofApp::setup(){
     fooFbo.end();
     
     midiOut.openVirtualPort("OF Skeleton Tracker");
-    midiNotes.push_back(0);
-    midiNotes.push_back(2);
-    midiNotes.push_back(4);
-    midiNotes.push_back(5);
-    midiNotes.push_back(7);
-    midiNotes.push_back(9);
-    midiNotes.push_back(11);
-    buttons.resize(midiNotes.size() * 6);
-    
-    for(int i = 0; i < buttons.size(); i++) {
-        buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
-        buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
-    }
 }
 
 //--------------------------------------------------------------
@@ -262,57 +249,7 @@ void ofApp::draw(){
 
 
 void ofApp::updateAudio(kinectBody &body) {
-    float spacing = 130;
-    
-    vector< pair<ofPoint, float> > activePoints;
-    
-    const float velNorm = 30;
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::hand),
-                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::hand]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::hand),
-                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::hand]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::foot),
-                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::foot]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::foot),
-                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::foot]].length() / velNorm ));
-    
-    for(int i = 0; i < buttons.size(); i++) {
-        int interval = i % (midiNotes.size() + 1);
-        int octave = i / (midiNotes.size() + 1);
-        
-        float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
-        
-        float x = sin(t);
-        float z = cos(t);
-        float y = ofMap(octave, 0, 2, -1, 1);
-        
-        buttons[i].setParent(body.getLastSkeleton().centerPoint);
-        buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
-        
-        buttons[i].setRadius(buttonRadius);
-        buttons[i].setTriggerScale(buttonTriggerScale);
-        buttons[i].setApproachScale(buttonApproachScale);
-        buttons[i].update(activePoints);
-    }
-}
-
-void ofApp::sendMidi(int buttonIndex, int channel, float velocity, bool noteOn) {
-    
-    int midiRoot = 24; // C3
-    int octave = buttonIndex / midiNotes.size();
-    int interval = buttonIndex % midiNotes.size();
-    int note = midiNotes[interval] + (octave * 12) + midiRoot;
-    int velMidi = ofMap(velocity, 0, 1, 40, 120, true);
-    
-    if(noteOn) {
-        midiOut.sendNoteOn(channel, note, velMidi);
-    } else {
-        midiOut.sendNoteOff(channel, note, velMidi);
-    }
+	
 }
 
 //--------------------------------------------------------------
