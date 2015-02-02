@@ -176,8 +176,11 @@ void ofApp::update(){
                     int count = 12;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
-                            if(iter->second.triggered){
+                            if(iter->second.triggered && !triggers[iter->first]){
+                                triggers[iter->first] = true;
                                 midiOut.sendNoteOn(3, count++, 127);
+                            }else if(!iter->second.triggered){
+                                 triggers[iter->first] = false;
                             }
 
                         }

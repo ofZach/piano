@@ -96,7 +96,7 @@ public:
 	
 	ofxMidiOut midiOut;
 	vector<int> midiNotes;
-    
+    map<string, bool> triggers;
     //void newGesture(Gesture &newGest);
     
     
