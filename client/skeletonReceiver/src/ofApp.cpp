@@ -53,6 +53,10 @@ void ofApp::setup(){
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
+	
+	buttonControl.setName("button control");
+	buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
+	buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
@@ -72,9 +76,12 @@ void ofApp::setup(){
     //gui.addGroup(KSA.anlaysisParams);
     //gui.addGroup(KSAI.interpreterParams);
     
-    
+	
     gui.setWhichPanel(2);
-    gui.setWhichPanel(0);
+	gui.setWhichColumn(0);
+	gui.addGroup(buttonControl);
+	
+	gui.setWhichPanel(0);
     
     status = "first frame";
     gui.setStatusMessage(status);
@@ -92,6 +99,36 @@ void ofApp::setup(){
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
+	
+	midiOut.openVirtualPort("OF Skeleton Tracker");
+	
+	buttons.resize(8 * 4);
+	
+	midiNotes.push_back(0);
+	midiNotes.push_back(2);
+	midiNotes.push_back(4);
+	midiNotes.push_back(5);
+	midiNotes.push_back(7);
+	midiNotes.push_back(9);
+	midiNotes.push_back(11);
+	
+	int midiRoot = 24; // C2
+	
+	for(int i = 0; i < buttons.size(); i++) {
+		buttons[i].setTriggerBlock(^(bool on, float vel) {
+			
+			int octave = i / midiNotes.size();
+			int interval = i % midiNotes.size();
+			int note = midiNotes[interval] + (octave * 12) + midiRoot;
+			int velocity = ofMap(vel, 0, 1, 40, 120);
+			
+			if(on) {
+				midiOut.sendNoteOn(1, note, velocity);
+			} else {
+				midiOut.sendNoteOff(1, note, velocity);
+			}
+		});
+	}
 }
 
 //--------------------------------------------------------------
@@ -136,18 +173,31 @@ void ofApp::update(){
         
         if (bNewFrame){
             KSA.update(KS);
-            
+			
+			float spacing = ofClamp(KS.shouldersWidth, 150, 200);
+			for(int i = 0; i < buttons.size(); i++) {
+				
+				int interval = i % 8;
+				int octave = i / 8;
+				
+				float t = ofMap(interval, 0, 7, M_PI_2, M_PI + M_PI_2);
+				
+				float x = sin(t);
+				float z = cos(t);
+				float y = ofMap(octave, 0, 3, 0.2, 1);
+				
+				buttons[i].setParent(KS.centerPoint);
+				buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
+				
+				buttons[i].setRadius(buttonRadius);
+				buttons[i].setTriggerScale(buttonTriggerScale);
+				buttons[i].update(KS.pts);
+			}
         }
         //KSAI.analyze(KSA, KS);
     }
     
-    
-    
     //KSAI.drawEvents( KSA.normFbo);
-    
-    
-    
-
 }
 
 //--------------------------------------------------------------
@@ -181,10 +231,11 @@ void ofApp::draw(){
     if(drawAnalyzer){
         KS.drawDebug(drawBoundingCube);
     }
-    
-    
-    
-    
+	
+	for(auto& button : buttons) {
+		button.draw();
+	}
+	
     cam.end();
     
     

@@ -2,11 +2,16 @@
 
 #include "ofNode.h"
 
+typedef void (^ButtonBlock)(bool isOn, float vel);
+
 class kinectButton : public ofNode {
 	
 public:
 	
 	kinectButton();
+	
+	void update(const std::vector<ofVec3f> &points);
+	bool hitTest(const ofVec3f& v) const;
 	
 	void setRadius(float radius);
 	float getRadius() const { return _radius; }
@@ -14,10 +19,10 @@ public:
 	void setTriggerScale(float triggerScale);
 	float getTriggerScale() const { return _triggerScale; }
 	
-	bool hitTest(const ofVec3f& v) const;
-	
 	void setIsActive(bool active);
 	bool getIsActive() const { return _isActive; }
+	
+	void setTriggerBlock(ButtonBlock);
 	
 private:
 	
@@ -27,6 +32,8 @@ private:
 	float _radius;
 	float _triggerScale;
 	bool _isActive;
+	bool _triggered;
 	
 	float _triggerRadiusSquared;
+	ButtonBlock _block;
 };
