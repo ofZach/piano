@@ -197,8 +197,7 @@ void ofApp::update(){
 				buttons[i].setRadius(buttonRadius);
 				buttons[i].setTriggerScale(buttonTriggerScale);
 				buttons[i].update(hands);
-			}
-			
+			}			
         }
         //KSAI.analyze(KSA, KS);
     }
