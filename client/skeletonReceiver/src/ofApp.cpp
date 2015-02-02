@@ -101,9 +101,7 @@ void ofApp::setup(){
     fooFbo.end();
 	
 	midiOut.openVirtualPort("OF Skeleton Tracker");
-	
-	buttons.resize(8 * 4);
-	
+	int midiRoot = 24; // C3
 	midiNotes.push_back(0);
 	midiNotes.push_back(2);
 	midiNotes.push_back(4);
@@ -111,8 +109,7 @@ void ofApp::setup(){
 	midiNotes.push_back(7);
 	midiNotes.push_back(9);
 	midiNotes.push_back(11);
-	
-	int midiRoot = 24; // C2
+	buttons.resize(midiNotes.size() * 6);
 	
 	for(int i = 0; i < buttons.size(); i++) {
 		buttons[i].setTriggerBlock(^(bool on, float vel) {
@@ -174,21 +171,22 @@ void ofApp::update(){
         if (bNewFrame){
             KSA.update(KS);
 			
-			float spacing = ofClamp(KS.shouldersWidth, 140, 175);
+//			float spacing = ofClamp(KS.shouldersWidth, 140, 175);
+			float spacing = 150;
 			vector<ofPoint> hands;
 			hands.push_back(KS.getRightPoint(::hand));
 			hands.push_back(KS.getLeftPoint(::hand));
 			
 			for(int i = 0; i < buttons.size(); i++) {
 				
-				int interval = i % 8;
-				int octave = i / 8;
+				int interval = i % (midiNotes.size() + 1);
+				int octave = i / (midiNotes.size() + 1);
 				
-				float t = ofMap(interval, 0, 7, M_PI_2, M_PI + M_PI_2);
+				float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
 				
 				float x = sin(t);
 				float z = cos(t);
-				float y = ofMap(octave, 0, 3, 0.2, 1);
+				float y = ofMap(octave, 0, 3, -0.75, 1);
 				
 				buttons[i].setParent(KS.centerPoint);
 				buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
