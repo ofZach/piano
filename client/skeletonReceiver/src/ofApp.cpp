@@ -103,21 +103,21 @@ void ofApp::setup(){
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
-
-	midiOut.openVirtualPort("OF Skeleton Tracker");
-	midiNotes.push_back(0);
-	midiNotes.push_back(2);
-	midiNotes.push_back(4);
-	midiNotes.push_back(5);
-	midiNotes.push_back(7);
-	midiNotes.push_back(9);
-	midiNotes.push_back(11);
-	buttons.resize(midiNotes.size() * 6);
-	
-	for(int i = 0; i < buttons.size(); i++) {
-		buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
-		buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
-	}
+    
+    midiOut.openVirtualPort("OF Skeleton Tracker");
+    midiNotes.push_back(0);
+    midiNotes.push_back(2);
+    midiNotes.push_back(4);
+    midiNotes.push_back(5);
+    midiNotes.push_back(7);
+    midiNotes.push_back(9);
+    midiNotes.push_back(11);
+    buttons.resize(midiNotes.size() * 6);
+    
+    for(int i = 0; i < buttons.size(); i++) {
+        buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
+        buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
+    }
 }
 
 //--------------------------------------------------------------
@@ -162,10 +162,6 @@ void ofApp::update(){
     
     
     if (skeletons->size() >= 1){
-        //TO DO
-        // Handle Multi Skeletons
-        
-        
         for(int i = 0; i < skeletons->size(); i++){
             KS.setFromSkeleton(skeletons->at(i), mat);
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
@@ -175,6 +171,18 @@ void ofApp::update(){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 updateAudio(body);
+                
+                if(body.gestureHistory.size() > 0){
+                    int count = 12;
+                    for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
+                        if(iter->second.type == Discrete){
+                            if(iter->second.triggered){
+                                midiOut.sendNoteOn(3, count++, 127);
+                            }
+
+                        }
+                    }
+                }
             }
         }
     }else{
@@ -290,18 +298,18 @@ void ofApp::updateAudio(kinectBody &body) {
 }
 
 void ofApp::sendMidi(int buttonIndex, int channel, float velocity, bool noteOn) {
-	
-	int midiRoot = 24; // C3
-	int octave = buttonIndex / midiNotes.size();
-	int interval = buttonIndex % midiNotes.size();
-	int note = midiNotes[interval] + (octave * 12) + midiRoot;
-	int velMidi = ofMap(velocity, 0, 1, 40, 120, true);
-	
-	if(noteOn) {
-		midiOut.sendNoteOn(channel, note, velMidi);
-	} else {
-		midiOut.sendNoteOff(channel, note, velMidi);
-	}
+    
+    int midiRoot = 24; // C3
+    int octave = buttonIndex / midiNotes.size();
+    int interval = buttonIndex % midiNotes.size();
+    int note = midiNotes[interval] + (octave * 12) + midiRoot;
+    int velMidi = ofMap(velocity, 0, 1, 40, 120, true);
+    
+    if(noteOn) {
+        midiOut.sendNoteOn(channel, note, velMidi);
+    } else {
+        midiOut.sendNoteOff(channel, note, velMidi);
+    }
 }
 
 //--------------------------------------------------------------
