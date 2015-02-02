@@ -10,7 +10,7 @@ public:
 	
 	kinectButton();
 	
-	void update(const std::vector<ofVec3f> &points);
+	void update(const std::vector< std::pair<ofPoint, float> > &points);
 	bool hitTest(const ofVec3f& v) const;
 	
 	void setRadius(float radius);

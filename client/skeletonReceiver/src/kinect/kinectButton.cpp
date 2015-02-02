@@ -32,17 +32,20 @@ void kinectButton::updateHitbox() {
 
 #pragma mark - Hit Testing
 
-void kinectButton::update(const vector<ofVec3f> &points) {
+void kinectButton::update(const vector< pair<ofVec3f, float> > &points) {
 	bool isHit = false;
+	float velocity = 0;
+	
 	for(auto& p : points) {
-		if(hitTest(p)) {
+		if(hitTest(p.first)) {
 			isHit = true;
+			velocity = p.second;
 			break;
 		}
 	}
 	
 	if(isHit != _isActive) {
-		_block(isHit, 1);
+		_block(isHit, velocity);
 	}
 	
 	setIsActive(isHit);

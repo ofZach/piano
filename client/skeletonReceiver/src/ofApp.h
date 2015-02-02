@@ -16,7 +16,7 @@ class ofApp : public ofBaseApp{
 public:
     void setup();
     void update();
-	void updateAudio();
+	void updateAudio(kinectSkeleton &skeleton, kinectBody &body);
     void draw();
     
     void keyPressed(int key);
