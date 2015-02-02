@@ -139,7 +139,7 @@ void ofApp::update(){
         if (bNewFrame){
             //Analyze the Kinect Skeleton
             // This MUST be a pointer to a kinectSkeleton so you can store the in that kinect object
-            KSA.analyze(&KS);
+            KSA.analyze(&KB.getLastSkeleton());
             //Update the Body After Analyzing the Skeleton
             KB.update();
           

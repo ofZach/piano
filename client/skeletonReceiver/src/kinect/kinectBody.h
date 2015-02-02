@@ -12,9 +12,11 @@ public:
     int bodyId;
     
     vector < ofxHistoryPlot * > historyPlots;
-    vector < ofxHistoryPlot * > gesturePlots;
+    vector <ofxHistoryPlot *  > gesturePlots;
+    vector<string> gestureNames;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
     
+    vector < map<string, Gesture > >  gestureHistory;
     vector < kinectSkeleton > history;
     vector < ofPoint > velocity;
     vector < float > velLen;
@@ -23,7 +25,7 @@ public:
     ofParameter <float> scale;
     ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
     
-    
+    bool drawSkeletonDebug;
     float rightLegVel;
     float leftLegVel;
     float rightArmVel;
@@ -42,6 +44,7 @@ public:
     void drawHistory();
     
     ofFbo historyPlotsFBO;
+    ofFbo gestureFBO;
     ofFbo normFbo;
     ofCamera normCam;
 

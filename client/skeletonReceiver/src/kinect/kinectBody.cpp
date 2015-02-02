@@ -96,12 +96,18 @@ kinectBody::kinectBody(){
     historyPlotsFBO.allocate(400, 2000);
     normFbo.allocate(400, 400);
     
+    gestureFBO.allocate(400, 2000);
+    
     smoothing.set(0.9);
     scale.set(35);
     twoDSkelCamDistance.set(1000);
     
-//    normCam.enableOrtho();
-
+    
+    drawSkeletonDebug = false;
+    
+    // to do
+    // setup gestureNames from file to map names to gestures
+    //
 }
 
 
@@ -173,6 +179,11 @@ bool kinectBody::addSkeleton( kinectSkeleton & KS){
         history.erase(history.begin());
     }
     
+    gestureHistory.push_back(KS.gestures);
+    if(gestureHistory.size() > nFramesHistory){
+        gestureHistory.erase((gestureHistory.begin()));
+    }
+    
     return true;
     
 }
@@ -202,6 +213,26 @@ void kinectBody::update(){
     nameToHistoryPlot["dist-hand-to-hip-rt"]->update(history.back().rightHandVHip);
     nameToHistoryPlot["dist-hand-to-hand"]->update(
                                                    (history.back().leftHandSpan + history.back().rightHandSpan) / 2.0);
+    
+    
+    if(gesturePlots.size() == 0){
+        // TO DO REMOVE THIS
+        // setup gestureNames from file to map names to gestures
+        //
+        int count = 0;
+        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+            gesturePlots.push_back(new ofxHistoryPlot(NULL, iter->first, 100, false));
+            count++;
+        }
+    }else{
+        int count = 0;
+        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+            gesturePlots[count]->update(iter->second.value);
+            count++;
+        }
+    }
+    
+    
     
     //---------------------------------------------------------------------------------------
     //
@@ -319,7 +350,7 @@ void kinectBody::drawHistory(){
         normFbo.end();
     }
     historyPlotsFBO.begin();
-    
+    ofPushMatrix();
     ofClear(127, 127, 127, 50);
     
     if(history.size() > 0){
@@ -377,9 +408,27 @@ void kinectBody::drawHistory(){
                                                      height - 5);
     }
     
+
+    ofPopMatrix();
     historyPlotsFBO.end();
     
-    historyPlotsFBO.draw(0, 0);
+    
+    
+    gestureFBO.begin();
+    ofClear(127, 127, 127, 50);
+    for(int i = 0; i < gesturePlots.size(); i++){
+        gesturePlots[i]->draw(0, height*i, 190, height-5);
+    }
+    gestureFBO.end();
+    
+    
+    if(drawSkeletonDebug){
+        historyPlotsFBO.draw(0, 0);
+    }else{
+        gestureFBO.draw(0, 0);
+    }
+
+    
     
     
 }
