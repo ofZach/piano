@@ -174,7 +174,11 @@ void ofApp::update(){
         if (bNewFrame){
             KSA.update(KS);
 			
-			float spacing = ofClamp(KS.shouldersWidth, 150, 200);
+			float spacing = ofClamp(KS.shouldersWidth, 140, 175);
+			vector<ofPoint> hands;
+			hands.push_back(KS.getRightPoint(::hand));
+			hands.push_back(KS.getLeftPoint(::hand));
+			
 			for(int i = 0; i < buttons.size(); i++) {
 				
 				int interval = i % 8;
@@ -191,7 +195,7 @@ void ofApp::update(){
 				
 				buttons[i].setRadius(buttonRadius);
 				buttons[i].setTriggerScale(buttonTriggerScale);
-				buttons[i].update(KS.pts);
+				buttons[i].update(hands);
 			}
         }
         //KSAI.analyze(KSA, KS);
