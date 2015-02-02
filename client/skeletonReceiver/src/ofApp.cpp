@@ -54,10 +54,13 @@ void ofApp::setup(){
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
     
+    
     buttonControl.setName("button control");
     buttonControl.add(buttonDraw.set("Draw Buttons", false));
     buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
     buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
+    buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
+    
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
@@ -127,6 +130,33 @@ void ofApp::setup(){
             }
         });
     }
+    
+    midiOut.openVirtualPort("OF Skeleton Tracker");
+    midiRoot = 24; // C3
+    midiNotes.push_back(0);
+    midiNotes.push_back(2);
+    midiNotes.push_back(4);
+    midiNotes.push_back(5);
+    midiNotes.push_back(7);
+    midiNotes.push_back(9);
+    midiNotes.push_back(11);
+    buttons.resize(midiNotes.size() * 6);
+    
+    for(int i = 0; i < buttons.size(); i++) {
+        buttons[i].setTriggerBlock(^(bool on, float vel) {
+            
+            int octave = i / midiNotes.size();
+            int interval = i % midiNotes.size();
+            int note = midiNotes[interval] + (octave * 12) + midiRoot;
+            int velocity = ofMap(vel, 0, 1, 40, 120, true);
+            
+            if(on) {
+                midiOut.sendNoteOn(1, note, velocity);
+            } else {
+                midiOut.sendNoteOff(1, note, velocity);
+            }
+        });
+    }
 }
 
 //--------------------------------------------------------------
@@ -174,15 +204,16 @@ void ofApp::update(){
         //TO DO
         // Handle Multi Skeletons
         
+        
         for(int i = 0; i < skeletons->size(); i++){
             KS.setFromSkeleton(skeletons->at(i), mat);
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
             if (bNewFrame){
-                KSA.analyze(&body.getLastSkeleton());
+                KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
-                updateAudio();
+                updateAudio(KS, body);
             }
         }
     }else{
@@ -257,14 +288,27 @@ void ofApp::draw(){
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
-void ofApp::updateAudio() {
+
+void ofApp::updateAudio(kinectSkeleton &skeleton, kinectBody &body) {
     float spacing = 150;
-    vector<ofPoint> hands;
-    hands.push_back(KS.getRightPoint(::hand));
-    hands.push_back(KS.getLeftPoint(::hand));
+    
+    vector< pair<ofPoint, float> > activePoints;
+    
+    const float velNorm = 30;
+    
+    activePoints.push_back( make_pair(skeleton.getLeftPoint(::hand),
+                                      body.velocity[skeleton.leftEnumsToIndex[::hand]].length() / velNorm ));
+    
+    activePoints.push_back( make_pair(skeleton.getRightPoint(::hand),
+                                      body.velocity[skeleton.rightEnumsToIndex[::hand]].length() / velNorm ));
+    
+    activePoints.push_back( make_pair(skeleton.getLeftPoint(::foot),
+                                      body.velocity[skeleton.leftEnumsToIndex[::foot]].length() / velNorm ));
+    
+    activePoints.push_back( make_pair(skeleton.getRightPoint(::foot),
+                                      body.velocity[skeleton.rightEnumsToIndex[::foot]].length() / velNorm ));
     
     for(int i = 0; i < buttons.size(); i++) {
-        
         int interval = i % (midiNotes.size() + 1);
         int octave = i / (midiNotes.size() + 1);
         
@@ -274,24 +318,19 @@ void ofApp::updateAudio() {
         float z = cos(t);
         float y = ofMap(octave, 0, 3, -0.75, 1);
         
-        buttons[i].setParent(KS.centerPoint);
+        buttons[i].setParent(skeleton.centerPoint);
         buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
         
         buttons[i].setRadius(buttonRadius);
         buttons[i].setTriggerScale(buttonTriggerScale);
-        buttons[i].update(hands);
+        buttons[i].setApproachScale(buttonApproachScale);
+        buttons[i].update(activePoints);
     }
+    
 }
-
-//void ofApp::newGesture(Gesture &newGest){
-//    ofLog()<<newGest.name<<endl;
-//}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-    
-    
     if (key == 's'){
         gui.saveSettings("settings.xml");
     }
