@@ -4,17 +4,19 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyser.h"
+#include "kinectButton.h"
+#include "kinectBody.h"
 #include "kinectBodyAnalyser.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
-#include "kinectBody.h"
-
+#include "ofxMidi.h"
 
 class ofApp : public ofBaseApp{
     
 public:
     void setup();
     void update();
+	void updateAudio();
     void draw();
     
     void keyPressed(int key);
@@ -31,6 +33,8 @@ public:
     ofxKinectV2OSC kinect;
     Skeleton* skeleton;
     vector<Skeleton>* skeletons;
+	
+	vector<kinectButton> buttons;
     
     BodyRenderer renderer;
     
@@ -58,13 +62,18 @@ public:
     ofParameter <float> cameraHeight;
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
+	
+	ofParameterGroup buttonControl;
+	ofParameter<bool> buttonDraw;
+	ofParameter<float> buttonRadius;
+	ofParameter<float> buttonTriggerScale;
     
     ofFbo fooFbo;
     
     ofxControlPanel gui;
     
     ofCamera cam;
-    
+	
     ofPolyline leftHandHistory;
     ofPolyline rightHandHistory;
     ofMatrix4x4 mat;
@@ -73,11 +82,14 @@ public:
     
     kinectSkeleton KS;
     kinectBody KB;
-    kinectBodyAnalyser KBA;
-    
+	kinectBodyAnalyser KBA;
+	
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
+	
+	ofxMidiOut midiOut;
+	vector<int> midiNotes;
     
     //void newGesture(Gesture &newGest);
     

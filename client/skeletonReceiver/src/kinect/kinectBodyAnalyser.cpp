@@ -11,7 +11,7 @@
 
 
 void kinectBodyAnalyser::analyze ( kinectBody & KB ){
-
+    KB.update();
     kinectSkeleton & skeleton = KB.getLastSkeleton();
     
     vector < int > & leftLeg = skeleton.bones["leftLeg"].pointIds;

@@ -85,7 +85,7 @@ public:
     void setup(){
         
         string jointNames[25] = { "ThumbRight", "SpineBase", "SpineMid", "Neck", "Head", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "SpineShoulder", "HandTipLeft", "ThumbLeft", "HandTipRight"};
-        
+		
         for (int i = 0; i < 25; i++){
             nameToIndex[jointNames[i]] = i;
             indexToName[i] = jointNames[i];
