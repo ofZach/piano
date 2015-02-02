@@ -13,10 +13,10 @@
         <val_0>42.007</val_0>
     </scaleZ>
     <offsetX>
-        <val_0>-630.769</val_0>
+        <val_0>-246.154</val_0>
     </offsetX>
     <offsetY>
-        <val_0>723.077</val_0>
+        <val_0>415.385</val_0>
     </offsetY>
     <offsetZ>
         <val_0>400</val_0>
@@ -39,12 +39,12 @@
         <val_0>0</val_0>
     </load_udp>
     <Playback_Pos>
-        <val_0>0.859</val_0>
+        <val_0>0.506368</val_0>
     </Playback_Pos>
 </dataPlayer>
 <camera_control>
     <camera_height>
-        <val_0>823.077</val_0>
+        <val_0>346.154</val_0>
     </camera_height>
     <camera_radius>
         <val_0>815.385</val_0>

@@ -227,6 +227,7 @@
 		C8D782361A7FD4BE00F367F8 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = ../../../../../../../System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<group>"; };
 		C8D782401A7FD70000F367F8 /* kinectSkeletonAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeletonAnalyser.cpp; sourceTree = "<group>"; };
 		C8D782411A7FD70000F367F8 /* kinectSkeletonAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonAnalyser.h; sourceTree = "<group>"; };
+		C8D782451A7FE9DA00F367F8 /* Gesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Gesture.h; path = "../../../addons/ofxKinectV2-OSC/src/DataTransform/Gesture.h"; sourceTree = "<group>"; };
 		D6B9CFD1E73671E93959871F /* BodyRenderer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = BodyRenderer.h; path = "../../../addons/ofxKinectV2-OSC/src/Draw/BodyRenderer.h"; sourceTree = SOURCE_ROOT; };
 		D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
 		D9F2933D385C0665970A1A19 /* Interpreter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Interpreter.cpp; path = "../../../addons/ofxKinectV2-OSC/src/Body/Interpreter.cpp"; sourceTree = SOURCE_ROOT; };
@@ -427,6 +428,7 @@
 		6626B42A0AC3BD4A61F267CC /* DataTransform */ = {
 			isa = PBXGroup;
 			children = (
+				C8D782451A7FE9DA00F367F8 /* Gesture.h */,
 				0843C11089CAA451E0010BD9 /* Logger.cpp */,
 				59FD809E303FEC1D986FF9DF /* Logger.h */,
 				583E7F54B84A88FD5D4B5C1A /* Mapper.cpp */,

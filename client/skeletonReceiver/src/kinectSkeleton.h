@@ -179,10 +179,10 @@ public:
                 return pts[centerEnumsToIndex[name]];
             }
         } else if (side == ::left){
-            cout << "left"<< nameToIndex["HandLeft"] <<  " " << leftEnumsToIndex[name] << endl;
+            ofLog(OF_LOG_NOTICE) << "left"<< nameToIndex["HandLeft"] <<  " " << leftEnumsToIndex[name] << endl;
             
             if (leftEnumsToIndex.find(name) != leftEnumsToIndex.end()){
-                cout << "found"<< endl;
+                ofLog(OF_LOG_NOTICE) << "found"<< endl;
                 
                 return pts[leftEnumsToIndex[name]];
             }

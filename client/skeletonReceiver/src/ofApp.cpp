@@ -136,7 +136,7 @@ void ofApp::update(){
         
         if (bNewFrame){
             KSA.update(KS);
-            
+            KB.update();
         }
         //KSAI.analyze(KSA, KS);
     }
@@ -194,7 +194,7 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    //KSA.drawDebug();
+    KB.draw();
     
     gui.draw();
  
