@@ -116,9 +116,9 @@ bool kinectBody::addSkeleton( kinectSkeleton & KS){
         
         float diff = 0;
         for (int i = 0; i < ptsA.size(); i++){
-            diff += (ptsA[i] - ptsB[i]).length();
+            diff += (ptsA[i] - ptsB[i]).lengthSquared();
         }
-        if (diff > 0.1){
+        if (diff > 0.1*0.1){
             bNewFrame = true;
         } else {
             bNewFrame = false;
