@@ -150,9 +150,6 @@ void ofApp::update(){
         udpDuration.set(UDPR.pct);
     }
     
-    
-
-    
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
