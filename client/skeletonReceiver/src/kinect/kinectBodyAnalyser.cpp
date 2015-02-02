@@ -19,16 +19,13 @@ void kinectBodyAnalyser::analyze ( kinectBody & KB ){
     vector < int > & leftArm = skeleton.bones["leftArm"].pointIds;
     vector < int > & rightArm = skeleton.bones["rightArm"].pointIds;
     vector < int > & torso = skeleton.bones["torso"].pointIds;
-    
-    
-    
+
     ofPoint leftLegVel      = avgVel(leftLeg, KB);
     ofPoint rightLegVel     = avgVel(rightLeg, KB);
     ofPoint leftArmVel      = avgVel(leftArm, KB);
     ofPoint rightArmVel     = avgVel(rightArm, KB);
     ofPoint torsoVel        = avgVel(torso, KB);
-    
-    
+
     KB.rightLegVel  = rightLegVel.length();
     KB.leftLegVel   = leftLegVel.length();
     KB.leftArmVel = leftArmVel.length();
@@ -52,4 +49,5 @@ ofPoint kinectBodyAnalyser::avgVel (vector < int > pts, kinectBody & KB){
         avgVel += KB.velocity[ pts[i] ];
     }
     avgVel /= (float)pts.size();
+    return avgVel;
 }

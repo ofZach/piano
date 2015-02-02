@@ -30,7 +30,6 @@ public:
     
     
     // ---------------------------------------------------
-    
                         kinectBody();
     bool                addSkeleton( kinectSkeleton & KS);
     kinectSkeleton &    getLastSkeleton();
@@ -49,5 +48,16 @@ public:
             getLastSkeleton().drawDebug( bDrawBox );
         }
     }
+    
+    /*void drawVelocity(){
+        
+        
+        if (history.size() > 0){
+            ofPoint handPt = getLastSkeleton().getLeftPoint( hand );
+            ofDrawBitmapString("arm vel = " + ofToString(leftArmVel, 3), handPt);
+        }
+
+        
+    }*/
     
 };

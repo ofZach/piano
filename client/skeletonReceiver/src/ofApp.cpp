@@ -141,14 +141,10 @@ void ofApp::update(){
             KSA.analyze(KB.getLastSkeleton());
             KBA.analyze(KB);
         }
-        //KSAI.analyze(KSA, KS);
+   
     }
     
-    
-    
-    //KSAI.drawEvents( KSA.normFbo);
-    
-    
+   
     
 
 }
