@@ -52,4 +52,6 @@ ofPoint kinectBodyAnalyser::avgVel (vector < int > pts, kinectBody & KB){
         avgVel += KB.velocity[ pts[i] ];
     }
     avgVel /= (float)pts.size();
+    return avgVel;
+    
 }

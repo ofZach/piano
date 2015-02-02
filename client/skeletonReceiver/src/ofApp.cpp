@@ -165,8 +165,8 @@ void ofApp::update(){
 
     kinect.update();
     
-//    cout << skeletons->size() << endl;
-    
+////    cout << skeletons->size() << endl;
+//
     if (skeletons->size() >= 1){
         //TO DO
         // Handle Multi Skeletons
