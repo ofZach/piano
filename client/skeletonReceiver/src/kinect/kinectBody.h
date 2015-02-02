@@ -3,7 +3,7 @@
 
 #include "ofMain.h"
 #include "kinectSkeleton.h"
-
+#include "ofxHistoryPlot.h"
 
 class kinectBody {
     
@@ -11,11 +11,21 @@ public:
     
     int bodyId;
     
+    vector < ofxHistoryPlot * > historyPlots;
+    vector <ofxHistoryPlot *  > gesturePlots;
+    vector<string> gestureNames;
+    map < string, ofxHistoryPlot * > nameToHistoryPlot;
+    
+    vector < map<string, Gesture > >  gestureHistory;
     vector < kinectSkeleton > history;
     vector < ofPoint > velocity;
     vector < float > velLen;
     vector < ofPoint > accel;
+    ofParameter <float> smoothing;
+    ofParameter <float> scale;
+    ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
     
+    bool drawSkeletonDebug;
     float rightLegVel;
     float leftLegVel;
     float rightArmVel;
@@ -28,11 +38,21 @@ public:
     
     int nFramesHistory;
     
+    kinectBody();
+    bool addSkeleton( kinectSkeleton & KS);
+    void update();
+    void drawHistory();
+    
+    ofFbo historyPlotsFBO;
+    ofFbo gestureFBO;
+    ofFbo normFbo;
+    ofCamera normCam;
+
     
     // ---------------------------------------------------
     
-                        kinectBody();
-    bool                addSkeleton( kinectSkeleton & KS);
+//                        kinectBody();
+//    bool                addSkeleton( kinectSkeleton & KS);
     kinectSkeleton &    getLastSkeleton();
     
     // ---------------------------------------------------
@@ -49,5 +69,5 @@ public:
             getLastSkeleton().drawDebug( bDrawBox );
         }
     }
-    
+
 };

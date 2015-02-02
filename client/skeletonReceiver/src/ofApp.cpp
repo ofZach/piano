@@ -162,13 +162,17 @@ void ofApp::update(){
 
     kinect.update();
     
+////    cout << skeletons->size() << endl;
+//
     if (skeletons->size() >= 1){
+        //TO DO
+        // Handle Multi Skeletons
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
-			KSA.analyze(KB.getLastSkeleton());
-			KBA.analyze(KB);
+            KSA.analyze(&KB.getLastSkeleton());
+            KBA.analyze(KB);
 			updateAudio();
         }
         //KSAI.analyze(KSA, KS);
@@ -191,7 +195,6 @@ void ofApp::draw(){
     ofBackground(ofColor::darkGray);
     //ofClear(0, 0, 0);
     cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
-    cam.begin();
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
     ofPushMatrix();
@@ -225,7 +228,7 @@ void ofApp::draw(){
     
     ofSetColor(255,255,255);
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    //KSA.drawDebug();
+    KB.drawHistory();
     
     gui.draw();
  

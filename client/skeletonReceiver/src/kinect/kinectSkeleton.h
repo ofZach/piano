@@ -63,6 +63,8 @@ public:
     map < int, string> indexToName;
     
     
+    map<string, Gesture> gestures;
+    
     float shouldersWidth;
     float armLeftExtendedPct;
     float armRightExtendedPct;
@@ -175,7 +177,10 @@ public:
                 return pts[centerEnumsToIndex[name]];
             }
         } else if (side == ::left){
+            //ofLog(OF_LOG_NOTICE) << "left"<< nameToIndex["HandLeft"] <<  " " << leftEnumsToIndex[name] << endl;
+            
             if (leftEnumsToIndex.find(name) != leftEnumsToIndex.end()){
+                //ofLog(OF_LOG_NOTICE) << "found"<< endl;
                 return pts[leftEnumsToIndex[name]];
             }
         } else if (side == ::right){
@@ -259,6 +264,8 @@ public:
         trackingStates[nameToIndex["ThumbLeft"]] = sk.getThumbLeft().getTrackingState();
         trackingStates[nameToIndex["HandTipRight"]] = sk.getHandTipRight().getTrackingState();
         
+        
+        gestures = sk.gestures;
     }
     
     void draw(){
