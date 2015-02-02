@@ -52,14 +52,21 @@ public:
     vector < int > trackingStates;
     vector < string > skipList;
     
-
-    //map<string , vector<int> > bones;
-    //vector<string> bonesList;
-
-    
     map < string, int > nameToIndex;
     map < int, string> indexToName;
     
+    
+    //----------------------------------- statistics to be calculated:
+    float shouldersWidth;
+    float armLeftExtendedPct;
+    float armRightExtendedPct;
+    float legLeftExtendedPct;
+    float legRightExtendedPct;
+    
+    
+    
+    
+
     void setup(){
         
         string jointNames[25] = { "ThumbRight", "SpineBase", "SpineMid", "Neck", "Head", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "SpineShoulder", "HandTipLeft", "ThumbLeft", "HandTipRight"};
