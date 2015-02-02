@@ -178,11 +178,11 @@ void ofApp::update(){
                         if(iter->second.type == Discrete){
                             if(iter->second.triggered && !triggers[iter->first]){
                                 triggers[iter->first] = true;
-                                midiOut.sendNoteOn(3, count++, 127);
+                                midiOut.sendNoteOn(3, count, 127);
                             }else if(!iter->second.triggered){
                                  triggers[iter->first] = false;
                             }
-
+                            count++;
                         }
                     }
                 }
