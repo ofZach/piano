@@ -13,13 +13,13 @@
         <val_0>42.007</val_0>
     </scaleZ>
     <offsetX>
-        <val_0>-246.154</val_0>
+        <val_0>-630.769</val_0>
     </offsetX>
     <offsetY>
-        <val_0>400</val_0>
+        <val_0>723.077</val_0>
     </offsetY>
     <offsetZ>
-        <val_0>461.539</val_0>
+        <val_0>400</val_0>
     </offsetZ>
     <rotationX>
         <val_0>180</val_0>
@@ -39,12 +39,12 @@
         <val_0>0</val_0>
     </load_udp>
     <Playback_Pos>
-        <val_0>0.843026</val_0>
+        <val_0>0.859</val_0>
     </Playback_Pos>
 </dataPlayer>
 <camera_control>
     <camera_height>
-        <val_0>169.231</val_0>
+        <val_0>823.077</val_0>
     </camera_height>
     <camera_radius>
         <val_0>815.385</val_0>
@@ -63,4 +63,38 @@
     <smoothing_diff>
         <val_0>0.469231</val_0>
     </smoothing_diff>
+    <twoDSkelCamDistance>
+        <val_0>1000</val_0>
+    </twoDSkelCamDistance>
 </analysis>
+<DebugView>
+    <Draw_Skeleton>
+        <val_0>1</val_0>
+    </Draw_Skeleton>
+    <Draw_Analyzer>
+        <val_0>1</val_0>
+    </Draw_Analyzer>
+    <Draw_Bounding_Cube>
+        <val_0>1</val_0>
+    </Draw_Bounding_Cube>
+</DebugView>
+<interpreterParams>
+    <armExtendedThreshold>
+        <val_0>0.619231</val_0>
+    </armExtendedThreshold>
+    <armNotExtendedThreshold>
+        <val_0>0.796154</val_0>
+    </armNotExtendedThreshold>
+    <armNotBelowThreshold>
+        <val_0>0.203846</val_0>
+    </armNotBelowThreshold>
+    <velOverThresh>
+        <val_0>18.1538</val_0>
+    </velOverThresh>
+    <velBelowThresh>
+        <val_0>13.2308</val_0>
+    </velBelowThresh>
+    <pelvisBlockoutLen>
+        <val_0>67.6923</val_0>
+    </pelvisBlockoutLen>
+</interpreterParams>

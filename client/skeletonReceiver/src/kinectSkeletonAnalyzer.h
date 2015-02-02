@@ -29,6 +29,10 @@
 
 
 
+
+
+
+
 class kinectSkeletonAnalyzer {
     
 public:
@@ -51,19 +55,15 @@ public:
     float armRightExtendedPct;
     float legLeftExtendedPct;
     float legRightExtendedPct;
-    
     float leftFootSpan, rightFootSpan;
     float leftHandSpan, rightHandSpan;
-
-    
     float angleLeftKnee, angleRightKnee;
     float angleLeftElbow, angleRightElbow;
     float angleHandToHand;
-    
     float leftHandVHip;
     float rightHandVHip;
-    
     float distFootLeft, distFootRight;
+    
     deque<kinectSkeleton> skeletons;
     deque<vector<ofPoint> > ptsHistory;
     deque<vector<ofPoint> > velHistory;
@@ -87,6 +87,18 @@ public:
 //    float scale;
 //    float smoothing;
     
+    ofNode centerNode;
+    
+    
+    // zach todo:
+    // get velocities
+    float rightLegVel;
+    float leftLegVel;
+    float rightArmVel;
+    float leftArmVel;
+    float torsoAvgVel;
+    float totalAvgVel;
+
     bool set;
     bool setV;
 
@@ -107,5 +119,22 @@ public:
     ofParameterGroup anlaysisParams;
     ofParameter <float> smoothing;
     ofParameter <float> scale;
+    ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
+    
+    vector < ofPoint > ks2d;        // 2d sekeleton points 
+    
+    
+    
+    ofCamera normCam;
+    ofFbo normFbo;
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 };

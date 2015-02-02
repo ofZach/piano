@@ -23,8 +23,8 @@ void ofApp::setup(){
     //gui.setup("panel");
     
     KS.setup();
-    KSA.setup();
-    KSAI.setup();
+    
+    //KSAI.setup();
 
     
     skeletonTransform.setName("skeleton transform");
@@ -68,7 +68,9 @@ void ofApp::setup(){
     
     gui.setWhichPanel(1);
     gui.setWhichColumn(0);
-    gui.addGroup(KSA.anlaysisParams);
+    
+    //gui.addGroup(KSA.anlaysisParams);
+    //gui.addGroup(KSAI.interpreterParams);
     
     
     gui.setWhichPanel(2);
@@ -81,11 +83,11 @@ void ofApp::setup(){
     gui.setupEvents();
     gui.enableEvents();
     
-    
-    ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
+
+    //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
 
     
- 
+    
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
@@ -130,9 +132,19 @@ void ofApp::update(){
     
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
-        KSA.analyze(KS);
-        KSAI.analyze(KSA, KS);
+        bool bNewFrame = KB.addSkeleton(KS);
+        
+        if (bNewFrame){
+            KSA.update(KS);
+            
+        }
+        //KSAI.analyze(KSA, KS);
     }
+    
+    
+    
+    //KSAI.drawEvents( KSA.normFbo);
+    
     
     
 
@@ -167,25 +179,35 @@ void ofApp::draw(){
         KS.draw();
     }
     if(drawAnalyzer){
-        KSA.draw(drawBoundingCube);
+        KS.drawDebug(drawBoundingCube);
     }
+    
+    
+    
+    
     cam.end();
+    
+    
+    
     ofClearAlpha();
     fooFbo.end();
     ofSetLineWidth(1);
     
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    KSA.drawDebug();
+    //KSA.drawDebug();
     
     gui.draw();
  
+    
+    
+    
 
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
-void ofApp::newGesture(Gesture &newGest){
-    ofLog()<<newGest.name<<endl;
-}
+//void ofApp::newGesture(Gesture &newGest){
+//    ofLog()<<newGest.name<<endl;
+//}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){

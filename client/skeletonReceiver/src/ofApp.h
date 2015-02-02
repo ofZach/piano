@@ -3,10 +3,12 @@
 #include "ofMain.h"
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
-#include "kinectSkeletonAnalyzer.h"
-#include "kinectSkeletonAnalyzerInterpreter.h"
+#include "kinectSkeletonAnalyser.h"
+//#include "kinectSkeletonAnalyzerInterpreter.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
+#include "kinectBody.h"
+
 
 class ofApp : public ofBaseApp{
     
@@ -25,8 +27,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    void newGesture(Gesture & newGest);
-    
+    //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;
     Skeleton* skeleton;
     vector<Skeleton>* skeletons;
@@ -71,8 +72,15 @@ public:
     ofParameter <string> status;
     
     kinectSkeleton KS;
-    kinectSkeletonAnalyzerInterpreter KSAI;
-    kinectSkeletonAnalyzer KSA;
+    kinectBody KB;
+    
+    //kinectSkeletonAnalyzerInterpreter KSAI;
+    kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
+    
+    //void newGesture(Gesture &newGest);
+    
+    
+    
 };
 
