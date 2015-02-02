@@ -103,11 +103,7 @@ kinectBody::kinectBody(){
     twoDSkelCamDistance.set(1000);
     
     
-    drawSkeletonDebug = false;
-    
-    // to do
-    // setup gestureNames from file to map names to gestures
-    //
+    drawSkeletonDebug = true;
 }
 
 
@@ -321,7 +317,7 @@ void kinectBody::update(){
         nameToHistoryPlot["elbow-diff-lt"]->update(diffl);
         nameToHistoryPlot["elbow-diff-rt"]->update(diffr);
     }
-
+    
 }
 
 
@@ -331,7 +327,7 @@ void kinectBody::drawHistory(){
     if(history.size() > 0){
         normCam.setPosition(history.back().centerPoint.getPosition() + ofPoint(0, 0, -twoDSkelCamDistance/2.0));
         normCam.lookAt(history.back().centerPoint, history.back().centerPoint.getUpDir());
-//        normCam.draw();
+        //        normCam.draw();
         
         normFbo.begin();
         ofClear(255, 255, 255, 255);
@@ -363,52 +359,48 @@ void kinectBody::drawHistory(){
     float height = 75;
     int count = 0;
     
-    if (history.size() > 0) {
-        nameToHistoryPlot["arm-ext-lt"]->draw(200, height * count++, 190,
+    nameToHistoryPlot["arm-ext-lt"]->draw(200, height * count++, 190,
+                                          height - 5);
+    nameToHistoryPlot["arm-diff-lt"]->draw(200, height * count++, 190,
+                                           height - 5);
+    nameToHistoryPlot["elbow-angle-lt"]->draw(200, height * count++, 190,
                                               height - 5);
-        nameToHistoryPlot["arm-diff-lt"]->draw(200, height * count++, 190,
-                                               height - 5);
-        nameToHistoryPlot["elbow-angle-lt"]->draw(200, height * count++, 190,
+    nameToHistoryPlot["elbow-diff-lt"]->draw(200, height * count++, 190,
+                                             height - 5);
+    nameToHistoryPlot["dist-hand-to-hip-lt"]->draw(200, height * count++, 190,
+                                                   height - 5);
+    nameToHistoryPlot["knee-angle-lt"]->draw(200, height * count++, 190,
+                                             height - 5);
+    nameToHistoryPlot["leg-ext-lt"]->draw(200, height * count++, 190,
+                                          height - 5);
+    nameToHistoryPlot["leg-diff-lt"]->draw(200, height * count++, 190,
+                                           height - 5);
+    nameToHistoryPlot["dist-foot-head-lt"]->draw(200, height * count++, 190,
+                                                 height - 5);
+    nameToHistoryPlot["dist-hand-to-hand"]->draw(200, height * count++, 190,
+                                                 height - 5);
+    nameToHistoryPlot["angle-hand-to-hand"]->draw(200, height * count++, 190,
                                                   height - 5);
-        nameToHistoryPlot["elbow-diff-lt"]->draw(200, height * count++, 190,
-                                                 height - 5);
-        nameToHistoryPlot["dist-hand-to-hip-lt"]->draw(200, height * count++, 190,
-                                                       height - 5);
-        nameToHistoryPlot["knee-angle-lt"]->draw(200, height * count++, 190,
-                                                 height - 5);
-        nameToHistoryPlot["leg-ext-lt"]->draw(200, height * count++, 190,
+    count = 0;
+    nameToHistoryPlot["arm-ext-rt"]->draw(0, height * count++, 190, height - 5);
+    nameToHistoryPlot["arm-diff-rt"]->draw(0, height * count++, 190,
+                                           height - 5);
+    nameToHistoryPlot["elbow-angle-rt"]->draw(0, height * count++, 190,
                                               height - 5);
-        nameToHistoryPlot["leg-diff-lt"]->draw(200, height * count++, 190,
-                                               height - 5);
-        nameToHistoryPlot["dist-foot-head-lt"]->draw(200, height * count++, 190,
-                                                     height - 5);
-        nameToHistoryPlot["dist-hand-to-hand"]->draw(200, height * count++, 190,
-                                                     height - 5);
-        nameToHistoryPlot["angle-hand-to-hand"]->draw(200, height * count++, 190,
-                                                      height - 5);
-        count = 0;
-        nameToHistoryPlot["arm-ext-rt"]->draw(0, height * count++, 190, height - 5);
-        nameToHistoryPlot["arm-diff-rt"]->draw(0, height * count++, 190,
-                                               height - 5);
-        nameToHistoryPlot["elbow-angle-rt"]->draw(0, height * count++, 190,
-                                                  height - 5);
-        nameToHistoryPlot["elbow-diff-rt"]->draw(0, height * count++, 190,
+    nameToHistoryPlot["elbow-diff-rt"]->draw(0, height * count++, 190,
+                                             height - 5);
+    nameToHistoryPlot["dist-hand-to-hip-rt"]->draw(0, height * count++, 190,
+                                                   height - 5);
+    nameToHistoryPlot["knee-angle-rt"]->draw(0, height * count++, 190,
+                                             height - 5);
+    nameToHistoryPlot["leg-ext-rt"]->draw(0, height * count++, 190, height - 5);
+    nameToHistoryPlot["leg-diff-rt"]->draw(0, height * count++, 190,
+                                           height - 5);
+    nameToHistoryPlot["dist-foot-head-rt"]->draw(0, height * count++, 190,
                                                  height - 5);
-        nameToHistoryPlot["dist-hand-to-hip-rt"]->draw(0, height * count++, 190,
-                                                       height - 5);
-        nameToHistoryPlot["knee-angle-rt"]->draw(0, height * count++, 190,
-                                                 height - 5);
-        nameToHistoryPlot["leg-ext-rt"]->draw(0, height * count++, 190, height - 5);
-        nameToHistoryPlot["leg-diff-rt"]->draw(0, height * count++, 190,
-                                               height - 5);
-        nameToHistoryPlot["dist-foot-head-rt"]->draw(0, height * count++, 190,
-                                                     height - 5);
-        
-        nameToHistoryPlot["dist-foot-to-foot"]->draw(0, height * count++, 190,
-                                                     height - 5);
-    }
     
-
+    nameToHistoryPlot["dist-foot-to-foot"]->draw(0, height * count++, 190,
+                                                 height - 5);
     ofPopMatrix();
     historyPlotsFBO.end();
     
@@ -427,8 +419,4 @@ void kinectBody::drawHistory(){
     }else{
         gestureFBO.draw(0, 0);
     }
-
-    
-    
-    
 }

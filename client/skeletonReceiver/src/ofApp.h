@@ -73,6 +73,7 @@ public:
     
     kinectSkeleton KS;
     kinectBody KB;
+    kinectBodyAnalyser KBA;
     
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
