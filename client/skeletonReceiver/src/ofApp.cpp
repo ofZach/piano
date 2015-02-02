@@ -168,12 +168,13 @@ void ofApp::update(){
 //    cout << skeletons->size() << endl;
     
     if (skeletons->size() >= 1){
+        //TO DO
+        // Handle Multi Skeletons
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
             KSA.analyze(&KB.getLastSkeleton());
-            //KB.update();
             KBA.analyze(KB);
 			updateAudio();
         }
