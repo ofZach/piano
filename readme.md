@@ -9,7 +9,7 @@ this is to help with organizing OF and non OF parts of this project.
 requires ofxHistoryPlot, ofxKinectV2-OSC:
 
 https://github.com/armadillu/ofxHistoryPlot
-https://github.com/microcosm/ofxKinectV2-OSC
+https://github.com/danthemellowman/ofxKinectV2-OSC: master
 
 also ofxControlPanel -- with the ofParamter branch
 
