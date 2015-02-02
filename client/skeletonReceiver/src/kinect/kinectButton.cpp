@@ -66,7 +66,7 @@ void kinectButton::update(const vector< pair<ofVec3f, float> > &points) {
 	}
 	
 	if(isApproached != _isApproached) {
-//		_approachBlock(isApproached, velocity);
+		_approachBlock(isApproached, velocity);
 	}
 	
 	setIsTriggered(isHit);

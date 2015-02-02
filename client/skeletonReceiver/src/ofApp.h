@@ -16,7 +16,6 @@ class ofApp : public ofBaseApp{
 public:
     void setup();
     void update();
-	void updateAudio(kinectBody &body);
     void draw();
     
     void keyPressed(int key);
@@ -28,6 +27,9 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+	
+	void updateAudio(kinectBody &body);
+	void sendMidi(int buttonIndex, int channel, float velocity, bool noteOn);
     
     //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;

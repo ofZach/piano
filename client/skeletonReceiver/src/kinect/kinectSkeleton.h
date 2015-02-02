@@ -276,8 +276,8 @@ public:
             if (std::find(skipList.begin(), skipList.end(), indexToName[i] )!=skipList.end()){
                 continue;
             }
-            if (trackingStates[i] == TRACKED) ofSetColor(255,255,255, 100);
-            else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127, 100);
+            if (trackingStates[i] == TRACKED) ofSetColor(255,255,255, 255);
+            else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127, 255);
             else ofSetColor(255,0,0, 100);
             ofPushMatrix();
             
