@@ -7,13 +7,13 @@ void ofApp::setup(){
     UDPR.setup();
     
     
-
+    
     ofTrueTypeFont smallFont, largeFont;
     
     smallFont.loadFont("selena.otf", 16); //http://openfontlibrary.org/en/font/selena
     largeFont.loadFont("selena.otf", 48);
     
-
+    
     ofSetFrameRate(60);
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
@@ -25,7 +25,7 @@ void ofApp::setup(){
     KS.setup();
     
     //KSAI.setup();
-
+    
     
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
@@ -37,7 +37,7 @@ void ofApp::setup(){
     skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
-   
+    
     dataPlayer.setName("dataPlayer");
     dataPlayer.add(bUseUdpPlayer.set("use udp player", false));
     dataPlayer.add(bLoadNewUDP.set("load udp", false));
@@ -53,11 +53,11 @@ void ofApp::setup(){
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
-	
-	buttonControl.setName("button control");
-	buttonControl.add(buttonDraw.set("Draw Buttons", false));
-	buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
-	buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
+    
+    buttonControl.setName("button control");
+    buttonControl.add(buttonDraw.set("Draw Buttons", false));
+    buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
+    buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
@@ -69,7 +69,7 @@ void ofApp::setup(){
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
     gui.addGroup(debugView);
-
+    
     
     gui.setWhichPanel(1);
     gui.setWhichColumn(0);
@@ -77,12 +77,12 @@ void ofApp::setup(){
     //gui.addGroup(KSA.anlaysisParams);
     //gui.addGroup(KSAI.interpreterParams);
     
-	
+    
     gui.setWhichPanel(2);
-	gui.setWhichColumn(0);
-	gui.addGroup(buttonControl);
-	
-	gui.setWhichPanel(0);
+    gui.setWhichColumn(0);
+    gui.addGroup(buttonControl);
+    
+    gui.setWhichPanel(0);
     
     status = "first frame";
     gui.setStatusMessage(status);
@@ -91,52 +91,52 @@ void ofApp::setup(){
     gui.setupEvents();
     gui.enableEvents();
     
-
+    
     //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
-
+    
     
     
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
-	
-	midiOut.openVirtualPort("OF Skeleton Tracker");
-	int midiRoot = 24; // C3
-	midiNotes.push_back(0);
-	midiNotes.push_back(2);
-	midiNotes.push_back(4);
-	midiNotes.push_back(5);
-	midiNotes.push_back(7);
-	midiNotes.push_back(9);
-	midiNotes.push_back(11);
-	buttons.resize(midiNotes.size() * 6);
-	
-	for(int i = 0; i < buttons.size(); i++) {
-		buttons[i].setTriggerBlock(^(bool on, float vel) {
-			
-			int octave = i / midiNotes.size();
-			int interval = i % midiNotes.size();
-			int note = midiNotes[interval] + (octave * 12) + midiRoot;
-			int velocity = ofMap(vel, 0, 1, 40, 120);
-			
-			if(on) {
-				midiOut.sendNoteOn(1, note, velocity);
-			} else {
-				midiOut.sendNoteOff(1, note, velocity);
-			}
-		});
-	}
+    
+    midiOut.openVirtualPort("OF Skeleton Tracker");
+    int midiRoot = 24; // C3
+    midiNotes.push_back(0);
+    midiNotes.push_back(2);
+    midiNotes.push_back(4);
+    midiNotes.push_back(5);
+    midiNotes.push_back(7);
+    midiNotes.push_back(9);
+    midiNotes.push_back(11);
+    buttons.resize(midiNotes.size() * 6);
+    
+    for(int i = 0; i < buttons.size(); i++) {
+        buttons[i].setTriggerBlock(^(bool on, float vel) {
+            
+            int octave = i / midiNotes.size();
+            int interval = i % midiNotes.size();
+            int note = midiNotes[interval] + (octave * 12) + midiRoot;
+            int velocity = ofMap(vel, 0, 1, 40, 120);
+            
+            if(on) {
+                midiOut.sendNoteOn(1, note, velocity);
+            } else {
+                midiOut.sendNoteOff(1, note, velocity);
+            }
+        });
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
     gui.update();
-
-
+    
+    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
-
+    
     if (bLoadNewUDP == true){
         string folder = ofSystemLoadDialog("", true).getPath();
         if (folder != ""){
@@ -151,7 +151,7 @@ void ofApp::update(){
     }
     
     
-
+    
     
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
@@ -162,23 +162,31 @@ void ofApp::update(){
     ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
-
+    
     kinect.update();
     
-////    cout << skeletons->size() << endl;
-//
+    
+    //ofLog(OF_LOG_NOTICE) << skeletons->size() << endl;
+    //
+    
+    
     if (skeletons->size() >= 1){
         //TO DO
         // Handle Multi Skeletons
-        KS.setFromSkeleton(skeletons->at(0), mat);
-        bool bNewFrame = KB.addSkeleton(KS);
         
-        if (bNewFrame){
-            KSA.analyze(&KB.getLastSkeleton());
-            KBA.analyze(KB);
-			updateAudio();
+        for(int i = 0; i < skeletons->size(); i++){
+            KS.setFromSkeleton(skeletons->at(i), mat);
+            kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
+            bool bNewFrame = body.addSkeleton(KS);
+            
+            if (bNewFrame){
+                KSA.analyze(&body.getLastSkeleton());
+                KBA.analyze(body);
+                updateAudio();
+            }
         }
-        //KSAI.analyze(KSA, KS);
+    }else{
+        
     }
     
     //KSAI.drawEvents( KSA.normFbo);
@@ -188,12 +196,12 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(ofColor::darkGray);
-
+    
     
     ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
- 
+    
     fooFbo.begin();
     ofBackground(ofColor::darkGray);
     //ofClear(0, 0, 0);
@@ -208,19 +216,24 @@ void ofApp::draw(){
     
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
-    if(drawSkeleton){
-        KB.draw();
+    
+    for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+        if(drawSkeleton){
+            bodyMap[iter->getBodyId()].draw();
+        }
+        if(drawAnalyzer){
+            bodyMap[iter->getBodyId()].drawDebug(drawBoundingCube);
+        }
     }
-    if(drawAnalyzer){
-        KB.drawDebug(drawBoundingCube);
+    
+    
+    
+    if(buttonDraw) {
+        for(auto& button : buttons) {
+            button.draw();
+        }
     }
-	
-	if(buttonDraw) {
-		for(auto& button : buttons) {
-			button.draw();
-		}
-	}
-	
+    
     cam.end();
     
     
@@ -231,41 +244,43 @@ void ofApp::draw(){
     
     ofSetColor(255,255,255);
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    KB.drawHistory();
+    for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+        bodyMap[iter->getBodyId()].drawHistory();
+    }
     
     gui.draw();
- 
     
     
     
-
-//    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
+    
+    
+    //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 void ofApp::updateAudio() {
-	float spacing = 150;
-	vector<ofPoint> hands;
-	hands.push_back(KS.getRightPoint(::hand));
-	hands.push_back(KS.getLeftPoint(::hand));
-	
-	for(int i = 0; i < buttons.size(); i++) {
-		
-		int interval = i % (midiNotes.size() + 1);
-		int octave = i / (midiNotes.size() + 1);
-		
-		float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
-		
-		float x = sin(t);
-		float z = cos(t);
-		float y = ofMap(octave, 0, 3, -0.75, 1);
-		
-		buttons[i].setParent(KS.centerPoint);
-		buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
-		
-		buttons[i].setRadius(buttonRadius);
-		buttons[i].setTriggerScale(buttonTriggerScale);
-		buttons[i].update(hands);
-	}
+    float spacing = 150;
+    vector<ofPoint> hands;
+    hands.push_back(KS.getRightPoint(::hand));
+    hands.push_back(KS.getLeftPoint(::hand));
+    
+    for(int i = 0; i < buttons.size(); i++) {
+        
+        int interval = i % (midiNotes.size() + 1);
+        int octave = i / (midiNotes.size() + 1);
+        
+        float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
+        
+        float x = sin(t);
+        float z = cos(t);
+        float y = ofMap(octave, 0, 3, -0.75, 1);
+        
+        buttons[i].setParent(KS.centerPoint);
+        buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
+        
+        buttons[i].setRadius(buttonRadius);
+        buttons[i].setTriggerScale(buttonTriggerScale);
+        buttons[i].update(hands);
+    }
 }
 
 //void ofApp::newGesture(Gesture &newGest){
@@ -318,6 +333,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }

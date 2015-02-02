@@ -83,6 +83,9 @@ public:
     kinectSkeleton KS;
     kinectBody KB;
 	kinectBodyAnalyser KBA;
+    
+    map<string, kinectBody> bodyMap;
+    map<string, kinectSkeleton> ksMap;
 	
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
