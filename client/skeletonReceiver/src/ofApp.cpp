@@ -58,6 +58,7 @@ void ofApp::setup(){
 	buttonControl.add(buttonDraw.set("Draw Buttons", false));
 	buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
 	buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
+	buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
@@ -276,6 +277,7 @@ void ofApp::updateAudio(kinectSkeleton &skeleton, kinectBody &body) {
 		
 		buttons[i].setRadius(buttonRadius);
 		buttons[i].setTriggerScale(buttonTriggerScale);
+		buttons[i].setApproachScale(buttonApproachScale);
 		buttons[i].update(activePoints);
 	}
 }

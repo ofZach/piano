@@ -11,7 +11,7 @@ public:
 	kinectButton();
 	
 	void update(const std::vector< std::pair<ofPoint, float> > &points);
-	bool hitTest(const ofVec3f& v) const;
+	bool hitTest(const ofVec3f& v, float distSquared) const;
 	
 	void setRadius(float radius);
 	float getRadius() const { return _radius; }
@@ -19,10 +19,17 @@ public:
 	void setTriggerScale(float triggerScale);
 	float getTriggerScale() const { return _triggerScale; }
 	
-	void setIsActive(bool active);
-	bool getIsActive() const { return _isActive; }
+	void setApproachScale(float approachScale);
+	float getApproachScale() const { return _approachScale; }
+	
+	void setIsTriggered(bool isTriggered);
+	bool getIsTriggered() const { return _isTriggered; }
+	
+	void setIsApproached(bool isApproached);
+	bool getIsApproached() const { return _isApproached; }
 	
 	void setTriggerBlock(ButtonBlock);
+	void setApproachBlock(ButtonBlock);
 	
 private:
 	
@@ -30,10 +37,17 @@ private:
 	void updateHitbox();
 	
 	float _radius;
+	float _radiusSquared;
+	
 	float _triggerScale;
-	bool _isActive;
-	bool _triggered;
+	float _approachScale;
+	
+	bool _isTriggered;
+	bool _isApproached;
 	
 	float _triggerRadiusSquared;
-	ButtonBlock _block;
+	float _approachRadiusSquared;
+	
+	ButtonBlock _triggerBlock;
+	ButtonBlock _approachBlock;
 };

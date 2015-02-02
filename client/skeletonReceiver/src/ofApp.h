@@ -67,6 +67,7 @@ public:
 	ofParameter<bool> buttonDraw;
 	ofParameter<float> buttonRadius;
 	ofParameter<float> buttonTriggerScale;
+	ofParameter<float> buttonApproachScale;
     
     ofFbo fooFbo;
     
