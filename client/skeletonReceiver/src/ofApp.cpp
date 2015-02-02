@@ -217,7 +217,7 @@ void ofApp::update(){
             }
         }
     }else{
-        
+        bodyMap.clear();
     }
     
     //KSAI.drawEvents( KSA.normFbo);
