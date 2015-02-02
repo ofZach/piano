@@ -55,6 +55,7 @@ void ofApp::setup(){
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
 	
 	buttonControl.setName("button control");
+	buttonControl.add(buttonDraw.set("Draw Buttons", false));
 	buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
 	buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     
@@ -173,31 +174,7 @@ void ofApp::update(){
         if (bNewFrame){
 			KSA.analyze(KB.getLastSkeleton());
 			KBA.analyze(KB);
-			
-//			float spacing = ofClamp(KS.shouldersWidth, 140, 175);
-			float spacing = 150;
-			vector<ofPoint> hands;
-			hands.push_back(KS.getRightPoint(::hand));
-			hands.push_back(KS.getLeftPoint(::hand));
-			
-			for(int i = 0; i < buttons.size(); i++) {
-				
-				int interval = i % (midiNotes.size() + 1);
-				int octave = i / (midiNotes.size() + 1);
-				
-				float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
-				
-				float x = sin(t);
-				float z = cos(t);
-				float y = ofMap(octave, 0, 3, -0.75, 1);
-				
-				buttons[i].setParent(KS.centerPoint);
-				buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
-				
-				buttons[i].setRadius(buttonRadius);
-				buttons[i].setTriggerScale(buttonTriggerScale);
-				buttons[i].update(hands);
-			}			
+			updateAudio();
         }
         //KSAI.analyze(KSA, KS);
     }
@@ -237,8 +214,10 @@ void ofApp::draw(){
         KB.drawDebug(drawBoundingCube);
     }
 	
-	for(auto& button : buttons) {
-		button.draw();
+	if(buttonDraw) {
+		for(auto& button : buttons) {
+			button.draw();
+		}
 	}
 	
     cam.end();
@@ -260,6 +239,32 @@ void ofApp::draw(){
     
 
 //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
+}
+
+void ofApp::updateAudio() {
+	float spacing = 150;
+	vector<ofPoint> hands;
+	hands.push_back(KS.getRightPoint(::hand));
+	hands.push_back(KS.getLeftPoint(::hand));
+	
+	for(int i = 0; i < buttons.size(); i++) {
+		
+		int interval = i % (midiNotes.size() + 1);
+		int octave = i / (midiNotes.size() + 1);
+		
+		float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
+		
+		float x = sin(t);
+		float z = cos(t);
+		float y = ofMap(octave, 0, 3, -0.75, 1);
+		
+		buttons[i].setParent(KS.centerPoint);
+		buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
+		
+		buttons[i].setRadius(buttonRadius);
+		buttons[i].setTriggerScale(buttonTriggerScale);
+		buttons[i].update(hands);
+	}
 }
 
 //void ofApp::newGesture(Gesture &newGest){

@@ -16,6 +16,7 @@ class ofApp : public ofBaseApp{
 public:
     void setup();
     void update();
+	void updateAudio();
     void draw();
     
     void keyPressed(int key);
@@ -63,6 +64,7 @@ public:
     ofParameter <float> cameraAngle;
 	
 	ofParameterGroup buttonControl;
+	ofParameter<bool> buttonDraw;
 	ofParameter<float> buttonRadius;
 	ofParameter<float> buttonTriggerScale;
     
@@ -81,7 +83,7 @@ public:
     kinectSkeleton KS;
     kinectBody KB;
 	kinectBodyAnalyser KBA;
-    
+	
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
