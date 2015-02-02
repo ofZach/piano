@@ -139,7 +139,7 @@ void ofApp::update(){
         if (bNewFrame){
             
             KSA.analyze(KB.getLastSkeleton());
-            
+            KBA.analyze(KB);
         }
         //KSAI.analyze(KSA, KS);
     }
