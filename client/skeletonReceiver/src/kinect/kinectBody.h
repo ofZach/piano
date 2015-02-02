@@ -12,7 +12,9 @@ public:
     int bodyId;
     
     vector < ofxHistoryPlot * > historyPlots;
+    vector < ofxHistoryPlot * > gesturePlots;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
+    
     vector < kinectSkeleton > history;
     vector < ofPoint > velocity;
     vector < float > velLen;
@@ -20,7 +22,7 @@ public:
     ofParameter <float> smoothing;
     ofParameter <float> scale;
     ofParameter <float> twoDSkelCamDistance;    // I make skeletons 2d
-
+    
     
     int nFramesHistory;
     
