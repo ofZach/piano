@@ -130,12 +130,15 @@ void ofApp::update(){
 
     kinect.update();
     
+    cout << skeletons->size() << endl;
+    
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
         bool bNewFrame = KB.addSkeleton(KS);
         
         if (bNewFrame){
-            KSA.update(KS);
+            
+            KSA.analyze(KB.getLastSkeleton());
             
         }
         //KSAI.analyze(KSA, KS);
@@ -176,10 +179,10 @@ void ofApp::draw(){
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
     if(drawSkeleton){
-        KS.draw();
+        KB.draw();
     }
     if(drawAnalyzer){
-        KS.drawDebug(drawBoundingCube);
+        KB.drawDebug(drawBoundingCube);
     }
     
     
@@ -193,6 +196,7 @@ void ofApp::draw(){
     fooFbo.end();
     ofSetLineWidth(1);
     
+    ofSetColor(255,255,255);
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
     //KSA.drawDebug();
     

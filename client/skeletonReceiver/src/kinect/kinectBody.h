@@ -16,19 +16,38 @@ public:
     vector < float > velLen;
     vector < ofPoint > accel;
     
+    float rightLegVel;
+    float leftLegVel;
+    float rightArmVel;
+    float leftArmVel;
+    float torsoAvgVel;
+    float totalAvgVel;
+    
+    // ---------------------------------------------------
+    // make this a parameter
+    
     int nFramesHistory;
     
-    kinectBody();
-    bool addSkeleton( kinectSkeleton & KS);
+    
+    // ---------------------------------------------------
+    
+                        kinectBody();
+    bool                addSkeleton( kinectSkeleton & KS);
+    kinectSkeleton &    getLastSkeleton();
+    
+    // ---------------------------------------------------
 
     
-    kinectSkeleton & getLastSkeleton(){
+    void draw(){
         if (history.size() > 0){
-            return history.back();
-        } else {
-            return;
+            getLastSkeleton().draw();
         }
-        
-        
     }
+    
+    void drawDebug(bool bDrawBox){
+        if (history.size() > 0){
+            getLastSkeleton().drawDebug( bDrawBox );
+        }
+    }
+    
 };
