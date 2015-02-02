@@ -32,6 +32,7 @@ public:
     float leftArmVel;
     float torsoAvgVel;
     float totalAvgVel;
+
     
     // ---------------------------------------------------
     // make this a parameter
