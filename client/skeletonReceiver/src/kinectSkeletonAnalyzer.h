@@ -28,39 +28,6 @@
 // (c) size of non axis aligned bounds (maybe the convex hull 3d of point set)
 
 
-/*
- 
- 
- bones["LeftLeg"].clear();
- bones["LeftLeg"].push_back(nameToIndex["HipLeft"]);
- bones["LeftLeg"].push_back(nameToIndex["KneeLeft"]);
- bones["LeftLeg"].push_back(nameToIndex["AnkleLeft"]);
- 
- bones["RightArm"].clear();
- bones["RightArm"].push_back(nameToIndex["ShoulderRight"]);
- bones["RightArm"].push_back(nameToIndex["ElbowRight"]);
- bones["RightArm"].push_back(nameToIndex["HandRight"]);
- 
- bones["RightLeg"].clear();
- bones["RightLeg"].push_back(nameToIndex["HipRight"]);
- bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
- bones["RightLeg"].push_back(nameToIndex["KneeRight"]);
- 
- 
- bones["LeftArm"].clear();
- bones["LeftArm"].push_back(nameToIndex["ShoulderLeft"]);
- bones["LeftArm"].push_back(nameToIndex["ElbowLeft"]);
- bones["LeftArm"].push_back(nameToIndex["HandLeft"]);
- 
- 
- bones["Torso"].clear();
-
- 
- 
- 
- */
-
-
 
 
 

@@ -7,11 +7,16 @@
 #include "kinectSkeletonAnalyzer.h"
 #include "kinectSkeleton.h"
 
+#include "ofxMidi.h"
+
+
 // look at the kinect skeleton analyzer and make some decisions
 
 typedef struct {
     ofPoint eventPt;
     float energy;
+    int note;
+    
 } hitEvent;
 
 class kinectSkeletonAnalyzerInterpreter {
@@ -26,11 +31,7 @@ public:
     ofParameter <float> velBelowThresh;
     ofParameter <float> pelvisBlockoutLen;
     
-    
-    
-    
-    
-    
+
     void setup();
     void analyze( kinectSkeletonAnalyzer & KSA, kinectSkeleton & KS);
     
@@ -41,8 +42,7 @@ public:
 
     vector < hitEvent > events;
     
-    
-    
-    
+    ofxMidiOut midi;
+
     
 };

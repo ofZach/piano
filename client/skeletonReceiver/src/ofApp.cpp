@@ -23,8 +23,9 @@ void ofApp::setup(){
     //gui.setup("panel");
     
     KS.setup();
-    KSA.setup();
-    KSAI.setup();
+    
+    //KSA.setup();
+    //KSAI.setup();
 
     
     skeletonTransform.setName("skeleton transform");
@@ -68,8 +69,9 @@ void ofApp::setup(){
     
     gui.setWhichPanel(1);
     gui.setWhichColumn(0);
-    gui.addGroup(KSA.anlaysisParams);
-    gui.addGroup(KSAI.interpreterParams);
+    
+    //gui.addGroup(KSA.anlaysisParams);
+    //gui.addGroup(KSAI.interpreterParams);
     
     
     gui.setWhichPanel(2);
@@ -131,13 +133,18 @@ void ofApp::update(){
     
     if (skeletons->size() >= 1){
         KS.setFromSkeleton(skeletons->at(0), mat);
-        KSA.analyze(KS);
-        KSAI.analyze(KSA, KS);
+        bool bNewFrame = KB.addSkeleton(KS);
+        
+        if (bNewFrame){
+            //KSA.analyze(KS);
+            
+        }
+        //KSAI.analyze(KSA, KS);
     }
     
     
     
-    KSAI.drawEvents( KSA.normFbo);
+    //KSAI.drawEvents( KSA.normFbo);
     
     
     
@@ -173,7 +180,7 @@ void ofApp::draw(){
         KS.draw();
     }
     if(drawAnalyzer){
-        KSA.draw(drawBoundingCube);
+        //KSA.draw(drawBoundingCube);
     }
     
     
@@ -188,7 +195,7 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     
     fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    KSA.drawDebug();
+    //KSA.drawDebug();
     
     gui.draw();
  
