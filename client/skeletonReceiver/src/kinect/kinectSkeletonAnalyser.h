@@ -132,7 +132,7 @@ public:
         skeleton.distFootRight = footToFootDist[1] / totalFeetDist[1];
 
         skeleton.shouldersWidth = (shoulders[0] - shoulders[1]).length();
-        
+        skeleton.skeletonHeight = totalFeetDist[0]+totalFeetDist[1];
     
         //---------------------------------------------------------------------------------------
         //
