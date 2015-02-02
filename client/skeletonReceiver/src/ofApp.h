@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
-//#include "kinectSkeletonAnalyzer.h"
+#include "kinectSkeletonAnalyser.h"
 //#include "kinectSkeletonAnalyzerInterpreter.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
@@ -75,7 +75,7 @@ public:
     kinectBody KB;
     
     //kinectSkeletonAnalyzerInterpreter KSAI;
-    //kinectSkeletonAnalyzer KSA;
+    kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
     
     //void newGesture(Gesture &newGest);

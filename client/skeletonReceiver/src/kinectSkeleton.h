@@ -40,7 +40,7 @@ class kinectSkeleton {
     
 public:
     
-    
+    ofNode centerPoint;
     map < int, int > rightEnumsToIndex;
     map < int, int > leftEnumsToIndex;
     map < int, int > centerEnumsToIndex;
@@ -52,21 +52,39 @@ public:
     vector < int > trackingStates;
     vector < string > skipList;
     
+    
+    //map<string , vector<int> > bones;
+    //vector<string> bonesList;
+    
+    
     map < string, int > nameToIndex;
     map < int, string> indexToName;
     
     
-    //----------------------------------- statistics to be calculated:
     float shouldersWidth;
     float armLeftExtendedPct;
     float armRightExtendedPct;
     float legLeftExtendedPct;
     float legRightExtendedPct;
+    float leftFootSpan, rightFootSpan;
+    float leftHandSpan, rightHandSpan;
+    float angleLeftKnee, angleRightKnee;
+    float angleLeftElbow, angleRightElbow;
+    float angleHandToHand;
+    float leftHandVHip;
+    float rightHandVHip;
+    float distFootLeft, distFootRight;
+    ofVec3f orientation;
     
+    // zach todo:
+    // get velocities
+    float rightLegVel;
+    float leftLegVel;
+    float rightArmVel;
+    float leftArmVel;
+    float torsoAvgVel;
+    float totalAvgVel;
     
-    
-    
-
     void setup(){
         
         string jointNames[25] = { "ThumbRight", "SpineBase", "SpineMid", "Neck", "Head", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "SpineShoulder", "HandTipLeft", "ThumbLeft", "HandTipRight"};
@@ -77,7 +95,7 @@ public:
             pts.push_back(ofPoint(0,0,0));
             trackingStates.push_back(0);
         }
-
+        
         
         //--------------------------------------------------------------------- enums
         rightEnumsToIndex[ thumb ]      = nameToIndex["ThumbRight"];
@@ -104,11 +122,11 @@ public:
         
         centerEnumsToIndex[ spineBase ] = nameToIndex["SpineBase"];
         centerEnumsToIndex[ spineShoulder ] = nameToIndex["SpineShoulder"];
-        centerEnumsToIndex[ neck ] = nameToIndex["neck"];
-        centerEnumsToIndex[ head ] = nameToIndex["head"];
+        centerEnumsToIndex[ neck ] = nameToIndex["Neck"];
+        centerEnumsToIndex[ head ] = nameToIndex["Head"];
         centerEnumsToIndex[ spineMid ] = nameToIndex["SpineMid"];
         //---------------------------------------------------------------------
-
+        
         skipList.push_back("WristRight");
         skipList.push_back("WristLeft");
         skipList.push_back("HandTipRight");
@@ -192,7 +210,7 @@ public:
         }
         return -1;
     }
-
+    
     
     
     void setFromSkeleton( Skeleton & sk, ofMatrix4x4 transform = ofMatrix4x4()){
@@ -248,7 +266,7 @@ public:
         trackingStates[nameToIndex["HandTipLeft"]] = sk.getHandTipLeft().getTrackingState();
         trackingStates[nameToIndex["ThumbLeft"]] = sk.getThumbLeft().getTrackingState();
         trackingStates[nameToIndex["HandTipRight"]] = sk.getHandTipRight().getTrackingState();
-
+        
     }
     
     void draw(){
@@ -271,6 +289,147 @@ public:
         
         drawBones();
     }
+    
+    void drawDebug(bool boundingbox){
+        // draw HandToHandVector
+        ofSetColor(
+                   ofFloatColor(ofColor::orange, (leftHandSpan + rightHandSpan) / 2.0));
+        ofLine(getLeftPoint(hand),
+               getRightPoint(hand));
+        
+        // Draw Left Arm Extended
+        ofSetColor(ofFloatColor(ofColor::red, (armLeftExtendedPct)));
+        ofLine(getLeftPoint(hand),
+               getLeftPoint(shoulder));
+        
+        // Draw Right Arm Extended
+        ofSetColor(ofFloatColor(ofColor::red, (armRightExtendedPct)));
+        ofLine(getRightPoint(hand),
+               getRightPoint(shoulder));
+        
+        // Draw Left Arm To Hip
+        ofSetColor(ofFloatColor(ofColor::green, leftHandVHip));
+        ofLine(getLeftPoint(hand),
+               getLeftPoint(hip));
+        
+        // Draw Left Arm To Hip
+        ofSetColor(ofFloatColor(ofColor::green, rightHandVHip));
+        ofLine(getRightPoint(hand),
+               getRightPoint(hip));
+        
+        // Draw Head to Feet
+        ofSetColor(ofFloatColor(ofColor::darkBlue, 1.0 - distFootLeft));
+        ofLine(getCenterPoint(head),
+               getLeftPoint(ankle));
+        
+        // Draw Head to Feet
+        ofSetColor(ofFloatColor(ofColor::darkBlue, 1.0 - distFootRight));
+        ofLine(getCenterPoint(head),
+               getRightPoint(ankle));
+        
+        // Draw Foot to Foot
+        ofSetColor(
+                   ofFloatColor(ofColor::violet, (leftFootSpan + rightFootSpan) / 2.0));
+        ofLine(getLeftPoint(ankle),
+               getRightPoint(ankle));
+        
+        // Draw Left Hip to Foot
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legLeftExtendedPct));
+        ofLine(getLeftPoint(hip),
+               getLeftPoint(ankle));
+        
+        // Draw Right Hip to Foot
+        ofSetColor(ofFloatColor(ofColor::blueViolet, legRightExtendedPct));
+        ofLine(getRightPoint(hip),
+               getRightPoint(ankle));
+        
+        // Draw Angle Right Knee
+        ofSpherePrimitive primitve(5, 5);
+        ofVboMesh mesh = primitve.getMesh();
+        ofPushMatrix();
+        ofSetColor(
+                   ofFloatColor(ofColor::blue, ofMap(angleRightKnee, 0, 180, 0, 1, true)));
+        ofTranslate(
+                    getRightPoint(knee));
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofLine(getRightPoint(hip),
+               getRightPoint(knee));
+        ofLine(getRightPoint(ankle),
+               getRightPoint(knee));
+        
+        // Draw Angle Left Knee
+        ofPushMatrix();
+        ofSetColor(
+                   ofFloatColor(ofColor::blue, ofMap(angleLeftKnee, 0, 180, 0, 1, true)));
+        ofTranslate(
+                    getLeftPoint(knee));
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofLine(getLeftPoint(hip),
+               getLeftPoint(knee));
+        ofLine(getLeftPoint(ankle),
+               getLeftPoint(knee));
+        
+        // Draw Elbow Left Elbow
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::blue,
+                                ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+        ofTranslate(
+                    getLeftPoint(elbow));
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofLine(getLeftPoint(hand),
+               getLeftPoint(elbow));
+        ofLine(getLeftPoint(elbow),
+               getLeftPoint(shoulder));
+        
+        // Draw Elbow Right Elbow
+        ofPushMatrix();
+        ofSetColor(ofFloatColor(ofColor::blue,
+                                ofMap(angleRightElbow, 0, 180, 0, 1, true)));
+        ofTranslate(
+                    getRightPoint(elbow));
+        mesh.draw();
+        ofPopMatrix();
+        
+        ofLine(getRightPoint(hand),
+               getRightPoint(elbow));
+        ofLine(getRightPoint(elbow),
+               getRightPoint(shoulder));
+        
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofPushMatrix();
+        ofSetColor(255, 255, 255, 200);
+        ofTranslate(getCenterPoint(spineMid));
+        
+        // Draw Bounding Cube
+        ofRotate(0, orientation.x, orientation.y, orientation.z);
+        
+        //        ofBoxPrimitive p(100,100,100);
+        //        p.drawWireframe();
+        //
+        //        ofDrawAxis(20);
+        ofPopMatrix();
+        
+        centerPoint.draw();
+        if (boundingbox) {
+            ofSetLineWidth(1);
+            ofPushMatrix();
+            ofMultMatrix(centerPoint.getGlobalTransformMatrix());
+            ofBoxPrimitive p(400, 400, 400);
+            ofSetColor(255, 255, 255, 50);
+            p.drawWireframe();
+            ofPopMatrix();
+            ofSetLineWidth(2);
+            ofSetColor(255);
+        }
+    }
+    
+    
     
     
     void drawBones() {
