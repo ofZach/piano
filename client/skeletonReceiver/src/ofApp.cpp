@@ -105,20 +105,6 @@ void ofApp::setup(){
     fooFbo.end();
     
     midiOut.openVirtualPort("OF Skeleton Tracker");
-
-    midiNotes.push_back(0);
-    midiNotes.push_back(2);
-    midiNotes.push_back(4);
-    midiNotes.push_back(5);
-    midiNotes.push_back(7);
-    midiNotes.push_back(9);
-    midiNotes.push_back(11);
-    buttons.resize(midiNotes.size() * 6);
-    
-    for(int i = 0; i < buttons.size(); i++) {
-        buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
-        buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
-    }
     
     midi.setup();
 }
@@ -259,17 +245,48 @@ void ofApp::draw(){
     }
     
     gui.draw();
-    
     midi.draw();
-    
-    
-    
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
-
 void ofApp::updateAudio(kinectBody &body) {
+	static bool trig = false;
+	static int trigNote = 0;
+
+	float extendThreshHi = 0.6;
+	float extendThreshLow = 0.5;
+
+	float elevateThreshLow = 0.5;
+
+	float extendPerc = body.getLastSkeleton().armRightExtendedPct;
+	float elevatePerc = body.getLastSkeleton().rightHandVHip;
 	
+	ofVec3f acc = body.accel[body.getLastSkeleton().rightEnumsToIndex[::hand]];
+	
+	vector<int> notes;
+	notes.push_back(60);
+	notes.push_back(65);
+	notes.push_back(67);
+	notes.push_back(72);
+	float notePerc = ofMap(elevatePerc, 0.3, 0.7, 0, notes.size() - 1, true);
+	int note = notes[notePerc];
+	
+	float sum = acc.x + acc.y + acc.z;
+	bool shouldTrig = sum < -5 && extendPerc > extendThreshHi;
+	bool shouldStop = extendPerc < extendThreshLow;
+
+	if(shouldTrig && !trig) {
+		midiOut.sendNoteOn(4, note);
+		trig = true;
+	} else if(shouldStop && trig) {
+		midiOut.sendNoteOff(4, note);
+		trig = false;
+	} else if(trig && trigNote != note) {
+		midiOut.sendNoteOn(4, note);
+		midiOut.sendNoteOff(4, trigNote);
+	}
+	
+	trigNote = note;
 }
 
 //--------------------------------------------------------------

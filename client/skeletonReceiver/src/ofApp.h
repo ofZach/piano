@@ -30,7 +30,6 @@ public:
     void gotMessage(ofMessage msg);
 	
 	void updateAudio(kinectBody &body);
-	void sendMidi(int buttonIndex, int channel, float velocity, bool noteOn);
     
     //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;
