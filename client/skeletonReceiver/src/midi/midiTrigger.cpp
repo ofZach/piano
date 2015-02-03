@@ -12,13 +12,13 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 
 #pragma mark - Util
 
-float NormalizedHeight(kinectSkeleton& sk, int name, int side, bool clamp = true) {
+float NormalizedHeight(kinectSkeleton& sk, int name, int side) {
 	if(sk.skeletonHeight == 0) {
 		return 0;
 	} else {
 		ofPoint p = sk.getPoint(name, side);
 		ofPoint f = sk.getPoint(::foot, side);
-		return ofMap(p.distance(f), 0, sk.skeletonHeight, 0, 1, clamp);
+		return ofMap(p.distance(f), 0, sk.skeletonHeight, 0, 1);
 	}
 }
 
@@ -46,7 +46,7 @@ void grabbedNote::update(kinectBody &body) {
 	
 	float extendPerc = sk.armRightExtendedPct;
 	
-	float height = ofMap(NormalizedHeight(sk, ::hand, ::right), 0, 1, 0.3, 1);
+	float height = ofMap(NormalizedHeight(sk, ::hand, ::right), 0.3, 1, 0, 1);
 	int note = ExtractNote(getSettings(), height);
 	
 	ofVec3f acc = body.accel[sk.rightEnumsToIndex[::hand]];
@@ -58,15 +58,16 @@ void grabbedNote::update(kinectBody &body) {
 	if(shouldTrig && !_triggered) {
 		getMidiOut()->sendNoteOn(getSettings().channel, note);
 		_triggered = true;
+		_currentNote = note;
 	} else if(shouldStop && _triggered) {
 		getMidiOut()->sendNoteOff(getSettings().channel, note);
 		_triggered = false;
+		_currentNote = 0;
 	} else if(_triggered && _currentNote != note) {
 		getMidiOut()->sendNoteOn(getSettings().channel, note);
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
+		_currentNote = note;
 	}
-	
-	_currentNote = note;
 }
 
 #pragma mark - Grid Note
@@ -77,46 +78,56 @@ gridNote::gridNote() : _triggered(false), _currentNote(0) {
 
 void gridNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	float extendPerc;
+	ofVec3f handVel;
+	
+	if(getSettings().side == ::left) {
+		extendPerc = sk.armLeftExtendedPct;
+		handVel = body.velocity[sk.leftEnumsToIndex[::hand]];
+	} else {
+		extendPerc = sk.armRightExtendedPct;
+		handVel = body.velocity[sk.rightEnumsToIndex[::hand]];
+	}
+	
 	float extendThreshHi = 0.6;
-	float extendPerc = sk.armLeftExtendedPct;
-	
 	bool shouldTrig = extendPerc > extendThreshHi;
-	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, ::left, true));
-	
-	ofVec3f handVel = body.velocity[sk.leftEnumsToIndex[::hand]];
+	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, getSettings().side));
 	int vel = ofMap(handVel.length(), 0, 40, 40, 120);
 	
 	if(shouldTrig && note != _currentNote) {
 		getMidiOut()->sendNoteOn(getSettings().channel, note, vel);
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = true;
+		_currentNote = note;
 	} else if(!shouldTrig && _triggered) {
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = false;
+		_currentNote = 0;
+	}
+}
+
+#pragma mark - Accordian Note
+
+accordianNote::accordianNote() : _triggered(false) {
+	
+}
+
+void accordianNote::update(kinectBody &body) {
+	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	float dist = sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand));
+	float mapped = ofMap(dist, 0, sk.skeletonHeight, 0, 1);
+	
+	float onThresh = 0.1;
+	
+	if(!_triggered && mapped > onThresh) {
+		getMidiOut()->sendNoteOn(getSettings().channel, 67);
+		_triggered = true;
+	} else if(_triggered && mapped < onThresh) {
+		getMidiOut()->sendNoteOff(getSettings().channel, 67);
+		_triggered = false;
 	}
 	
-	_currentNote = note;
-}
-
-#pragma mark - Hand Spread Note
-
-handSpreadNote::handSpreadNote() : _triggered(false) {
-	
-}
-
-void handSpreadNote::update(kinectBody &body) {
-//	kinectSkeleton& sk = body.getLastSkeleton();
-//	float height = NormalizedHeight(sk, ::hand, ::right);
-//	
-//	float onThresh = 0.1;
-//	
-//	if(!_triggered && mapped > onThresh) {
-//		getMidiOut()->sendNoteOn(6, 67);
-//		_triggered = true;
-//	} else if(_triggered && mapped < onThresh) {
-//		getMidiOut()->sendNoteOff(6, 67);
-//		_triggered = false;
-//	}
-//	
-//	getMidiOut()->sendAftertouch(6, mapped * 127);
+	getMidiOut()->sendAftertouch(6, mapped * 127);
 }

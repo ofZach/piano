@@ -413,35 +413,43 @@ void ofApp::exit() {
     }
 }
 
-#define END( a ) (a + (sizeof( a ) / sizeof( a[ 0 ] )))
+#define END(a) (a + (sizeof(a) / sizeof(a[0])))
 
 void ofApp::setupAudio() {
-    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->openVirtualPort("OF Skeleton Tracker");
-    
-    int grabbedNotes[] = {53, 59, 60, 65, 67, 72};
-    int gridNotes[] = {59, 60, 64, 65, 67, 72, 77, 79, 84};
-    
-    triggerRef grabbed = triggerRef(new grabbedNote);
-    midiTrigger::Settings grabbedSettings;
-    grabbedSettings.notes.assign(grabbedNotes, END(grabbedNotes));
-    grabbedSettings.channel = 4;
-    grabbed->setSettings(grabbedSettings);
-    
-    triggerRef grid = triggerRef(new gridNote);
-    midiTrigger::Settings gridSettings;
-    gridSettings.notes.assign(gridNotes, END(gridNotes));
-    gridSettings.channel = 5;
-    grid->setSettings(gridSettings);
-    
-    midiTriggers.push_back(grabbed);
-    midiTriggers.push_back(grid);
-    
-    for(auto& t : midiTriggers) {
-        t->setMidiOut(midiOut);
-    }
-    
-    midi.setup();
+	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+	midiOut->openVirtualPort("OF Skeleton Tracker");
+	
+	int stringNotes[] = {53, 59, 60, 65, 67, 72};
+	int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
+	
+	
+	triggerRef strings = triggerRef(new gridNote);
+	midiTrigger::Settings stringSettings;
+	stringSettings.notes.assign(stringNotes, END(stringNotes));
+	stringSettings.channel = 4;
+	stringSettings.side = ::right;
+	strings->setSettings(stringSettings);
+	
+	triggerRef piano = triggerRef(new gridNote);
+	midiTrigger::Settings pianoSettings;
+	pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
+	pianoSettings.channel = 5;
+	pianoSettings.side = ::left;
+	piano->setSettings(pianoSettings);
+	
+	triggerRef accord = triggerRef(new accordianNote);
+	midiTrigger::Settings accordSettings;
+	accordSettings.channel = 8;
+	
+	midiTriggers.push_back(strings);
+	midiTriggers.push_back(piano);
+	midiTriggers.push_back(accord);
+	
+	for(auto& t : midiTriggers) {
+		t->setMidiOut(midiOut);
+	}
+	
+	midi.setup();
 }
 
 #undef END
