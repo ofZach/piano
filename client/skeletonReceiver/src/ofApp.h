@@ -75,6 +75,20 @@ public:
 	ofParameter<float> buttonTriggerScale;
 	ofParameter<float> buttonApproachScale;
     
+    ofParameterGroup graphsControl1;
+    ofParameter<float> smoothUpSkeleton;
+    ofParameter<float> smoothDownSkeleton;
+    vector<ofParameter<float> > graphsSkeletonThresh;
+    ofParameterGroup graphsControl2;
+    vector<ofParameter<float> > graphsHistoryThresh;
+    ofParameter<float> smoothUpHistory;
+    ofParameter<float> smoothDownHistory;
+    
+    
+    ofParameter<int> startNote;
+    ofParameter<int> numNotes;
+    ofParameter<bool> jazzDrums;
+    ofParameter<bool> historyAndSkeleton;
     ofFbo fooFbo;
     
     ofxControlPanel gui;
@@ -110,6 +124,7 @@ public:
     
     vector < Graph > graphs;
     vector < Graph > graphsForSkeleton;
+    vector < Graph > graphsHistory;
     
     
 };
