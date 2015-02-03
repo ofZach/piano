@@ -48,6 +48,7 @@ public:
 private:
 	bool _triggered;
 	int _currentNote;
+	unsigned long long _lastTrigger;
 };
 
 class accordianNote : public midiTrigger {
@@ -58,6 +59,8 @@ public:
 	
 private:
 	bool _triggered;
+	int _currentNote;
+	float _lastDist;
 };
 
 typedef shared_ptr<midiTrigger> triggerRef;

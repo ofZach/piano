@@ -72,7 +72,7 @@ void grabbedNote::update(kinectBody &body) {
 
 #pragma mark - Grid Note
 
-gridNote::gridNote() : _triggered(false), _currentNote(0) {
+gridNote::gridNote() : _triggered(false), _currentNote(0), _lastTrigger(0) {
 
 }
 
@@ -95,21 +95,27 @@ void gridNote::update(kinectBody &body) {
 	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, getSettings().side));
 	int vel = ofMap(handVel.length(), 0, 40, 40, 120);
 	
-	if(shouldTrig && note != _currentNote) {
+	auto now = ofGetElapsedTimeMillis();
+	unsigned long long timeThresh = 80;
+	bool timeOk = (now - _lastTrigger) > timeThresh;
+	
+	if(shouldTrig && note != _currentNote && timeOk) {
 		getMidiOut()->sendNoteOn(getSettings().channel, note, vel);
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = true;
 		_currentNote = note;
+		_lastTrigger = now;
 	} else if(!shouldTrig && _triggered) {
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = false;
 		_currentNote = 0;
+		_lastTrigger = now;
 	}
 }
 
 #pragma mark - Accordian Note
 
-accordianNote::accordianNote() : _triggered(false) {
+accordianNote::accordianNote() : _triggered(false), _currentNote(0), _lastDist(0) {
 	
 }
 
@@ -119,15 +125,34 @@ void accordianNote::update(kinectBody &body) {
 	float dist = sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand));
 	float mapped = ofMap(dist, 0, sk.skeletonHeight, 0, 1);
 	
-	float onThresh = 0.1;
+	float onThresh = 0.15;
+	int note = dist > _lastDist ? 36 : 43;
 	
-	if(!_triggered && mapped > onThresh) {
-		getMidiOut()->sendNoteOn(getSettings().channel, 67);
+	if(dist > onThresh) {
+		
+		if(!_triggered) {
+			getMidiOut()->sendNoteOn(getSettings().channel, note);
+		} else if(note != _currentNote && abs(dist - _lastDist) > 0.05) {
+			getMidiOut()->sendNoteOn(getSettings().channel, note);
+			getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
+		}
+		
+		_currentNote = note;
 		_triggered = true;
-	} else if(_triggered && mapped < onThresh) {
-		getMidiOut()->sendNoteOff(getSettings().channel, 67);
-		_triggered = false;
+		
+	} else if(_triggered) {
+		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
+		_currentNote = 0;
 	}
 	
-	getMidiOut()->sendAftertouch(6, mapped * 127);
+	_lastDist = dist;
+	
+	
+//	if(!_triggered && mapped > onThresh) {
+//		getMidiOut()->sendNoteOn(getSettings().channel, 48);
+//		_triggered = true;
+//	} else if(_triggered && mapped < onThresh) {
+//		getMidiOut()->sendNoteOff(getSettings().channel, 48);
+//		_triggered = false;
+//	}
 }

@@ -372,6 +372,7 @@ void ofApp::setupAudio() {
 	triggerRef accord = triggerRef(new accordianNote);
 	midiTrigger::Settings accordSettings;
 	accordSettings.channel = 8;
+	accord->setSettings(accordSettings);
 	
 	midiTriggers.push_back(strings);
 	midiTriggers.push_back(piano);
