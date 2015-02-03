@@ -73,6 +73,9 @@ public:
 	ofParameter<float> buttonTriggerScale;
 	ofParameter<float> buttonApproachScale;
     
+    ofParameterGroup graphsControl;
+    
+    
     ofFbo fooFbo;
     
     ofxControlPanel gui;

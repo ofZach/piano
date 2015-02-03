@@ -126,6 +126,10 @@ void ofApp::setup(){
         graphs.push_back(Graph());
         graphs.back().setup(ofToString(i));
         graphs.back().setSize(100, 50);
+//        graphs.back().setMinMaxRange(0, 1);
+        graphs.back().setBidirectional(true);
+        graphs.back().setThreshold(0);
+//        graphs.back().setSmoothing(0.0, 0.0);
     }
     
     
@@ -197,13 +201,19 @@ void ofApp::update(){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 
-                for (int i = 0; i < body.velocity.size(); i++){
-                    graphsForSkeleton[i].addSample(body.velLen[i]);
-                }
+//                for (int i = 0; i < body.velocity.size(); i++){
+//                    graphsForSkeleton[i].addSample(body.velLen[i]);
+//                }
                 
-                for (int i = 0; i < graphsForSkeleton.size(); i++){
-                    if (graphsForSkeleton[i].getTriggered()){
-                        midi.updateSequencerStep(12 + i, ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
+                for (int i = 0; i < body.historyPlots.size(); i++){
+                    if(body.historyPlots[i]->getValues().size()> 0){
+                        graphsForSkeleton[i].addSample(body.historyPlots[i]->getValues().back());
+                    }
+  
+                    if (graphsForSkeleton[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0){
+                        midi.updateSequencerStep(12 + i, ofMap(body.historyPlots[i]->getValues().back(), 0, 1, 0, 127, true));
+//                    }else if(body.historyPlots[i]->getValues().size()> 0){
+//                        midi.updateSequencerStep(12 + i, ofMap(body.historyPlots[i]->getValues().back(), 0, 1, 0, 127, true));
                     }
                 }
                 
@@ -344,11 +354,11 @@ void ofApp::draw(){
     
     
     for (int i = 0; i < 4; i++){
-        graphs[i].draw(500, i * 50);
+        graphs[i].draw(250, i * 50);
     }
     
     for (int i = 0; i < 25; i++){
-        graphsForSkeleton[i].draw(400, i*25);
+        graphsForSkeleton[i].draw(150, i*25);
     }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }

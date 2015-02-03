@@ -19,7 +19,7 @@ void midiController::setup(){
 //    ofAddListener(sequencer.sequencerEvent, this, &midiController::sequencerStep);
 //    sequencer.start();
     midiOut.listPorts();
-    midiOut.openPort("Network Session 1");
+    midiOut.openVirtualPort();
 }
 
 void midiController::updateSequencerStep(int row, float value){
