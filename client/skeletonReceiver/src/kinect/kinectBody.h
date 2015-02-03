@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "kinectSkeleton.h"
 #include "ofxHistoryPlot.h"
+#include "ofxMidi.h"
 
 class kinectBody {
     
@@ -32,7 +33,7 @@ public:
     float leftArmVel;
     float torsoAvgVel;
     float totalAvgVel;
-    
+
     // ---------------------------------------------------
     // make this a parameter
     

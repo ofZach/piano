@@ -56,10 +56,6 @@ public:
     
 };
 
-
-
-
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 
@@ -92,19 +88,19 @@ void ofApp::update(){
         
     }
     
-    if (buffers.size() == 27 ||
-        buffers.size() == 54 ){
+//    if (buffers.size() == 27 ||
+//        buffers.size() == 54 ){
+    
         
-        
-        for (int i = buffers.size()-27; i < buffers.size(); i++){
+        for (int i = 0; i < buffers.size(); i++){
             string file = folder + "/"  + ofToString((int)(timeStamp - ofRecordTimeStart)) + "_" + ofToString(i) +  ".bin";
             ofBufferToFile(file, buffers[i], true);
         }
-    } else {
-        
-        cout << buffers.size() << endl;
-        
-    }
+//    } else {
+//        
+//        cout << buffers.size() << endl;
+//        
+//    }
     
 }
 

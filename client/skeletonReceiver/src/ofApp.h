@@ -10,13 +10,13 @@
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
+#include "midiController.h"
 
 class ofApp : public ofBaseApp{
     
 public:
     void setup();
     void update();
-	void updateAudio(kinectSkeleton &skeleton, kinectBody &body);
     void draw();
     
     void keyPressed(int key);
@@ -28,6 +28,9 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+	
+	void updateAudio(kinectBody &body);
+	void sendMidi(int buttonIndex, int channel, float velocity, bool noteOn);
     
     //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;
@@ -84,6 +87,9 @@ public:
     kinectSkeleton KS;
     kinectBody KB;
 	kinectBodyAnalyser KBA;
+    
+    map<string, kinectBody> bodyMap;
+    map<string, kinectSkeleton> ksMap;
 	
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
@@ -91,10 +97,10 @@ public:
 	
 	ofxMidiOut midiOut;
 	vector<int> midiNotes;
-    
+    map<string, bool> triggers;
     //void newGesture(Gesture &newGest);
     
-    
+    midiController midi;
     
 };
 

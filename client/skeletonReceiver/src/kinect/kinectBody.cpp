@@ -98,12 +98,12 @@ kinectBody::kinectBody(){
     
     gestureFBO.allocate(400, 2000);
     
-    smoothing.set(0.9);
+    smoothing.set(0.1);
     scale.set(35);
     twoDSkelCamDistance.set(1000);
     
     
-    drawSkeletonDebug = true;
+    drawSkeletonDebug = false;
 }
 
 
@@ -218,6 +218,7 @@ void kinectBody::update(){
         int count = 0;
         for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
             gesturePlots.push_back(new ofxHistoryPlot(NULL, iter->first, 100, false));
+            gesturePlots.back()->update(iter->second.value);
             count++;
         }
     }else{
