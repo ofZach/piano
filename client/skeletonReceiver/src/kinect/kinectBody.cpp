@@ -103,7 +103,7 @@ kinectBody::kinectBody(){
     twoDSkelCamDistance.set(1000);
     
     
-    drawSkeletonDebug = true;
+    drawSkeletonDebug = false;
 }
 
 

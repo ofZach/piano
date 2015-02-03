@@ -103,9 +103,8 @@ void ofApp::setup(){
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
-    
-    midiOut.openVirtualPort("OF Skeleton Tracker");
-    
+	
+    midiOut.openVirtualPort("OF Skeleton Tracker");    
     midi.setup();
 }
 
@@ -129,10 +128,7 @@ void ofApp::update(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
-    
-    
-    
-    
+
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -166,9 +162,8 @@ void ofApp::update(){
                     int i = 0;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
-                            if(iter->second.triggered && !triggers[iter->first]){
+                            if((iter->second.triggered || iter->second.value > 0.75) && !triggers[iter->first] ){
                                 triggers[iter->first] = true;
-                                midiOut.sendNoteOn(3, count, 127);
                                 midi.updateSequencerStep(i, 127);
                             }else if(!iter->second.triggered){
                                  triggers[iter->first] = false;
