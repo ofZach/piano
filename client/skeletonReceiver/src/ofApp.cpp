@@ -120,6 +120,20 @@ void ofApp::setup(){
     }
     
     midi.setup();
+    
+    
+    for (int i = 0; i < 4; i++){
+        graphs.push_back(Graph());
+        graphs.back().setup(ofToString(i));
+        graphs.back().setSize(100, 50);
+    }
+    
+    
+    graphs[0].setName("kick left");
+    graphs[1].setName("kick right");
+    graphs[2].setName("punch left");
+    graphs[3].setName("punch right");
+    
 }
 
 //--------------------------------------------------------------
@@ -172,9 +186,16 @@ void ofApp::update(){
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
-                    //int count = 12;
-                    //int i = 0;
+                    int count = 12;
+                    int i = 0;
                     
+                    int counter = 0;
+                    graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
+                    graphs[1].addSample(body.gestureHistory.back()["kick_right"].value);
+                    graphs[2].addSample(body.gestureHistory.back()["punch_left"].value);
+                    graphs[3].addSample(body.gestureHistory.back()["punch_right"].value);
+                    
+                   
                     if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
                         triggers["kick_Left"] = true;
                         midi.updateSequencerStep(12, 127);
@@ -275,6 +296,9 @@ void ofApp::draw(){
     midi.draw();
     
     
+    for (int i = 0; i < 4; i++){
+        graphs[i].draw(500, i * 50);
+    }
     
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
