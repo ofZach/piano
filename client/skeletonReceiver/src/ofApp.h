@@ -11,6 +11,7 @@
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
 #include "midiController.h"
+#include "midiTrigger.h"
 
 class ofApp : public ofBaseApp{
     
@@ -94,9 +95,11 @@ public:
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
 	
-	ofxMidiOut midiOut;
+	shared_ptr<ofxMidiOut> midiOut;
 	vector<int> midiNotes;
     map<string, bool> triggers;
+	
+	vector<triggerRef> midiTriggers;
     //void newGesture(Gesture &newGest);
     
     midiController midi;

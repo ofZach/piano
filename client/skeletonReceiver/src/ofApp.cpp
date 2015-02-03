@@ -104,7 +104,15 @@ void ofApp::setup(){
     ofClear(0, 0, 0, 0);
     fooFbo.end();
 	
-    midiOut.openVirtualPort("OF Skeleton Tracker");    
+	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Skeleton Tracker");
+	
+	midiTriggers.push_back(triggerRef(new grabbedNote));
+	midiTriggers.push_back(triggerRef(new gridNote));
+	for(auto& t : midiTriggers) {
+		t->setMidiOut(midiOut);
+	}
+	
     midi.setup();
 }
 
@@ -245,43 +253,9 @@ void ofApp::draw(){
 }
 
 void ofApp::updateAudio(kinectBody &body) {
-	static bool trig = false;
-	static int trigNote = 0;
-
-	float extendThreshHi = 0.6;
-	float extendThreshLow = 0.5;
-
-	float elevateThreshLow = 0.5;
-
-	float extendPerc = body.getLastSkeleton().armRightExtendedPct;
-	float elevatePerc = body.getLastSkeleton().rightHandVHip;
-	
-	ofVec3f acc = body.accel[body.getLastSkeleton().rightEnumsToIndex[::hand]];
-	
-	vector<int> notes;
-	notes.push_back(60);
-	notes.push_back(65);
-	notes.push_back(67);
-	notes.push_back(72);
-	float notePerc = ofMap(elevatePerc, 0.3, 0.7, 0, notes.size() - 1, true);
-	int note = notes[notePerc];
-	
-	float sum = acc.x + acc.y + acc.z;
-	bool shouldTrig = sum < -5 && extendPerc > extendThreshHi;
-	bool shouldStop = extendPerc < extendThreshLow;
-
-	if(shouldTrig && !trig) {
-		midiOut.sendNoteOn(4, note);
-		trig = true;
-	} else if(shouldStop && trig) {
-		midiOut.sendNoteOff(4, note);
-		trig = false;
-	} else if(trig && trigNote != note) {
-		midiOut.sendNoteOn(4, note);
-		midiOut.sendNoteOff(4, trigNote);
+	for(auto& t : midiTriggers) {
+		t->update(body);
 	}
-	
-	trigNote = note;
 }
 
 //--------------------------------------------------------------

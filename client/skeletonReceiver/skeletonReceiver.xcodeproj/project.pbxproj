@@ -20,6 +20,7 @@
 		63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DF87D612C5AAE17AAFA6C0 /* ofxXmlSettings.cpp */; };
 		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
 		6651B49E1A8012E0008FF381 /* kinectButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6651B49C1A8012E0008FF381 /* kinectButton.cpp */; };
+		6651B4AD1A8063C4008FF381 /* midiTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6651B4AB1A8063C4008FF381 /* midiTrigger.cpp */; };
 		66BBA05BD1EC05BD23DCBD7E /* Skeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 09BD1A9AB41884A85349FF37 /* Skeleton.cpp */; };
 		67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
 		6847664D0060F42AEBB4E101 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61CB8B1EABE69C099F2D7196 /* Parser.cpp */; };
@@ -176,6 +177,8 @@
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		6651B49C1A8012E0008FF381 /* kinectButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectButton.cpp; sourceTree = "<group>"; };
 		6651B49D1A8012E0008FF381 /* kinectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectButton.h; sourceTree = "<group>"; };
+		6651B4AB1A8063C4008FF381 /* midiTrigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = midiTrigger.cpp; sourceTree = "<group>"; };
+		6651B4AC1A8063C4008FF381 /* midiTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midiTrigger.h; sourceTree = "<group>"; };
 		688837E5F1F103E4FD361DAA /* Parser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Parser.h; path = "../../../addons/ofxKinectV2-OSC/src/DataTransform/Parser.h"; sourceTree = SOURCE_ROOT; };
 		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
 		7689F8A0F3D0B7635A8C3104 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
@@ -613,6 +616,8 @@
 			children = (
 				C8D7825E1A80482000F367F8 /* midiController.cpp */,
 				C8D7825F1A80482000F367F8 /* midiController.h */,
+				6651B4AB1A8063C4008FF381 /* midiTrigger.cpp */,
+				6651B4AC1A8063C4008FF381 /* midiTrigger.h */,
 			);
 			path = midi;
 			sourceTree = "<group>";
@@ -1005,6 +1010,7 @@
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				FDD5CE4E1A78334100EC1272 /* guiTextBase.cpp in Sources */,
+				6651B4AD1A8063C4008FF381 /* midiTrigger.cpp in Sources */,
 				FDD5CE5C1A78334100EC1272 /* guiTypeVairableLister.cpp in Sources */,
 				FD5DA16D1A7FE68F00FE6303 /* ofxMidi.cpp in Sources */,
 				FD5DA1451A7FE64D00FE6303 /* kinectSkeleton.cpp in Sources */,
