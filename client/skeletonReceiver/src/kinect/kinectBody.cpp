@@ -103,6 +103,16 @@ kinectBody::kinectBody(){
     twoDSkelCamDistance.set(1000);
     
     
+    
+    gestureNames.push_back("kick_Left");
+    gestureNames.push_back("kick_Right");
+    gestureNames.push_back("punch_Right");
+    gestureNames.push_back("punch_Left");
+    
+    for(int i = 0; i < gestureNames.size(); i++){
+        gesturePlots.push_back(new ofxHistoryPlot(NULL, gestureNames[i], 100, false));
+    }
+    
     drawSkeletonDebug = false;
 }
 
@@ -211,23 +221,13 @@ void kinectBody::update(){
                                                    (history.back().leftHandSpan + history.back().rightHandSpan) / 2.0);
     
     
-    if(gesturePlots.size() == 0){
-        // TO DO REMOVE THIS
-        // setup gestureNames from file to map names to gestures
-        //
-        int count = 0;
-        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-            gesturePlots.push_back(new ofxHistoryPlot(NULL, iter->first, 100, false));
-            gesturePlots.back()->update(iter->second.value);
-            count++;
-        }
-    }else{
-        int count = 0;
-        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-            gesturePlots[count]->update(iter->second.value);
-            count++;
-        }
+    
+    int count = 0;
+    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+        gesturePlots[count]->update(iter->second.value);
+        count++;
     }
+    
     
     
     

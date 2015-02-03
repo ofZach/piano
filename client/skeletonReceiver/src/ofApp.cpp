@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-
+    
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -142,7 +142,7 @@ void ofApp::update(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
-
+    
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -172,20 +172,37 @@ void ofApp::update(){
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
-                    int count = 12;
-                    int i = 0;
-                    for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
-                        if(iter->second.type == Discrete){
-                            if((iter->second.triggered || iter->second.value > 0.65) && !triggers[iter->first] ){
-                                triggers[iter->first] = true;
-                                midi.updateSequencerStep(i, 127);
-                            }else if(!iter->second.triggered){
-                                 triggers[iter->first] = false;
-                            }
-                            count++;
-                            i++;
-                        }
+                    //int count = 12;
+                    //int i = 0;
+                    
+                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
+                        triggers["kick_Left"] = true;
+                        midi.updateSequencerStep(12, 127);
+                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
+                        triggers["kick_Left"] = false;
                     }
+                    
+                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
+                        triggers["kick_Right"] = true;
+                        midi.updateSequencerStep(12, 127);
+                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
+                        triggers["kick_Right"] = false;
+                    }
+                    
+                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
+                        triggers["punch_Left"] = true;
+                        midi.updateSequencerStep(15, 127);
+                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
+                        triggers["punch_Left"] = false;
+                    }
+                    
+                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
+                        triggers["punch_Right"] = true;
+                        midi.updateSequencerStep(15, 127);
+                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
+                        triggers["punch_Right"] = false;
+                    }
+                    
                 }
             }
         }
