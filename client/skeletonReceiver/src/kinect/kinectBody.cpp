@@ -223,7 +223,9 @@ void kinectBody::update(){
     
     
     for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-        gesturePlots[iter->first]->update(iter->second.value);
+        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+            gesturePlots[iter->first]->update(iter->second.value);
+        }
     }
     
     
@@ -409,8 +411,10 @@ void kinectBody::drawHistory(){
     ofClear(127, 127, 127, 50);
     int i = 0;
     for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-        gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
-        i++;
+        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+            gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
+            i++;
+        }
     }
     gestureFBO.end();
     
