@@ -142,6 +142,9 @@ void ofApp::update(){
     gui.update();
     
     
+    
+    
+    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     if (bLoadNewUDP == true){
@@ -191,38 +194,52 @@ void ofApp::update(){
                     
                     int counter = 0;
                     graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
-                    graphs[1].addSample(body.gestureHistory.back()["kick_right"].value);
-                    graphs[2].addSample(body.gestureHistory.back()["punch_left"].value);
-                    graphs[3].addSample(body.gestureHistory.back()["punch_right"].value);
+                    graphs[1].addSample(body.gestureHistory.back()["kick_Right"].value);
+                    graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
+                    graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
                     
                    
-                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
-                        triggers["kick_Left"] = true;
-                        midi.updateSequencerStep(12, 127);
-                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["kick_Left"]){
-                        triggers["kick_Left"] = false;
+//                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
+//                        triggers["kick_Left"] = true;
+//                        //midi.updateSequencerStep(12, 127);
+//                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
+//
+//                        triggers["kick_Left"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
+//                        triggers["kick_Right"] = true;
+//                        //midi.updateSequencerStep(12, 127);
+//                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
+//
+//                        triggers["kick_Right"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
+//                        triggers["punch_Left"] = true;
+//                        //midi.updateSequencerStep(15, 127);
+//                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
+//                        triggers["punch_Left"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
+//                        triggers["punch_Right"] = true;
+//                        //midi.updateSequencerStep(15, 127);
+//                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
+//                        triggers["punch_Right"] = false;
+//                    }
+                    
+                    
+                    for (int i = 0; i < graphs.size(); i++){
+                        if (graphs[i].getTriggered()){
+                            midi.updateSequencerStep(12 + i, 127);
+                        }
                     }
                     
-                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
-                        triggers["kick_Right"] = true;
-                        midi.updateSequencerStep(12, 127);
-                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["kick_Right"]){
-                        triggers["kick_Right"] = false;
-                    }
+
                     
-                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
-                        triggers["punch_Left"] = true;
-                        midi.updateSequencerStep(14, 127);
-                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
-                        triggers["punch_Left"] = false;
-                    }
                     
-                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
-                        triggers["punch_Right"] = true;
-                        midi.updateSequencerStep(14, 127);
-                    }else if(body.gestureHistory.back()["punch_Right"].value > 0.75 && triggers["punch_Right"]){
-                        triggers["punch_Right"] = false;
-                    }
+                    
                     
                 }
             }
