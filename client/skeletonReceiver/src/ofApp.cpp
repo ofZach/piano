@@ -104,7 +104,7 @@ void ofApp::setup(){
     ofClear(0, 0, 0, 0);
     fooFbo.end();
     
-    midiOut.openVirtualPort("OF Skeleton Tracker");
+    //midiOut.openPort("Network Session 1");
     midiNotes.push_back(0);
     midiNotes.push_back(2);
     midiNotes.push_back(4);
@@ -181,7 +181,6 @@ void ofApp::update(){
                         if(iter->second.type == Discrete){
                             if(iter->second.triggered && !triggers[iter->first]){
                                 triggers[iter->first] = true;
-                                midiOut.sendNoteOn(3, count, 127);
                                 midi.updateSequencerStep(i, 127);
                             }else if(!iter->second.triggered){
                                  triggers[iter->first] = false;
