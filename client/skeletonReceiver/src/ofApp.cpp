@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-
+    
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -128,6 +128,12 @@ void ofApp::setup(){
         graphs.back().setSize(100, 50);
     }
     
+    
+    graphs[0].setName("kick left");
+    graphs[1].setName("kick right");
+    graphs[2].setName("punch left");
+    graphs[3].setName("punch right");
+    
 }
 
 //--------------------------------------------------------------
@@ -150,7 +156,7 @@ void ofApp::update(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
-
+    
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -184,26 +190,40 @@ void ofApp::update(){
                     int i = 0;
                     
                     int counter = 0;
-                    for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
-                        if(iter->second.type == Discrete){
-                            
-                            
-                            if (counter < graphs.size()){
-                                graphs[counter].addSample(iter->second.value);
-                            }
-                            counter++;
-                            
-                            
-                            if((iter->second.triggered || iter->second.value > 0.75) && !triggers[iter->first] ){
-                                triggers[iter->first] = true;
-                                midi.updateSequencerStep(i, 127);
-                            }else if(!iter->second.triggered){
-                                 triggers[iter->first] = false;
-                            }
-                            count++;
-                            i++;
-                        }
+                    graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
+                    graphs[1].addSample(body.gestureHistory.back()["kick_right"].value);
+                    graphs[2].addSample(body.gestureHistory.back()["punch_left"].value);
+                    graphs[3].addSample(body.gestureHistory.back()["punch_right"].value);
+                    
+                   
+                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
+                        triggers["kick_Left"] = true;
+                        midi.updateSequencerStep(12, 127);
+                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
+                        triggers["kick_Left"] = false;
                     }
+                    
+                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
+                        triggers["kick_Right"] = true;
+                        midi.updateSequencerStep(12, 127);
+                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
+                        triggers["kick_Right"] = false;
+                    }
+                    
+                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
+                        triggers["punch_Left"] = true;
+                        midi.updateSequencerStep(15, 127);
+                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
+                        triggers["punch_Left"] = false;
+                    }
+                    
+                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
+                        triggers["punch_Right"] = true;
+                        midi.updateSequencerStep(15, 127);
+                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
+                        triggers["punch_Right"] = false;
+                    }
+                    
                 }
             }
         }
