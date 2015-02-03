@@ -176,7 +176,7 @@ void ofApp::update(){
                     int i = 0;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
-                            if(iter->second.triggered && !triggers[iter->first]){
+                            if((iter->second.triggered || iter->second.value > 0.75) && !triggers[iter->first] ){
                                 triggers[iter->first] = true;
                                 midi.updateSequencerStep(i, 127);
                             }else if(!iter->second.triggered){

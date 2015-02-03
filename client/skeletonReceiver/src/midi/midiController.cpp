@@ -37,10 +37,10 @@ void midiController::clear(){
 }
 
 void midiController::sequencerStep(vector<float> &column) {
-    int count = 12;
-    for(int i = 0; i < column.size(); i++){
-        triggerMidiNote(i, count++, column[i]);
-    }
+//    int count = 12;
+//    for(int i = 0; i < column.size(); i++){
+//        triggerMidiNote(i, count++, column[i]);
+//    }
 }
 
 void midiController::update(ofEventArgs & args){
@@ -65,4 +65,5 @@ void midiController::draw(){
 
 void midiController::triggerMidiNote(int channel, int note, int velocity){
     midiOut.sendNoteOn(channel, note, velocity);
+    ofLog()<<
 }
