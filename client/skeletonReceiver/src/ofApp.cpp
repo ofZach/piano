@@ -142,6 +142,9 @@ void ofApp::update(){
     gui.update();
     
     
+    
+    
+    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     if (bLoadNewUDP == true){
@@ -198,31 +201,43 @@ void ofApp::update(){
                    
                     if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
                         triggers["kick_Left"] = true;
-                        midi.updateSequencerStep(12, 127);
+                        //midi.updateSequencerStep(12, 127);
                     }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
                         triggers["kick_Left"] = false;
                     }
                     
                     if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
                         triggers["kick_Right"] = true;
-                        midi.updateSequencerStep(12, 127);
+                        //midi.updateSequencerStep(12, 127);
                     }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
                         triggers["kick_Right"] = false;
                     }
                     
                     if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
                         triggers["punch_Left"] = true;
-                        midi.updateSequencerStep(15, 127);
+                        //midi.updateSequencerStep(15, 127);
                     }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
                         triggers["punch_Left"] = false;
                     }
                     
                     if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
                         triggers["punch_Right"] = true;
-                        midi.updateSequencerStep(15, 127);
+                        //midi.updateSequencerStep(15, 127);
                     }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
                         triggers["punch_Right"] = false;
                     }
+                    
+                    
+                    for (int i = 0; i < graphs.size(); i++){
+                        if (graphs[i].getTriggered()){
+                            midi.updateSequencerStep(12 + i, 127);
+                        }
+                    }
+                    
+
+                    
+                    
+                    
                     
                 }
             }
