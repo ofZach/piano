@@ -11,6 +11,7 @@
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
 #include "midiController.h"
+#include "midiTrigger.h"
 #include "Graph.h"
 
 class ofApp : public ofBaseApp{
@@ -19,6 +20,7 @@ public:
     void setup();
     void update();
     void draw();
+	void exit();
     
     void keyPressed(int key);
     void keyReleased(int key);
@@ -30,8 +32,8 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 	
+	void setupAudio();
 	void updateAudio(kinectBody &body);
-	void sendMidi(int buttonIndex, int channel, float velocity, bool noteOn);
     
     //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;
@@ -99,9 +101,11 @@ public:
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
 	
-	ofxMidiOut midiOut;
+	shared_ptr<ofxMidiOut> midiOut;
 	vector<int> midiNotes;
     map<string, bool> triggers;
+	
+	vector<triggerRef> midiTriggers;
     //void newGesture(Gesture &newGest);
     
     midiController midi;

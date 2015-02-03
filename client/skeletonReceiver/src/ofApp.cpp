@@ -103,23 +103,8 @@ void ofApp::setup(){
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
-    
-    //midiOut.openPort("Network Session 1");
-    midiNotes.push_back(0);
-    midiNotes.push_back(2);
-    midiNotes.push_back(4);
-    midiNotes.push_back(5);
-    midiNotes.push_back(7);
-    midiNotes.push_back(9);
-    midiNotes.push_back(11);
-    buttons.resize(midiNotes.size() * 6);
-    
-    for(int i = 0; i < buttons.size(); i++) {
-        buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
-        buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
-    }
-    
-    midi.setup();
+	
+	setupAudio();
     
     
     for (int i = 0; i < 4; i++){
@@ -349,9 +334,7 @@ void ofApp::draw(){
     }
     
     gui.draw();
-    
     midi.draw();
-    
     
     for (int i = 0; i < 4; i++){
         graphs[i].draw(250, i * 50);
@@ -363,59 +346,52 @@ void ofApp::draw(){
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
-
-void ofApp::updateAudio(kinectBody &body) {
-    float spacing = 130;
-    
-    vector< pair<ofPoint, float> > activePoints;
-    
-    const float velNorm = 30;
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::hand),
-                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::hand]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::hand),
-                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::hand]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getLeftPoint(::foot),
-                                      body.velocity[body.getLastSkeleton().leftEnumsToIndex[::foot]].length() / velNorm ));
-    
-    activePoints.push_back( make_pair(body.getLastSkeleton().getRightPoint(::foot),
-                                      body.velocity[body.getLastSkeleton().rightEnumsToIndex[::foot]].length() / velNorm ));
-    
-    for(int i = 0; i < buttons.size(); i++) {
-        int interval = i % (midiNotes.size() + 1);
-        int octave = i / (midiNotes.size() + 1);
-        
-        float t = ofMap(interval, 0, midiNotes.size(), M_PI_2, M_PI + M_PI_2);
-        
-        float x = sin(t);
-        float z = cos(t);
-        float y = ofMap(octave, 0, 2, -1, 1);
-        
-        buttons[i].setParent(body.getLastSkeleton().centerPoint);
-        buttons[i].setPosition(x * spacing, y * spacing, z * spacing);
-        
-        buttons[i].setRadius(buttonRadius);
-        buttons[i].setTriggerScale(buttonTriggerScale);
-        buttons[i].setApproachScale(buttonApproachScale);
-        buttons[i].update(activePoints);
-    }
+void ofApp::exit() {
+	// turn off all MIDI notes, "All notes off" message is unreliable
+	for(int channel = 1; channel <= 16; channel++) {
+		for(int note = 0; note <= 127; note++) {
+			midiOut->sendNoteOff(channel, note);
+		}
+	}
 }
 
-void ofApp::sendMidi(int buttonIndex, int channel, float velocity, bool noteOn) {
-    
-    int midiRoot = 24; // C3
-    int octave = buttonIndex / midiNotes.size();
-    int interval = buttonIndex % midiNotes.size();
-    int note = midiNotes[interval] + (octave * 12) + midiRoot;
-    int velMidi = ofMap(velocity, 0, 1, 40, 120, true);
-    
-    if(noteOn) {
-        midiOut.sendNoteOn(channel, note, velMidi);
-    } else {
-        midiOut.sendNoteOff(channel, note, velMidi);
-    }
+#define END( a ) (a + (sizeof( a ) / sizeof( a[ 0 ] )))
+
+void ofApp::setupAudio() {
+	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+	midiOut->openVirtualPort("OF Skeleton Tracker");
+	
+	int grabbedNotes[] = {53, 59, 60, 65, 67, 72};
+	int gridNotes[] = {59, 60, 64, 65, 67, 72, 77, 79, 84};
+	
+	triggerRef grabbed = triggerRef(new grabbedNote);
+	midiTrigger::Settings grabbedSettings;
+	grabbedSettings.notes.assign(grabbedNotes, END(grabbedNotes));
+	grabbedSettings.channel = 4;
+	grabbed->setSettings(grabbedSettings);
+	
+	triggerRef grid = triggerRef(new gridNote);
+	midiTrigger::Settings gridSettings;
+	gridSettings.notes.assign(gridNotes, END(gridNotes));
+	gridSettings.channel = 5;
+	grid->setSettings(gridSettings);
+	
+	midiTriggers.push_back(grabbed);
+	midiTriggers.push_back(grid);
+	
+	for(auto& t : midiTriggers) {
+		t->setMidiOut(midiOut);
+	}
+	
+	midi.setup();
+}
+
+#undef END
+
+void ofApp::updateAudio(kinectBody &body) {
+	for(auto& t : midiTriggers) {
+		t->update(body);
+	}
 }
 
 //--------------------------------------------------------------
