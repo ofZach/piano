@@ -65,5 +65,5 @@ void midiController::draw(){
 
 void midiController::triggerMidiNote(int channel, int note, int velocity){
     midiOut.sendNoteOn(channel, note, velocity);
-    ofLog()<<
+    ofLog()<<"trigger midi"<<endl;
 }
