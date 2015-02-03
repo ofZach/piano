@@ -104,16 +104,7 @@ void ofApp::setup(){
     ofClear(0, 0, 0, 0);
     fooFbo.end();
 	
-	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->openVirtualPort("OF Skeleton Tracker");
-	
-	midiTriggers.push_back(triggerRef(new grabbedNote));
-	midiTriggers.push_back(triggerRef(new gridNote));
-	for(auto& t : midiTriggers) {
-		t->setMidiOut(midiOut);
-	}
-	
-    midi.setup();
+	setupAudio();
     
     
     for (int i = 0; i < 4; i++){
@@ -344,6 +335,48 @@ void ofApp::draw(){
     }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
+
+void ofApp::exit() {
+	// turn off all MIDI notes, "All notes off" message is unreliable
+	for(int channel = 1; channel <= 16; channel++) {
+		for(int note = 0; note <= 127; note++) {
+			midiOut->sendNoteOff(channel, note);
+		}
+	}
+}
+
+#define END( a ) (a + (sizeof( a ) / sizeof( a[ 0 ] )))
+
+void ofApp::setupAudio() {
+	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+	midiOut->openVirtualPort("OF Skeleton Tracker");
+	
+	int grabbedNotes[] = {53, 59, 60, 65, 67, 72};
+	int gridNotes[] = {59, 60, 64, 65, 67, 72, 77, 79, 84};
+	
+	triggerRef grabbed = triggerRef(new grabbedNote);
+	midiTrigger::Settings grabbedSettings;
+	grabbedSettings.notes.assign(grabbedNotes, END(grabbedNotes));
+	grabbedSettings.channel = 4;
+	grabbed->setSettings(grabbedSettings);
+	
+	triggerRef grid = triggerRef(new gridNote);
+	midiTrigger::Settings gridSettings;
+	gridSettings.notes.assign(gridNotes, END(gridNotes));
+	gridSettings.channel = 5;
+	grid->setSettings(gridSettings);
+	
+	midiTriggers.push_back(grabbed);
+	midiTriggers.push_back(grid);
+	
+	for(auto& t : midiTriggers) {
+		t->setMidiOut(midiOut);
+	}
+	
+	midi.setup();
+}
+
+#undef END
 
 void ofApp::updateAudio(kinectBody &body) {
 	for(auto& t : midiTriggers) {

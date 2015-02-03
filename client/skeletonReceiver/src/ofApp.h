@@ -20,6 +20,7 @@ public:
     void setup();
     void update();
     void draw();
+	void exit();
     
     void keyPressed(int key);
     void keyReleased(int key);
@@ -31,6 +32,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 	
+	void setupAudio();
 	void updateAudio(kinectBody &body);
     
     //void newGesture(Gesture & newGest);
