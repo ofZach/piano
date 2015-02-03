@@ -110,7 +110,7 @@ kinectBody::kinectBody(){
     gestureNames.push_back("punch_Left");
     
     for(int i = 0; i < gestureNames.size(); i++){
-        gesturePlots.push_back(new ofxHistoryPlot(NULL, gestureNames[i], 100, false));
+        gesturePlots[gestureNames[i]] = new ofxHistoryPlot(NULL, gestureNames[i], 100, false);
     }
     
     drawSkeletonDebug = false;
@@ -222,10 +222,8 @@ void kinectBody::update(){
     
     
     
-    int count = 0;
     for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-        gesturePlots[count]->update(iter->second.value);
-        count++;
+        gesturePlots[iter->first]->update(iter->second.value);
     }
     
     
@@ -409,8 +407,10 @@ void kinectBody::drawHistory(){
     
     gestureFBO.begin();
     ofClear(127, 127, 127, 50);
-    for(int i = 0; i < gesturePlots.size(); i++){
-        gesturePlots[i]->draw(0, height*i, 190, height-5);
+    int i = 0;
+    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+        gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
+        i++;
     }
     gestureFBO.end();
     
