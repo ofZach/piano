@@ -19,12 +19,12 @@ void midiController::setup(){
 //    ofAddListener(sequencer.sequencerEvent, this, &midiController::sequencerStep);
 //    sequencer.start();
     midiOut.listPorts();
-    midiOut.openVirtualPort();
+    midiOut.openPort("Network Session 1");
 }
 
-void midiController::updateSequencerStep(int row, float value){
+void midiController::updateSequencerStep(int note, float value){
 //    int col = sequencer.getColumn();
-    triggerMidiNote(3, row+12, value);
+    triggerMidiNote(3, note, value);
     //sequencer.setValue(row, col, value);
 }
 

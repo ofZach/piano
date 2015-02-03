@@ -231,14 +231,14 @@ void Graph::draw(int x, int y) {
 	ofSetColor(255);
 	drawString(name, 5, 10);
 	
-	if(!buffer.empty() && !derivative.empty()) {
-		ofPushMatrix();
-		ofTranslate(width, 0);
-		drawString(ofToString(bufferBox.y, 2) + "<" + (buffer.empty() ? "empty" :  ofToString(buffer.back(), 2)) + "<" + ofToString(bufferBox.y + bufferBox.height, 2), 5, 10);
-		drawString(ofToString(derivativeBox.y, 2) + "<" + (derivative.empty() ? "empty" :  ofToString(derivative.back(), 2)) + "<" + ofToString(derivativeBox.y + derivativeBox.height, 2), 5, 18);
-		drawString(ofToString(threshold, 2) + ", " + ofToString(buffer.back(), 2) + " (" + ofToString(getNormalized(), 2) + ") " + ofToString(derivative.back(), 2), 5, 26);
-		ofPopMatrix();
-	}
+//	if(!buffer.empty() && !derivative.empty()) {
+//		ofPushMatrix();
+//		ofTranslate(width, 0);
+//		drawString(ofToString(bufferBox.y, 2) + "<" + (buffer.empty() ? "empty" :  ofToString(buffer.back(), 2)) + "<" + ofToString(bufferBox.y + bufferBox.height, 2), 5, 10);
+//		drawString(ofToString(derivativeBox.y, 2) + "<" + (derivative.empty() ? "empty" :  ofToString(derivative.back(), 2)) + "<" + ofToString(derivativeBox.y + derivativeBox.height, 2), 5, 18);
+//		drawString(ofToString(threshold, 2) + ", " + ofToString(buffer.back(), 2) + " (" + ofToString(getNormalized(), 2) + ") " + ofToString(derivative.back(), 2), 5, 26);
+//		ofPopMatrix();
+//	}
 	
 	ofPopStyle();
 	ofPopMatrix();

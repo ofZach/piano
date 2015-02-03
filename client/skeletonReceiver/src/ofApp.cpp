@@ -20,8 +20,8 @@ void ofApp::setup(){
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
-    //gui.setup("panel");
-    
+    gui.setup("panel");
+
     KS.setup();
     
     //KSAI.setup();
@@ -53,6 +53,15 @@ void ofApp::setup(){
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
+    debugView.add(startNote.set("Start Note", 36, 0, 127));
+    debugView.add(numNotes.set("Num Note", 16, 0, 127));
+    debugView.add(smoothUpHistory.set("Smooth Up History", 0, 0, 1));
+    debugView.add(smoothDownHistory.set("Smooth Down History", 0, 0, 1));
+    debugView.add(smoothDownSkeleton.set("Smooth Down Skeleton", 0, 0, 1));
+    debugView.add(smoothUpSkeleton.set("Smooth Up Skeleton", 0, 0, 1));
+    debugView.add(jazzDrums.set("JazzDrums", false));
+    debugView.add(historyAndSkeleton.set("Send All Triggers", false));
+    
     
     
     buttonControl.setName("button control");
@@ -65,20 +74,25 @@ void ofApp::setup(){
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
     gui.addPanel("main control", 4, false);
     gui.addPanel("analysis", 4, false);
+    gui.addPanel("Debug Controls", 4, false);
+    gui.addPanel("Thresholds Skeletons", 4, false);
+    gui.addPanel("Thresholds History", 4, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     
     gui.addGroup(skeletonTransform);
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
-    gui.addGroup(debugView);
+
     
     
-    gui.setWhichPanel(1);
+    gui.setWhichPanel(3);
     gui.setWhichColumn(0);
     
     //gui.addGroup(KSA.anlaysisParams);
     //gui.addGroup(KSAI.interpreterParams);
+    
+    gui.addGroup(debugView);
     
     
     gui.setWhichPanel(2);
@@ -103,19 +117,20 @@ void ofApp::setup(){
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
-	
-	setupAudio();
+    
+    setupAudio();
     
     
     for (int i = 0; i < 4; i++){
         graphs.push_back(Graph());
         graphs.back().setup(ofToString(i));
         graphs.back().setSize(100, 50);
-//        graphs.back().setMinMaxRange(0, 1);
+        graphs.back().setMinMaxRange(0, 1);
         graphs.back().setBidirectional(true);
         graphs.back().setThreshold(0);
-//        graphs.back().setSmoothing(0.0, 0.0);
     }
+    
+    
     
     
     graphs[0].setName("kick left");
@@ -127,9 +142,35 @@ void ofApp::setup(){
     for (int i = 0; i < 25; i++){
         graphsForSkeleton.push_back(Graph());
         graphsForSkeleton.back().setup(ofToString(i));
+        graphsForSkeleton.back().setBidirectional(true);
         graphsForSkeleton.back().setSize(100, 20);
+        graphsForSkeleton.back().setThreshold(0);
+        ofParameter<float> fooParam;
+        fooParam.set("Threshold-"+ofToString(i), 0, 0, 100);
+        graphsSkeletonThresh.push_back(fooParam);
+        graphsControl1.add(graphsSkeletonThresh.back());
+        
+    }
+    gui.setWhichPanel(4);
+    gui.setWhichColumn(0);
+    gui.addGroup(graphsControl1);
+    
+    for (int i = 0; i < 25; i++){
+        graphsHistory.push_back(Graph());
+        graphsHistory.back().setup(ofToString(i));
+        graphsHistory.back().setSize(100, 20);
+        graphsHistory.back().setThreshold(0);
+        graphsHistory.back().setBidirectional(true);
+        graphsHistory.back().setMinMaxRange(0, 1);
+        ofParameter<float> fooParam;
+        fooParam.set("History Threshold-"+ofToString(i), 0, 0, 100);
+        graphsHistoryThresh.push_back(fooParam);
+        graphsControl2.add(graphsHistoryThresh.back());
     }
     
+    gui.setWhichPanel(5);
+    gui.setWhichColumn(0);
+    gui.addGroup(graphsControl2);
     
     
 }
@@ -186,21 +227,34 @@ void ofApp::update(){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 
-//                for (int i = 0; i < body.velocity.size(); i++){
-//                    graphsForSkeleton[i].addSample(body.velLen[i]);
-//                }
+                //                for (int i = 0; i < body.velocity.size(); i++){
+                //                    graphsForSkeleton[i].addSample(body.velLen[i]);
+                //                }
                 
                 for (int i = 0; i < body.historyPlots.size(); i++){
                     if(body.historyPlots[i]->getValues().size()> 0){
-                        graphsForSkeleton[i].addSample(body.historyPlots[i]->getValues().back());
+                        graphsHistory[i].addSample(body.historyPlots[i]->getValues().back());
                     }
-  
-                    if (graphsForSkeleton[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0){
-                        midi.updateSequencerStep(12 + i, ofMap(body.historyPlots[i]->getValues().back(), 0, 1, 0, 127, true));
-//                    }else if(body.historyPlots[i]->getValues().size()> 0){
-//                        midi.updateSequencerStep(12 + i, ofMap(body.historyPlots[i]->getValues().back(), 0, 1, 0, 127, true));
+                    
+                    if (graphsHistory[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0 && (!jazzDrums || historyAndSkeleton)){
+                        midi.updateSequencerStep(startNote + i%numNotes, ofMap(body.historyPlots[i]->getValues().back(), body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange(), 0, 127, true));
                     }
+                    graphsHistory[i].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    graphsHistory[i].setMinMaxRange(body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange());
+                    graphsHistoryThresh[i].set(graphsHistory[i].threshold);
+                    
                 }
+                
+                for (int i = 0; i < graphsForSkeleton.size(); i++){
+                    
+                    graphsForSkeleton[i].addSample(body.velLen[i]);
+                    if (graphsForSkeleton[i].getTriggered() && (jazzDrums || historyAndSkeleton)){
+                        midi.updateSequencerStep(startNote + (i%numNotes), ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
+                    };
+                    graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
+                }
+                
                 
                 
                 
@@ -217,45 +271,45 @@ void ofApp::update(){
                     graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
                     graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
                     
-                   
-//                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
-//                        triggers["kick_Left"] = true;
-//                        //midi.updateSequencerStep(12, 127);
-//                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
-//
-//                        triggers["kick_Left"] = false;
-//                    }
-//                    
-//                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
-//                        triggers["kick_Right"] = true;
-//                        //midi.updateSequencerStep(12, 127);
-//                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
-//
-//                        triggers["kick_Right"] = false;
-//                    }
-//                    
-//                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
-//                        triggers["punch_Left"] = true;
-//                        //midi.updateSequencerStep(15, 127);
-//                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
-//                        triggers["punch_Left"] = false;
-//                    }
-//                    
-//                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
-//                        triggers["punch_Right"] = true;
-//                        //midi.updateSequencerStep(15, 127);
-//                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
-//                        triggers["punch_Right"] = false;
-//                    }
+                    
+                    //                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
+                    //                        triggers["kick_Left"] = true;
+                    //                        //midi.updateSequencerStep(12, 127);
+                    //                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
+                    //
+                    //                        triggers["kick_Left"] = false;
+                    //                    }
+                    //
+                    //                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
+                    //                        triggers["kick_Right"] = true;
+                    //                        //midi.updateSequencerStep(12, 127);
+                    //                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
+                    //
+                    //                        triggers["kick_Right"] = false;
+                    //                    }
+                    //
+                    //                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
+                    //                        triggers["punch_Left"] = true;
+                    //                        //midi.updateSequencerStep(15, 127);
+                    //                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
+                    //                        triggers["punch_Left"] = false;
+                    //                    }
+                    //
+                    //                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
+                    //                        triggers["punch_Right"] = true;
+                    //                        //midi.updateSequencerStep(15, 127);
+                    //                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
+                    //                        triggers["punch_Right"] = false;
+                    //                    }
                     
                     
                     for (int i = 0; i < graphs.size(); i++){
                         if (graphs[i].getTriggered()){
-                           // midi.updateSequencerStep(12 + i, 127);
+                            // midi.updateSequencerStep(12 + i, 127);
                         }
                     }
                     
-
+                    
                     
                     
                     
@@ -269,7 +323,7 @@ void ofApp::update(){
         for(int i = 0; i < graphsForSkeleton.size(); i++){
             graphsForSkeleton[i].clear();
             graphsForSkeleton[i].setup(ofToString(i));
-    
+            
         }
         
     }
@@ -337,61 +391,65 @@ void ofApp::draw(){
     midi.draw();
     
     for (int i = 0; i < 4; i++){
-        graphs[i].draw(250, i * 50);
+        graphs[i].draw(350, i * 50);
     }
     
-    for (int i = 0; i < 25; i++){
+    for (int i = 0; i < graphsForSkeleton.size(); i++){
         graphsForSkeleton[i].draw(150, i*25);
+    }
+    
+    for (int i = 0; i < graphsHistory.size(); i++){
+        graphsHistory[i].draw(0, i*25);
     }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 void ofApp::exit() {
-	// turn off all MIDI notes, "All notes off" message is unreliable
-	for(int channel = 1; channel <= 16; channel++) {
-		for(int note = 0; note <= 127; note++) {
-			midiOut->sendNoteOff(channel, note);
-		}
-	}
+    // turn off all MIDI notes, "All notes off" message is unreliable
+    for(int channel = 1; channel <= 16; channel++) {
+        for(int note = 0; note <= 127; note++) {
+            midiOut->sendNoteOff(channel, note);
+        }
+    }
 }
 
 #define END( a ) (a + (sizeof( a ) / sizeof( a[ 0 ] )))
 
 void ofApp::setupAudio() {
-	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-	midiOut->openVirtualPort("OF Skeleton Tracker");
-	
-	int grabbedNotes[] = {53, 59, 60, 65, 67, 72};
-	int gridNotes[] = {59, 60, 64, 65, 67, 72, 77, 79, 84};
-	
-	triggerRef grabbed = triggerRef(new grabbedNote);
-	midiTrigger::Settings grabbedSettings;
-	grabbedSettings.notes.assign(grabbedNotes, END(grabbedNotes));
-	grabbedSettings.channel = 4;
-	grabbed->setSettings(grabbedSettings);
-	
-	triggerRef grid = triggerRef(new gridNote);
-	midiTrigger::Settings gridSettings;
-	gridSettings.notes.assign(gridNotes, END(gridNotes));
-	gridSettings.channel = 5;
-	grid->setSettings(gridSettings);
-	
-	midiTriggers.push_back(grabbed);
-	midiTriggers.push_back(grid);
-	
-	for(auto& t : midiTriggers) {
-		t->setMidiOut(midiOut);
-	}
-	
-	midi.setup();
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Skeleton Tracker");
+    
+    int grabbedNotes[] = {53, 59, 60, 65, 67, 72};
+    int gridNotes[] = {59, 60, 64, 65, 67, 72, 77, 79, 84};
+    
+    triggerRef grabbed = triggerRef(new grabbedNote);
+    midiTrigger::Settings grabbedSettings;
+    grabbedSettings.notes.assign(grabbedNotes, END(grabbedNotes));
+    grabbedSettings.channel = 4;
+    grabbed->setSettings(grabbedSettings);
+    
+    triggerRef grid = triggerRef(new gridNote);
+    midiTrigger::Settings gridSettings;
+    gridSettings.notes.assign(gridNotes, END(gridNotes));
+    gridSettings.channel = 5;
+    grid->setSettings(gridSettings);
+    
+    midiTriggers.push_back(grabbed);
+    midiTriggers.push_back(grid);
+    
+    for(auto& t : midiTriggers) {
+        t->setMidiOut(midiOut);
+    }
+    
+    midi.setup();
 }
 
 #undef END
 
 void ofApp::updateAudio(kinectBody &body) {
-	for(auto& t : midiTriggers) {
-		t->update(body);
-	}
+    for(auto& t : midiTriggers) {
+        t->update(body);
+    }
 }
 
 //--------------------------------------------------------------
