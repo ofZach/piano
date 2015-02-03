@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-
+    
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -114,12 +114,38 @@ void ofApp::setup(){
 	}
 	
     midi.setup();
+    
+    
+    for (int i = 0; i < 4; i++){
+        graphs.push_back(Graph());
+        graphs.back().setup(ofToString(i));
+        graphs.back().setSize(100, 50);
+    }
+    
+    
+    graphs[0].setName("kick left");
+    graphs[1].setName("kick right");
+    graphs[2].setName("punch left");
+    graphs[3].setName("punch right");
+    
+    
+    for (int i = 0; i < 25; i++){
+        graphsForSkeleton.push_back(Graph());
+        graphsForSkeleton.back().setup(ofToString(i));
+        graphsForSkeleton.back().setSize(100, 20);
+    }
+    
+    
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
     gui.update();
+    
+    
+    
     
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
@@ -136,7 +162,7 @@ void ofApp::update(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
-
+    
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -160,32 +186,91 @@ void ofApp::update(){
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
+            
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
+                
+                for (int i = 0; i < body.velocity.size(); i++){
+                    graphsForSkeleton[i].addSample(body.velLen[i]);
+                }
+                
+                for (int i = 0; i < graphsForSkeleton.size(); i++){
+                    if (graphsForSkeleton[i].getTriggered()){
+                        midi.updateSequencerStep(12 + i, ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
+                    }
+                }
+                
+                
+                
+                
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
                     int count = 12;
                     int i = 0;
-                    for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
-                        if(iter->second.type == Discrete){
-                            if((iter->second.triggered || iter->second.value > 0.75) && !triggers[iter->first] ){
-                                triggers[iter->first] = true;
-                                midi.updateSequencerStep(i, 127);
-                            }else if(!iter->second.triggered){
-                                 triggers[iter->first] = false;
-                            }
-                            count++;
-                            i++;
+                    
+                    int counter = 0;
+                    graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
+                    graphs[1].addSample(body.gestureHistory.back()["kick_Right"].value);
+                    graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
+                    graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
+                    
+                   
+//                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
+//                        triggers["kick_Left"] = true;
+//                        //midi.updateSequencerStep(12, 127);
+//                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
+//
+//                        triggers["kick_Left"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
+//                        triggers["kick_Right"] = true;
+//                        //midi.updateSequencerStep(12, 127);
+//                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
+//
+//                        triggers["kick_Right"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
+//                        triggers["punch_Left"] = true;
+//                        //midi.updateSequencerStep(15, 127);
+//                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
+//                        triggers["punch_Left"] = false;
+//                    }
+//                    
+//                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
+//                        triggers["punch_Right"] = true;
+//                        //midi.updateSequencerStep(15, 127);
+//                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
+//                        triggers["punch_Right"] = false;
+//                    }
+                    
+                    
+                    for (int i = 0; i < graphs.size(); i++){
+                        if (graphs[i].getTriggered()){
+                           // midi.updateSequencerStep(12 + i, 127);
                         }
                     }
+                    
+
+                    
+                    
+                    
+                    
                 }
             }
         }
     }else{
         bodyMap.clear();
         midi.clear();
+        for(int i = 0; i < graphsForSkeleton.size(); i++){
+            graphsForSkeleton[i].clear();
+            graphsForSkeleton[i].setup(ofToString(i));
+    
+        }
+        
     }
     
     //KSAI.drawEvents( KSA.normFbo);
@@ -249,6 +334,14 @@ void ofApp::draw(){
     
     gui.draw();
     midi.draw();
+    
+    for (int i = 0; i < 4; i++){
+        graphs[i].draw(500, i * 50);
+    }
+    
+    for (int i = 0; i < 25; i++){
+        graphsForSkeleton[i].draw(400, i*25);
+    }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 

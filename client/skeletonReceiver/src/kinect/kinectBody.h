@@ -13,7 +13,7 @@ public:
     int bodyId;
     
     vector < ofxHistoryPlot * > historyPlots;
-    vector <ofxHistoryPlot *  > gesturePlots;
+    map <string, ofxHistoryPlot *  > gesturePlots;
     vector<string> gestureNames;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
     

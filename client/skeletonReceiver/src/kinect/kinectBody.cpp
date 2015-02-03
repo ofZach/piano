@@ -103,6 +103,16 @@ kinectBody::kinectBody(){
     twoDSkelCamDistance.set(1000);
     
     
+    
+    gestureNames.push_back("kick_Left");
+    gestureNames.push_back("kick_Right");
+    gestureNames.push_back("punch_Right");
+    gestureNames.push_back("punch_Left");
+    
+    for(int i = 0; i < gestureNames.size(); i++){
+        gesturePlots[gestureNames[i]] = new ofxHistoryPlot(NULL, gestureNames[i], 100, false);
+    }
+    
     drawSkeletonDebug = false;
 }
 
@@ -211,23 +221,13 @@ void kinectBody::update(){
                                                    (history.back().leftHandSpan + history.back().rightHandSpan) / 2.0);
     
     
-    if(gesturePlots.size() == 0){
-        // TO DO REMOVE THIS
-        // setup gestureNames from file to map names to gestures
-        //
-        int count = 0;
-        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-            gesturePlots.push_back(new ofxHistoryPlot(NULL, iter->first, 100, false));
-            gesturePlots.back()->update(iter->second.value);
-            count++;
-        }
-    }else{
-        int count = 0;
-        for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-            gesturePlots[count]->update(iter->second.value);
-            count++;
+    
+    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+            gesturePlots[iter->first]->update(iter->second.value);
         }
     }
+    
     
     
     
@@ -409,8 +409,12 @@ void kinectBody::drawHistory(){
     
     gestureFBO.begin();
     ofClear(127, 127, 127, 50);
-    for(int i = 0; i < gesturePlots.size(); i++){
-        gesturePlots[i]->draw(0, height*i, 190, height-5);
+    int i = 0;
+    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+            gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
+            i++;
+        }
     }
     gestureFBO.end();
     

@@ -12,6 +12,7 @@
 #include "ofxMidi.h"
 #include "midiController.h"
 #include "midiTrigger.h"
+#include "Graph.h"
 
 class ofApp : public ofBaseApp{
     
@@ -103,6 +104,11 @@ public:
     //void newGesture(Gesture &newGest);
     
     midiController midi;
+    
+    
+    vector < Graph > graphs;
+    vector < Graph > graphsForSkeleton;
+    
     
 };
 
