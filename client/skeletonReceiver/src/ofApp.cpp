@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-    
+
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -118,6 +118,8 @@ void ofApp::setup(){
         buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
         buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
     }
+    
+    midi.setup();
 }
 
 //--------------------------------------------------------------
@@ -174,15 +176,18 @@ void ofApp::update(){
                 
                 if(body.gestureHistory.size() > 0){
                     int count = 12;
+                    int i = 0;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
                             if(iter->second.triggered && !triggers[iter->first]){
                                 triggers[iter->first] = true;
                                 midiOut.sendNoteOn(3, count, 127);
+                                midi.updateSequencerStep(i, 127);
                             }else if(!iter->second.triggered){
                                  triggers[iter->first] = false;
                             }
                             count++;
+                            i++;
                         }
                     }
                 }
@@ -190,6 +195,7 @@ void ofApp::update(){
         }
     }else{
         bodyMap.clear();
+        midi.clear();
     }
     
     //KSAI.drawEvents( KSA.normFbo);
@@ -253,7 +259,7 @@ void ofApp::draw(){
     
     gui.draw();
     
-    
+    midi.draw();
     
     
     
