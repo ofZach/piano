@@ -11,6 +11,7 @@
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
 #include "midiController.h"
+#include "Graph.h"
 
 class ofApp : public ofBaseApp{
     
@@ -101,6 +102,10 @@ public:
     //void newGesture(Gesture &newGest);
     
     midiController midi;
+    
+    
+    vector < Graph > graphs;
+    
     
 };
 

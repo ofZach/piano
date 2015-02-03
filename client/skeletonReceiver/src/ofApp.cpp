@@ -120,6 +120,14 @@ void ofApp::setup(){
     }
     
     midi.setup();
+    
+    
+    for (int i = 0; i < 4; i++){
+        graphs.push_back(Graph());
+        graphs.back().setup(ofToString(i));
+        graphs.back().setSize(100, 50);
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -174,8 +182,18 @@ void ofApp::update(){
                 if(body.gestureHistory.size() > 0){
                     int count = 12;
                     int i = 0;
+                    
+                    int counter = 0;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
+                            
+                            
+                            if (counter < graphs.size()){
+                                graphs[counter].addSample(iter->second.value);
+                            }
+                            counter++;
+                            
+                            
                             if((iter->second.triggered || iter->second.value > 0.75) && !triggers[iter->first] ){
                                 triggers[iter->first] = true;
                                 midi.updateSequencerStep(i, 127);
@@ -258,6 +276,9 @@ void ofApp::draw(){
     midi.draw();
     
     
+    for (int i = 0; i < 4; i++){
+        graphs[i].draw(500, i * 50);
+    }
     
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
