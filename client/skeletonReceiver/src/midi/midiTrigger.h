@@ -9,9 +9,10 @@ class midiTrigger {
 public:
 	
 	struct Settings {
-		Settings() : notes(0), channel(1) { }
+		Settings() : notes(0), channel(1), side(::left) { }
 		vector<int> notes;
 		int channel;
+		int side;
 	};
 	
 	virtual void update(kinectBody& body) { };
@@ -49,10 +50,10 @@ private:
 	int _currentNote;
 };
 
-class handSpreadNote : public midiTrigger {
+class accordianNote : public midiTrigger {
 	
 public:
-	handSpreadNote();
+	accordianNote();
 	virtual void update(kinectBody& body);
 	
 private:
