@@ -134,6 +134,15 @@ void ofApp::setup(){
     graphs[2].setName("punch left");
     graphs[3].setName("punch right");
     
+    
+    for (int i = 0; i < 25; i++){
+        graphsForSkeleton.push_back(Graph());
+        graphsForSkeleton.back().setup(ofToString(i));
+        graphsForSkeleton.back().setSize(100, 20);
+    }
+    
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -183,9 +192,24 @@ void ofApp::update(){
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
+            
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
+                
+                for (int i = 0; i < body.velocity.size(); i++){
+                    graphsForSkeleton[i].addSample(body.velLen[i]);
+                }
+                
+                for (int i = 0; i < graphsForSkeleton.size(); i++){
+                    if (graphsForSkeleton[i].getTriggered()){
+                        midi.updateSequencerStep(12 + i, 127);
+                    }
+                }
+                
+                
+                
+                
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
@@ -230,7 +254,7 @@ void ofApp::update(){
                     
                     for (int i = 0; i < graphs.size(); i++){
                         if (graphs[i].getTriggered()){
-                            midi.updateSequencerStep(12 + i, 127);
+                           // midi.updateSequencerStep(12 + i, 127);
                         }
                     }
                     
@@ -315,6 +339,9 @@ void ofApp::draw(){
         graphs[i].draw(500, i * 50);
     }
     
+    for (int i = 0; i < 25; i++){
+        graphsForSkeleton[i].draw(400, i*25);
+    }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 

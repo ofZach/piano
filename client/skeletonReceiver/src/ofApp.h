@@ -105,6 +105,7 @@ public:
     
     
     vector < Graph > graphs;
+    vector < Graph > graphsForSkeleton;
     
     
 };
