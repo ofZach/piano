@@ -23,8 +23,8 @@ void midiController::setup(){
 }
 
 void midiController::updateSequencerStep(int row, float value){
-    int col = sequencer.getColumn();
-    triggerMidiNote(col, row+12, value);
+//    int col = sequencer.getColumn();
+    triggerMidiNote(3, row+12, value);
     //sequencer.setValue(row, col, value);
 }
 
@@ -65,5 +65,5 @@ void midiController::draw(){
 
 void midiController::triggerMidiNote(int channel, int note, int velocity){
     midiOut.sendNoteOn(channel, note, velocity);
-    ofLog()<<
+    ofLog()<<"trigger midi"<<endl;
 }
