@@ -203,7 +203,7 @@ void ofApp::update(){
                 
                 for (int i = 0; i < graphsForSkeleton.size(); i++){
                     if (graphsForSkeleton[i].getTriggered()){
-                        midi.updateSequencerStep(12 + i, 127);
+                        midi.updateSequencerStep(12 + i, ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
                     }
                 }
                 
@@ -271,6 +271,12 @@ void ofApp::update(){
     }else{
         bodyMap.clear();
         midi.clear();
+        for(int i = 0; i < graphsForSkeleton.size(); i++){
+            graphsForSkeleton[i].clear();
+            graphsForSkeleton[i].setup(ofToString(i));
+    
+        }
+        
     }
     
     //KSAI.drawEvents( KSA.normFbo);
