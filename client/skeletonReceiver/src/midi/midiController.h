@@ -1,7 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxMidi.h"
-#include "ofxSequencer.h"
+//#include "ofxSequencer.h"
 class midiController{
 public:
     midiController();
@@ -15,5 +15,5 @@ public:
     void clear();
     void setBMP(int _bpm);
     ofxMidiOut midiOut;
-    ofxSequencer sequencer;
+//    ofxSequencer sequencer;
 };
