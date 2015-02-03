@@ -10,6 +10,7 @@
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
+#include "midiController.h"
 
 class ofApp : public ofBaseApp{
     
@@ -99,7 +100,7 @@ public:
     map<string, bool> triggers;
     //void newGesture(Gesture &newGest);
     
-    
+    midiController midi;
     
 };
 

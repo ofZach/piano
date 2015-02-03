@@ -6,7 +6,7 @@ void ofApp::setup(){
     
     UDPR.setup();
     
-    
+
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -105,6 +105,22 @@ void ofApp::setup(){
     fooFbo.end();
     
     midiOut.openVirtualPort("OF Skeleton Tracker");
+
+    midiNotes.push_back(0);
+    midiNotes.push_back(2);
+    midiNotes.push_back(4);
+    midiNotes.push_back(5);
+    midiNotes.push_back(7);
+    midiNotes.push_back(9);
+    midiNotes.push_back(11);
+    buttons.resize(midiNotes.size() * 6);
+    
+    for(int i = 0; i < buttons.size(); i++) {
+        buttons[i].setTriggerBlock(^(bool on, float vel) { sendMidi(i, 1, vel, on); });
+        buttons[i].setApproachBlock(^(bool on, float vel) { sendMidi(i, 2, vel, on); });
+    }
+    
+    midi.setup();
 }
 
 //--------------------------------------------------------------
@@ -161,15 +177,18 @@ void ofApp::update(){
                 
                 if(body.gestureHistory.size() > 0){
                     int count = 12;
+                    int i = 0;
                     for(map<string, Gesture>::iterator iter = body.gestureHistory.back().begin(); iter != body.gestureHistory.back().end(); ++iter){
                         if(iter->second.type == Discrete){
                             if(iter->second.triggered && !triggers[iter->first]){
                                 triggers[iter->first] = true;
                                 midiOut.sendNoteOn(3, count, 127);
+                                midi.updateSequencerStep(i, 127);
                             }else if(!iter->second.triggered){
                                  triggers[iter->first] = false;
                             }
                             count++;
+                            i++;
                         }
                     }
                 }
@@ -177,6 +196,7 @@ void ofApp::update(){
         }
     }else{
         bodyMap.clear();
+        midi.clear();
     }
     
     //KSAI.drawEvents( KSA.normFbo);
@@ -240,7 +260,7 @@ void ofApp::draw(){
     
     gui.draw();
     
-    
+    midi.draw();
     
     
     

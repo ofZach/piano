@@ -10,6 +10,9 @@ requires ofxHistoryPlot, ofxKinectV2-OSC:
 
 - [ofxHistoryPlot](https://github.com/armadillu/ofxHistoryPlot)
 - [ofxKinectV2-OSC with Gesture Support](https://github.com/danthemellowman/ofxKinectV2-OSC)
+- [ofxMidi](https://github.com/danomatika/ofxMidi.git)
+- [ofxSequencer](https://github.com/genekogan/ofxSequencer.git)
+- [ofxBMP](https://github.com/mirrorboy714/ofxBpm)
 
 also [ofxControlPanel](https://github.com/ofTheo/ofxControlPanel) -- with the ofParamter branch
 
