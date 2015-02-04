@@ -315,7 +315,6 @@ void ofApp::update(){
             graphsForSkeleton[i].clear();
             graphsForSkeleton[i].setup(ofToString(i));
         }
-		AllNotesOff(*midiOut);
     }
     
     //KSAI.drawEvents( KSA.normFbo);
