@@ -85,6 +85,8 @@ public:
     ofParameter<float> smoothDownHistory;
     
     
+    
+    ofParameter<bool> 
     ofParameter<int> startNote;
     ofParameter<int> numNotes;
     ofParameter<bool> jazzDrums;
