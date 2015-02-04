@@ -211,11 +211,6 @@ void ofApp::update(){
     
     kinect.update();
     
-    
-    //ofLog(OF_LOG_NOTICE) << skeletons->size() << endl;
-    //
-    
-    
     if (skeletons->size() >= 1){
         for(int i = 0; i < skeletons->size(); i++){
             KS.setFromSkeleton(skeletons->at(i), mat);
@@ -226,10 +221,6 @@ void ofApp::update(){
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
-                
-                //                for (int i = 0; i < body.velocity.size(); i++){
-                //                    graphsForSkeleton[i].addSample(body.velLen[i]);
-                //                }
                 
                 for (int i = 0; i < body.historyPlots.size(); i++){
                     if(body.historyPlots[i]->getValues().size()> 0){
@@ -254,11 +245,7 @@ void ofApp::update(){
                     graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
                 }
-                
-                
-                
-                
-                
+
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
@@ -272,59 +259,36 @@ void ofApp::update(){
                     graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
                     
                     
-                    //                    if((body.gestureHistory.back()["kick_Left"].triggered || body.gestureHistory.back()["kick_Left"].value > 0.75) && !triggers["kick_Left"] ){
-                    //                        triggers["kick_Left"] = true;
-                    //                        //midi.updateSequencerStep(12, 127);
-                    //                    }else if(!body.gestureHistory.back()["kick_Left"].triggered && triggers["punch_Left"]){
-                    //
-                    //                        triggers["kick_Left"] = false;
-                    //                    }
-                    //
-                    //                    if((body.gestureHistory.back()["kick_Right"].triggered || body.gestureHistory.back()["kick_Right"].value > 0.75) && !triggers["kick_Right"] ){
-                    //                        triggers["kick_Right"] = true;
-                    //                        //midi.updateSequencerStep(12, 127);
-                    //                    }else if(!body.gestureHistory.back()["kick_Right"].triggered && triggers["punch_Left"]){
-                    //
-                    //                        triggers["kick_Right"] = false;
-                    //                    }
-                    //
-                    //                    if((body.gestureHistory.back()["punch_Left"].triggered || body.gestureHistory.back()["punch_Left"].value > 0.75) && !triggers["punch_Left"] ){
-                    //                        triggers["punch_Left"] = true;
-                    //                        //midi.updateSequencerStep(15, 127);
-                    //                    }else if(!body.gestureHistory.back()["punch_Left"].triggered && triggers["punch_Left"]){
-                    //                        triggers["punch_Left"] = false;
-                    //                    }
-                    //
-                    //                    if((body.gestureHistory.back()["punch_Right"].triggered || body.gestureHistory.back()["punch_Right"].value > 0.75) && !triggers["punch_Right"] ){
-                    //                        triggers["punch_Right"] = true;
-                    //                        //midi.updateSequencerStep(15, 127);
-                    //                    }else if(!body.gestureHistory.back()["punch_Right"].triggered && triggers["punch_Left"]){
-                    //                        triggers["punch_Right"] = false;
-                    //                    }
-                    
-                    
                     for (int i = 0; i < graphs.size(); i++){
                         if (graphs[i].getTriggered()){
-                            // midi.updateSequencerStep(12 + i, 127);
+                            midi.updateSequencerStep(startNote+i%numNotes, 127);
                         }
                     }
-                    
-                    
-                    
-                    
-                    
-                    
                 }
             }
         }
     }else{
+        
+        if(bodyMap.size() > 0){
+            for(int i = 0; i < graphsForSkeleton.size(); i++){
+                graphsForSkeleton[i].clear();
+                
+            }
+            
+            for(int i = 0; i < graphsHistory.size(); i++){
+                graphsHistory[i].clear();
+                
+            }
+            
+            for(int i = 0; i < graphs.size(); i++){
+                graphs[i].clear();
+                
+            }
+        }
+        
         bodyMap.clear();
         midi.clear();
-        for(int i = 0; i < graphsForSkeleton.size(); i++){
-            graphsForSkeleton[i].clear();
-            graphsForSkeleton[i].setup(ofToString(i));
-            
-        }
+
         
     }
     
