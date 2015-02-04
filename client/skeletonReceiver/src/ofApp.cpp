@@ -403,6 +403,7 @@ void ofApp::setupAudio() {
 
 	int stringNotes[] = {53, 59, 60, 64, 67, 72};
 	int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
+	int accordNotes[] = {36, 43};
 	
 	triggerRef strings = triggerRef(new gridNote);
 	midiTrigger::Settings stringSettings;
@@ -421,6 +422,7 @@ void ofApp::setupAudio() {
 	triggerRef accord = triggerRef(new accordianNote);
 	midiTrigger::Settings accordSettings;
 	accordSettings.channel = 8;
+	accordSettings.notes.assign(accordNotes, END(accordNotes));
 	accord->setSettings(accordSettings);
 	
 	midiTriggers.push_back(strings);

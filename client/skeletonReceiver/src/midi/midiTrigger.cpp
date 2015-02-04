@@ -128,22 +128,22 @@ void gridNote::update(kinectBody &body) {
 #pragma mark - Accordian Note
 
 accordianNote::accordianNote() : _triggered(false), _currentNote(0), _lastDist(0) {
-	
+	getSettings().notes.resize(2);
 }
 
 void accordianNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
-	float dist = sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand));
-	float mapped = ofMap(dist, 0, sk.skeletonHeight, 0, 1);
-	
-	float onThresh = 0.4;
-	int note = dist > _lastDist ? 36 : 43;
+	float dist = ofMap(sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand)), 0, sk.skeletonHeight, 0, 1);
+
+	float onThresh = 0.5;
+	float retrigThresh = 0.0004;
+	int note = dist > _lastDist ? getSettings().notes[0] : getSettings().notes[1];
 	
 	if(dist > onThresh) {
 		if(!_triggered) {
 			getMidiOut()->sendNoteOn(getSettings().channel, note);
-		} else if(note != _currentNote && abs(dist - _lastDist) > 0.08) {
+		} else if(note != _currentNote && abs(_lastDist - dist) > retrigThresh) {
 			getMidiOut()->sendNoteOn(getSettings().channel, note);
 			getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		}
