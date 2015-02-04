@@ -11,7 +11,7 @@
 
 void Floor::setup(){
     
-    gui.setup("Floor Controls", ofGetWidth()-300-10, 10, 300, 400);
+    gui.setup("Floor Controls", ofGetWidth()-600-10, 10, 300, 400);
     gui.addPanel("main control",1, false);
     
     gui.setWhichPanel(0);
@@ -36,6 +36,9 @@ void Floor::setup(){
     
     gui.setupEvents();
     gui.enableEvents();
+    
+    
+    gui.loadSettings("controlPanelSettings.xml");
     
     floor.allocate(1280, 720, GL_RGBA, 4);
     floor.begin();
@@ -258,14 +261,17 @@ void Floor::update(ofEventArgs &args){
             ofCircle(pts[i], 3);
         }
     }
-    
-    for (int i = 0; i < movers.size(); i++){
-        movers[i].draw();
-    }
-    
+    ofPushStyle();
     for (int i = 0; i < triangles.size(); i++){
         triangles[i].draw(pts);
     }
+    ofPopStyle();
+    for (int i = 0; i < movers.size(); i++){
+        ofSetColor(255, 255, 255);
+        movers[i].draw();
+    }
+    
+
     
     ofPopMatrix();
     ofPopStyle();
@@ -281,8 +287,8 @@ void Floor::addLineTrace(){
     
     for (int i = 0; i < movers.size(); i++){
         
-        movers[i].speed = speed*1.00001;
-        movers[i].lineDistance = movers[i].lineDistance*0.99999;
+        movers[i].speed = ofRandom(0.1, 0.5)*0.01;
+        movers[i].lineDistance = ofRandom(25, 30);
         
     }
     
@@ -298,8 +304,11 @@ void Floor::addLineTrace(){
 }
 
 void Floor::triggerTriangles(){
-    for (int i = 0; i < triangles.size(); i++){
-        triangles[i].impulse();
+    if(ofGetElapsedTimeMillis() - lastTrigger > 750){
+        for (int i = 0; i < triangles.size(); i++){
+            triangles[i].impulse();
+        }
+        lastTrigger = ofGetElapsedTimeMillis();
     }
 }
 

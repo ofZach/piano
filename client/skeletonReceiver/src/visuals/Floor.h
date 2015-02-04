@@ -49,4 +49,6 @@ public:
     ofParameter <float>     speed;
     
     ofxSyphonServer floorTexture;
+    
+    unsigned long long lastTrigger;
 };
