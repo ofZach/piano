@@ -474,10 +474,12 @@ void ofApp::exit() {
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
 
 
+
 void ofApp::setupAudio() {
     
     int stringNotes[] = {53, 59, 60, 64, 67, 72};
     int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
+    int accordNotes[] = {36, 43};
     
     triggerRef strings = triggerRef(new gridNote);
     midiTrigger::Settings stringSettings;
@@ -496,6 +498,7 @@ void ofApp::setupAudio() {
     triggerRef accord = triggerRef(new accordianNote);
     midiTrigger::Settings accordSettings;
     accordSettings.channel = 8;
+    accordSettings.notes.assign(accordNotes, END(accordNotes));
     accord->setSettings(accordSettings);
     
     midiTriggers.push_back(strings);
@@ -503,17 +506,14 @@ void ofApp::setupAudio() {
     midiTriggers.push_back(accord);
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->listPorts();
-    //midiOut->openPort("Network Session 1");
-    midiOut->openVirtualPort();
+    midiOut->openVirtualPort("OF Kinect");
     for(auto& t : midiTriggers) {
         t->setMidiOut(midiOut);
     }
     AllNotesOff(*midiOut);
-    
+
     
     skeletonMidi.setup(midiOut);
-    
 }
 
 #undef END
