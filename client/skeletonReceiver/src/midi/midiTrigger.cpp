@@ -2,6 +2,10 @@
 
 #pragma mark - Interface
 
+midiTrigger::midiTrigger() : _settings() {
+	
+}
+
 void midiTrigger::setMidiOut(shared_ptr<ofxMidiOut> midiOut) {
 	_midiOut = midiOut;
 }
@@ -30,6 +34,14 @@ T ExtractNote(const vector<T>& notes, float perc) {
 
 int ExtractNote(const midiTrigger::Settings &settings, float perc) {
 	return ExtractNote(settings.notes, perc);
+}
+
+void AllNotesOff(ofxMidiOut& midiOut) {
+	for(int channel = 1; channel <= 16; channel++) {
+		for(int note = 0; note <= 127; note++) {
+			midiOut.sendNoteOff(channel, note);
+		}
+	}
 }
 
 #pragma mark - Grabbed Note
@@ -125,34 +137,24 @@ void accordianNote::update(kinectBody &body) {
 	float dist = sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand));
 	float mapped = ofMap(dist, 0, sk.skeletonHeight, 0, 1);
 	
-	float onThresh = 0.15;
+	float onThresh = 0.4;
 	int note = dist > _lastDist ? 36 : 43;
 	
 	if(dist > onThresh) {
-		
 		if(!_triggered) {
 			getMidiOut()->sendNoteOn(getSettings().channel, note);
-		} else if(note != _currentNote && abs(dist - _lastDist) > 0.05) {
+		} else if(note != _currentNote && abs(dist - _lastDist) > 0.08) {
 			getMidiOut()->sendNoteOn(getSettings().channel, note);
 			getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		}
-		
 		_currentNote = note;
 		_triggered = true;
+		_lastDist = dist;
 		
 	} else if(_triggered) {
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_currentNote = 0;
+		_lastDist = 0;
+		_triggered = false;
 	}
-	
-	_lastDist = dist;
-	
-	
-//	if(!_triggered && mapped > onThresh) {
-//		getMidiOut()->sendNoteOn(getSettings().channel, 48);
-//		_triggered = true;
-//	} else if(_triggered && mapped < onThresh) {
-//		getMidiOut()->sendNoteOff(getSettings().channel, 48);
-//		_triggered = false;
-//	}
 }

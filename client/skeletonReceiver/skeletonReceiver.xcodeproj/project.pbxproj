@@ -41,7 +41,6 @@
 		C0788BDE2AA497B48C2B6F85 /* Interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9F2933D385C0665970A1A19 /* Interpreter.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		C80A46941A76A6BE00BC0545 /* ofxHistoryPlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C80A46921A76A6BE00BC0545 /* ofxHistoryPlot.cpp */; };
-		C8D782601A80482000F367F8 /* midiController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8D7825E1A80482000F367F8 /* midiController.cpp */; };
 		C99C59EB5A00132F22624A2D /* BodyRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7D88D45725D5A3C0781C9A8 /* BodyRenderer.cpp */; };
 		DF0E23207448D9B0A01099DE /* Hand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C140B7536113642BB2F29B2 /* Hand.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -213,8 +212,6 @@
 		C80A46931A76A6BE00BC0545 /* ofxHistoryPlot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxHistoryPlot.h; sourceTree = "<group>"; };
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
 		C8D782451A7FE9DA00F367F8 /* Gesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Gesture.h; path = "../../../addons/ofxKinectV2-OSC/src/DataTransform/Gesture.h"; sourceTree = "<group>"; };
-		C8D7825E1A80482000F367F8 /* midiController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = midiController.cpp; sourceTree = "<group>"; };
-		C8D7825F1A80482000F367F8 /* midiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midiController.h; sourceTree = "<group>"; };
 		D6B9CFD1E73671E93959871F /* BodyRenderer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = BodyRenderer.h; path = "../../../addons/ofxKinectV2-OSC/src/Draw/BodyRenderer.h"; sourceTree = SOURCE_ROOT; };
 		D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
 		D9F2933D385C0665970A1A19 /* Interpreter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Interpreter.cpp; path = "../../../addons/ofxKinectV2-OSC/src/Body/Interpreter.cpp"; sourceTree = SOURCE_ROOT; };
@@ -618,8 +615,6 @@
 		C8D7825D1A80482000F367F8 /* midi */ = {
 			isa = PBXGroup;
 			children = (
-				C8D7825E1A80482000F367F8 /* midiController.cpp */,
-				C8D7825F1A80482000F367F8 /* midiController.h */,
 				6651B4AB1A8063C4008FF381 /* midiTrigger.cpp */,
 				6651B4AC1A8063C4008FF381 /* midiTrigger.h */,
 			);
@@ -1060,7 +1055,6 @@
 				FD5DA1761A7FE69B00FE6303 /* RtMidi.cpp in Sources */,
 				FDD5CE501A78334100EC1272 /* guiTypeChartPlotter.cpp in Sources */,
 				6651B49E1A8012E0008FF381 /* kinectButton.cpp in Sources */,
-				C8D782601A80482000F367F8 /* midiController.cpp in Sources */,
 				FD5DA1651A7FE68F00FE6303 /* ofxRtMidiIn.cpp in Sources */,
 				FDD5CE4B1A78334100EC1272 /* guiCallback.cpp in Sources */,
 				FDD5CE5E1A78334100EC1272 /* guiValue.cpp in Sources */,

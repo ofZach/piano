@@ -3,10 +3,13 @@
 #include "kinectBody.h"
 #include "ofxMidiOut.h"
 
+extern void AllNotesOff(ofxMidiOut& midiOut);
 
 class midiTrigger {
 	
 public:
+	
+	midiTrigger();
 	
 	struct Settings {
 		Settings() : notes(0), channel(1), side(::left) { }

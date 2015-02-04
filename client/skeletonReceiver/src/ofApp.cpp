@@ -237,27 +237,25 @@ void ofApp::update(){
                     }
                     
                     if (graphsHistory[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0 && (!jazzDrums || historyAndSkeleton)){
-                        midi.updateSequencerStep(startNote + i%numNotes, ofMap(body.historyPlots[i]->getValues().back(), body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange(), 0, 127, true));
+						midiOut->sendNoteOn(startNote + (i % numNotes), ofMap(body.historyPlots[i]->getValues().back(),
+																			  body.historyPlots[i]->getLowerRange(),
+																			  body.historyPlots[i]->getHigerRange(),
+																			  0, 127, true));
                     }
                     graphsHistory[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsHistory[i].setMinMaxRange(body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange());
                     graphsHistoryThresh[i].set(graphsHistory[i].threshold);
-                    
                 }
                 
                 for (int i = 0; i < graphsForSkeleton.size(); i++){
-                    
                     graphsForSkeleton[i].addSample(body.velLen[i]);
                     if (graphsForSkeleton[i].getTriggered() && (jazzDrums || historyAndSkeleton)){
-                        midi.updateSequencerStep(startNote + (i%numNotes), ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
+						midiOut->sendNoteOn(startNote + (i % numNotes), ofMap(graphsForSkeleton[i].getNormalized(),
+																			  0, 1, 0, 127, true));
                     };
                     graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
                 }
-                
-                
-                
-                
                 
                 updateAudio(body);
                 
@@ -308,24 +306,16 @@ void ofApp::update(){
                             // midi.updateSequencerStep(12 + i, 127);
                         }
                     }
-                    
-                    
-                    
-                    
-                    
-                    
                 }
             }
         }
     }else{
         bodyMap.clear();
-        midi.clear();
         for(int i = 0; i < graphsForSkeleton.size(); i++){
             graphsForSkeleton[i].clear();
             graphsForSkeleton[i].setup(ofToString(i));
-            
         }
-        
+		AllNotesOff(*midiOut);
     }
     
     //KSAI.drawEvents( KSA.normFbo);
@@ -388,7 +378,6 @@ void ofApp::draw(){
     }
     
     gui.draw();
-    midi.draw();
     
     for (int i = 0; i < 4; i++){
         graphs[i].draw(350, i * 50);
@@ -405,23 +394,16 @@ void ofApp::draw(){
 }
 
 void ofApp::exit() {
-    // turn off all MIDI notes, "All notes off" message is unreliable
-    for(int channel = 1; channel <= 16; channel++) {
-        for(int note = 0; note <= 127; note++) {
-            midiOut->sendNoteOff(channel, note);
-        }
-    }
+	AllNotesOff(*midiOut);
+	midiOut->closePort();
 }
 
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
 
 void ofApp::setupAudio() {
-	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-	midiOut->openVirtualPort("OF Skeleton Tracker");
-	
-	int stringNotes[] = {53, 59, 60, 65, 67, 72};
+
+	int stringNotes[] = {53, 59, 60, 64, 67, 72};
 	int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
-	
 	
 	triggerRef strings = triggerRef(new gridNote);
 	midiTrigger::Settings stringSettings;
@@ -446,11 +428,12 @@ void ofApp::setupAudio() {
 	midiTriggers.push_back(piano);
 	midiTriggers.push_back(accord);
 	
+	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+	midiOut->openVirtualPort("OF Kinect");
 	for(auto& t : midiTriggers) {
 		t->setMidiOut(midiOut);
 	}
-	
-	midi.setup();
+	AllNotesOff(*midiOut);
 }
 
 #undef END

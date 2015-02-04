@@ -10,7 +10,6 @@
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
 #include "ofxMidi.h"
-#include "midiController.h"
 #include "midiTrigger.h"
 #include "Graph.h"
 
@@ -118,8 +117,6 @@ public:
 	
 	vector<triggerRef> midiTriggers;
     //void newGesture(Gesture &newGest);
-    
-    midiController midi;
     
     
     vector < Graph > graphs;
