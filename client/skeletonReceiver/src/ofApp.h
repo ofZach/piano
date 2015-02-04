@@ -85,7 +85,9 @@ public:
     ofParameter<float> smoothUpHistory;
     ofParameter<float> smoothDownHistory;
     
+    ofParameter<int>   bodyDropThreshold;
     ofParameter<bool> debugMode;
+    ofParameter<int> outputMode;
     ofParameter<int> startNote;
     ofParameter<int> numNotes;
     ofParameter<bool> jazzDrums;
@@ -93,8 +95,8 @@ public:
     
     ofFbo fooFbo;
 
-
     
+    unsigned long long bodyDropTimer;
     
     ofxControlPanel gui;
     

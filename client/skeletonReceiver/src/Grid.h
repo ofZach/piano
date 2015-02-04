@@ -106,13 +106,13 @@ public:
     }
     
     void update(){
-        energy *= 0.993;
+        energy *= 0.93;
         
-        impulseEnergy  *= 0.993;
+        impulseEnergy  *= 0.93;
         
-        if (impulseEnergy > 0.01 && ofGetElapsedTimeMillis() - lastFlip > 500){
-            randomFlip(powf(energy, 0.3)* 0.15 + 0.85);
-        }
+//        if (impulseEnergy > 0.01 && ofGetElapsedTimeMillis() - lastFlip > 700){
+//            randomFlip(powf(energy, 0.3)* 0.15 + 0.85);
+//        }
         
     }
     
@@ -130,7 +130,7 @@ public:
         
         ofPushStyle();
         if (bOn){
-            ofSetColor(255, 255 * powf(impulseEnergy, 0.75));
+            ofSetColor(255, 255 * powf(impulseEnergy, 0.55));
             ofTriangle (pts[a], pts[b], pts[c]);
         }
         ofPopStyle();
@@ -138,11 +138,11 @@ public:
     }
     
     void impulse (){
-        if (ofGetElapsedTimeMillis() - lastFlip > 500){
+//        if (ofGetElapsedTimeMillis() - lastFlip > 500){
             impulseEnergy = 1;
             randomOn(0.5);
             if (bOn) energy = 1;
-        }
+//        }
     }
     
     bool bOn;

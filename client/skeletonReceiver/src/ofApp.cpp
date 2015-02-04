@@ -17,7 +17,7 @@ void ofApp::setup(){
     largeFont.loadFont("selena.otf", 48);
     
     
-       kinect.setup(12345, smallFont);
+    kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
@@ -64,7 +64,8 @@ void ofApp::setup(){
     debugView.add(jazzDrums.set("JazzDrums", false));
     debugView.add(historyAndSkeleton.set("Send All Triggers", false));
     debugView.add(debugMode.set("Draw Graphs", false));
-    
+    debugView.add(bodyDropThreshold.set("Body Drop Time", 500, 100, 2000));
+    debugView.add(outputMode.set("Output", 0, 0, 2));
     
     
     buttonControl.setName("button control");
@@ -130,7 +131,7 @@ void ofApp::setup(){
         graphs.back().setup(ofToString(i));
         graphs.back().setSize(100, 50);
         graphs.back().setMinMaxRange(0, 1);
-        graphs.back().setBidirectional(true);
+        graphs.back().setBidirectional(false);
         graphs.back().setThreshold(0);
     }
     
@@ -146,7 +147,7 @@ void ofApp::setup(){
     for (int i = 0; i < 25; i++){
         graphsForSkeleton.push_back(Graph());
         graphsForSkeleton.back().setup(ofToString(i));
-        graphsForSkeleton.back().setBidirectional(true);
+        graphsForSkeleton.back().setBidirectional(false);
         graphsForSkeleton.back().setSize(100, 20);
         graphsForSkeleton.back().setThreshold(0);
         ofParameter<float> fooParam;
@@ -164,7 +165,7 @@ void ofApp::setup(){
         graphsHistory.back().setup(ofToString(i));
         graphsHistory.back().setSize(100, 20);
         graphsHistory.back().setThreshold(0);
-        graphsHistory.back().setBidirectional(true);
+        graphsHistory.back().setBidirectional(false);
         graphsHistory.back().setMinMaxRange(0, 1);
         ofParameter<float> fooParam;
         fooParam.set("History Threshold-"+ofToString(i), 0, 0, 100);
@@ -175,7 +176,7 @@ void ofApp::setup(){
     gui.setWhichPanel(5);
     gui.setWhichColumn(0);
     gui.addGroup(graphsControl2);
-    
+    gui.loadSettings("settings.xml");
     floorProjections.setup();
     
 }
@@ -220,69 +221,150 @@ void ofApp::update(){
     kinect.update();
     
     if (skeletons->size() >= 1){
-        for(int i = 0; i < skeletons->size(); i++){
-            KS.setFromSkeleton(skeletons->at(i), mat);
-            kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
-            bool bNewFrame = body.addSkeleton(KS);
+        //for(int i = 0; i < skeletons->size(); i++){
+        KS.setFromSkeleton(skeletons->at(0), mat);
+        kinectBody & body = bodyMap[skeletons->at(0).getBodyId()];
+        bool bNewFrame = body.addSkeleton(KS);
+        
+        
+        if (bNewFrame){
+            KSA.analyze(body.getLastSkeleton());
+            KBA.analyze(body);
             
-            
-            if (bNewFrame){
-                KSA.analyze(body.getLastSkeleton());
-                KBA.analyze(body);
-                
+            if(outputMode == 0){
+                updateAudio(body);
+            }else{
+                if(outputMode == 1){
+                    jazzDrums.set(false);
+                }else{
+                    jazzDrums.set(true);
+                }
                 for (int i = 0; i < body.historyPlots.size(); i++){
                     if(body.historyPlots[i]->getValues().size()> 0){
                         graphsHistory[i].addSample(body.historyPlots[i]->getValues().back());
                     }
                     
-                    if (graphsHistory[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0 && (!jazzDrums || historyAndSkeleton)){
-                        skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(body.historyPlots[i]->getValues().back(),
-                                                                                                    body.historyPlots[i]->getLowerRange(),
-                                                                                                    body.historyPlots[i]->getHigerRange(),
-                                                                                                    0, 127, true));
+                    if (graphsHistory[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0 ){
                         
-                        floorProjections.addLineTrace();
+                        if((!jazzDrums || historyAndSkeleton)){
+                            if(!triggers[body.historyPlots[i]->varName]){
+                                triggers[body.historyPlots[i]->varName] = true;
+                                if(ofIsStringInString(body.historyPlots[i]->varName, "arm")){
+                                    skeletonMidi.triggerPunch(62+i%2, ofMap(body.historyPlots[i]->getValues().back(),
+                                                                            body.historyPlots[i]->getLowerRange(),
+                                                                            body.historyPlots[i]->getHigerRange(),
+                                                                            0, 127, true));
+                                }
+                                if(ofIsStringInString(body.historyPlots[i]->varName, "leg")){
+                                    skeletonMidi.triggerKick(60+i%2, ofMap(body.historyPlots[i]->getValues().back(),
+                                                                           body.historyPlots[i]->getLowerRange(),
+                                                                           body.historyPlots[i]->getHigerRange(),
+                                                                           0, 127, true));
+                                }
+                                if(ofIsStringInString(body.historyPlots[i]->varName, "angle")){
+                                    skeletonMidi.triggerKick(60+i%2, ofMap(body.historyPlots[i]->getValues().back(),
+                                                                           body.historyPlots[i]->getLowerRange(),
+                                                                           body.historyPlots[i]->getHigerRange(),
+                                                                           0, 127, true));
+                                }
+                                floorProjections.addLineTrace();
+                            }
+                        }
+                    }else if(triggers[body.historyPlots[i]->varName]){
+                        triggers[body.historyPlots[i]->varName] = false;
                     }
                     graphsHistory[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsHistory[i].setMinMaxRange(body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange());
                     graphsHistoryThresh[i].set(graphsHistory[i].threshold);
                 }
-                
                 for (int i = 0; i < graphsForSkeleton.size(); i++){
-                    graphsForSkeleton[i].addSample(body.velLen[i]);
-                    if (graphsForSkeleton[i].getTriggered() && (jazzDrums || historyAndSkeleton)){
-                        skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(graphsForSkeleton[i].getNormalized(),
-                                                                              0, 1, 0, 127, true));
-                         floorProjections.triggerTriangles();
+                    if(find(body.getLastSkeleton().skipList.begin(), body.getLastSkeleton().skipList.end(),body.getLastSkeleton().indexToName[i]) == body.getLastSkeleton().skipList.end()){
+                        graphsForSkeleton[i].addSample(body.velLen[i]);
+                        if (graphsForSkeleton[i].getTriggered()){
+                            if((jazzDrums || historyAndSkeleton)){
+                                if(!ofIsStringInString(body.getLastSkeleton().indexToName[i], "Spine")){
+                                    if(!triggers[body.getLastSkeleton().indexToName[i]]){
+                                        triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                        if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Hand")){
+                                            skeletonMidi.triggerPunch(70+i%2, graphsForSkeleton[i].getNormalized()*127);
+                                        }
+                                        if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Elbow")){
+                                            skeletonMidi.triggerPunch(72+i%2, graphsForSkeleton[i].getNormalized()*127);
+                                        }
+                                        if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Foot")){
+                                            skeletonMidi.triggerKick(68+i%2, graphsForSkeleton[i].getNormalized()*127);
+                                        }
+                                        if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Knee")){
+                                            skeletonMidi.triggerKick(64+i%2, graphsForSkeleton[i].getNormalized()*127);
+                                        }
+                                        if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Ankle")){
+                                            skeletonMidi.triggerKick(66+i%2, graphsForSkeleton[i].getNormalized()*127);
+                                        }
+                                        
+                                        ofLog(OF_LOG_NOTICE)<<"Trigger "<<body.getLastSkeleton().indexToName[i]<<endl;
+                                    }
+                                }
+                                floorProjections.triggerTriangles();
+//                                floorProjections.addLineTrace();
+                            }
+
+                        }else if(triggers[body.getLastSkeleton().indexToName[i]]){
+                            triggers[body.getLastSkeleton().indexToName[i]] = false;
+                        }
+                        graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
+                        graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
                         
-                    };
-                    graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
-                    graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
+                    }
                 }
                 
-                updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
-                    int count = 12;
-                    int i = 0;
-                    
-                    int counter = 0;
                     graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
                     graphs[1].addSample(body.gestureHistory.back()["kick_Right"].value);
                     graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
                     graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
                     
                     
-                    for (int i = 0; i < graphs.size(); i++){
-                        if (graphs[i].getTriggered()){
-                            skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(graphs[i].getNormalized(), 0, 1, 0, 127));
-                            floorProjections.triggerTriangles();
-                        }
+                    if(graphs[0].getTriggered()  && !triggers["kick_Left"]){
+                        skeletonMidi.triggerKick(60, graphs[0].getNormalized()*127);
+                        floorProjections.triggerTriangles();
+                        floorProjections.addLineTrace();
+                        triggers["kick_Left"] = true;
+                    }else if(!graphs[0].getTriggered()  && triggers["kick_Left"]){
+                        triggers["kick_Left"] = false;
                     }
+                    if(graphs[1].getTriggered()  && !triggers["kick_Right"]){
+                        skeletonMidi.triggerKick(61, graphs[1].getNormalized()*127);
+                        floorProjections.triggerTriangles();
+                        floorProjections.addLineTrace();
+                    }else if(!graphs[1].getTriggered()  && triggers["kick_Right"]){
+                        triggers["kick_Right"] = false;
+                    }
+                    if(graphs[2].getTriggered()&& !triggers["punch_Left"]){
+                        skeletonMidi.triggerPunch(62, graphs[2].getNormalized()*127);
+                        floorProjections.triggerTriangles();
+                        floorProjections.addLineTrace();
+                    }else if(!graphs[2].getTriggered()  && triggers["punch_Left"]){
+                        triggers["punch_Left"] = false;
+                    }
+                    if(graphs[3].getTriggered() && !triggers["punch_Right"]){
+                        skeletonMidi.triggerPunch(63, graphs[3].getNormalized()*127);
+                        floorProjections.triggerTriangles();
+                        floorProjections.addLineTrace();
+                    }else if(!graphs[3].getTriggered() && triggers["punch_Right"]){
+                        triggers["punch_Right"] = false;
+                    }
+                    
+                    graphs[0].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    graphs[1].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    graphs[2].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    graphs[3].setSmoothing(smoothDownHistory, smoothUpHistory);
+                    
                 }
             }
         }
-    }else{
+        //}
+    }else if(ofGetElapsedTimeMillis() - bodyDropTimer > bodyDropThreshold){
         if(bodyMap.size() > 0){
             for(int i = 0; i < graphsForSkeleton.size(); i++){
                 graphsForSkeleton[i].clear();
@@ -421,7 +503,9 @@ void ofApp::setupAudio() {
     midiTriggers.push_back(accord);
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->openVirtualPort("OF Kinect");
+    midiOut->listPorts();
+    //midiOut->openPort("Network Session 1");
+    midiOut->openVirtualPort();
     for(auto& t : midiTriggers) {
         t->setMidiOut(midiOut);
     }
