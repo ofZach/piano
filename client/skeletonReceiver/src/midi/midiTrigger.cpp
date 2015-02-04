@@ -2,6 +2,10 @@
 
 #pragma mark - Interface
 
+midiTrigger::midiTrigger() : _settings() {
+	
+}
+
 void midiTrigger::setMidiOut(shared_ptr<ofxMidiOut> midiOut) {
 	_midiOut = midiOut;
 }
@@ -30,6 +34,14 @@ T ExtractNote(const vector<T>& notes, float perc) {
 
 int ExtractNote(const midiTrigger::Settings &settings, float perc) {
 	return ExtractNote(settings.notes, perc);
+}
+
+void AllNotesOff(ofxMidiOut& midiOut) {
+	for(int channel = 1; channel <= 16; channel++) {
+		for(int note = 0; note <= 127; note++) {
+			midiOut.sendNoteOff(channel, note);
+		}
+	}
 }
 
 #pragma mark - Grabbed Note
@@ -72,7 +84,7 @@ void grabbedNote::update(kinectBody &body) {
 
 #pragma mark - Grid Note
 
-gridNote::gridNote() : _triggered(false), _currentNote(0) {
+gridNote::gridNote() : _triggered(false), _currentNote(0), _lastTrigger(0) {
 
 }
 
@@ -95,21 +107,27 @@ void gridNote::update(kinectBody &body) {
 	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, getSettings().side));
 	int vel = ofMap(handVel.length(), 0, 40, 40, 120);
 	
-	if(shouldTrig && note != _currentNote) {
+	auto now = ofGetElapsedTimeMillis();
+	unsigned long long timeThresh = 80;
+	bool timeOk = (now - _lastTrigger) > timeThresh;
+	
+	if(shouldTrig && note != _currentNote && timeOk) {
 		getMidiOut()->sendNoteOn(getSettings().channel, note, vel);
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = true;
 		_currentNote = note;
+		_lastTrigger = now;
 	} else if(!shouldTrig && _triggered) {
 		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
 		_triggered = false;
 		_currentNote = 0;
+		_lastTrigger = now;
 	}
 }
 
 #pragma mark - Accordian Note
 
-accordianNote::accordianNote() : _triggered(false) {
+accordianNote::accordianNote() : _triggered(false), _currentNote(0), _lastDist(0) {
 	
 }
 
@@ -119,15 +137,24 @@ void accordianNote::update(kinectBody &body) {
 	float dist = sk.getLeftPoint(::hand).distance(sk.getRightPoint(::hand));
 	float mapped = ofMap(dist, 0, sk.skeletonHeight, 0, 1);
 	
-	float onThresh = 0.1;
+	float onThresh = 0.4;
+	int note = dist > _lastDist ? 36 : 43;
 	
-	if(!_triggered && mapped > onThresh) {
-		getMidiOut()->sendNoteOn(getSettings().channel, 67);
+	if(dist > onThresh) {
+		if(!_triggered) {
+			getMidiOut()->sendNoteOn(getSettings().channel, note);
+		} else if(note != _currentNote && abs(dist - _lastDist) > 0.08) {
+			getMidiOut()->sendNoteOn(getSettings().channel, note);
+			getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
+		}
+		_currentNote = note;
 		_triggered = true;
-	} else if(_triggered && mapped < onThresh) {
-		getMidiOut()->sendNoteOff(getSettings().channel, 67);
+		_lastDist = dist;
+		
+	} else if(_triggered) {
+		getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
+		_currentNote = 0;
+		_lastDist = 0;
 		_triggered = false;
 	}
-	
-	getMidiOut()->sendAftertouch(6, mapped * 127);
 }

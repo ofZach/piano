@@ -3,6 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofSetFrameRate(60);
+    ofSetVerticalSync(true);
+    
     
     UDPR.setup();
     
@@ -14,14 +17,13 @@ void ofApp::setup(){
     largeFont.loadFont("selena.otf", 48);
     
     
-    ofSetFrameRate(60);
-    kinect.setup(12345, smallFont);
+       kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
     gui.setup("panel");
-
+    
     KS.setup();
     
     //KSAI.setup();
@@ -61,6 +63,7 @@ void ofApp::setup(){
     debugView.add(smoothUpSkeleton.set("Smooth Up Skeleton", 0, 0, 1));
     debugView.add(jazzDrums.set("JazzDrums", false));
     debugView.add(historyAndSkeleton.set("Send All Triggers", false));
+    debugView.add(debugMode.set("Draw Graphs", false));
     
     
     
@@ -77,13 +80,14 @@ void ofApp::setup(){
     gui.addPanel("Debug Controls", 4, false);
     gui.addPanel("Thresholds Skeletons", 4, false);
     gui.addPanel("Thresholds History", 4, false);
+    gui.addPanel("Grid Control", 4, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     
     gui.addGroup(skeletonTransform);
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
-
+    
     
     
     gui.setWhichPanel(3);
@@ -172,8 +176,12 @@ void ofApp::setup(){
     gui.setWhichColumn(0);
     gui.addGroup(graphsControl2);
     
+    floorProjections.setup();
     
 }
+
+
+
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -228,24 +236,30 @@ void ofApp::update(){
                     }
                     
                     if (graphsHistory[i].getTriggered() && body.historyPlots[i]->getValues().size()> 0 && (!jazzDrums || historyAndSkeleton)){
-                        midi.updateSequencerStep(startNote + i%numNotes, ofMap(body.historyPlots[i]->getValues().back(), body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange(), 0, 127, true));
+                        skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(body.historyPlots[i]->getValues().back(),
+                                                                                                    body.historyPlots[i]->getLowerRange(),
+                                                                                                    body.historyPlots[i]->getHigerRange(),
+                                                                                                    0, 127, true));
+                        
+                        floorProjections.addLineTrace();
                     }
                     graphsHistory[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsHistory[i].setMinMaxRange(body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange());
                     graphsHistoryThresh[i].set(graphsHistory[i].threshold);
-                    
                 }
                 
                 for (int i = 0; i < graphsForSkeleton.size(); i++){
-                    
                     graphsForSkeleton[i].addSample(body.velLen[i]);
                     if (graphsForSkeleton[i].getTriggered() && (jazzDrums || historyAndSkeleton)){
-                        midi.updateSequencerStep(startNote + (i%numNotes), ofMap(graphsForSkeleton[i].getNormalized(), 0, 1, 0, 127, true));
+                        skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(graphsForSkeleton[i].getNormalized(),
+                                                                              0, 1, 0, 127, true));
+                         floorProjections.triggerTriangles();
+                        
                     };
                     graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                     graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);
                 }
-
+                
                 updateAudio(body);
                 
                 if(body.gestureHistory.size() > 0){
@@ -261,14 +275,14 @@ void ofApp::update(){
                     
                     for (int i = 0; i < graphs.size(); i++){
                         if (graphs[i].getTriggered()){
-                            midi.updateSequencerStep(startNote+i%numNotes, 127);
+                            skeletonMidi.triggerNote(3, startNote + (i % numNotes), ofMap(graphs[i].getNormalized(), 0, 1, 0, 127));
+                            floorProjections.triggerTriangles();
                         }
                     }
                 }
             }
         }
     }else{
-        
         if(bodyMap.size() > 0){
             for(int i = 0; i < graphsForSkeleton.size(); i++){
                 graphsForSkeleton[i].clear();
@@ -284,16 +298,16 @@ void ofApp::update(){
                 graphs[i].clear();
                 
             }
+            
+            bodyMap.clear();
+            AllNotesOff(*midiOut);
         }
-        
-        bodyMap.clear();
-        midi.clear();
-
-        
     }
-    
-    //KSAI.drawEvents( KSA.normFbo);
 }
+
+
+
+
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -352,68 +366,70 @@ void ofApp::draw(){
     }
     
     gui.draw();
-    midi.draw();
     
-    for (int i = 0; i < 4; i++){
-        graphs[i].draw(350, i * 50);
-    }
-    
-    for (int i = 0; i < graphsForSkeleton.size(); i++){
-        graphsForSkeleton[i].draw(150, i*25);
-    }
-    
-    for (int i = 0; i < graphsHistory.size(); i++){
-        graphsHistory[i].draw(0, i*25);
+    if(debugMode){
+        
+        for (int i = 0; i < 4; i++){
+            graphs[i].draw(350, i * 50);
+        }
+        
+        for (int i = 0; i < graphsForSkeleton.size(); i++){
+            graphsForSkeleton[i].draw(150, i*25);
+        }
+        
+        for (int i = 0; i < graphsHistory.size(); i++){
+            graphsHistory[i].draw(0, i*25);
+        }
     }
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 void ofApp::exit() {
-    // turn off all MIDI notes, "All notes off" message is unreliable
-    for(int channel = 1; channel <= 16; channel++) {
-        for(int note = 0; note <= 127; note++) {
-            midiOut->sendNoteOff(channel, note);
-        }
-    }
+    AllNotesOff(*midiOut);
+    midiOut->closePort();
 }
 
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
 
+
 void ofApp::setupAudio() {
-	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-	midiOut->openVirtualPort("OF Skeleton Tracker");
-	
-	int stringNotes[] = {53, 59, 60, 65, 67, 72};
-	int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
-	
-	
-	triggerRef strings = triggerRef(new gridNote);
-	midiTrigger::Settings stringSettings;
-	stringSettings.notes.assign(stringNotes, END(stringNotes));
-	stringSettings.channel = 4;
-	stringSettings.side = ::right;
-	strings->setSettings(stringSettings);
-	
-	triggerRef piano = triggerRef(new gridNote);
-	midiTrigger::Settings pianoSettings;
-	pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
-	pianoSettings.channel = 5;
-	pianoSettings.side = ::left;
-	piano->setSettings(pianoSettings);
-	
-	triggerRef accord = triggerRef(new accordianNote);
-	midiTrigger::Settings accordSettings;
-	accordSettings.channel = 8;
-	
-	midiTriggers.push_back(strings);
-	midiTriggers.push_back(piano);
-	midiTriggers.push_back(accord);
-	
-	for(auto& t : midiTriggers) {
-		t->setMidiOut(midiOut);
-	}
-	
-	midi.setup();
+    
+    int stringNotes[] = {53, 59, 60, 64, 67, 72};
+    int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
+    
+    triggerRef strings = triggerRef(new gridNote);
+    midiTrigger::Settings stringSettings;
+    stringSettings.notes.assign(stringNotes, END(stringNotes));
+    stringSettings.channel = 4;
+    stringSettings.side = ::right;
+    strings->setSettings(stringSettings);
+    
+    triggerRef piano = triggerRef(new gridNote);
+    midiTrigger::Settings pianoSettings;
+    pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
+    pianoSettings.channel = 5;
+    pianoSettings.side = ::left;
+    piano->setSettings(pianoSettings);
+    
+    triggerRef accord = triggerRef(new accordianNote);
+    midiTrigger::Settings accordSettings;
+    accordSettings.channel = 8;
+    accord->setSettings(accordSettings);
+    
+    midiTriggers.push_back(strings);
+    midiTriggers.push_back(piano);
+    midiTriggers.push_back(accord);
+    
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Kinect");
+    for(auto& t : midiTriggers) {
+        t->setMidiOut(midiOut);
+    }
+    AllNotesOff(*midiOut);
+    
+    
+    skeletonMidi.setup(midiOut);
+    
 }
 
 #undef END
@@ -428,6 +444,9 @@ void ofApp::updateAudio(kinectBody &body) {
 void ofApp::keyPressed(int key){
     if (key == 's'){
         gui.saveSettings("settings.xml");
+    }
+    if(key == 'k'){
+        gui.toggleView();
     }
 }
 

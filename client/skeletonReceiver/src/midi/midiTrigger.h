@@ -3,10 +3,13 @@
 #include "kinectBody.h"
 #include "ofxMidiOut.h"
 
+extern void AllNotesOff(ofxMidiOut& midiOut);
 
 class midiTrigger {
 	
 public:
+	
+	midiTrigger();
 	
 	struct Settings {
 		Settings() : notes(0), channel(1), side(::left) { }
@@ -48,6 +51,7 @@ public:
 private:
 	bool _triggered;
 	int _currentNote;
+	unsigned long long _lastTrigger;
 };
 
 class accordianNote : public midiTrigger {
@@ -58,6 +62,8 @@ public:
 	
 private:
 	bool _triggered;
+	int _currentNote;
+	float _lastDist;
 };
 
 typedef shared_ptr<midiTrigger> triggerRef;
