@@ -260,7 +260,7 @@ void ofApp::draw(){
     SA.drawOverScene();
     
    
-    //TV.draw(ofRectangle(0,0,1920/2, 1080/2));
+    TV.draw(ofRectangle(0,0,1920/2, 1080/2));
     
     
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
