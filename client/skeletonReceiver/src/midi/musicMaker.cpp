@@ -65,6 +65,8 @@ void musicMaker::setup (){
     buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
     buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
+    
+    setupMidiTriggers();
 }
 
 void musicMaker::setupGraphs() {
