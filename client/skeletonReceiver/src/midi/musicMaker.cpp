@@ -23,6 +23,7 @@ void musicMaker::setup (){
         graphs.back().setMinMaxRange(0, 1);
         graphs.back().setBidirectional(false);
         graphs.back().setThreshold(0);
+        graphs.back().percentile = 0.5;
     }
     
     graphs[0].setName("kick left");
@@ -37,6 +38,7 @@ void musicMaker::setup (){
         graphsForSkeleton.back().setBidirectional(false);
         graphsForSkeleton.back().setSize(100, 20);
         graphsForSkeleton.back().setThreshold(0);
+        graphsForSkeleton.back().percentile = 0.5;
         ofParameter<float> fooParam;
         fooParam.set("Threshold-"+ofToString(i), 0, 0, 100);
         graphsSkeletonThresh.push_back(fooParam);
@@ -53,6 +55,7 @@ void musicMaker::setup (){
         graphsHistory.back().setThreshold(0);
         graphsHistory.back().setBidirectional(false);
         graphsHistory.back().setMinMaxRange(0, 1);
+        graphsHistory.back().percentile = 0.5;
         ofParameter<float> fooParam;
         fooParam.set("History Threshold-"+ofToString(i), 0, 0, 100);
         graphsHistoryThresh.push_back(fooParam);

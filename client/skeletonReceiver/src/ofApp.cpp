@@ -111,11 +111,6 @@ void ofApp::setup(){
     gui.loadSettings("settings.xml");
     
     
-    
-    //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
-    
-    
-    
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
@@ -132,14 +127,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-    gui.update();
-    
-    
-    
-    
-    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    gui.update();
     
     if (bLoadNewUDP == true){
         string folder = ofSystemLoadDialog("", true).getPath();
@@ -147,6 +136,7 @@ void ofApp::update(){
             UDPR.parseFolder(folder);
         }
         bLoadNewUDP = false;
+        bUseUdpPlayer = true;
     }
     
     if (bUseUdpPlayer){
@@ -163,7 +153,6 @@ void ofApp::update(){
     ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
-    
     kinect.update();
     
     if (skeletons->size() >= 1){
@@ -171,8 +160,6 @@ void ofApp::update(){
         KS.setFromSkeleton(skeletons->at(0), mat);
         kinectBody & body = bodyMap[skeletons->at(0).getBodyId()];
         bool bNewFrame = body.addSkeleton(KS);
-        
-        
         if (bNewFrame){
             KSA.analyze(body.getLastSkeleton());
             KBA.analyze(body);
@@ -180,16 +167,10 @@ void ofApp::update(){
         }
         //}
     }else if(ofGetElapsedTimeMillis() - bodyDropTimer > SA.bodyDropThreshold){
-        
-        
         if(bodyMap.size() > 0){
             bodyMap.clear();
             SA.clearBodies();
-            
         }
-
-        
-        
         bodyDropTimer = ofGetElapsedTimeMillis();
     }
 }

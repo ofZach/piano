@@ -186,8 +186,8 @@ float Graph::getActivity() const {
 
 void Graph::clear() {
 	noData = true;
-	//derivative.clear();
-	//buffer.clear();
+	derivative.clear();
+	buffer.clear();
 	// don't reset the threshold, we want to keep it as a guess
 }
 
