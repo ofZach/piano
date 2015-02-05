@@ -61,7 +61,10 @@ void grabbedNote::update(kinectBody &body) {
 	float height = ofMap(NormalizedHeight(sk, ::hand, ::right), 0.3, 1, 0, 1);
 	int note = ExtractNote(getSettings(), height);
 	
-	ofVec3f acc = body.accel[sk.rightEnumsToIndex[::hand]];
+    
+    
+    
+	ofVec3f acc = body.accel[SKLS::Instance()->rightEnumsToIndex[::hand]];
 	
 	float sum = acc.x + acc.y + acc.z;
 	bool shouldTrig = sum < -3 && extendPerc > extendThreshHi;
@@ -96,10 +99,10 @@ void gridNote::update(kinectBody &body) {
 	
 	if(getSettings().side == ::left) {
 		extendPerc = sk.armLeftExtendedPct;
-		handVel = body.velocity[sk.leftEnumsToIndex[::hand]];
+		handVel = body.velocity[SKLS::Instance()->leftEnumsToIndex[::hand]];
 	} else {
 		extendPerc = sk.armRightExtendedPct;
-		handVel = body.velocity[sk.rightEnumsToIndex[::hand]];
+		handVel = body.velocity[SKLS::Instance()->rightEnumsToIndex[::hand]];
 	}
 	
 	float extendThreshHi = 0.6;
@@ -173,12 +176,12 @@ void legCC::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
 	vector<ofPoint> acc;
-	acc.push_back(body.accel[sk.leftEnumsToIndex[::foot]]);
-	acc.push_back(body.accel[sk.leftEnumsToIndex[::knee]]);
-	acc.push_back(body.accel[sk.leftEnumsToIndex[::hip]]);
-	acc.push_back(body.accel[sk.rightEnumsToIndex[::foot]]);
-	acc.push_back(body.accel[sk.rightEnumsToIndex[::knee]]);
-	acc.push_back(body.accel[sk.rightEnumsToIndex[::hip]]);
+	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::hip]]);
+	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::hip]]);
 	ofSort(acc, GreatestSum);
 	
 	float greatest = acc.front().length();

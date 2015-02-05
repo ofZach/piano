@@ -11,7 +11,7 @@
 #include "ofxControlPanel.h"
 
 
-
+#include "tvScreen.h"
 #include "Floor.h"
 #include "musicMaker.h"
 
@@ -97,8 +97,7 @@ public:
     map<string, kinectBody> bodyMap;
     
     
-    
-    
+    tvScreen TV;
     Floor floorProjections;
     
 };
