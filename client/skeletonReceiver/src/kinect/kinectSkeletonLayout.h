@@ -209,7 +209,7 @@ public:
 
 
 typedef Singleton < kinectSkeletonLayout >  skelLayoutSinglton;
-typedef skelLayoutSinglton SKLS;
+typedef skelLayoutSinglton SKELETOR;
 
 
 

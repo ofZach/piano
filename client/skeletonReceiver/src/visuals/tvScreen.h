@@ -43,7 +43,7 @@ public:
             
             kinectSkeleton SK = KB->getLastSkeleton();
             
-            for (auto & bone : SKLS::Instance()->connections){
+            for (auto & bone : SKELETOR::Instance()->connections){
                 
                 cout << bone.a <<  " " << bone.b << endl;
                 ofPoint a( SK.pts[bone.a]);
