@@ -4,16 +4,19 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyser.h"
-#include "kinectButton.h"
+
 #include "kinectBody.h"
 #include "kinectBodyAnalyser.h"
 #include "udpPacketReplayer.h"
 #include "ofxControlPanel.h"
-#include "ofxMidi.h"
-#include "midiTrigger.h"
-#include "Graph.h"
-#include "skeletonMidiController.h"
+
+
+
 #include "Floor.h"
+#include "skeletonAnalyzer.h"
+
+
+
 class ofApp : public ofBaseApp{
     
 public:
@@ -31,17 +34,13 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-	
-	void setupAudio();
-	void updateAudio(kinectBody &body);
-    
+	 
     //void newGesture(Gesture & newGest);
     ofxKinectV2OSC kinect;
     Skeleton* skeleton;
     vector<Skeleton>* skeletons;
 	
-	vector<kinectButton> buttons;
-    
+	 
     BodyRenderer renderer;
     
     ofParameterGroup skeletonTransform;
@@ -69,41 +68,18 @@ public:
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
 	
-	ofParameterGroup buttonControl;
-	ofParameter<bool> buttonDraw;
-	ofParameter<float> buttonRadius;
-	ofParameter<float> buttonTriggerScale;
-	ofParameter<float> buttonApproachScale;
-    
-    ofParameterGroup graphsControl1;
-    ofParameter<float> smoothUpSkeleton;
-    ofParameter<float> smoothDownSkeleton;
-    vector<ofParameter<float> > graphsSkeletonThresh;
-    
-    ofParameterGroup graphsControl2;
-    vector<ofParameter<float> > graphsHistoryThresh;
-    ofParameter<float> smoothUpHistory;
-    ofParameter<float> smoothDownHistory;
-    
-    ofParameter<int>   bodyDropThreshold;
-    ofParameter<bool> debugMode;
-    ofParameter<int> outputMode;
-    ofParameter<int> startNote;
-    ofParameter<int> numNotes;
-    ofParameter<bool> jazzDrums;
-    ofParameter<bool> historyAndSkeleton;
-    
+	
     ofFbo fooFbo;
 
     
-    unsigned long long bodyDropTimer;
+    skeletonAnalyzer SA;
     
+    unsigned long long bodyDropTimer;
+
     ofxControlPanel gui;
     
     ofCamera cam;
 	
-    ofPolyline leftHandHistory;
-    ofPolyline rightHandHistory;
     ofMatrix4x4 mat;
     
     ofParameter <string> status;
@@ -112,27 +88,16 @@ public:
     kinectBody KB;
 	kinectBodyAnalyser KBA;
     
-    map<string, kinectBody> bodyMap;
-    map<string, kinectSkeleton> ksMap;
-	
-    //kinectSkeletonAnalyzerInterpreter KSAI;
+    
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
     
     
-    skeletonMidiController skeletonMidi;
-	
-	shared_ptr<ofxMidiOut> midiOut;
-	vector<int> midiNotes;
-    map<string, bool> triggers;
-	
-	vector<triggerRef> midiTriggers;
-    //void newGesture(Gesture &newGest);
+    map<string, kinectSkeleton> ksMap;
+    map<string, kinectBody> bodyMap;
     
     
-    vector < Graph > graphs;
-    vector < Graph > graphsForSkeleton;
-    vector < Graph > graphsHistory;
+    
     
     Floor floorProjections;
     
