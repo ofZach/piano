@@ -108,7 +108,7 @@ public:
     void update(){
         energy *= 0.93;
         
-        impulseEnergy  *= 0.93;
+        impulseEnergy  *= 0.99;
         
 //        if (impulseEnergy > 0.01 && ofGetElapsedTimeMillis() - lastFlip > 700){
 //            randomFlip(powf(energy, 0.3)* 0.15 + 0.85);
@@ -130,7 +130,7 @@ public:
         
         ofPushStyle();
         if (bOn){
-            ofSetColor(255, 255 * powf(impulseEnergy, 0.55));
+            ofSetColor(255, 255 * powf(impulseEnergy, 0.75));
             ofTriangle (pts[a], pts[b], pts[c]);
         }
         ofPopStyle();
