@@ -66,4 +66,20 @@ private:
 	float _lastDist;
 };
 
+class legCC : public midiTrigger {
+	
+public:
+	legCC();
+	virtual void update(kinectBody& body);
+	
+private:
+	double _accumulator;
+};
+
+class pointCC : public midiTrigger {
+	
+	
+	
+};
+
 typedef shared_ptr<midiTrigger> triggerRef;

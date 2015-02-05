@@ -154,8 +154,6 @@ void Floor::update(ofEventArgs &args){
     int which = (int)ofRandom(0,10000) % connections.size();
     
     
-    
-    
     if(movers.size() < 2){
         connectionMover C;
         C.pts = &pts;
