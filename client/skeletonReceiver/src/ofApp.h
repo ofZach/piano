@@ -12,7 +12,8 @@
 #include "ofxMidi.h"
 #include "midiTrigger.h"
 #include "Graph.h"
-
+#include "skeletonMidiController.h"
+#include "Floor.h"
 class ofApp : public ofBaseApp{
     
 public:
@@ -20,7 +21,7 @@ public:
     void update();
     void draw();
 	void exit();
-    
+
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -78,17 +79,24 @@ public:
     ofParameter<float> smoothUpSkeleton;
     ofParameter<float> smoothDownSkeleton;
     vector<ofParameter<float> > graphsSkeletonThresh;
+    
     ofParameterGroup graphsControl2;
     vector<ofParameter<float> > graphsHistoryThresh;
     ofParameter<float> smoothUpHistory;
     ofParameter<float> smoothDownHistory;
     
-    
+    ofParameter<int>   bodyDropThreshold;
+    ofParameter<bool> debugMode;
+    ofParameter<int> outputMode;
     ofParameter<int> startNote;
     ofParameter<int> numNotes;
     ofParameter<bool> jazzDrums;
     ofParameter<bool> historyAndSkeleton;
+    
     ofFbo fooFbo;
+
+    
+    unsigned long long bodyDropTimer;
     
     ofxControlPanel gui;
     
@@ -110,6 +118,9 @@ public:
     //kinectSkeletonAnalyzerInterpreter KSAI;
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
+    
+    
+    skeletonMidiController skeletonMidi;
 	
 	shared_ptr<ofxMidiOut> midiOut;
 	vector<int> midiNotes;
@@ -123,6 +134,7 @@ public:
     vector < Graph > graphsForSkeleton;
     vector < Graph > graphsHistory;
     
+    Floor floorProjections;
     
 };
 

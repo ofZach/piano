@@ -407,21 +407,21 @@ void kinectBody::drawHistory(){
     
     
     
-    gestureFBO.begin();
-    ofClear(127, 127, 127, 50);
-    int i = 0;
-    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
-            gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
-            i++;
-        }
-    }
-    gestureFBO.end();
+//    gestureFBO.begin();
+//    ofClear(127, 127, 127, 50);
+//    int i = 0;
+//    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+//        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+//            gesturePlots[iter->first]->draw(0, height*i, 190, height-5);
+//            i++;
+//        }
+//    }
+//    gestureFBO.end();
     
     
-    if(drawSkeletonDebug){
-        historyPlotsFBO.draw(0, 0);
-    }else{
-        gestureFBO.draw(0, 0);
-    }
+//    //if(drawSkeletonDebug){
+//        historyPlotsFBO.draw(0, 0);
+//    }else{
+//        //gestureFBO.draw(0, 0);
+//    }
 }
