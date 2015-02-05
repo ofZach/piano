@@ -31,6 +31,7 @@ void ofApp::setup(){
     
     KS.setup();
     SA.setup();
+    TV.setup();
     
     //KSAI.setup();
     
@@ -164,6 +165,13 @@ void ofApp::update(){
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
     
+    //update the camera
+    ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
+    cam.setPosition(position);
+    cam.lookAt( ofPoint(0,0,0));
+    
+    
+    
     kinect.update();
     
     if (skeletons->size() >= 1){
@@ -177,21 +185,29 @@ void ofApp::update(){
             KSA.analyze(body.getLastSkeleton());
             KBA.analyze(body);
             SA.analyze(body);
+            TV.update(&body);
+            
         }
-        //}
-    }else if(ofGetElapsedTimeMillis() - bodyDropTimer > SA.bodyDropThreshold){
+    }else {
+        
+        TV.update(NULL);
+        
+        
+        if(ofGetElapsedTimeMillis() - bodyDropTimer > SA.bodyDropThreshold){
         
         
         if(bodyMap.size() > 0){
             bodyMap.clear();
             SA.clearBodies();
-            
         }
 
-        
-        
         bodyDropTimer = ofGetElapsedTimeMillis();
+        }
     }
+    
+    
+    TV.drawIntoFbo(cam);
+    
 }
 
 
@@ -204,9 +220,8 @@ void ofApp::draw(){
     ofBackground(ofColor::darkGray);
     
     
-    ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
-    cam.setPosition(position);
-    cam.lookAt( ofPoint(0,0,0));
+    
+    
     
     fooFbo.begin();
     ofBackground(ofColor::darkGray);
@@ -232,6 +247,10 @@ void ofApp::draw(){
         }
     }
     
+    
+    
+    
+    
     SA.drawInScene();
     
     cam.end();
@@ -253,6 +272,8 @@ void ofApp::draw(){
     SA.drawOverScene();
     
    
+    //TV.draw(ofRectangle(0,0,1920/2, 1080/2));
+    
     
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }

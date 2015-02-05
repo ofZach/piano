@@ -179,36 +179,45 @@ void musicMaker::analyze (kinectBody & body) {
             graphsHistoryThresh[i].set(graphsHistory[i].threshold);
         }
         for (int i = 0; i < graphsForSkeleton.size(); i++){
-            if(find(body.getLastSkeleton().skipList.begin(), body.getLastSkeleton().skipList.end(),body.getLastSkeleton().indexToName[i]) == body.getLastSkeleton().skipList.end()){
+            if(find(SKLS::Instance()->skipList.begin(), SKLS::Instance()->skipList.end(), SKLS::Instance()->indexToName[i]) == SKLS::Instance()->skipList.end()){
+                
+                
+                
                 graphsForSkeleton[i].addSample(body.velLen[i]);
+                string nameOfPt = SKLS::Instance()->indexToName[i];
+                
+                
                 if (graphsForSkeleton[i].getTriggered()){
                     if((jazzDrums || historyAndSkeleton)){
-                        if(!ofIsStringInString(body.getLastSkeleton().indexToName[i], "Spine")){
-                            if(!triggers[body.getLastSkeleton().indexToName[i]]){
+                        
+                        
+                        
+                        if(!ofIsStringInString(nameOfPt, "Spine")){
+                            if(!triggers[nameOfPt]){
                                 
-                                if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Hand")){
+                                if(ofIsStringInString(nameOfPt, "Hand")){
                                     skeletonMidi.triggerNote(i%2==0?70:71, graphsForSkeleton[i].getNormalized()*127);
-                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                    triggers[nameOfPt] = true;
                                 }
-                                if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Hip")){
+                                if(ofIsStringInString(nameOfPt, "Hip")){
                                     skeletonMidi.triggerNote(i%2?68:69, graphsForSkeleton[i].getNormalized()*127);
-                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                    triggers[nameOfPt] = true;
                                 }
-                                if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Foot")){
+                                if(ofIsStringInString(nameOfPt, "Foot")){
                                     skeletonMidi.triggerNote(i%2?64:65, graphsForSkeleton[i].getNormalized()*127);
-                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                    triggers[nameOfPt] = true;
                                 }
-                                if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Knee")){
+                                if(ofIsStringInString(nameOfPt, "Knee")){
                                     skeletonMidi.triggerNote(i%2?66:67, graphsForSkeleton[i].getNormalized()*127);
-                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                    triggers[nameOfPt] = true;
                                 }
-                                if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Neck")){
+                                if(ofIsStringInString(nameOfPt, "Neck")){
                                     skeletonMidi.triggerNote(77, graphsForSkeleton[i].getNormalized()*127);
-                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                    triggers[nameOfPt] = true;
                                 }
                                 
-                                if(triggers[body.getLastSkeleton().indexToName[i]]){
-                                    ofLog(OF_LOG_NOTICE)<<"Trigger "<<body.getLastSkeleton().indexToName[i]<<endl;
+                                if(triggers[nameOfPt]){
+                                    ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
                                     ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
                                 }
                             }
@@ -216,8 +225,8 @@ void musicMaker::analyze (kinectBody & body) {
                         
                     }
                     
-                }else if(triggers[body.getLastSkeleton().indexToName[i]]){
-                    triggers[body.getLastSkeleton().indexToName[i]] = false;
+                }else if(triggers[nameOfPt]){
+                    triggers[nameOfPt] = false;
                 }
                 graphsForSkeleton[i].setSmoothing(smoothDownHistory, smoothUpHistory);
                 graphsSkeletonThresh[i].set(graphsForSkeleton[i].threshold);

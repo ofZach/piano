@@ -7,18 +7,18 @@
 //
 
 #include "kinectBodyAnalyser.h"
-
+#include "kinectSkeletonLayout.h"
 
 
 void kinectBodyAnalyser::analyze ( kinectBody & KB ){
     KB.update();
     kinectSkeleton & skeleton = KB.getLastSkeleton();
     
-    vector < int > & leftLeg = skeleton.bones["leftLeg"].pointIds;
-    vector < int > & rightLeg = skeleton.bones["rightLeg"].pointIds;
-    vector < int > & leftArm = skeleton.bones["leftArm"].pointIds;
-    vector < int > & rightArm = skeleton.bones["rightArm"].pointIds;
-    vector < int > & torso = skeleton.bones["torso"].pointIds;
+    vector < int > & leftLeg = SKLS::Instance()->bones["leftLeg"].pointIds;
+    vector < int > & rightLeg = SKLS::Instance()->bones["rightLeg"].pointIds;
+    vector < int > & leftArm = SKLS::Instance()->bones["leftArm"].pointIds;
+    vector < int > & rightArm = SKLS::Instance()->bones["rightArm"].pointIds;
+    vector < int > & torso = SKLS::Instance()->bones["torso"].pointIds;
     
     
     
