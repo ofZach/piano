@@ -15,7 +15,7 @@ class skeletonMidiController{
 public:
     void setup(shared_ptr<ofxMidiOut> midi);
     
-    void triggerNote(int channel, int note, int velocity);
+    void triggerNote(int note, int velocity);
     void triggerPunch(int note, int velocity);
     void triggerKick(int note, int velocity);
 private:
