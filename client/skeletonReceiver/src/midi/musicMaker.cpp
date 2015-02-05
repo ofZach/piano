@@ -239,9 +239,9 @@ void musicMaker::updateGraphs(kinectBody &body) {
 	}
 	
 	for (int i = 0; i < graphsForSkeleton.size(); i++){
-		if(find(SKLS::Instance()->skipList.begin(), SKLS::Instance()->skipList.end(),SKLS::Instance()->indexToName[i]) == SKLS::Instance()->skipList.end()){
+		if(find(SKELETOR::Instance()->skipList.begin(), SKELETOR::Instance()->skipList.end(),SKELETOR::Instance()->indexToName[i]) == SKELETOR::Instance()->skipList.end()){
             
-            string nameOfPt = SKLS::Instance()->indexToName[i];
+            string nameOfPt = SKELETOR::Instance()->indexToName[i];
             
 			graphsForSkeleton[i].addSample(body.velLen[i]);
 			if (graphsForSkeleton[i].getTriggered()){

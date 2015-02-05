@@ -14,11 +14,11 @@ void kinectBodyAnalyser::analyze ( kinectBody & KB ){
     KB.update();
     kinectSkeleton & skeleton = KB.getLastSkeleton();
     
-    vector < int > & leftLeg = SKLS::Instance()->bones["leftLeg"].pointIds;
-    vector < int > & rightLeg = SKLS::Instance()->bones["rightLeg"].pointIds;
-    vector < int > & leftArm = SKLS::Instance()->bones["leftArm"].pointIds;
-    vector < int > & rightArm = SKLS::Instance()->bones["rightArm"].pointIds;
-    vector < int > & torso = SKLS::Instance()->bones["torso"].pointIds;
+    vector < int > & leftLeg = SKELETOR::Instance()->bones["leftLeg"].pointIds;
+    vector < int > & rightLeg = SKELETOR::Instance()->bones["rightLeg"].pointIds;
+    vector < int > & leftArm = SKELETOR::Instance()->bones["leftArm"].pointIds;
+    vector < int > & rightArm = SKELETOR::Instance()->bones["rightArm"].pointIds;
+    vector < int > & torso = SKELETOR::Instance()->bones["torso"].pointIds;
     
     
     
