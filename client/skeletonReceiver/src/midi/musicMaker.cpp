@@ -133,38 +133,47 @@ void musicMaker::analyze (kinectBody & body) {
                 
                 if((!jazzDrums || historyAndSkeleton)){
                     if(!triggers[body.historyPlots[i]->varName]){
-                        triggers[body.historyPlots[i]->varName] = true;
+                        
                         if(ofIsStringInString(body.historyPlots[i]->varName, "arm")){
                             skeletonMidi.triggerNote(62+i%2, ofMap(body.historyPlots[i]->getValues().back(),
                                                                    body.historyPlots[i]->getLowerRange(),
                                                                    body.historyPlots[i]->getHigerRange(),
                                                                    0, 127, true));
+                            triggers[body.historyPlots[i]->varName] = true;
                         }
                         if(ofIsStringInString(body.historyPlots[i]->varName, "foot-head")){
                             skeletonMidi.triggerNote(i%2==0?77:78, ofMap(body.historyPlots[i]->getValues().back(),
                                                                          body.historyPlots[i]->getLowerRange(),
                                                                          body.historyPlots[i]->getHigerRange(),
                                                                          0, 127, true));
+                            triggers[body.historyPlots[i]->varName] = true;
                         }
                         if(ofIsStringInString(body.historyPlots[i]->varName, "elbow-angle")){
                             skeletonMidi.triggerNote(i%2==0?72:73, ofMap(body.historyPlots[i]->getValues().back(),
                                                                          body.historyPlots[i]->getLowerRange(),
                                                                          body.historyPlots[i]->getHigerRange(),
                                                                          0, 127, true));
+                            triggers[body.historyPlots[i]->varName] = true;
                         }
                         if(ofIsStringInString(body.historyPlots[i]->varName, "knee-angle")){
                             skeletonMidi.triggerNote(i%2==0?64:65, ofMap(body.historyPlots[i]->getValues().back(),
                                                                          body.historyPlots[i]->getLowerRange(),
                                                                          body.historyPlots[i]->getHigerRange(),
                                                                          0, 127, true));
+                            triggers[body.historyPlots[i]->varName] = true;
                         }
                         if(ofIsStringInString(body.historyPlots[i]->varName, "hand-hip")){
                             skeletonMidi.triggerNote(i%2==0?79:80, ofMap(body.historyPlots[i]->getValues().back(),
                                                                          body.historyPlots[i]->getLowerRange(),
                                                                          body.historyPlots[i]->getHigerRange(),
                                                                          0, 127, true));
+                            triggers[body.historyPlots[i]->varName] = true;
                         }
-                        ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+                        
+                        if(triggers[body.historyPlots[i]->varName]){
+                            ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+                        }
+
                     }
                 }
             }else if(triggers[body.historyPlots[i]->varName]){
@@ -181,28 +190,35 @@ void musicMaker::analyze (kinectBody & body) {
                     if((jazzDrums || historyAndSkeleton)){
                         if(!ofIsStringInString(body.getLastSkeleton().indexToName[i], "Spine")){
                             if(!triggers[body.getLastSkeleton().indexToName[i]]){
-                                triggers[body.getLastSkeleton().indexToName[i]] = true;
+                                
                                 if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Hand")){
                                     skeletonMidi.triggerNote(i%2==0?70:71, graphsForSkeleton[i].getNormalized()*127);
+                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
                                 }
                                 if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Hip")){
                                     skeletonMidi.triggerNote(i%2?68:69, graphsForSkeleton[i].getNormalized()*127);
+                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
                                 }
                                 if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Foot")){
                                     skeletonMidi.triggerNote(i%2?64:65, graphsForSkeleton[i].getNormalized()*127);
+                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
                                 }
                                 if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Knee")){
                                     skeletonMidi.triggerNote(i%2?66:67, graphsForSkeleton[i].getNormalized()*127);
+                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
                                 }
                                 if(ofIsStringInString(body.getLastSkeleton().indexToName[i], "Neck")){
                                     skeletonMidi.triggerNote(77, graphsForSkeleton[i].getNormalized()*127);
+                                    triggers[body.getLastSkeleton().indexToName[i]] = true;
                                 }
                                 
-                                
-                                ofLog(OF_LOG_NOTICE)<<"Trigger "<<body.getLastSkeleton().indexToName[i]<<endl;
+                                if(triggers[body.getLastSkeleton().indexToName[i]]){
+                                    ofLog(OF_LOG_NOTICE)<<"Trigger "<<body.getLastSkeleton().indexToName[i]<<endl;
+                                    ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
+                                }
                             }
                         }
-                        ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
+                        
                     }
                     
                 }else if(triggers[body.getLastSkeleton().indexToName[i]]){
