@@ -11,10 +11,7 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     
-    
     UDPR.setup();
-    
-    
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -31,9 +28,6 @@ void ofApp::setup(){
     
     KS.setup();
     SA.setup();
-    
-    //KSAI.setup();
-    
     
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
@@ -116,8 +110,6 @@ void ofApp::setup(){
     ofClear(0, 0, 0, 0);
     fooFbo.end();
     
-    SA.setupAudio();
-    
     floorProjections.setup();
     bodyDropTimer = ofGetElapsedTimeMillis();
 }
@@ -127,8 +119,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    ofSetWindowTitle(ofToString(ofGetFrameRate()));
     gui.update();
+    ofSetWindowTitle(ofToString(ofGetFrameRate()));
+
     
     if (bLoadNewUDP == true){
         string folder = ofSystemLoadDialog("", true).getPath();
@@ -171,6 +164,7 @@ void ofApp::update(){
             bodyMap.clear();
             SA.clearBodies();
         }
+
         bodyDropTimer = ofGetElapsedTimeMillis();
     }
 }

@@ -165,12 +165,8 @@ legCC::legCC() : _accumulator(0) {
 	
 }
 
-float PointSum(const ofPoint& p) {
-	return (p.x + p.y + p.z);
-}
-
 bool GreatestSum(ofPoint a, ofPoint b) {
-	return PointSum(a) > PointSum(b);
+	return a.lengthSquared() > b.lengthSquared();
 }
 
 void legCC::update(kinectBody &body) {
@@ -185,10 +181,8 @@ void legCC::update(kinectBody &body) {
 	acc.push_back(body.accel[sk.rightEnumsToIndex[::hip]]);
 	ofSort(acc, GreatestSum);
 	
-	float greatest = PointSum(acc.front());
-	
-	ofMap(greatest, 0, sk.skeletonHeight, 0, 1, true);
-	
-//	if(
-	
+	float greatest = acc.front().length();
+	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
+	_accumulator = ofLerp(_accumulator, amt, 0.03);
+	getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
 }
