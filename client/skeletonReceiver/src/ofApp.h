@@ -13,7 +13,7 @@
 
 
 #include "Floor.h"
-#include "skeletonAnalyzer.h"
+#include "musicMaker.h"
 
 
 
@@ -72,7 +72,7 @@ public:
     ofFbo fooFbo;
 
     
-    skeletonAnalyzer SA;
+    musicMaker SA;
     
     unsigned long long bodyDropTimer;
 

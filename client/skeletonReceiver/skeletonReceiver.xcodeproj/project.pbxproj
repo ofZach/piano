@@ -49,6 +49,7 @@
 		C83F998E1A827BD400207A6C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C83F99851A827B5C00207A6C /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C83F99911A82893100207A6C /* skeletonMidiController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F998F1A82893100207A6C /* skeletonMidiController.cpp */; };
 		C83F99951A828CDA00207A6C /* Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F99931A828CDA00207A6C /* Floor.cpp */; };
+		C83F999F1A839C4500207A6C /* musicMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F999D1A839C4500207A6C /* musicMaker.cpp */; };
 		C99C59EB5A00132F22624A2D /* BodyRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7D88D45725D5A3C0781C9A8 /* BodyRenderer.cpp */; };
 		DF0E23207448D9B0A01099DE /* Hand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C140B7536113642BB2F29B2 /* Hand.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -116,7 +117,6 @@
 		FDD5CE601A78334100EC1272 /* simpleColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE441A78334100EC1272 /* simpleColor.cpp */; };
 		FDD5CE611A78334100EC1272 /* simpleFileLister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE461A78334100EC1272 /* simpleFileLister.cpp */; };
 		FDD5CE621A78334100EC1272 /* simpleLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDD5CE481A78334100EC1272 /* simpleLogger.cpp */; };
-		FDE037581A8380C100B71390 /* skeletonAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDE037561A8380C100B71390 /* skeletonAnalyzer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,6 +235,8 @@
 		C83F99901A82893100207A6C /* skeletonMidiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeletonMidiController.h; sourceTree = "<group>"; };
 		C83F99931A828CDA00207A6C /* Floor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Floor.cpp; sourceTree = "<group>"; };
 		C83F99941A828CDA00207A6C /* Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Floor.h; sourceTree = "<group>"; };
+		C83F999D1A839C4500207A6C /* musicMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = musicMaker.cpp; sourceTree = "<group>"; };
+		C83F999E1A839C4500207A6C /* musicMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = musicMaker.h; sourceTree = "<group>"; };
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
 		C8D782451A7FE9DA00F367F8 /* Gesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Gesture.h; path = "../../../addons/ofxKinectV2-OSC/src/DataTransform/Gesture.h"; sourceTree = "<group>"; };
 		D6B9CFD1E73671E93959871F /* BodyRenderer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = BodyRenderer.h; path = "../../../addons/ofxKinectV2-OSC/src/Draw/BodyRenderer.h"; sourceTree = SOURCE_ROOT; };
@@ -368,8 +370,6 @@
 		FDD5CE471A78334100EC1272 /* simpleFileLister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simpleFileLister.h; sourceTree = "<group>"; };
 		FDD5CE481A78334100EC1272 /* simpleLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simpleLogger.cpp; sourceTree = "<group>"; };
 		FDD5CE491A78334100EC1272 /* simpleLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simpleLogger.h; sourceTree = "<group>"; };
-		FDE037561A8380C100B71390 /* skeletonAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = skeletonAnalyzer.cpp; path = src/skeletonAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
-		FDE037571A8380C100B71390 /* skeletonAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = skeletonAnalyzer.h; path = src/skeletonAnalyzer.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -723,6 +723,8 @@
 			children = (
 				6651B4AB1A8063C4008FF381 /* midiTrigger.cpp */,
 				6651B4AC1A8063C4008FF381 /* midiTrigger.h */,
+				C83F999D1A839C4500207A6C /* musicMaker.cpp */,
+				C83F999E1A839C4500207A6C /* musicMaker.h */,
 				C83F998F1A82893100207A6C /* skeletonMidiController.cpp */,
 				C83F99901A82893100207A6C /* skeletonMidiController.h */,
 			);
@@ -779,8 +781,6 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				FDE037561A8380C100B71390 /* skeletonAnalyzer.cpp */,
-				FDE037571A8380C100B71390 /* skeletonAnalyzer.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1144,6 +1144,7 @@
 				FD5DA16F1A7FE68F00FE6303 /* ofxMidiMessage.cpp in Sources */,
 				FD54C26A1A76C52500F622E7 /* ofxUDPManager.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
+				C83F999F1A839C4500207A6C /* musicMaker.cpp in Sources */,
 				FDD5CE5D1A78334100EC1272 /* guiTypeVideo.cpp in Sources */,
 				FDD5CE521A78334100EC1272 /* guiTypeDrawable.cpp in Sources */,
 				FDD5CE571A78334100EC1272 /* guiTypePanel.cpp in Sources */,
@@ -1190,7 +1191,6 @@
 				9780A09AECE86A91413F1249 /* Mapper.cpp in Sources */,
 				6847664D0060F42AEBB4E101 /* Parser.cpp in Sources */,
 				C99C59EB5A00132F22624A2D /* BodyRenderer.cpp in Sources */,
-				FDE037581A8380C100B71390 /* skeletonAnalyzer.cpp in Sources */,
 				FDD5CE551A78334100EC1272 /* guiTypeLogger.cpp in Sources */,
 				F8C594EDF5A25FA2F042074C /* ofxKinectV2OSC.cpp in Sources */,
 				FDD5CE541A78334100EC1272 /* guiTypeLabel.cpp in Sources */,

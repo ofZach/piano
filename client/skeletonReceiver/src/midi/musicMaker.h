@@ -16,7 +16,7 @@
 
 // I analyze and do midi
 
-class skeletonAnalyzer {
+class musicMaker {
     
     
 public:

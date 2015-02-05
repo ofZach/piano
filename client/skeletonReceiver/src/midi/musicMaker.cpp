@@ -1,12 +1,12 @@
 //
-//  skeletonAnalyzer.cpp
+//  musicMaker.cpp
 //  skeletonReceiver
 //
 //  Created by zach on 2/5/15.
 //
 //
 
-#include "skeletonAnalyzer.h"
+#include "musicMaker.h"
 #include "ofApp.h"
 
 
@@ -14,7 +14,7 @@
 
 
 
-void skeletonAnalyzer::setup (){
+void musicMaker::setup (){
     
     for (int i = 0; i < 4; i++){
         graphs.push_back(Graph());
@@ -74,7 +74,7 @@ void skeletonAnalyzer::setup (){
     
 }
 
-void skeletonAnalyzer::addToDebugParamGroup ( ofParameterGroup & debugView){
+void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
     debugView.add(startNote.set("Start Note", 36, 0, 127));
     debugView.add(numNotes.set("Num Note", 16, 0, 127));
     debugView.add(smoothUpHistory.set("Smooth Up History", 0, 0, 1));
@@ -88,7 +88,7 @@ void skeletonAnalyzer::addToDebugParamGroup ( ofParameterGroup & debugView){
     debugView.add(outputMode.set("Output", 0, 0, 2));
 }
 
-void skeletonAnalyzer::drawInScene(){
+void musicMaker::drawInScene(){
     if(buttonDraw) {
         for(auto& button : buttons) {
             button.draw();
@@ -96,7 +96,7 @@ void skeletonAnalyzer::drawInScene(){
     }
 }
 
-void skeletonAnalyzer::drawOverScene(){
+void musicMaker::drawOverScene(){
     if(debugMode){
         
         for (int i = 0; i < 4; i++){
@@ -113,7 +113,7 @@ void skeletonAnalyzer::drawOverScene(){
     }
 }
 
-void skeletonAnalyzer::analyze (kinectBody & body) {
+void musicMaker::analyze (kinectBody & body) {
     
     
     if(outputMode == 0){
@@ -265,7 +265,7 @@ void skeletonAnalyzer::analyze (kinectBody & body) {
 }
 
 
-void skeletonAnalyzer::exit() {
+void musicMaker::exit() {
     AllNotesOff(*midiOut);
     midiOut->closePort();
 }
@@ -274,7 +274,7 @@ void skeletonAnalyzer::exit() {
 
 
 
-void skeletonAnalyzer::setupAudio() {
+void musicMaker::setupAudio() {
     
     int stringNotes[] = {53, 59, 60, 64, 67, 72};
     int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
@@ -317,13 +317,13 @@ void skeletonAnalyzer::setupAudio() {
 
 #undef END
 
-void skeletonAnalyzer::updateAudio(kinectBody &body) {
+void musicMaker::updateAudio(kinectBody &body) {
     for(auto& t : midiTriggers) {
         t->update(body);
     }
 }
 
-void skeletonAnalyzer::clearBodies(){
+void musicMaker::clearBodies(){
     for(int i = 0; i < graphsForSkeleton.size(); i++){
         graphsForSkeleton[i].clear();
         
