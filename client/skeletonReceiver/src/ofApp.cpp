@@ -425,9 +425,14 @@ void ofApp::setupAudio() {
 	accordSettings.notes.assign(accordNotes, END(accordNotes));
 	accord->setSettings(accordSettings);
 	
-	midiTriggers.push_back(strings);
-	midiTriggers.push_back(piano);
-	midiTriggers.push_back(accord);
+	triggerRef legs = triggerRef(new legCC);
+	midiTrigger::Settings legSettings;
+	legSettings.channel = 10;
+	
+//	midiTriggers.push_back(strings);
+//	midiTriggers.push_back(piano);
+//	midiTriggers.push_back(accord);
+	midiTriggers.push_back(legs);
 	
 	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
 	midiOut->openVirtualPort("OF Kinect");

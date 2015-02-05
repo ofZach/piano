@@ -158,3 +158,37 @@ void accordianNote::update(kinectBody &body) {
 		_triggered = false;
 	}
 }
+
+#pragma mark - Leg CC
+
+legCC::legCC() : _accumulator(0) {
+	
+}
+
+float PointSum(const ofPoint& p) {
+	return (p.x + p.y + p.z);
+}
+
+bool GreatestSum(ofPoint a, ofPoint b) {
+	return PointSum(a) > PointSum(b);
+}
+
+void legCC::update(kinectBody &body) {
+	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	vector<ofPoint> acc;
+	acc.push_back(body.accel[sk.leftEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[sk.leftEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[sk.leftEnumsToIndex[::hip]]);
+	acc.push_back(body.accel[sk.rightEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[sk.rightEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[sk.rightEnumsToIndex[::hip]]);
+	ofSort(acc, GreatestSum);
+	
+	float greatest = PointSum(acc.front());
+	
+	ofMap(greatest, 0, sk.skeletonHeight, 0, 1, true);
+	
+//	if(
+	
+}
