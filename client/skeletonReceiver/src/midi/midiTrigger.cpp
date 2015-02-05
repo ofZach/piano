@@ -186,6 +186,6 @@ void legCC::update(kinectBody &body) {
 	
 	float greatest = acc.front().length();
 	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
-	_accumulator = ofLerp(_accumulator, amt, 0.05);
+	_accumulator = ofLerp(_accumulator, amt, 0.03);
 	getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
 }

@@ -23,12 +23,12 @@ public:
     void drawOverScene();
     void analyze (kinectBody & body);
     void exit();
-    void setupAudio();
-    void updateAudio(kinectBody &body);
+	void setupGraphs();
+	void setupMidiTriggers();
+	void updateMidiTriggers(kinectBody &body);
+	void updateGraphs(kinectBody &body);
     void clearBodies();
-    
-   
-    
+	
     vector < Graph > graphs;
     vector < Graph > graphsForSkeleton;
     vector < Graph > graphsHistory;
