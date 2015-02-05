@@ -66,7 +66,7 @@ void musicMaker::setupGraphs() {
 void musicMaker::setupMidiTriggers() {
 	
 	int stringNotes[] = {53, 59, 60, 64, 67, 72};
-	int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
+	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 72, 77, 79, 84};
 	int accordNotes[] = {36, 43};
  
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
@@ -74,14 +74,14 @@ void musicMaker::setupMidiTriggers() {
 	triggerRef strings = triggerRef(new gridNote);
 	midiTrigger::Settings stringSettings;
 	stringSettings.notes.assign(stringNotes, END(stringNotes));
-	stringSettings.channel = 4;
+	stringSettings.channel = 5;
 	stringSettings.side = ::right;
 	strings->setSettings(stringSettings);
 	
 	triggerRef piano = triggerRef(new gridNote);
 	midiTrigger::Settings pianoSettings;
 	pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
-	pianoSettings.channel = 5;
+	pianoSettings.channel = 4;
 	pianoSettings.side = ::left;
 	piano->setSettings(pianoSettings);
 	
@@ -123,6 +123,7 @@ void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
     debugView.add(debugMode.set("Draw Graphs", false));
     debugView.add(bodyDropThreshold.set("Body Drop Time", 500, 100, 2000));
     debugView.add(outputMode.set("Output", 0, 0, 2));
+	outputMode.addListener(this, &musicMaker::outputmodeChanged);
 }
 
 void musicMaker::drawInScene(){
@@ -349,5 +350,8 @@ void musicMaker::clearBodies(){
     }
 	
     AllNotesOff(*midiOut);
-	
+}
+
+void musicMaker::outputmodeChanged(int &mode) {
+	AllNotesOff(*midiOut);
 }

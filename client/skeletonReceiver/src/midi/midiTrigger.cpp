@@ -60,9 +60,6 @@ void grabbedNote::update(kinectBody &body) {
 	
 	float height = ofMap(NormalizedHeight(sk, ::hand, ::right), 0.3, 1, 0, 1);
 	int note = ExtractNote(getSettings(), height);
-	
-    
-    
     
 	ofVec3f acc = body.accel[SKELETOR::Instance()->rightEnumsToIndex[::hand]];
 	
@@ -105,13 +102,13 @@ void gridNote::update(kinectBody &body) {
 		handVel = body.velocity[SKELETOR::Instance()->rightEnumsToIndex[::hand]];
 	}
 	
-	float extendThreshHi = 0.6;
-	bool shouldTrig = extendPerc > extendThreshHi;
+	float extendThresh = 0.65;
+	bool shouldTrig = extendPerc > extendThresh;
 	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, getSettings().side));
 	int vel = ofMap(handVel.length(), 0, 40, 40, 120);
 	
 	auto now = ofGetElapsedTimeMillis();
-	unsigned long long timeThresh = 80;
+	unsigned long long timeThresh = 100;
 	bool timeOk = (now - _lastTrigger) > timeThresh;
 	
 	if(shouldTrig && note != _currentNote && timeOk) {
@@ -186,6 +183,6 @@ void legCC::update(kinectBody &body) {
 	
 	float greatest = acc.front().length();
 	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
-	_accumulator = ofLerp(_accumulator, amt, 0.03);
+	_accumulator = ofLerp(_accumulator, amt, 0.07);
 	getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
 }

@@ -29,6 +29,8 @@ public:
 	void updateGraphs(kinectBody &body);
     void clearBodies();
 	
+	void outputmodeChanged(int& mode);
+	
     vector < Graph > graphs;
     vector < Graph > graphsForSkeleton;
     vector < Graph > graphsHistory;
