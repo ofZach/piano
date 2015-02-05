@@ -9,11 +9,6 @@
 #include "musicMaker.h"
 #include "ofApp.h"
 
-
-
-
-
-
 void musicMaker::setup (){
     
     for (int i = 0; i < 4; i++){
@@ -286,16 +281,14 @@ void musicMaker::exit() {
     midiOut->closePort();
 }
 
-#define END(a) (a + (sizeof(a) / sizeof(a[0])))
-
-
-
 void musicMaker::setupAudio() {
     
     int stringNotes[] = {53, 59, 60, 64, 67, 72};
     int pianoNotes[] = {48, 53, 55, 59, 60, 64, 65, 67, 72, 77, 79, 84};
     int accordNotes[] = {36, 43};
-    
+ 
+	#define END(a) (a + (sizeof(a) / sizeof(a[0])))
+	
     triggerRef strings = triggerRef(new gridNote);
     midiTrigger::Settings stringSettings;
     stringSettings.notes.assign(stringNotes, END(stringNotes));
@@ -315,10 +308,15 @@ void musicMaker::setupAudio() {
     accordSettings.channel = 8;
     accordSettings.notes.assign(accordNotes, END(accordNotes));
     accord->setSettings(accordSettings);
+	
+	triggerRef legs = triggerRef(new legCC);
+	
+	#undef END
     
     midiTriggers.push_back(strings);
     midiTriggers.push_back(piano);
     midiTriggers.push_back(accord);
+	midiTriggers.push_back(legs);
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->openVirtualPort("OF Kinect");
@@ -330,8 +328,6 @@ void musicMaker::setupAudio() {
     
     skeletonMidi.setup(midiOut);
 }
-
-#undef END
 
 void musicMaker::updateAudio(kinectBody &body) {
     for(auto& t : midiTriggers) {

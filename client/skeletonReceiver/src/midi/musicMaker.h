@@ -1,9 +1,5 @@
 
-
-
 #pragma once
-
-
 
 #include "ofMain.h"
 #include "ofxControlPanel.h"
