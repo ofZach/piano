@@ -65,6 +65,7 @@ public:
 	vector<int> midiNotes;
     map<string, bool> triggers;
 	vector<triggerRef> midiTriggers;
+	vector<triggerRef> drumMidiTriggers;
     
     vector<kinectButton> buttons;
     
