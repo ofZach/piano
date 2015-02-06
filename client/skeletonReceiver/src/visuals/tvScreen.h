@@ -9,10 +9,11 @@
 #include "prng_engine.hh"
 #include <algorithm>    // std::shuffle
 
-struct pulseData {
+typedef struct {
 	float lifetime;
 	float noiseSeed;
-};
+}
+pulseData;
 
 bool removeIfZero(pulseData p) {
 	return p.lifetime < 0.01;
@@ -93,8 +94,6 @@ public:
         transform.makeIdentityMatrix();
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
-		ofMatrix4x4 negScaleMat;
-		negScaleMat.makeIdentityMatrix();
 		ofMatrix4x4 rotation;
 		rotation.makeIdentityMatrix();
         
@@ -123,19 +122,21 @@ public:
             //transform.glRotate(1.1 * sin(pctMap*8), 1, 0,1);
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
-			negScaleMat.glScale(-scale, -scale, -scale);
 			
-			rotation.glRotateRad(ofSignedNoise(ofGetElapsedTimef() * 0.2) * 0.1, -1, 0.1, 1);
+			float t = ofGetElapsedTimef();
+			rotation.glRotateRad(ofSignedNoise(t * 0.2, energy) * 0.02, // rad
+								 ofSignedNoise(t * 0.11, energy) * 0.1, // x
+								 ofSignedNoise(t * 0.09, energy) * 0.1, // y
+								 1);
             
             if (BODY.history.size() == 50){
             int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
-            if (i % skipRate == 0) ;
-            else{
-                
-                continue;
-            }
-            }
-            
+				if (i % skipRate == 0) ;
+				else {
+					continue;
+				}
+			}
+			
             kinectSkeleton & SKtemp = BODY.history[i];
             
             ofPoint avg;
@@ -148,23 +149,26 @@ public:
             ofTranslate(avg);
             for (auto & bone : connections){
                 
-                ofPoint a( SKtemp.pts[bone.a]);
-                ofPoint b( SKtemp.pts[bone.b]);
+                ofPoint a(SKtemp.pts[bone.a]);
+                ofPoint b(SKtemp.pts[bone.b]);
                 
                 float scale = energy;
                 
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
                 dist -= 15;
-                if (dist < 0) dist = 0;
+				
+				if (dist < 0) {
+					dist = 0;
+				}
+				
                 ofPoint normal = (a-b).getNormalized();
                 
                 ofPoint aNew = midPt + (dist * 0.5) * normal - avg;
                 ofPoint bNew = midPt - (dist * 0.5) * normal - avg;
-                
+				
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
-//                ofLine (aNew*rotation*transform*scaleMat, bNew*rotation*transform*scaleMat);
-				ofLine (aNew*rotation*transform*negScaleMat, bNew*rotation*transform*negScaleMat);
+                ofLine (aNew*rotation*transform*scaleMat, bNew*rotation*transform*scaleMat);
             }
             ofPopMatrix();
         
