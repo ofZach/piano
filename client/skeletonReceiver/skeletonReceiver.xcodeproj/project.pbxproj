@@ -375,6 +375,7 @@
 		FDE037621A83C56C00B71390 /* tvScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tvScreen.h; sourceTree = "<group>"; };
 		FDE037641A83C58000B71390 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		FDE037651A83C58D00B71390 /* kinectSkeletonLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonLayout.h; sourceTree = "<group>"; };
+		FDE0376C1A849EE300B71390 /* prng_engine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = prng_engine.hh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -708,6 +709,7 @@
 		C83F99921A828CC400207A6C /* visuals */ = {
 			isa = PBXGroup;
 			children = (
+				FDE0376C1A849EE300B71390 /* prng_engine.hh */,
 				FDE037641A83C58000B71390 /* Grid.h */,
 				FDE037611A83C56C00B71390 /* tvScreen.cpp */,
 				FDE037621A83C56C00B71390 /* tvScreen.h */,
