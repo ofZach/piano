@@ -14,6 +14,12 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 	return _midiOut;
 }
 
+void midiTrigger::reset() {
+	for(const auto& note : getSettings().notes) {
+		getMidiOut()->sendNoteOff(getSettings().channel, note);
+	}
+}
+
 #pragma mark - Util
 
 float NormalizedHeight(kinectSkeleton& sk, int name, int side) {
@@ -22,7 +28,7 @@ float NormalizedHeight(kinectSkeleton& sk, int name, int side) {
 	} else {
 		ofPoint p = sk.getPoint(name, side);
 		ofPoint f = sk.getPoint(::foot, side);
-		return ofMap(p.distance(f), 0, sk.skeletonHeight, 0, 1);
+		return ofMap(p.distance(f), 0, sk.skeletonHeight * 1.25, 0, 1);
 	}
 }
 
@@ -44,6 +50,10 @@ void AllNotesOff(ofxMidiOut& midiOut) {
 	}
 }
 
+int OtherSide(int side) {
+	return (side == ::left ? ::right : ::left);
+}
+
 #pragma mark - Grabbed Note
 
 grabbedNote::grabbedNote() : _triggered(false), _currentNote(0) {
@@ -60,11 +70,8 @@ void grabbedNote::update(kinectBody &body) {
 	
 	float height = ofMap(NormalizedHeight(sk, ::hand, ::right), 0.3, 1, 0, 1);
 	int note = ExtractNote(getSettings(), height);
-	
     
-    
-    
-	ofVec3f acc = body.accel[SKLS::Instance()->rightEnumsToIndex[::hand]];
+	ofVec3f acc = body.accel[SKELETOR::Instance()->rightEnumsToIndex[::hand]];
 	
 	float sum = acc.x + acc.y + acc.z;
 	bool shouldTrig = sum < -3 && extendPerc > extendThreshHi;
@@ -99,19 +106,19 @@ void gridNote::update(kinectBody &body) {
 	
 	if(getSettings().side == ::left) {
 		extendPerc = sk.armLeftExtendedPct;
-		handVel = body.velocity[SKLS::Instance()->leftEnumsToIndex[::hand]];
+		handVel = body.velocity[SKELETOR::Instance()->leftEnumsToIndex[::hand]];
 	} else {
 		extendPerc = sk.armRightExtendedPct;
-		handVel = body.velocity[SKLS::Instance()->rightEnumsToIndex[::hand]];
+		handVel = body.velocity[SKELETOR::Instance()->rightEnumsToIndex[::hand]];
 	}
 	
-	float extendThreshHi = 0.6;
-	bool shouldTrig = extendPerc > extendThreshHi;
+	float extendThresh = 0.65;
+	bool shouldTrig = extendPerc > extendThresh;
 	int note = ExtractNote(getSettings(), NormalizedHeight(sk, ::hand, getSettings().side));
 	int vel = ofMap(handVel.length(), 0, 40, 40, 120);
 	
 	auto now = ofGetElapsedTimeMillis();
-	unsigned long long timeThresh = 80;
+	unsigned long long timeThresh = 100;
 	bool timeOk = (now - _lastTrigger) > timeThresh;
 	
 	if(shouldTrig && note != _currentNote && timeOk) {
@@ -176,16 +183,60 @@ void legCC::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
 	vector<ofPoint> acc;
-	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::foot]]);
-	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::knee]]);
-	acc.push_back(body.accel[SKLS::Instance()->leftEnumsToIndex[::hip]]);
-	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::foot]]);
-	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::knee]]);
-	acc.push_back(body.accel[SKLS::Instance()->rightEnumsToIndex[::hip]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->leftEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->leftEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->leftEnumsToIndex[::hip]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::foot]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::knee]]);
+	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::hip]]);
 	ofSort(acc, GreatestSum);
 	
 	float greatest = acc.front().length();
 	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
-	_accumulator = ofLerp(_accumulator, amt, 0.03);
+	_accumulator = ofLerp(_accumulator, amt, 0.07);
 	getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
+}
+
+#pragma mark - Stomp
+
+stompNote::stompNote() {
+	reset();
+}
+
+void stompNote::update(kinectBody &body) {
+	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	float primeThresh = 0.9;
+	float triggerThresh = 0.7;
+	int framesToIgnore = 10; // number of frames to wait for a negative acceleration
+	
+	size_t idx = SKELETOR::Instance()->getPointIndex(::foot, getSettings().side);
+	size_t opp = SKELETOR::Instance()->getPointIndex(::foot, OtherSide(getSettings().side));
+	
+	float footDiff = ofMap(sk.pts[idx].y - sk.pts[opp].y, 0, sk.skeletonHeight / 10., 0, 1, true);
+	
+	if(!_primed && footDiff > primeThresh) {
+		_primed = true;
+	} else if(_primed) {
+		
+		float acc = body.accel[idx].y;
+		
+		if(footDiff < triggerThresh) {
+			if(acc < -0.1) {
+				int velocity = ofMap(acc, -0.1, -4, 80, 100);
+				getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
+				reset();
+			} else {
+				_ignoredFrameCount++;
+				if(_ignoredFrameCount == framesToIgnore) {
+					reset();
+				}
+			}
+		}
+	}
+}
+
+void stompNote::reset() {
+	_primed = false;
+	_ignoredFrameCount = 0;
 }

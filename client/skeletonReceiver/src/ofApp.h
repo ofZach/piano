@@ -14,7 +14,7 @@
 #include "tvScreen.h"
 #include "Floor.h"
 #include "musicMaker.h"
-
+#include "lineChaseSkeleton.h"
 
 
 class ofApp : public ofBaseApp{
@@ -91,7 +91,7 @@ public:
     
     kinectSkeletonAnalyser KSA;
     udpPacketReplayer UDPR;
-    
+    lineChaseSkeleton tv;
     
     map<string, kinectSkeleton> ksMap;
     map<string, kinectBody> bodyMap;

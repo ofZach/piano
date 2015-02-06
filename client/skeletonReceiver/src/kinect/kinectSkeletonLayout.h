@@ -166,8 +166,8 @@ public:
             vector < int > & ptIds = boneTemp.second.pointIds;
             for (int i = 0; i+1 < ptIds.size(); i++){
                 boneConnection BC;
-                BC.a = 0;
-                BC.b = i+1;
+                BC.a = ptIds[i];
+                BC.b = ptIds[i+1];
                 connections.push_back(BC);
             }
         }
@@ -176,11 +176,13 @@ public:
             vector < int > & ptIds = boneTemp.second.pointIds;
             for (int i = 0; i+1 < ptIds.size(); i++){
                 boneConnection BC;
-                BC.a = 0;
-                BC.b = i+1;
+                BC.a = ptIds[i];
+                BC.b = ptIds[i+1];
                 connections.push_back(BC);
             }
         }
+        
+        cout << connections.size() << endl;
     }
     
     int getPointIndex(int name, int side){
@@ -204,12 +206,22 @@ public:
         return nameToIndex[name];
     }
     
+    bool bIsSkipPoint( int ptId){
+        
+        if(find(skipList.begin(),skipList.end(),indexToName[ptId]) == skipList.end()){
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+    
     
 };
 
 
 typedef Singleton < kinectSkeletonLayout >  skelLayoutSinglton;
-typedef skelLayoutSinglton SKLS;
+typedef skelLayoutSinglton SKELETOR;
 
 
 

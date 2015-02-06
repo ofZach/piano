@@ -50,6 +50,7 @@
 		C83F99911A82893100207A6C /* skeletonMidiController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F998F1A82893100207A6C /* skeletonMidiController.cpp */; };
 		C83F99951A828CDA00207A6C /* Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F99931A828CDA00207A6C /* Floor.cpp */; };
 		C83F999F1A839C4500207A6C /* musicMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F999D1A839C4500207A6C /* musicMaker.cpp */; };
+		C83F99A61A848C5F00207A6C /* lineChaseSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83F99A41A848C5F00207A6C /* lineChaseSkeleton.cpp */; };
 		C99C59EB5A00132F22624A2D /* BodyRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F7D88D45725D5A3C0781C9A8 /* BodyRenderer.cpp */; };
 		DF0E23207448D9B0A01099DE /* Hand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C140B7536113642BB2F29B2 /* Hand.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -237,6 +238,8 @@
 		C83F99941A828CDA00207A6C /* Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Floor.h; sourceTree = "<group>"; };
 		C83F999D1A839C4500207A6C /* musicMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = musicMaker.cpp; sourceTree = "<group>"; };
 		C83F999E1A839C4500207A6C /* musicMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = musicMaker.h; sourceTree = "<group>"; };
+		C83F99A41A848C5F00207A6C /* lineChaseSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lineChaseSkeleton.cpp; sourceTree = "<group>"; };
+		C83F99A51A848C5F00207A6C /* lineChaseSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lineChaseSkeleton.h; sourceTree = "<group>"; };
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
 		C8D782451A7FE9DA00F367F8 /* Gesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Gesture.h; path = "../../../addons/ofxKinectV2-OSC/src/DataTransform/Gesture.h"; sourceTree = "<group>"; };
 		D6B9CFD1E73671E93959871F /* BodyRenderer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = BodyRenderer.h; path = "../../../addons/ofxKinectV2-OSC/src/Draw/BodyRenderer.h"; sourceTree = SOURCE_ROOT; };
@@ -713,6 +716,8 @@
 				FDE037621A83C56C00B71390 /* tvScreen.h */,
 				C83F99931A828CDA00207A6C /* Floor.cpp */,
 				C83F99941A828CDA00207A6C /* Floor.h */,
+				C83F99A41A848C5F00207A6C /* lineChaseSkeleton.cpp */,
+				C83F99A51A848C5F00207A6C /* lineChaseSkeleton.h */,
 			);
 			path = visuals;
 			sourceTree = "<group>";
@@ -1171,6 +1176,7 @@
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				FDD5CE4C1A78334100EC1272 /* guiCallbackValue.cpp in Sources */,
 				A29D8C96AE042ECEAA1BD4F3 /* NetworkingUtilsWin.cpp in Sources */,
+				C83F99A61A848C5F00207A6C /* lineChaseSkeleton.cpp in Sources */,
 				28090DEB5109115003E8F1C5 /* UdpSocketWin.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,

@@ -18,7 +18,7 @@ void ofApp::setup(){
     smallFont.loadFont("selena.otf", 16); //http://openfontlibrary.org/en/font/selena
     largeFont.loadFont("selena.otf", 48);
     
-    
+    tv.setup();
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
@@ -165,6 +165,7 @@ void ofApp::update(){
             KBA.analyze(body);
             SA.analyze(body);
             TV.update(&body);
+            tv.update(&body, cam);
             
         }
     }else {
@@ -251,7 +252,7 @@ void ofApp::draw(){
     SA.drawOverScene();
     
    
-    //TV.draw(ofRectangle(0,0,1920/2, 1080/2));
+//    TV.draw(ofRectangle(0,0,1920/2, 1080/2));
     
     
     //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
