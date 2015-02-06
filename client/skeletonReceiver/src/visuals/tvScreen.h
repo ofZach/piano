@@ -6,13 +6,19 @@
 
 #include "ofMain.h"
 #include "kinectBody.h"
+#include "kinectSkeletonLayout.h"
 #include "prng_engine.hh"
 #include "ofxSyphonServer.h"
 #include <algorithm>    // std::shuffle
 
+typedef struct {
+    float lifetime;
+    float noiseSeed;
+}
+pulseData;
 
-bool removeIfZero(float f){
-    return f < 0.01 ? true : false;
+bool removeIfZero(pulseData p) {
+    return p.lifetime < 0.01;
 }
 
 class tvScreen {
@@ -27,7 +33,9 @@ public:
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
     
-    vector < float > pulses;    // go from 1 to 0
+    vector < pulseData > pulses;    // go from 1 to 0
+    
+    float twist;
     
     //--------------------------------------------------
     float nonOfRandom(float x, float y) {
@@ -40,11 +48,14 @@ public:
     
     
     void addImpluse(){
-        if(pulses.size() < 5){
-            pulses.push_back(1.0 + 0.2);
+        if(pulses.size() < 10){
+            pulses.push_back((pulseData){
+                .lifetime = 1.0 + 0.2,
+                .noiseSeed = ofGetElapsedTimef()
+            });
+            
         }
     }
-    
     bool bDrawHairyMan;
     
     void setup () {
@@ -67,20 +78,18 @@ public:
         energy = 0.0;
         
         bDrawHairyMan = false;
-        
         server.setName("Piano - TV - Screen");
-        
+        twist = 0;
     }
     
     void update( kinectBody * kinectBody){
         KB = kinectBody;
         
-        
         for (int i = 0; i < pulses.size(); i++){
-            pulses[i] -= 0.01;
+            pulses[i].lifetime -= 0.01;
         }
-        ofRemove(pulses, removeIfZero);
         
+        ofRemove(pulses, removeIfZero);
     }
     
     float energy;
@@ -94,7 +103,12 @@ public:
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
         
-        //cout << BODY.history.size() << endl;
+        // calculate twist value from spine
+        kinectSkeleton& sk = BODY.getLastSkeleton();
+        ofVec2f spineBase = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineBase]];
+        ofVec2f spineTop = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineShoulder]];
+        float currentTwist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
+        twist = ofLerp(twist, currentTwist, 0.1);
         
         for (int i = BODY.history.size()-1; i >= 0; i--){
             
@@ -103,7 +117,7 @@ public:
             float pctMap = ofMap(i, BODY.history.size()/3, BODY.history.size(), 0, 1);
             float strength = 0;
             for (int j = 0; j < pulses.size(); j++){
-                float diff = pulses[j] - pctMap;
+                float diff = pulses[j].lifetime - pctMap;
                 
                 float pctToLook = ofMap(pctMap, 1, 0, 0.25, 0.01);
                 if (fabs(diff) < pctToLook){
@@ -113,20 +127,20 @@ public:
             
             strength = ofClamp(strength, 0, 1);
             
-           // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
+            // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
             
             transform.glTranslate(ofPoint(0,0,5));
-            //transform.glRotate(1.1 * sin(pctMap*8), 1, 0,1);
+            transform.glRotateRad(twist * 0.05, 0, 0, 1);
+            
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
             
             if (BODY.history.size() == 50){
-            int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
-            if (i % skipRate == 0) ;
-            else{
-                
-                continue;
-            }
+                int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
+                if (i % skipRate == 0) ;
+                else {
+                    continue;
+                }
             }
             
             kinectSkeleton & SKtemp = BODY.history[i];
@@ -141,16 +155,19 @@ public:
             ofTranslate(avg);
             for (auto & bone : connections){
                 
-                ofPoint a( SKtemp.pts[bone.a]);
-                ofPoint b( SKtemp.pts[bone.b]);
+                ofPoint a(SKtemp.pts[bone.a]);
+                ofPoint b(SKtemp.pts[bone.b]);
                 
                 float scale = energy;
                 
-                
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
-                dist -= 15;
-                if (dist < 0) dist = 0;
+                dist -= 10;
+                
+                if (dist < 0) {
+                    dist = 0;
+                }
+                
                 ofPoint normal = (a-b).getNormalized();
                 
                 ofPoint aNew = midPt + (dist * 0.5) * normal - avg;
@@ -158,12 +175,10 @@ public:
                 
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
                 ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
-                
-                
-                
+                ofLine (aNew*transform.getInverse()*scaleMat.getInverse(), bNew*transform.getInverse()*scaleMat.getInverse());
             }
             ofPopMatrix();
-        
+            
         }
         
         kinectSkeleton & SK = BODY.getLastSkeleton();
@@ -171,7 +186,6 @@ public:
         
         for (auto & bone : connections){
             
-            //cout << bone.a <<  " " << bone.b << endl;
             ofPoint a( SK.pts[bone.a]);
             ofPoint b( SK.pts[bone.b]);
             
@@ -278,7 +292,7 @@ public:
             }
             
         }
-
+        
     }
     
     void drawIntoFbo( ofCamera & mainViewCam){
@@ -331,8 +345,8 @@ public:
     
     void draw( ofRectangle drawRect){
         ofSetColor(255,255,255);
-//        
-//        tvScreenView.draw(drawRect);
+        //
+        //        tvScreenView.draw(drawRect);
     }
     
     ofFbo tvScreenView;

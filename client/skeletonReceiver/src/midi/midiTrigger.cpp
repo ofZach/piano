@@ -54,6 +54,10 @@ int OtherSide(int side) {
 	return (side == ::left ? ::right : ::left);
 }
 
+bool GreatestLength(ofPoint a, ofPoint b) {
+	return a.lengthSquared() > b.lengthSquared();
+}
+
 #pragma mark - Grabbed Note
 
 grabbedNote::grabbedNote() : _triggered(false), _currentNote(0) {
@@ -175,10 +179,6 @@ legCC::legCC() : _accumulator(0) {
 	
 }
 
-bool GreatestSum(ofPoint a, ofPoint b) {
-	return a.lengthSquared() > b.lengthSquared();
-}
-
 void legCC::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
@@ -189,7 +189,7 @@ void legCC::update(kinectBody &body) {
 	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::foot]]);
 	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::knee]]);
 	acc.push_back(body.accel[SKELETOR::Instance()->rightEnumsToIndex[::hip]]);
-	ofSort(acc, GreatestSum);
+	ofSort(acc, GreatestLength);
 	
 	float greatest = acc.front().length();
 	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
