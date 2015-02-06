@@ -148,7 +148,10 @@ public:
                 
                 ofPoint a(SKtemp.pts[bone.a]);
                 ofPoint b(SKtemp.pts[bone.b]);
-                
+				
+//				ofCircle(a*transform*scaleMat.getInverse(), 10);
+//				ofCircle(b, 10);
+				
                 float scale = energy;
                 
                 ofPoint midPt = (a+b)/2.0;
@@ -166,6 +169,7 @@ public:
 				
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
                 ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
+				ofLine (aNew*transform.getInverse()*scaleMat.getInverse(), bNew*transform.getInverse()*scaleMat.getInverse());
             }
             ofPopMatrix();
         
