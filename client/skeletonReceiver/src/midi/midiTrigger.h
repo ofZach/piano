@@ -89,4 +89,16 @@ private:
 	int _ignoredFrameCount;
 };
 
+class dropDatNote : public midiTrigger {
+	
+public:
+	dropDatNote();
+	virtual void update(kinectBody &body);
+	virtual void reset();
+	
+private:
+	bool _primed;
+	int _ignoredFrameCount;
+};
+
 typedef shared_ptr<midiTrigger> triggerRef;

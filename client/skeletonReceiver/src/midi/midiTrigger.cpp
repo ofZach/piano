@@ -203,12 +203,17 @@ stompNote::stompNote() {
 	reset();
 }
 
+void stompNote::reset() {
+	_primed = false;
+	_ignoredFrameCount = 0;
+}
+
 void stompNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
 	float primeThresh = 0.9;
 	float triggerThresh = 0.7;
-	int framesToIgnore = 10; // number of frames to wait for a negative acceleration
+	int framesToWait = 10; // number of frames to wait for a negative acceleration
 	
 	size_t idx = SKELETOR::Instance()->getPointIndex(::foot, getSettings().side);
 	size_t opp = SKELETOR::Instance()->getPointIndex(::foot, OtherSide(getSettings().side));
@@ -228,7 +233,7 @@ void stompNote::update(kinectBody &body) {
 				reset();
 			} else {
 				_ignoredFrameCount++;
-				if(_ignoredFrameCount == framesToIgnore) {
+				if(_ignoredFrameCount == framesToWait) {
 					reset();
 				}
 			}
@@ -236,7 +241,32 @@ void stompNote::update(kinectBody &body) {
 	}
 }
 
-void stompNote::reset() {
-	_primed = false;
-	_ignoredFrameCount = 0;
+#pragma mark - Ass Note
+
+dropDatNote::dropDatNote() : _primed(false), _ignoredFrameCount(0) {
+	
+}
+
+void dropDatNote::reset() {
+	
+}
+
+void dropDatNote::update(kinectBody &body) {
+	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	float primeThresh = 0.93;
+	float triggerThresh = 0.9;
+	
+	float left = sk.legLeftExtendedPct;
+	float right = sk.legRightExtendedPct;
+	bool abovePrime = (left > primeThresh) && (right > primeThresh);
+	bool belowTrigger = (left < triggerThresh) && (right < triggerThresh);
+	
+	if(!_primed && abovePrime) {
+		_primed = true;
+		getMidiOut()->sendNoteOn(11, 67);
+	} else if(_primed && belowTrigger) {
+		getMidiOut()->sendNoteOn(11, 60);
+		_primed = false;
+	}
 }

@@ -107,6 +107,12 @@ void musicMaker::setupMidiTriggers() {
 	stompRightSettings.channel = 10;
 	stompRight->setSettings(stompRightSettings);
 	
+	triggerRef drop = triggerRef(new dropDatNote);
+	midiTrigger::Settings dropSettings;
+	dropSettings.notes.push_back(60);
+	dropSettings.channel = 11;
+	drop->setSettings(dropSettings);
+	
 #undef END
 	
 	midiTriggers.push_back(strings);
@@ -115,6 +121,7 @@ void musicMaker::setupMidiTriggers() {
 	midiTriggers.push_back(legs);
 	midiTriggers.push_back(stompLeft);
 	midiTriggers.push_back(stompRight);
+	midiTriggers.push_back(drop);
 	
 	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
 	midiOut->openVirtualPort("OF Kinect");
