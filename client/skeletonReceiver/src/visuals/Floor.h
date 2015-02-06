@@ -13,8 +13,6 @@
 #include "ofxControlPanel.h"
 class Floor{
 public:
-    Floor();
-    ~Floor();
     void setup();
     void update(ofEventArgs &args);
     void draw(ofEventArgs &args);
