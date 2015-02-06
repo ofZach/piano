@@ -68,6 +68,11 @@ public:
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
 	
+    ofParameter<float> centerX;
+    ofParameter<float> centerY;
+    ofParameter<float> centerZ;
+    
+    ofPoint centerPoint;
     
     kinectButton switchMode;
     ofParameter<float> buttonX;
@@ -79,7 +84,7 @@ public:
     bool changeTriggered;
     ofFbo fooFbo;
 
-    
+       
     musicMaker MM;
     
     unsigned long long bodyDropTimer;

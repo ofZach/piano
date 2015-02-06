@@ -9,13 +9,13 @@
         <val_0>1</val_0>
     </scaleY>
     <scaleZ>
-        <val_0>32.3154</val_0>
+        <val_0>18.3164</val_0>
     </scaleZ>
     <offsetX>
         <val_0>-184.615</val_0>
     </offsetX>
     <offsetY>
-        <val_0>400</val_0>
+        <val_0>323.077</val_0>
     </offsetY>
     <offsetZ>
         <val_0>-15.3846</val_0>
@@ -30,23 +30,32 @@
         <val_0>0</val_0>
     </rotationZ>
     <buttonX>
-        <val_0>0</val_0>
+        <val_0>200</val_0>
     </buttonX>
     <buttonY>
-        <val_0>0</val_0>
+        <val_0>-30.7693</val_0>
     </buttonY>
     <buttonZ>
-        <val_0>0</val_0>
+        <val_0>-261.538</val_0>
     </buttonZ>
     <buttonApproach>
-        <val_0>1.64615</val_0>
+        <val_0>1.92308</val_0>
     </buttonApproach>
     <buttonTriggerScale>
-        <val_0>0.450769</val_0>
+        <val_0>0.823462</val_0>
     </buttonTriggerScale>
     <buttonRadius>
-        <val_0>21.9192</val_0>
+        <val_0>50</val_0>
     </buttonRadius>
+    <centerX>
+        <val_0>0</val_0>
+    </centerX>
+    <centerY>
+        <val_0>76.9231</val_0>
+    </centerY>
+    <centerZ>
+        <val_0>-400</val_0>
+    </centerZ>
 </skeleton_transform>
 <dataPlayer>
     <use_udp_player>
@@ -61,7 +70,7 @@
 </dataPlayer>
 <camera_control>
     <camera_height>
-        <val_0>0</val_0>
+        <val_0>530.769</val_0>
     </camera_height>
     <camera_radius>
         <val_0>1207.69</val_0>
@@ -87,7 +96,7 @@
         <val_0>16</val_0>
     </Num_Note>
     <Smooth_Up_History>
-        <val_0>0.738462</val_0>
+        <val_0>0.0730769</val_0>
     </Smooth_Up_History>
     <Smooth_Down_History>
         <val_0>0.884615</val_0>
@@ -96,7 +105,7 @@
         <val_0>0.892308</val_0>
     </Smooth_Down_Skeleton>
     <Smooth_Up_Skeleton>
-        <val_0>0.711538</val_0>
+        <val_0>0.0576923</val_0>
     </Smooth_Up_Skeleton>
     <JazzDrums>
         <val_0>0</val_0>
@@ -113,6 +122,15 @@
     <Output>
         <val_0>1</val_0>
     </Output>
+    <Percentile>
+        <val_0>0.75</val_0>
+    </Percentile>
+    <ThresholdSmoothing>
+        <val_0>0.753846</val_0>
+    </ThresholdSmoothing>
+    <Velocity_Cutoff>
+        <val_0>1</val_0>
+    </Velocity_Cutoff>
 </DebugView>
 <button_control>
     <Draw_Buttons>
@@ -132,67 +150,67 @@
     <val_0>2.90293</val_0>
 </Threshold-0>
 <Threshold-1>
-    <val_0>2.34321</val_0>
+    <val_0>0.37043</val_0>
 </Threshold-1>
 <Threshold-2>
-    <val_0>2.29815</val_0>
+    <val_0>0.351463</val_0>
 </Threshold-2>
 <Threshold-3>
-    <val_0>2.54654</val_0>
+    <val_0>0.405235</val_0>
 </Threshold-3>
 <Threshold-4>
-    <val_0>2.93178</val_0>
+    <val_0>0.411467</val_0>
 </Threshold-4>
 <Threshold-5>
-    <val_0>2.80084</val_0>
+    <val_0>0.455698</val_0>
 </Threshold-5>
 <Threshold-6>
-    <val_0>2.66487</val_0>
+    <val_0>0.462393</val_0>
 </Threshold-6>
 <Threshold-7>
     <val_0>2.68282</val_0>
 </Threshold-7>
 <Threshold-8>
-    <val_0>2.71078</val_0>
+    <val_0>0.62987</val_0>
 </Threshold-8>
 <Threshold-9>
-    <val_0>2.29955</val_0>
+    <val_0>0.340435</val_0>
 </Threshold-9>
 <Threshold-10>
-    <val_0>2.40706</val_0>
+    <val_0>0.47797</val_0>
 </Threshold-10>
 <Threshold-11>
     <val_0>2.66716</val_0>
 </Threshold-11>
 <Threshold-12>
-    <val_0>2.69128</val_0>
+    <val_0>0.795658</val_0>
 </Threshold-12>
 <Threshold-13>
-    <val_0>2.39144</val_0>
+    <val_0>0.389675</val_0>
 </Threshold-13>
 <Threshold-14>
-    <val_0>2.53535</val_0>
+    <val_0>0.629893</val_0>
 </Threshold-14>
 <Threshold-15>
-    <val_0>2.63256</val_0>
+    <val_0>2.07511</val_0>
 </Threshold-15>
 <Threshold-16>
     <val_0>3.0207</val_0>
 </Threshold-16>
 <Threshold-17>
-    <val_0>2.38678</val_0>
+    <val_0>0.395101</val_0>
 </Threshold-17>
 <Threshold-18>
-    <val_0>1.90541</val_0>
+    <val_0>0.81939</val_0>
 </Threshold-18>
 <Threshold-19>
-    <val_0>1.81867</val_0>
+    <val_0>3.93294</val_0>
 </Threshold-19>
 <Threshold-20>
     <val_0>1.95437</val_0>
 </Threshold-20>
 <Threshold-21>
-    <val_0>2.46457</val_0>
+    <val_0>0.374689</val_0>
 </Threshold-21>
 <Threshold-22>
     <val_0>2.99111</val_0>
@@ -204,67 +222,67 @@
     <val_0>2.74599</val_0>
 </Threshold-24>
 <History_Threshold-0>
-    <val_0>0.0139396</val_0>
+    <val_0>0.00348299</val_0>
 </History_Threshold-0>
 <History_Threshold-1>
-    <val_0>0.0256442</val_0>
+    <val_0>0.00579341</val_0>
 </History_Threshold-1>
 <History_Threshold-2>
-    <val_0>0.0135919</val_0>
+    <val_0>0.00723152</val_0>
 </History_Threshold-2>
 <History_Threshold-3>
-    <val_0>0.0259892</val_0>
+    <val_0>0.0120563</val_0>
 </History_Threshold-3>
 <History_Threshold-4>
-    <val_0>0.0134916</val_0>
+    <val_0>0.00198617</val_0>
 </History_Threshold-4>
 <History_Threshold-5>
-    <val_0>0.0152299</val_0>
+    <val_0>0.00341283</val_0>
 </History_Threshold-5>
 <History_Threshold-6>
-    <val_0>0.0323192</val_0>
+    <val_0>0.0190686</val_0>
 </History_Threshold-6>
 <History_Threshold-7>
-    <val_0>0.0302837</val_0>
+    <val_0>0.0240688</val_0>
 </History_Threshold-7>
 <History_Threshold-8>
-    <val_0>0.0153586</val_0>
+    <val_0>0.00486956</val_0>
 </History_Threshold-8>
 <History_Threshold-9>
-    <val_0>0.0171216</val_0>
+    <val_0>0.00363421</val_0>
 </History_Threshold-9>
 <History_Threshold-10>
-    <val_0>0.00945646</val_0>
+    <val_0>0.0226623</val_0>
 </History_Threshold-10>
 <History_Threshold-11>
-    <val_0>4.59032</val_0>
+    <val_0>2.36589</val_0>
 </History_Threshold-11>
 <History_Threshold-12>
-    <val_0>5.27771</val_0>
+    <val_0>3.18903</val_0>
 </History_Threshold-12>
 <History_Threshold-13>
-    <val_0>2.26567</val_0>
+    <val_0>1.26272</val_0>
 </History_Threshold-13>
 <History_Threshold-14>
-    <val_0>2.97126</val_0>
+    <val_0>1.03043</val_0>
 </History_Threshold-14>
 <History_Threshold-15>
-    <val_0>4.64533</val_0>
+    <val_0>2.4891</val_0>
 </History_Threshold-15>
 <History_Threshold-16>
-    <val_0>5.45819</val_0>
+    <val_0>3.28388</val_0>
 </History_Threshold-16>
 <History_Threshold-17>
-    <val_0>0.0106742</val_0>
+    <val_0>0.0018778</val_0>
 </History_Threshold-17>
 <History_Threshold-18>
-    <val_0>0.0103331</val_0>
+    <val_0>0.00194411</val_0>
 </History_Threshold-18>
 <History_Threshold-19>
-    <val_0>0.0295478</val_0>
+    <val_0>0.00198029</val_0>
 </History_Threshold-19>
 <History_Threshold-20>
-    <val_0>7.38461</val_0>
+    <val_0>0.73471</val_0>
 </History_Threshold-20>
 <History_Threshold-21>
     <val_0>0</val_0>

@@ -39,7 +39,7 @@ void Floor::setup(){
     
     gui.loadSettings("controlPanelSettings.xml");
     
-    floor.allocate(1280, 720, GL_RGBA, 4);
+    floor.allocate(1280, 1024, GL_RGBA, 4);
     floor.begin();
     ofClear(0, 0, 0, 0);
     floor.end();
@@ -432,6 +432,9 @@ void Floor::keyPressed(ofKeyEventArgs &key){
     }
     if(key.key == 's'){
         gui.saveSettings();
+    }
+    if(key.key == ' '){
+        triggerTriangles();
     }
 }
 

@@ -28,8 +28,8 @@ void ofApp::setup(){
     
     KS.setup();
     TV.setup();
-	MM.setup();
-	MM.TV = &TV;
+    MM.setup();
+    MM.TV = &TV;
     
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
@@ -41,7 +41,11 @@ void ofApp::setup(){
     skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
-        
+    
+    skeletonTransform.add(centerX.set("centerX", 0, -2000,2000));
+    skeletonTransform.add(centerY.set("centerY", 0, -2000,2000));
+    skeletonTransform.add(centerZ.set("centerZ", 0, -2000,2000));
+    
     skeletonTransform.add(buttonX.set("buttonX", 0, -2000,2000));
     skeletonTransform.add(buttonY.set("buttonY", 0, -2000,2000));
     skeletonTransform.add(buttonZ.set("buttonZ", 0, -2000,2000));
@@ -131,6 +135,7 @@ void ofApp::setup(){
 
 
 
+
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -150,6 +155,8 @@ void ofApp::update(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
+    
+    centerPoint.set(centerX, centerY, centerZ);
     
     switchMode.setRadius(buttonRadius);
     switchMode.setApproachScale(buttonApproach);
@@ -174,11 +181,21 @@ void ofApp::update(){
     
     
     
+    
     kinect.update();
     
     if (skeletons->size() >= 1){
-        //for(int i = 0; i < skeletons->size(); i++){
-        KS.setFromSkeleton(skeletons->at(0), mat);
+        int index = 0;
+        float dist = FLT_MAX;
+        if(skeletons->size() >= 2){
+            for(int i = 0; i < skeletons->size(); i++){
+                if(abs((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length()) < dist){
+                    index = i;
+                    dist = abs(skeletons->at(i).getSpineBase().getPoint().length());
+                }
+            }
+        }
+        KS.setFromSkeleton(skeletons->at(index), mat);
         kinectBody & body = bodyMap[skeletons->at(0).getBodyId()];
         bool bNewFrame = body.addSkeleton(KS);
         
@@ -208,22 +225,22 @@ void ofApp::update(){
         
         TV.update(NULL);
         
-		
-		if(ofGetElapsedTimeMillis() - bodyDropTimer > MM.bodyDropThreshold){
-			
-			
-			if(bodyMap.size() > 0){
-				bodyMap.clear();
-				MM.clearBodies();
-			}
-			
-			bodyDropTimer = ofGetElapsedTimeMillis();
-		}
+        
+        if(ofGetElapsedTimeMillis() - bodyDropTimer > MM.bodyDropThreshold){
+            
+            
+            if(bodyMap.size() > 0){
+                bodyMap.clear();
+                MM.clearBodies();
+            }
+            
+            bodyDropTimer = ofGetElapsedTimeMillis();
+        }
     }
-	
-	
+    
+    
     TV.drawIntoFbo(cam);
-	
+    
 }
 
 
@@ -249,8 +266,10 @@ void ofApp::draw(){
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
     ofPopMatrix();
+    ofPushMatrix();
+    ofTranslate(centerPoint);
     ofDrawAxis(50);
-    
+    ofPopMatrix();
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
     
@@ -262,7 +281,6 @@ void ofApp::draw(){
             bodyMap[iter->getBodyId()].drawDebug(drawBoundingCube);
         }
     }
-    
     
     
     
@@ -289,7 +307,7 @@ void ofApp::draw(){
     
     MM.drawOverScene();
     
-   
+    
     TV.draw(ofRectangle(0,0,1920/2, 1080/2));
     
     
