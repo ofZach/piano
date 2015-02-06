@@ -68,5 +68,5 @@ public:
 	vector<triggerRef> drumMidiTriggers;
     
     vector<kinectButton> buttons;
-    
+        
 };

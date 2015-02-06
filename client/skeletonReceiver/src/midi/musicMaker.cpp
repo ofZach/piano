@@ -270,6 +270,7 @@ void musicMaker::updateGraphs(kinectBody &body) {
 					
 					if(triggers[body.historyPlots[i]->varName]){
 						((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+                        ((ofApp*)ofGetAppPtr())->TV.addImpluse();
 					}
 					
 				}
@@ -317,7 +318,9 @@ void musicMaker::updateGraphs(kinectBody &body) {
 							if(triggers[nameOfPt]){
 								ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
 								((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-							}
+                                ((ofApp*)ofGetAppPtr())->TV.addImpluse();
+
+                            }
 						}
 					}
 					

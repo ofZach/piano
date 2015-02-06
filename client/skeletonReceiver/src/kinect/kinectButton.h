@@ -13,6 +13,8 @@ public:
 	void update(const std::vector< std::pair<ofPoint, float> > &points);
 	bool hitTest(const ofVec3f& v, float distSquared) const;
 	
+    bool isTriggered();
+    
 	void setRadius(float radius);
 	float getRadius() const { return _radius; }
 	

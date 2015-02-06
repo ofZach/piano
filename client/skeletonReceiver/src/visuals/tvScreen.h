@@ -7,6 +7,7 @@
 #include "ofMain.h"
 #include "kinectBody.h"
 #include "prng_engine.hh"
+#include "ofxSyphonServer.h"
 #include <algorithm>    // std::shuffle
 
 
@@ -20,6 +21,7 @@ class tvScreen {
 public:
     
     ofVboMesh sphere;
+    ofxSyphonServer server;
     
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
@@ -38,7 +40,9 @@ public:
     
     
     void addImpluse(){
-        pulses.push_back(1.0 + 0.2);
+        if(pulses.size() < 5){
+            pulses.push_back(1.0 + 0.2);
+        }
     }
     
     bool bDrawHairyMan;
@@ -63,6 +67,8 @@ public:
         energy = 0.0;
         
         bDrawHairyMan = false;
+        
+        server.setName("Piano - TV - Screen");
         
     }
     
@@ -277,6 +283,8 @@ public:
     
     void drawIntoFbo( ofCamera & mainViewCam){
         
+        ofEnableAlphaBlending();
+        ofEnableDepthTest();
         tvScreenView.begin();
         ofClear(0,0,0,255);
         //ofClear(0, 0, 0);
@@ -315,11 +323,16 @@ public:
         mainViewCam.end();
         ofClearAlpha();
         tvScreenView.end();
+        ofDisableDepthTest();
+        ofDisableAlphaBlending();
+        
+        server.publishTexture(&tvScreenView.getTextureReference());
     }
     
     void draw( ofRectangle drawRect){
         ofSetColor(255,255,255);
-        tvScreenView.draw(drawRect);
+//        
+//        tvScreenView.draw(drawRect);
     }
     
     ofFbo tvScreenView;

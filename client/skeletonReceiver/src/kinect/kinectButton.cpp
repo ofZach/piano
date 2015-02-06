@@ -40,6 +40,10 @@ void kinectButton::updateHitbox() {
 
 #pragma mark - Hit Testing
 
+bool kinectButton::isTriggered(){
+    return _isTriggered;
+}
+
 void kinectButton::update(const vector< pair<ofVec3f, float> > &points) {
 	
 	bool isHit = false;

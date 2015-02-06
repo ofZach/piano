@@ -4,7 +4,7 @@
 #include "ofxKinectV2OSC.h"
 #include "kinectSkeleton.h"
 #include "kinectSkeletonAnalyser.h"
-
+#include "kinectButton.h"
 #include "kinectBody.h"
 #include "kinectBodyAnalyser.h"
 #include "udpPacketReplayer.h"
@@ -68,7 +68,15 @@ public:
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
 	
-	
+    
+    kinectButton switchMode;
+    ofParameter<float> buttonX;
+    ofParameter<float> buttonY;
+    ofParameter<float> buttonZ;
+    ofParameter<float> buttonApproach;
+    ofParameter<float> buttonTriggerScale;
+    ofParameter<float> buttonRadius;
+    bool changeTriggered;
     ofFbo fooFbo;
 
     
