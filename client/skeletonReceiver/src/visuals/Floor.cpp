@@ -8,7 +8,6 @@
 
 #include "Floor.h"
 
-
 void Floor::setup(){
     
     gui.setup("Floor Controls", ofGetWidth()-600-10, 10, 300, 400);
@@ -141,6 +140,8 @@ void Floor::setup(){
     ofAddListener(ofEvents().update, this, &Floor::update);
     ofAddListener(ofEvents().draw, this, &Floor::draw);
     ofAddListener(ofEvents().keyPressed, this, &Floor::keyPressed);
+    
+    floorServer.setName("Piano - Floor Projections");
 }
 
 void Floor::update(ofEventArgs &args){
@@ -276,7 +277,7 @@ void Floor::update(ofEventArgs &args){
     floor.end();
     ofDisableAlphaBlending();
     
-    floorTexture.publishTexture(&floor.getTextureReference());
+    floorServer.publishTexture(&floor.getTextureReference());
 }
 
 void Floor::addLineTrace(){

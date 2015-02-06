@@ -41,11 +41,7 @@ void ofApp::setup(){
     skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
-    
-    skeletonTransform.add(buttonX.set("offsetX", 0, -2000,2000));
-    skeletonTransform.add(buttonY.set("offsetY", 0, -2000,2000));
-    skeletonTransform.add(buttonZ.set("offsetZ", 0, -2000,2000));
-    
+        
     skeletonTransform.add(buttonX.set("buttonX", 0, -2000,2000));
     skeletonTransform.add(buttonY.set("buttonY", 0, -2000,2000));
     skeletonTransform.add(buttonZ.set("buttonZ", 0, -2000,2000));
