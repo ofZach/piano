@@ -276,6 +276,10 @@ void ofApp::keyPressed(int key){
     if(key == 'k'){
         gui.toggleView();
     }
+    
+    if (key == ' '){
+        TV.addImpluse();
+    }
 }
 
 //--------------------------------------------------------------
