@@ -72,7 +72,7 @@ public:
     ofFbo fooFbo;
 
     
-    musicMaker SA;
+    musicMaker MM;
     
     unsigned long long bodyDropTimer;
 

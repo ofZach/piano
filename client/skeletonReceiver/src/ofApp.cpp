@@ -2,7 +2,7 @@
 
 
 void ofApp::exit(){
-    SA.exit();
+    MM.exit();
 }
 
 //--------------------------------------------------------------
@@ -27,8 +27,9 @@ void ofApp::setup(){
     gui.setup("panel");
     
     KS.setup();
-    SA.setup();
     TV.setup();
+	MM.setup();
+	MM.TV = &TV;
     
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
@@ -57,7 +58,7 @@ void ofApp::setup(){
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
     
-    SA.addToDebugParamGroup(debugView);
+    MM.addToDebugParamGroup(debugView);
     
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
@@ -77,11 +78,11 @@ void ofApp::setup(){
     
     gui.setWhichPanel(4);
     gui.setWhichColumn(0);
-    gui.addGroup(SA.graphsControl1);
+    gui.addGroup(MM.graphsControl1);
     
     gui.setWhichPanel(5);
     gui.setWhichColumn(0);
-    gui.addGroup(SA.graphsControl2);
+    gui.addGroup(MM.graphsControl2);
     
     
     gui.setWhichPanel(3);
@@ -92,7 +93,7 @@ void ofApp::setup(){
     
     gui.setWhichPanel(2);
     gui.setWhichColumn(0);
-    gui.addGroup(SA.buttonControl);
+    gui.addGroup(MM.buttonControl);
     
     gui.setWhichPanel(0);
     
@@ -172,7 +173,7 @@ void ofApp::update(){
         if (bNewFrame){
             KSA.analyze(body.getLastSkeleton());
             KBA.analyze(body);
-            SA.analyze(body);
+            MM.analyze(body);
             TV.update(&body);
             
         }
@@ -180,22 +181,22 @@ void ofApp::update(){
         
         TV.update(NULL);
         
-        
-        if(ofGetElapsedTimeMillis() - bodyDropTimer > SA.bodyDropThreshold){
-        
-        
-        if(bodyMap.size() > 0){
-            bodyMap.clear();
-            SA.clearBodies();
-        }
-
-        bodyDropTimer = ofGetElapsedTimeMillis();
-        }
+		
+		if(ofGetElapsedTimeMillis() - bodyDropTimer > MM.bodyDropThreshold){
+			
+			
+			if(bodyMap.size() > 0){
+				bodyMap.clear();
+				MM.clearBodies();
+			}
+			
+			bodyDropTimer = ofGetElapsedTimeMillis();
+		}
     }
-    
-    
+	
+	
     TV.drawIntoFbo(cam);
-    
+	
 }
 
 
@@ -239,7 +240,7 @@ void ofApp::draw(){
     
     
     
-    SA.drawInScene();
+    MM.drawInScene();
     
     cam.end();
     
@@ -257,7 +258,7 @@ void ofApp::draw(){
     
     gui.draw();
     
-    SA.drawOverScene();
+    MM.drawOverScene();
     
    
     TV.draw(ofRectangle(0,0,1920/2, 1080/2));

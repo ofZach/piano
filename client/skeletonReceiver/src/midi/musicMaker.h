@@ -9,6 +9,7 @@
 #include "ofxMidi.h"
 #include "midiTrigger.h"
 #include "kinectButton.h"
+#include "tvScreen.h"
 
 // I analyze and do midi
 
@@ -66,6 +67,8 @@ public:
     map<string, bool> triggers;
 	vector<triggerRef> midiTriggers;
 	vector<triggerRef> drumMidiTriggers;
+	
+	tvScreen * TV;
     
     vector<kinectButton> buttons;
     
