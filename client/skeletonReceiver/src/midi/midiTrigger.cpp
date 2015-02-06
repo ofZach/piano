@@ -44,6 +44,10 @@ void AllNotesOff(ofxMidiOut& midiOut) {
 	}
 }
 
+int OtherSide(int side) {
+	return (side == ::left ? ::right : ::left);
+}
+
 #pragma mark - Grabbed Note
 
 grabbedNote::grabbedNote() : _triggered(false), _currentNote(0) {
@@ -185,4 +189,46 @@ void legCC::update(kinectBody &body) {
 	float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
 	_accumulator = ofLerp(_accumulator, amt, 0.07);
 	getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
+}
+
+#pragma mark - Stomp
+
+stompNote::stompNote() {
+	reset();
+}
+
+void stompNote::update(kinectBody &body) {
+	kinectSkeleton& sk = body.getLastSkeleton();
+	
+	float primeThresh = 0.99;
+	float triggerThresh = 0.7;
+	int framesToIgnore = 30; // number of frames to wait for a negative acceleration
+	
+	size_t idx = SKELETOR::Instance()->getPointIndex(::foot, getSettings().side);
+	size_t opp = SKELETOR::Instance()->getPointIndex(::foot, OtherSide(getSettings().side));
+	
+	float footDiff = ofMap(sk.pts[idx].y - sk.pts[opp].y, 0, sk.skeletonHeight / 8., 0, 1, true);
+	
+	if(!_primed && footDiff > primeThresh) {
+		_primed = true;
+	} else if(_primed) {
+		
+		float acc = body.accel[idx].y;
+		
+		if(footDiff < triggerThresh && acc < -0.1) {
+			int velocity = ofMap(acc, -0.1, -4, 80, 100);
+			getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
+			reset();
+		} else {
+			_ignoredFrameCount++;
+			if(_ignoredFrameCount == framesToIgnore) {
+				reset();
+			}
+		}
+	}
+}
+
+void stompNote::reset() {
+	_primed = false;
+	_ignoredFrameCount = 0;
 }

@@ -93,12 +93,28 @@ void musicMaker::setupMidiTriggers() {
 	
 	triggerRef legs = triggerRef(new legCC);
 	
+	triggerRef stompLeft = triggerRef(new stompNote);
+	midiTrigger::Settings stompLeftSettings;
+	stompLeftSettings.side = ::left;
+	stompLeftSettings.notes.push_back(48);
+	stompLeftSettings.channel = 10;
+	stompLeft->setSettings(stompLeftSettings);
+	
+	triggerRef stompRight = triggerRef(new stompNote);
+	midiTrigger::Settings stompRightSettings;
+	stompRightSettings.side = ::right;
+	stompRightSettings.notes.push_back(53);
+	stompRightSettings.channel = 10;
+	stompRight->setSettings(stompRightSettings);
+	
 #undef END
 	
 	midiTriggers.push_back(strings);
 	midiTriggers.push_back(piano);
 	midiTriggers.push_back(accord);
 	midiTriggers.push_back(legs);
+	midiTriggers.push_back(stompLeft);
+	midiTriggers.push_back(stompRight);
 	
 	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
 	midiOut->openVirtualPort("OF Kinect");

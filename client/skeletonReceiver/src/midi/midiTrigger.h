@@ -19,6 +19,7 @@ public:
 	};
 	
 	virtual void update(kinectBody& body) { };
+	virtual void reset() { };
 	virtual void setMidiOut(shared_ptr<ofxMidiOut> midiOut);
 	void setSettings(Settings settings) { _settings = settings; }
 	
@@ -76,10 +77,16 @@ private:
 	double _accumulator;
 };
 
-class pointCC : public midiTrigger {
+class stompNote : public midiTrigger {
 	
+public:
+	stompNote();
+	virtual void update(kinectBody& body);
+	virtual void reset();
 	
-	
+private:
+	bool _primed;
+	int _ignoredFrameCount;
 };
 
 typedef shared_ptr<midiTrigger> triggerRef;
