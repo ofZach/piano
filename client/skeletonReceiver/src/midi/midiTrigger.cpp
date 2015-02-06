@@ -222,6 +222,9 @@ void stompNote::update(kinectBody &body) {
 	
 	if(!_primed && footDiff > primeThresh) {
 		_primed = true;
+		if(getSettings().notes.size() > 1) {
+			getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes[1]);
+		}
 	} else if(_primed) {
 		
 		float acc = body.accel[idx].y;
@@ -264,6 +267,9 @@ void dropDatNote::update(kinectBody &body) {
 	
 	if(!_primed && abovePrime) {
 		_primed = true;
+		if(getSettings().notes.size() > 1) {
+			getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes[1]);
+		}
 	} else if(_primed && belowTrigger) {
 		getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front());
 		_primed = false;

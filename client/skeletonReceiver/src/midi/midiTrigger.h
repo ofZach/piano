@@ -12,7 +12,7 @@ public:
 	midiTrigger();
 	
 	struct Settings {
-		Settings() : notes(0), channel(1), side(::left) { }
+		Settings(int channel = 1, int side = ::left) : notes(0), channel(channel), side(side) { }
 		vector<int> notes;
 		int channel;
 		int side;
