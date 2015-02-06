@@ -18,6 +18,7 @@ public:
     void triggerNote(int note, int velocity);
     void triggerPunch(int note, int velocity);
     void triggerKick(int note, int velocity);
+    void sendControl(int control, int value);
 private:
     shared_ptr<ofxMidiOut> midiOut;
     map<int, unsigned long long> lastSend;

@@ -26,3 +26,7 @@ void skeletonMidiController::triggerKick(int note, int velocity){
     ofLog(OF_LOG_NOTICE)<<"triggerKick "<<" "<<note<<" "<<velocity<<endl;
     midiOut->sendNoteOn(9, note, velocity);
 }
+
+void skeletonMidiController::sendControl(int control, int value){
+    midiOut->sendControlChange(9, control, value);
+}
