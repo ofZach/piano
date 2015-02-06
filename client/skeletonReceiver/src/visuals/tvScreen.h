@@ -27,7 +27,8 @@ class tvScreen {
 public:
     
     ofVboMesh sphere;
-    ofxSyphonServer server;
+    ofxSyphonServer skeletonServer;
+    ofxSyphonServer gridServer;
     
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
@@ -59,10 +60,16 @@ public:
     bool bDrawHairyMan;
     
     void setup () {
-        tvScreenView.allocate(1920, 1080, GL_RGBA, 4);
-        tvScreenView.begin();
+        tvSkeletonView.allocate(1920, 1080, GL_RGBA, 4);
+        tvSkeletonView.begin();
         ofClear(0,0,0,255);
-        tvScreenView.end();
+        tvSkeletonView.end();
+        
+        tvGridView.allocate(1920, 1080, GL_RGBA, 4);
+        tvGridView.begin();
+        ofClear(0,0,0,255);
+        tvGridView.end();
+        
         sphere = ofSpherePrimitive(5, 10).getMesh();
         
         
@@ -78,7 +85,8 @@ public:
         energy = 0.0;
         
         bDrawHairyMan = false;
-        server.setName("Piano - TV - Screen");
+        skeletonServer.setName("Piano - TV - Skeleton");
+        gridServer.setName("Piano - TV - Grid");
         twist = 0;
     }
     
@@ -297,12 +305,11 @@ public:
     
     void drawIntoFbo( ofCamera & mainViewCam){
         
-        ofEnableAlphaBlending();
-        ofEnableDepthTest();
-        tvScreenView.begin();
+
+        tvGridView.begin();
         ofClear(0,0,0,255);
         //ofClear(0, 0, 0);
-        mainViewCam.begin(ofRectangle(ofVec2f(0, 0), tvScreenView.getWidth(), tvScreenView.getHeight()));
+        mainViewCam.begin(ofRectangle(ofVec2f(0, 0), tvGridView.getWidth(), tvGridView.getHeight()));
         ofSetColor(255,255,255,127);
         ofSetLineWidth(3);
         ofPushMatrix();
@@ -310,7 +317,14 @@ public:
         ofRotate(90,0,0,1);
         ofDrawGridPlane(1000);
         ofPopMatrix();
+        mainViewCam.end();
+        ofClearAlpha();
+        tvGridView.end();
         
+        tvSkeletonView.begin();
+        ofClear(0,0,0,255);
+        //ofClear(0, 0, 0);
+        mainViewCam.begin(ofRectangle(ofVec2f(0, 0), tvSkeletonView.getWidth(), tvSkeletonView.getHeight()));
         
         energy*= 0.9;
         if (ofGetMousePressed()){
@@ -333,14 +347,12 @@ public:
             
             //KB->draw();
         }
-        
         mainViewCam.end();
         ofClearAlpha();
-        tvScreenView.end();
-        ofDisableDepthTest();
-        ofDisableAlphaBlending();
+        tvSkeletonView.end();
         
-        server.publishTexture(&tvScreenView.getTextureReference());
+        skeletonServer.publishTexture(&tvSkeletonView.getTextureReference());
+        gridServer.publishTexture(&tvGridView.getTextureReference());
     }
     
     void draw( ofRectangle drawRect){
@@ -349,7 +361,8 @@ public:
         //        tvScreenView.draw(drawRect);
     }
     
-    ofFbo tvScreenView;
+    ofFbo tvSkeletonView;
+    ofFbo tvGridView;
     kinectBody * KB;
     
     

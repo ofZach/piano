@@ -65,6 +65,18 @@ void Floor::setup(){
     pts.push_back(ofPoint(3 * w, 0 * w));
     
     
+    buttonPoints.push_back(ofPoint(2 * w, 0 * w));
+    buttonPoints.push_back(ofPoint(3 * w, 0 * w));
+    buttonPoints.push_back(ofPoint(2 * w, 1 * w));
+    buttonPoints.push_back(ofPoint(3 * w, 1 * w));
+    
+    buttonConnections.push_back(connection(0, 1));
+    buttonConnections.push_back(connection(1, 2));
+    buttonConnections.push_back(connection(2, 3));
+    buttonConnections.push_back(connection(0, 3));
+    
+    
+    
     pts.push_back(ofPoint(0 * w, 1 * w));
     pts.push_back(ofPoint(1 * w, 1 * w));
     pts.push_back(ofPoint(2 * w, 1 * w));
@@ -137,6 +149,18 @@ void Floor::setup(){
         }
     }
     
+    
+    for (int i = 0; i < buttonPoints.size(); i++){
+        for (int j = 0; j < buttonConnections.size(); j++){
+            
+            if (buttonConnections[j].a == i ||
+                buttonConnections[j].b == i ){
+                buttonPtToConnections[i].push_back(  j );
+            }
+        }
+    }
+    
+    
     ofAddListener(ofEvents().update, this, &Floor::update);
     ofAddListener(ofEvents().draw, this, &Floor::draw);
     ofAddListener(ofEvents().keyPressed, this, &Floor::keyPressed);
@@ -149,6 +173,14 @@ void Floor::update(ofEventArgs &args){
         
         movers[i].speed = speed*1.00001;
         movers[i].lineDistance = movers[i].lineDistance*0.99999;
+        
+    }
+    
+    
+    for (int i = 0; i < buttonMovers.size(); i++){
+        
+        buttonMovers[i].speed = speed*1.00001;
+        buttonMovers[i].lineDistance = buttonMovers[i].lineDistance*0.99999;
         
     }
     
@@ -185,12 +217,18 @@ void Floor::update(ofEventArgs &args){
     pts[ct++].set(ofPoint(2 * w, 3 * w));
     pts[ct++].set(ofPoint(3 * w, 3 * w));
     
+    
+    ct = 0;
+    buttonPoints[ct++].set(2 * w, 0 * w);
+    buttonPoints[ct++].set(3 * w, 0 * w);
+    buttonPoints[ct++].set(2 * w, 1 * w);
+    buttonPoints[ct++].set(3 * w, 1 * w);
+    
+    
     for (int i = 0; i < pts.size(); i++){
         pts[i] -= (ofPoint(1.5, 1.5));
         pts[i] /= 3.0;
         float height = ofMap(pts[i].y, -0.5, 0.5, 0,1);
-        
-        //cout << height << endl;
     }
     
     
@@ -200,6 +238,19 @@ void Floor::update(ofEventArgs &args){
         
     }
     
+    
+    for (int i = 0; i < buttonPoints.size(); i++){
+        buttonPoints[i] -= (ofPoint(1.5, 1.5));
+        buttonPoints[i] /= 3.0;
+        float height = ofMap(buttonPoints[i].y, -0.5, 0.5, 0,1);
+    }
+    
+    for(int i = 0; i < buttonPoints.size(); i++){
+        buttonPoints[i] *= scale*100;
+        buttonPoints[i] += ofPoint(horizOffset,verticalOffset);
+    }
+    
+    
     gui.update();
     
     
@@ -207,6 +258,11 @@ void Floor::update(ofEventArgs &args){
     for (int i = 0; i < movers.size(); i++){
         movers[i].update();
     }
+    
+    for (int i = 0; i < buttonMovers.size(); i++){
+        buttonMovers[i].update();
+    }
+    
     
     for (int i = 0; i < movers.size(); i++){
         if (movers[i].pct > 0.99){
@@ -243,6 +299,51 @@ void Floor::update(ofEventArgs &args){
     }
     
     
+    for (int i = 0; i < buttonMovers.size(); i++){
+        if (buttonMovers[i].pct > 0.99){
+            connection * weJustCameFrom = buttonMovers[i].c;
+            int idWeJustGotTo = buttonMovers[i].bFlip ? buttonMovers[i].c->a : buttonMovers[i].c->b;
+            
+            vector < int > goodConnections;
+            
+            for (int j = 0; j < buttonConnections.size(); j++){
+                if (buttonConnections[j].a == idWeJustGotTo ||
+                    buttonConnections[j].b == idWeJustGotTo ){
+                    
+                    if (&buttonConnections[j] != weJustCameFrom){
+                        goodConnections.push_back(j);
+                    }
+                }
+            }
+            
+            bool bFlip = false;
+            
+            if (goodConnections.size() > 0){
+                int which = (int)ofRandom(0,100000) % goodConnections.size();
+                if (buttonConnections[goodConnections[which]].a != idWeJustGotTo){
+                    bFlip = true;
+                } else {
+                    bFlip = false;
+                }
+                buttonMovers[i].setConnection(&(buttonConnections[goodConnections[which]]), bFlip);
+            }
+        }
+        if(buttonMovers[i].bDead){
+            buttonMovers.erase(buttonMovers.begin()+i);
+            
+        }
+    }
+    if(buttonMovers.size() < 2){
+        int which = (int)ofRandom(0,10000) % buttonConnections.size();
+        connectionMover C;
+        C.pts = &buttonPoints;
+        C.setConnection(&(buttonConnections[which]), ofRandom(0,1) > 0.5 ? true : false);
+        buttonMovers.push_back(C);
+        buttonMovers.back().lineDistance = ofRandom(30, 55);
+        buttonMovers.back().speed = 0.05;
+    }
+    
+    
     for (int i = 0; i < triangles.size(); i++){
         triangles[i].update();
     }
@@ -269,8 +370,18 @@ void Floor::update(ofEventArgs &args){
         ofSetColor(255, 255, 255);
         movers[i].draw();
     }
-    
+//    
+    for (int i = 0; i < buttonMovers.size(); i++){
+        ofSetColor(255, 0, 255);
+        buttonMovers[i].draw();
+    }
+////
+    for (int i = 0; i < buttonPoints.size(); i++){
 
+        ofCircle(buttonPoints[i], 3);
+    }
+    
+    
     
     ofPopMatrix();
     ofPopStyle();
@@ -299,7 +410,7 @@ void Floor::addLineTrace(){
     movers.back().lineDistance = lineDistance;
     movers.back().speed = speed;
     
-
+    
 }
 
 void Floor::triggerTriangles(){
