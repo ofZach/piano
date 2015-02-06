@@ -18,7 +18,6 @@ void ofApp::setup(){
     smallFont.loadFont("selena.otf", 16); //http://openfontlibrary.org/en/font/selena
     largeFont.loadFont("selena.otf", 48);
     
-    tv.setup();
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
@@ -29,7 +28,7 @@ void ofApp::setup(){
     KS.setup();
     SA.setup();
     TV.setup();
-    
+
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
     skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
@@ -113,6 +112,8 @@ void ofApp::setup(){
     
     floorProjections.setup();
     bodyDropTimer = ofGetElapsedTimeMillis();
+    
+    tv.setup();
 }
 
 
@@ -247,9 +248,15 @@ void ofApp::draw(){
         bodyMap[iter->getBodyId()].drawHistory();
     }
     
+    
+        tv.draw();
+    
     gui.draw();
     
+    
     SA.drawOverScene();
+    
+
     
    
 //    TV.draw(ofRectangle(0,0,1920/2, 1080/2));

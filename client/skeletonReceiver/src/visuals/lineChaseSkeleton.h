@@ -25,7 +25,7 @@ public:
     
     void setup();
     void update(kinectBody * kinectBody, ofCamera mainViewCam);
-    void draw(ofEventArgs &args);
+    void draw();
     void keyPressed(ofKeyEventArgs &key);
     
     void addLineTrace();

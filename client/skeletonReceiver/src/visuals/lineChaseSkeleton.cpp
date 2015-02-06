@@ -46,15 +46,13 @@ void lineChaseSkeleton::setup(){
     tv.end();
     
     
-
-    for (int i = 0; i < 27; i++) {
-        connections.push_back(connection(i, (i+1)%27));
-    }
+    
+    
     
     
     
     //    ofAddListener(ofEvents().update, this, &lineChaseSkeleton::update);
-    ofAddListener(ofEvents().draw, this, &lineChaseSkeleton::draw);
+    //ofAddListener(ofEvents().draw, this, &lineChaseSkeleton::draw);
     ofAddListener(ofEvents().keyPressed, this, &lineChaseSkeleton::keyPressed);
 }
 
@@ -65,6 +63,11 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
         if(find(SKELETOR::Instance()->skipList.begin(), SKELETOR::Instance()->skipList.end(),SKELETOR::Instance()->indexToName[i]) == SKELETOR::Instance()->skipList.end()){
             pts.push_back(KB->getLastSkeleton().pts[i]);
         }
+    }
+    connections.clear();
+    for (int i = 0; i < SKELETOR::Instance()->connections.size(); i++) {
+        connections.push_back(connection(SKELETOR::Instance()->connections[i].a,SKELETOR::Instance()->connections[i].b));
+        connections.push_back(connection(SKELETOR::Instance()->connections[i].b,SKELETOR::Instance()->connections[i].a));
     }
     
     for (int i = 0; i < pts.size(); i++){
@@ -78,22 +81,22 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
     }
     
     
-    
+    //
     for (int i = 0; i < movers.size(); i++){
-        movers[i].speed = speed*1.00001;
-        movers[i].lineDistance = movers[i].lineDistance*0.99999;
+        movers[i].speed = movers[i].speed*1.01;
+        movers[i].lineDistance = movers[i].lineDistance*0.999;
     }
     
-    //int which = (int)ofRandom(0,10000) % SKELETOR::Instance()->connections.size();
+    int which = (int)ofRandom(0,10000) % SKELETOR::Instance()->connections.size();
     
     
     if(movers.size() < 20){
-        int which = (int)ofRandom(0,10000) % SKELETOR::Instance()->connections.size();
+        
         connectionMover C;
         C.pts = &pts;
         C.setConnection(new connection(SKELETOR::Instance()->connections[which].a, SKELETOR::Instance()->connections[which].b), ofRandom(0,1) > 0.5 ? true : false);
         movers.push_back(C);
-        movers.back().lineDistance = ofRandom(10, 25);
+        movers.back().lineDistance = ofRandom(10, 50);
         movers.back().speed = 0.05;
     }
     
@@ -148,9 +151,9 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
             
             vector < int > goodConnections;
             
-            for (int j = 0; j < connections.size(); j++){
-                if (connections[j].a == idWeJustGotTo ||
-                    connections[j].b == idWeJustGotTo ){
+            for (int j = 0; j < SKELETOR::Instance()->connections.size(); j++){
+                if (SKELETOR::Instance()->connections[j].a == idWeJustGotTo ||
+                    SKELETOR::Instance()->connections[j].b == idWeJustGotTo ){
                     
                     if (&connections[j] != weJustCameFrom){
                         goodConnections.push_back(j);
@@ -162,7 +165,7 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
             
             if (goodConnections.size() > 0){
                 int which = (int)ofRandom(0,100000) % goodConnections.size();
-                if (connections[goodConnections[which]].a != idWeJustGotTo){
+                if (SKELETOR::Instance()->connections[goodConnections[which]].a != idWeJustGotTo){
                     bFlip = true;
                 } else {
                     bFlip = false;
@@ -170,9 +173,9 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
                 movers[i].setConnection(&(connections[goodConnections[which]]), bFlip);
             }
         }
-        if(movers[i].bDead){
-            movers.erase(movers.begin()+i);
-        }
+                if(movers[i].bDead){
+                    movers.erase(movers.begin()+i);
+                }
     }
     
     
@@ -186,10 +189,11 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
     mainViewCam.begin(ofRectangle(0, 0, tv.getWidth(), tv.getHeight()));
     ofPushStyle();
     ofSetLineWidth(lightWeight);
-    ofClear(0, 0, 0, 0);
+    ofClear(0, 0, 0, 255);
     ofPushMatrix();
     
     if (bShowDots){
+        ofSetColor(255, 255, 255, 100);
         for (int i = 0; i < pts.size(); i++){
             ofCircle(pts[i], 3);
         }
@@ -200,7 +204,7 @@ void lineChaseSkeleton::update( kinectBody * kinectBody, ofCamera mainViewCam){
     //    }
     ofPopStyle();
     for (int i = 0; i < movers.size(); i++){
-        ofSetColor(255, 255, 255);
+        ofSetColor(255, 255, 255, 255);
         movers[i].draw();
     }
     
@@ -243,8 +247,11 @@ void lineChaseSkeleton::triggerTriangles(){
     }
 }
 
-void lineChaseSkeleton::draw(ofEventArgs &args){
+void lineChaseSkeleton::draw(){
+    tv.draw(0, 0);
     gui.draw();
+
+    
 }
 
 void lineChaseSkeleton::keyPressed(ofKeyEventArgs &key){
