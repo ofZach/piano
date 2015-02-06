@@ -8,16 +8,17 @@
 #include "kinectBody.h"
 #include "kinectSkeletonLayout.h"
 #include "prng_engine.hh"
+#include "ofxSyphonServer.h"
 #include <algorithm>    // std::shuffle
 
 typedef struct {
-	float lifetime;
-	float noiseSeed;
+    float lifetime;
+    float noiseSeed;
 }
 pulseData;
 
 bool removeIfZero(pulseData p) {
-	return p.lifetime < 0.01;
+    return p.lifetime < 0.01;
 }
 
 class tvScreen {
@@ -26,14 +27,15 @@ class tvScreen {
 public:
     
     ofVboMesh sphere;
+    ofxSyphonServer server;
     
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
     
     vector < pulseData > pulses;    // go from 1 to 0
-	
-	float twist;
+    
+    float twist;
     
     //--------------------------------------------------
     float nonOfRandom(float x, float y) {
@@ -46,12 +48,14 @@ public:
     
     
     void addImpluse(){
-		pulses.push_back((pulseData){
-			.lifetime = 1.0 + 0.2,
-			.noiseSeed = ofGetElapsedTimef()
-		});
+        if(pulses.size() < 10){
+            pulses.push_back((pulseData){
+                .lifetime = 1.0 + 0.2,
+                .noiseSeed = ofGetElapsedTimef()
+            });
+            
+        }
     }
-    
     bool bDrawHairyMan;
     
     void setup () {
@@ -74,17 +78,18 @@ public:
         energy = 0.0;
         
         bDrawHairyMan = false;
-		twist = 0;
+        server.setName("Piano - TV - Screen");
+        twist = 0;
     }
     
     void update( kinectBody * kinectBody){
         KB = kinectBody;
-		
+        
         for (int i = 0; i < pulses.size(); i++){
             pulses[i].lifetime -= 0.01;
         }
-		
-        ofRemove(pulses, removeIfZero);   
+        
+        ofRemove(pulses, removeIfZero);
     }
     
     float energy;
@@ -97,14 +102,14 @@ public:
         transform.makeIdentityMatrix();
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
-		
-		// calculate twist value from spine
-		kinectSkeleton& sk = BODY.getLastSkeleton();
-		ofVec2f spineBase = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineBase]];
-		ofVec2f spineTop = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineShoulder]];
-		float currentTwist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
-		twist = ofLerp(twist, currentTwist, 0.1);
-		
+        
+        // calculate twist value from spine
+        kinectSkeleton& sk = BODY.getLastSkeleton();
+        ofVec2f spineBase = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineBase]];
+        ofVec2f spineTop = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineShoulder]];
+        float currentTwist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
+        twist = ofLerp(twist, currentTwist, 0.1);
+        
         for (int i = BODY.history.size()-1; i >= 0; i--){
             
             if (i < BODY.history.size()/3) continue;
@@ -122,22 +127,22 @@ public:
             
             strength = ofClamp(strength, 0, 1);
             
-           // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
+            // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
             
             transform.glTranslate(ofPoint(0,0,5));
-			transform.glRotateRad(twist * 0.05, 0, 0, 1);
-			
+            transform.glRotateRad(twist * 0.05, 0, 0, 1);
+            
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
-			
+            
             if (BODY.history.size() == 50){
-            int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
-				if (i % skipRate == 0) ;
-				else {
-					continue;
-				}
-			}
-			
+                int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
+                if (i % skipRate == 0) ;
+                else {
+                    continue;
+                }
+            }
+            
             kinectSkeleton & SKtemp = BODY.history[i];
             
             ofPoint avg;
@@ -152,35 +157,35 @@ public:
                 
                 ofPoint a(SKtemp.pts[bone.a]);
                 ofPoint b(SKtemp.pts[bone.b]);
-				
+                
                 float scale = energy;
                 
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
                 dist -= 10;
-				
-				if (dist < 0) {
-					dist = 0;
-				}
-				
+                
+                if (dist < 0) {
+                    dist = 0;
+                }
+                
                 ofPoint normal = (a-b).getNormalized();
                 
                 ofPoint aNew = midPt + (dist * 0.5) * normal - avg;
                 ofPoint bNew = midPt - (dist * 0.5) * normal - avg;
-				
+                
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
                 ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
-				ofLine (aNew*transform.getInverse()*scaleMat.getInverse(), bNew*transform.getInverse()*scaleMat.getInverse());
+                ofLine (aNew*transform.getInverse()*scaleMat.getInverse(), bNew*transform.getInverse()*scaleMat.getInverse());
             }
             ofPopMatrix();
-        
+            
         }
         
         kinectSkeleton & SK = BODY.getLastSkeleton();
         
         
         for (auto & bone : connections){
-			
+            
             ofPoint a( SK.pts[bone.a]);
             ofPoint b( SK.pts[bone.b]);
             
@@ -287,11 +292,13 @@ public:
             }
             
         }
-
+        
     }
     
     void drawIntoFbo( ofCamera & mainViewCam){
         
+        ofEnableAlphaBlending();
+        ofEnableDepthTest();
         tvScreenView.begin();
         ofClear(0,0,0,255);
         //ofClear(0, 0, 0);
@@ -330,11 +337,16 @@ public:
         mainViewCam.end();
         ofClearAlpha();
         tvScreenView.end();
+        ofDisableDepthTest();
+        ofDisableAlphaBlending();
+        
+        server.publishTexture(&tvScreenView.getTextureReference());
     }
     
     void draw( ofRectangle drawRect){
         ofSetColor(255,255,255);
-        tvScreenView.draw(drawRect);
+        //
+        //        tvScreenView.draw(drawRect);
     }
     
     ofFbo tvScreenView;

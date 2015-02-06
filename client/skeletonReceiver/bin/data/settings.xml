@@ -29,6 +29,24 @@
     <rotationZ>
         <val_0>0</val_0>
     </rotationZ>
+    <buttonX>
+        <val_0>0</val_0>
+    </buttonX>
+    <buttonY>
+        <val_0>0</val_0>
+    </buttonY>
+    <buttonZ>
+        <val_0>0</val_0>
+    </buttonZ>
+    <buttonApproach>
+        <val_0>1.64615</val_0>
+    </buttonApproach>
+    <buttonTriggerScale>
+        <val_0>0.450769</val_0>
+    </buttonTriggerScale>
+    <buttonRadius>
+        <val_0>21.9192</val_0>
+    </buttonRadius>
 </skeleton_transform>
 <dataPlayer>
     <use_udp_player>

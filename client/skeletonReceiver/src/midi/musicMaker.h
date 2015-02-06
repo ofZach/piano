@@ -71,5 +71,5 @@ public:
 	tvScreen * TV;
     
     vector<kinectButton> buttons;
-    
+        
 };

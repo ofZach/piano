@@ -41,6 +41,13 @@ void ofApp::setup(){
     skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
+        
+    skeletonTransform.add(buttonX.set("buttonX", 0, -2000,2000));
+    skeletonTransform.add(buttonY.set("buttonY", 0, -2000,2000));
+    skeletonTransform.add(buttonZ.set("buttonZ", 0, -2000,2000));
+    skeletonTransform.add(buttonApproach.set("buttonApproach", 0, 1.0,2.0));
+    skeletonTransform.add(buttonTriggerScale.set("buttonTriggerScale", 0, 0.1,2.0));
+    skeletonTransform.add(buttonRadius.set("buttonRadius", 10, 1,50));
     
     dataPlayer.setName("dataPlayer");
     dataPlayer.add(bUseUdpPlayer.set("use udp player", false));
@@ -146,6 +153,12 @@ void ofApp::update(){
         udpDuration.set(UDPR.pct);
     }
     
+    switchMode.setRadius(buttonRadius);
+    switchMode.setApproachScale(buttonApproach);
+    switchMode.setTriggerScale(buttonTriggerScale);
+    switchMode.setPosition(buttonX, buttonY, buttonZ);
+    
+    
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -185,6 +198,20 @@ void ofApp::update(){
             MM.analyze(body);
             TV.update(&body);
             
+            //switch mode
+            int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+            int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+            vector<std::pair<ofPoint, float> > feet;
+            feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
+            feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
+            switchMode.update(feet);
+            if(switchMode.isTriggered() && ! changeTriggered){
+                changeTriggered = true;
+                MM.outputMode.set((MM.outputMode+1)%2);
+                
+            }else if(!switchMode.isTriggered()){
+                changeTriggered = false;
+            }
         }
     }else {
         
@@ -250,6 +277,8 @@ void ofApp::draw(){
     
     
     MM.drawInScene();
+    
+    switchMode.draw();
     
     cam.end();
     
