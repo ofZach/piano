@@ -32,6 +32,8 @@ public:
     sitmo::prng_engine eng; /// don't laugh.
     
     vector < pulseData > pulses;    // go from 1 to 0
+	
+	float twist;
     
     //--------------------------------------------------
     float nonOfRandom(float x, float y) {
@@ -72,7 +74,7 @@ public:
         energy = 0.0;
         
         bDrawHairyMan = false;
-        
+		twist = 0;
     }
     
     void update( kinectBody * kinectBody){
@@ -96,10 +98,12 @@ public:
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
 		
+		// calculate twist value from spine
 		kinectSkeleton& sk = BODY.getLastSkeleton();
 		ofVec2f spineBase = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineBase]];
 		ofVec2f spineTop = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineShoulder]];
-		float twist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
+		float currentTwist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
+		twist = ofLerp(twist, currentTwist, 0.1);
 		
         for (int i = BODY.history.size()-1; i >= 0; i--){
             
@@ -121,7 +125,7 @@ public:
            // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
             
             transform.glTranslate(ofPoint(0,0,5));
-			transform.glRotateRad(twist * 0.03, 0, 0, 1);
+			transform.glRotateRad(twist * 0.05, 0, 0, 1);
 			
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
@@ -148,9 +152,6 @@ public:
                 
                 ofPoint a(SKtemp.pts[bone.a]);
                 ofPoint b(SKtemp.pts[bone.b]);
-				
-//				ofCircle(a*transform*scaleMat.getInverse(), 10);
-//				ofCircle(b, 10);
 				
                 float scale = energy;
                 
