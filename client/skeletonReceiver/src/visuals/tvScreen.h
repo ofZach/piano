@@ -71,7 +71,7 @@ public:
         
         
         for (int i = 0; i < pulses.size(); i++){
-            pulses[i] *= 0.985;
+            pulses[i] -= 0.01;
         }
         ofRemove(pulses, removeIfZero);
         
@@ -94,7 +94,7 @@ public:
             
             if (i < BODY.history.size()/3) continue;
             
-            float pctMap = ofMap(i, 0, BODY.history.size(), 0, 1);
+            float pctMap = ofMap(i, BODY.history.size()/3, BODY.history.size(), 0, 1);
             float strength = 0;
             for (int j = 0; j < pulses.size(); j++){
                 float diff = pulses[j] - pctMap;
@@ -107,14 +107,15 @@ public:
             
             strength = ofClamp(strength, 0, 1);
             
+           // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
             
-            transform.glTranslate(ofPoint(0,0,15.5));
+            transform.glTranslate(ofPoint(0,0,5));
             //transform.glRotate(1.1 * sin(pctMap*8), 1, 0,1);
-            float scale = ofMap(pctMap, 0, 1, 1.02, 1.1);
+            float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
             
             if (BODY.history.size() == 50){
-            int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 1, 6);
+            int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
             if (i % skipRate == 0) ;
             else{
                 
@@ -142,14 +143,14 @@ public:
                 
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
-                dist -= 20;
+                dist -= 15;
                 if (dist < 0) dist = 0;
                 ofPoint normal = (a-b).getNormalized();
                 
                 ofPoint aNew = midPt + (dist * 0.5) * normal - avg;
                 ofPoint bNew = midPt - (dist * 0.5) * normal - avg;
                 
-                ofSetColor(255,255,255,200 * strength * (pctMap));
+                ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
                 ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
                 
                 
