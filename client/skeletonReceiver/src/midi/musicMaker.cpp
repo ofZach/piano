@@ -99,19 +99,19 @@ void musicMaker::setupMidiTriggers() {
 	stompRight->setSettings(stompRightSettings);
 	
 	triggerRef drop = triggerRef(new dropDatNote);
-	midiTrigger::Settings dropSettings(9);
+	midiTrigger::Settings dropSettings(3);
 	dropSettings.notes.push_back(57);
 	dropSettings.notes.push_back(60);
 	drop->setSettings(dropSettings);
 	
 	triggerRef drumStompLeft = triggerRef(new stompNote);
-	midiTrigger::Settings drumpStompLeftSettings(9, ::left);
+	midiTrigger::Settings drumpStompLeftSettings(3, ::left);
 	int drumpStompLeftNotes[] = {66, 58};
 	drumpStompLeftSettings.notes.assign(drumpStompLeftNotes, END(drumpStompLeftNotes));
 	drumStompLeft->setSettings(drumpStompLeftSettings);
 	
 	triggerRef drumStompRight = triggerRef(new stompNote);
-	midiTrigger::Settings drumStompRightSettings(9, ::right);
+	midiTrigger::Settings drumStompRightSettings(3, ::right);
 	int drumStompRightNotes[] = {67, 59};
 	drumStompRightSettings.notes.assign(drumStompRightNotes, END(drumStompRightNotes));
 	drumStompRight->setSettings(drumStompRightSettings);

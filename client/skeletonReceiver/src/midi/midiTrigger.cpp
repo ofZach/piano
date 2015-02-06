@@ -211,9 +211,9 @@ void stompNote::reset() {
 void stompNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
-	float primeThresh = 0.9;
-	float triggerThresh = 0.7;
-	int framesToWait = 10; // number of frames to wait for a negative acceleration
+	float primeThresh = 0.7;
+	float triggerThresh = 0.5;
+	int framesToWait = 40; // number of frames to wait for a negative acceleration
 	
 	size_t idx = SKELETOR::Instance()->getPointIndex(::foot, getSettings().side);
 	size_t opp = SKELETOR::Instance()->getPointIndex(::foot, OtherSide(getSettings().side));
@@ -230,16 +230,9 @@ void stompNote::update(kinectBody &body) {
 		float acc = body.accel[idx].y;
 		
 		if(footDiff < triggerThresh) {
-			if(acc < -0.1) {
 				int velocity = ofMap(acc, -0.1, -4, 80, 100);
 				getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
 				reset();
-			} else {
-				_ignoredFrameCount++;
-				if(_ignoredFrameCount == framesToWait) {
-					reset();
-				}
-			}
 		}
 	}
 }
@@ -257,8 +250,8 @@ void dropDatNote::reset() {
 void dropDatNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
-	float primeThresh = 0.93;
-	float triggerThresh = 0.9;
+	float primeThresh = 0.95;
+	float triggerThresh = 0.91;
 	
 	float left = sk.legLeftExtendedPct;
 	float right = sk.legRightExtendedPct;
