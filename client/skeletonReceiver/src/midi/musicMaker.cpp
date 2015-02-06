@@ -406,7 +406,5 @@ void musicMaker::clearBodies(){
 }
 
 void musicMaker::outputmodeChanged(int &mode) {
-	for(auto& trig : midiTriggers) {
-		trig->reset();
-	}
+	clearBodies();
 }
