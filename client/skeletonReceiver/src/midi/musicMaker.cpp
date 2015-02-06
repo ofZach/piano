@@ -63,6 +63,7 @@ void musicMaker::setupGraphs() {
 	}
 }
 
+// TODO: less verbose
 void musicMaker::setupMidiTriggers() {
 	
 	int stringNotes[] = {53, 59, 60, 64, 67, 72};
@@ -109,9 +110,23 @@ void musicMaker::setupMidiTriggers() {
 	
 	triggerRef drop = triggerRef(new dropDatNote);
 	midiTrigger::Settings dropSettings;
-	dropSettings.notes.push_back(60);
-	dropSettings.channel = 11;
+	dropSettings.notes.push_back(66);
+	dropSettings.channel = 9;
 	drop->setSettings(dropSettings);
+	
+	triggerRef drumStompLeft = triggerRef(new stompNote);
+	midiTrigger::Settings drumpStompLeftSettings;
+	drumpStompLeftSettings.channel = 9;
+	drumpStompLeftSettings.side = ::left;
+	drumpStompLeftSettings.notes.push_back(66);
+	drumStompLeft->setSettings(drumpStompLeftSettings);
+	
+	triggerRef drumStompRight = triggerRef(new stompNote);
+	midiTrigger::Settings drumStompRightSettings;
+	drumStompRightSettings.channel = 9;
+	drumStompRightSettings.side = ::right;
+	drumStompRightSettings.notes.push_back(67);
+	drumStompRight->setSettings(drumStompRightSettings);
 	
 #undef END
 	
@@ -121,14 +136,20 @@ void musicMaker::setupMidiTriggers() {
 	midiTriggers.push_back(legs);
 	midiTriggers.push_back(stompLeft);
 	midiTriggers.push_back(stompRight);
-	midiTriggers.push_back(drop);
+	
+	drumMidiTriggers.push_back(drumStompLeft);
+	drumMidiTriggers.push_back(drumStompRight);
+	drumMidiTriggers.push_back(drop);
 	
 	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
 	midiOut->openVirtualPort("OF Kinect");
+	
 	for(auto& t : midiTriggers) {
 		t->setMidiOut(midiOut);
 	}
-	AllNotesOff(*midiOut);
+	for(auto& t : drumMidiTriggers) {
+		t->setMidiOut(midiOut);
+	}
 
 	skeletonMidi.setup(midiOut);
 }
@@ -353,6 +374,10 @@ void musicMaker::updateGraphs(kinectBody &body) {
 		graphs[2].setSmoothing(smoothDownHistory, smoothUpHistory);
 		graphs[3].setSmoothing(smoothDownHistory, smoothUpHistory);
 	}
+	
+	for(auto& trig : drumMidiTriggers) {
+		trig->update(body);
+	}
 }
 
 void musicMaker::clearBodies(){
@@ -371,7 +396,13 @@ void musicMaker::clearBodies(){
 		
     }
 	
-    AllNotesOff(*midiOut);
+	for(auto& t : midiTriggers) {
+		t->reset();
+	}
+	
+	for(auto& t : drumMidiTriggers) {
+		t->reset();
+	}
 }
 
 void musicMaker::outputmodeChanged(int &mode) {

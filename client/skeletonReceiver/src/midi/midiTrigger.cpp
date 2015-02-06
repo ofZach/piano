@@ -264,9 +264,8 @@ void dropDatNote::update(kinectBody &body) {
 	
 	if(!_primed && abovePrime) {
 		_primed = true;
-		getMidiOut()->sendNoteOn(11, 67);
 	} else if(_primed && belowTrigger) {
-		getMidiOut()->sendNoteOn(11, 60);
+		getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front());
 		_primed = false;
 	}
 }
