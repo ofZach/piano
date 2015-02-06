@@ -372,7 +372,7 @@ void Floor::update(ofEventArgs &args){
     }
 //    
     for (int i = 0; i < buttonMovers.size(); i++){
-        ofSetColor(255, 0, 255);
+        ofSetColor(255, 255, 255, ofMap(abs(sin(ofGetElapsedTimef()*0.1234)), 0, 1, 100, 255));
         buttonMovers[i].draw();
     }
 ////
