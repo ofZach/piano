@@ -9,9 +9,13 @@
 #include "prng_engine.hh"
 #include <algorithm>    // std::shuffle
 
+struct pulseData {
+	float lifetime;
+	float noiseSeed;
+};
 
-bool removeIfZero(float f){
-    return f < 0.01 ? true : false;
+bool removeIfZero(pulseData p) {
+	return p.lifetime < 0.01;
 }
 
 class tvScreen {
@@ -25,7 +29,7 @@ public:
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
     
-    vector < float > pulses;    // go from 1 to 0
+    vector < pulseData > pulses;    // go from 1 to 0
     
     //--------------------------------------------------
     float nonOfRandom(float x, float y) {
@@ -38,7 +42,10 @@ public:
     
     
     void addImpluse(){
-        pulses.push_back(1.0 + 0.2);
+		pulses.push_back((pulseData){
+			.lifetime = 1.0 + 0.2,
+			.noiseSeed = ofGetElapsedTimef()
+		});
     }
     
     bool bDrawHairyMan;
@@ -68,13 +75,12 @@ public:
     
     void update( kinectBody * kinectBody){
         KB = kinectBody;
-        
-        
+		
         for (int i = 0; i < pulses.size(); i++){
-            pulses[i] -= 0.01;
+            pulses[i].lifetime -= 0.01;
         }
-        ofRemove(pulses, removeIfZero);
-        
+		
+        ofRemove(pulses, removeIfZero);   
     }
     
     float energy;
@@ -87,6 +93,10 @@ public:
         transform.makeIdentityMatrix();
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
+		ofMatrix4x4 negScaleMat;
+		negScaleMat.makeIdentityMatrix();
+		ofMatrix4x4 rotation;
+		rotation.makeIdentityMatrix();
         
         //cout << BODY.history.size() << endl;
         
@@ -97,7 +107,7 @@ public:
             float pctMap = ofMap(i, BODY.history.size()/3, BODY.history.size(), 0, 1);
             float strength = 0;
             for (int j = 0; j < pulses.size(); j++){
-                float diff = pulses[j] - pctMap;
+                float diff = pulses[j].lifetime - pctMap;
                 
                 float pctToLook = ofMap(pctMap, 1, 0, 0.25, 0.01);
                 if (fabs(diff) < pctToLook){
@@ -113,6 +123,9 @@ public:
             //transform.glRotate(1.1 * sin(pctMap*8), 1, 0,1);
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
+			negScaleMat.glScale(-scale, -scale, -scale);
+			
+			rotation.glRotateRad(ofSignedNoise(ofGetElapsedTimef() * 0.2) * 0.1, -1, 0.1, 1);
             
             if (BODY.history.size() == 50){
             int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
@@ -140,7 +153,6 @@ public:
                 
                 float scale = energy;
                 
-                
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
                 dist -= 15;
@@ -151,10 +163,8 @@ public:
                 ofPoint bNew = midPt - (dist * 0.5) * normal - avg;
                 
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
-                ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
-                
-                
-                
+//                ofLine (aNew*rotation*transform*scaleMat, bNew*rotation*transform*scaleMat);
+				ofLine (aNew*rotation*transform*negScaleMat, bNew*rotation*transform*negScaleMat);
             }
             ofPopMatrix();
         
