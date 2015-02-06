@@ -67,6 +67,9 @@ public:
     ofParameter <float> cameraHeight;
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
+	ofParameter <bool> swayCamera;
+	ofParameter <float> swayAmount;
+	ofParameter <float> swayRate;
 	
 	
     ofFbo fooFbo;

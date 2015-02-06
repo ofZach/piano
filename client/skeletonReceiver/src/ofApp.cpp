@@ -51,7 +51,9 @@ void ofApp::setup(){
     cameraControl.add(cameraHeight.set("camera height", 800,0, 2000));
     cameraControl.add(cameraRadius.set("camera radius", 800,0, 2000));
     cameraControl.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
-    
+	cameraControl.add(swayCamera.set("sway camera", true));
+	cameraControl.add(swayAmount.set("sway amount", 0.5, 0, 1));
+	cameraControl.add(swayRate.set("sway rate", 0.5, 0, 1));
     
     debugView.setName("DebugView");
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
@@ -156,6 +158,13 @@ void ofApp::update(){
     
     //update the camera
     ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
+	
+	if(swayCamera) {
+		float t = ofGetElapsedTimef() * swayRate;
+		ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
+		position += swayDir * (swayAmount * 100.);
+	}
+	
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
     
