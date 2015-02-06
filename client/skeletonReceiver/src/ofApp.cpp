@@ -62,7 +62,9 @@ void ofApp::setup(){
     cameraControl.add(cameraHeight.set("camera height", 800,0, 2000));
     cameraControl.add(cameraRadius.set("camera radius", 800,0, 2000));
     cameraControl.add(cameraAngle.set("camera angle", 0,-TWO_PI*2, TWO_PI*2));
-    
+    cameraControl.add(swayCamera.set("sway camera", true));
+    cameraControl.add(swayAmount.set("sway amount", 0.5, 0, 1));
+    cameraControl.add(swayRate.set("sway rate", 0.5, 0, 1));
     
     debugView.setName("DebugView");
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
@@ -157,6 +159,7 @@ void ofApp::update(){
     }
     
     centerPoint.set(centerX, centerY, centerZ);
+    centerButton.setPosition(centerX, centerY, centerZ);
     
     switchMode.setRadius(buttonRadius);
     switchMode.setApproachScale(buttonApproach);
@@ -176,6 +179,13 @@ void ofApp::update(){
     
     //update the camera
     ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
+    
+    if(swayCamera) {
+        float t = ofGetElapsedTimef() * swayRate;
+        ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
+        position += swayDir * (swayAmount * 100.);
+    }
+    
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
     
@@ -187,14 +197,14 @@ void ofApp::update(){
     if (skeletons->size() >= 1){
         int index = 0;
         float dist = FLT_MAX;
-        if(skeletons->size() >= 2){
-            for(int i = 0; i < skeletons->size(); i++){
-                if(abs((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length()) < dist){
-                    index = i;
-                    dist = abs(skeletons->at(i).getSpineBase().getPoint().length());
-                }
+        
+        for(int i = 0; i < skeletons->size(); i++){
+            if(((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length()) < dist){
+                index = i;
+                dist = ((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length());
             }
         }
+        
         KS.setFromSkeleton(skeletons->at(index), mat);
         kinectBody & body = bodyMap[skeletons->at(0).getBodyId()];
         bool bNewFrame = body.addSkeleton(KS);
@@ -266,10 +276,10 @@ void ofApp::draw(){
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
     ofPopMatrix();
-    ofPushMatrix();
-    ofTranslate(centerPoint);
+    //    ofPushMatrix();
+    //    ofTranslate(centerPoint);
     ofDrawAxis(50);
-    ofPopMatrix();
+    //    ofPopMatrix();
     ofLine( ofPoint(0,0), ofPoint(800,0));
     
     
@@ -282,7 +292,7 @@ void ofApp::draw(){
         }
     }
     
-    
+    centerButton.draw();
     
     
     MM.drawInScene();

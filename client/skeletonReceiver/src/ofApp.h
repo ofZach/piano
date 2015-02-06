@@ -67,13 +67,16 @@ public:
     ofParameter <float> cameraHeight;
     ofParameter <float> cameraRadius;
     ofParameter <float> cameraAngle;
+	ofParameter <bool> swayCamera;
+	ofParameter <float> swayAmount;
+	ofParameter <float> swayRate;
 	
     ofParameter<float> centerX;
     ofParameter<float> centerY;
     ofParameter<float> centerZ;
     
     ofPoint centerPoint;
-    
+    kinectButton centerButton;
     kinectButton switchMode;
     ofParameter<float> buttonX;
     ofParameter<float> buttonY;

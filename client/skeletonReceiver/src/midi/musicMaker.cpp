@@ -65,67 +65,55 @@ void musicMaker::setupGraphs() {
 
 // TODO: less verbose
 void musicMaker::setupMidiTriggers() {
-	
-	int stringNotes[] = {53, 59, 60, 64, 67, 72};
-	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 72, 77, 79, 86};
-	int accordNotes[] = {36, 43};
  
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
 	
 	triggerRef strings = triggerRef(new gridNote);
-	midiTrigger::Settings stringSettings;
+	midiTrigger::Settings stringSettings(5, ::right);
+	int stringNotes[] = {53, 59, 60, 64, 67, 72};
 	stringSettings.notes.assign(stringNotes, END(stringNotes));
-	stringSettings.channel = 5;
-	stringSettings.side = ::right;
 	strings->setSettings(stringSettings);
 	
 	triggerRef piano = triggerRef(new gridNote);
-	midiTrigger::Settings pianoSettings;
+	midiTrigger::Settings pianoSettings(4, ::left);
+	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 74, 77, 79, 84, 86, 96};
 	pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
-	pianoSettings.channel = 4;
-	pianoSettings.side = ::left;
 	piano->setSettings(pianoSettings);
 	
 	triggerRef accord = triggerRef(new accordianNote);
-	midiTrigger::Settings accordSettings;
-	accordSettings.channel = 8;
+	midiTrigger::Settings accordSettings(8);
+	int accordNotes[] = {36, 43};
 	accordSettings.notes.assign(accordNotes, END(accordNotes));
 	accord->setSettings(accordSettings);
 	
 	triggerRef legs = triggerRef(new legCC);
 	
 	triggerRef stompLeft = triggerRef(new stompNote);
-	midiTrigger::Settings stompLeftSettings;
-	stompLeftSettings.side = ::left;
+	midiTrigger::Settings stompLeftSettings(10, ::left);
 	stompLeftSettings.notes.push_back(50);
-	stompLeftSettings.channel = 10;
 	stompLeft->setSettings(stompLeftSettings);
 	
 	triggerRef stompRight = triggerRef(new stompNote);
-	midiTrigger::Settings stompRightSettings;
-	stompRightSettings.side = ::right;
+	midiTrigger::Settings stompRightSettings(10, ::right);
 	stompRightSettings.notes.push_back(56);
-	stompRightSettings.channel = 10;
 	stompRight->setSettings(stompRightSettings);
 	
 	triggerRef drop = triggerRef(new dropDatNote);
-	midiTrigger::Settings dropSettings;
-	dropSettings.notes.push_back(66);
-	dropSettings.channel = 9;
+	midiTrigger::Settings dropSettings(3);
+	dropSettings.notes.push_back(57);
+	dropSettings.notes.push_back(60);
 	drop->setSettings(dropSettings);
 	
 	triggerRef drumStompLeft = triggerRef(new stompNote);
-	midiTrigger::Settings drumpStompLeftSettings;
-	drumpStompLeftSettings.channel = 9;
-	drumpStompLeftSettings.side = ::left;
-	drumpStompLeftSettings.notes.push_back(66);
+	midiTrigger::Settings drumpStompLeftSettings(3, ::left);
+	int drumpStompLeftNotes[] = {66, 58};
+	drumpStompLeftSettings.notes.assign(drumpStompLeftNotes, END(drumpStompLeftNotes));
 	drumStompLeft->setSettings(drumpStompLeftSettings);
 	
 	triggerRef drumStompRight = triggerRef(new stompNote);
-	midiTrigger::Settings drumStompRightSettings;
-	drumStompRightSettings.channel = 9;
-	drumStompRightSettings.side = ::right;
-	drumStompRightSettings.notes.push_back(67);
+	midiTrigger::Settings drumStompRightSettings(3, ::right);
+	int drumStompRightNotes[] = {67, 59};
+	drumStompRightSettings.notes.assign(drumStompRightNotes, END(drumStompRightNotes));
 	drumStompRight->setSettings(drumStompRightSettings);
 	
 #undef END
@@ -224,6 +212,12 @@ void musicMaker::updateMidiTriggers(kinectBody &body) {
 }
 
 void musicMaker::updateGraphs(kinectBody &body) {
+
+    
+    for(auto& trig : drumMidiTriggers) {
+        trig->update(body);
+    }
+    
     for (int i = 0; i < body.historyPlots.size(); i++){
         if(body.historyPlots[i]->getValues().size()> 0){
             graphsHistory[i].addSample(body.historyPlots[i]->getValues().back());
@@ -302,7 +296,6 @@ void musicMaker::updateGraphs(kinectBody &body) {
     
     for (int i = 0; i < graphsForSkeleton.size(); i++){
         if(find(SKELETOR::Instance()->skipList.begin(), SKELETOR::Instance()->skipList.end(),SKELETOR::Instance()->indexToName[i]) == SKELETOR::Instance()->skipList.end()){
-            
             string nameOfPt = SKELETOR::Instance()->indexToName[i];
             graphsForSkeleton[i].percentile = percentile;
             graphsForSkeleton[i].thresholdSmoothing = thresholdSmoothing;
@@ -341,7 +334,6 @@ void musicMaker::updateGraphs(kinectBody &body) {
                                 }
                             }
                         }
-                        
                     }
                     
                 }else if(triggers[nameOfPt]){
@@ -399,10 +391,6 @@ void musicMaker::updateGraphs(kinectBody &body) {
         graphs[2].percentile = percentile;
         graphs[3].thresholdSmoothing = thresholdSmoothing;
     }
-    
-	for(auto& trig : drumMidiTriggers) {
-		trig->update(body);
-	}
 }
 
 void musicMaker::clearBodies(){
