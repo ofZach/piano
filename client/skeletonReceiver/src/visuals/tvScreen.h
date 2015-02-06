@@ -6,6 +6,7 @@
 
 #include "ofMain.h"
 #include "kinectBody.h"
+#include "kinectSkeletonLayout.h"
 #include "prng_engine.hh"
 #include <algorithm>    // std::shuffle
 
@@ -94,11 +95,12 @@ public:
         transform.makeIdentityMatrix();
         ofMatrix4x4 scaleMat;
         scaleMat.makeIdentityMatrix();
-		ofMatrix4x4 rotation;
-		rotation.makeIdentityMatrix();
-        
-        //cout << BODY.history.size() << endl;
-        
+		
+		kinectSkeleton& sk = BODY.getLastSkeleton();
+		ofVec2f spineBase = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineBase]];
+		ofVec2f spineTop = sk.pts[SKELETOR::Instance()->centerEnumsToIndex[::spineShoulder]];
+		float twist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
+		
         for (int i = BODY.history.size()-1; i >= 0; i--){
             
             if (i < BODY.history.size()/3) continue;
@@ -119,16 +121,11 @@ public:
            // float transmap = ofMap(pctMap, 0, 1, 1.5, 15.5);
             
             transform.glTranslate(ofPoint(0,0,5));
-            //transform.glRotate(1.1 * sin(pctMap*8), 1, 0,1);
+			transform.glRotateRad(twist * 0.03, 0, 0, 1);
+			
             float scale = ofMap(pctMap, 0, 1, 1.01, 1.09);
             scaleMat.glScale(scale,scale, scale);
 			
-			float t = ofGetElapsedTimef();
-			rotation.glRotateRad(ofSignedNoise(t * 0.2, energy) * 0.02, // rad
-								 ofSignedNoise(t * 0.11, energy) * 0.1, // x
-								 ofSignedNoise(t * 0.09, energy) * 0.1, // y
-								 1);
-            
             if (BODY.history.size() == 50){
             int skipRate = ofMap(i, BODY.history.size()-1, BODY.history.size()/3, 2, 4);
 				if (i % skipRate == 0) ;
@@ -156,7 +153,7 @@ public:
                 
                 ofPoint midPt = (a+b)/2.0;
                 float dist = (a-b).length();
-                dist -= 15;
+                dist -= 10;
 				
 				if (dist < 0) {
 					dist = 0;
@@ -168,7 +165,7 @@ public:
                 ofPoint bNew = midPt - (dist * 0.5) * normal - avg;
 				
                 ofSetColor(255,255,255,200 * strength * (pctMap*pctMap));
-                ofLine (aNew*rotation*transform*scaleMat, bNew*rotation*transform*scaleMat);
+                ofLine (aNew*transform*scaleMat, bNew*transform*scaleMat);
             }
             ofPopMatrix();
         
@@ -178,8 +175,7 @@ public:
         
         
         for (auto & bone : connections){
-            
-            //cout << bone.a <<  " " << bone.b << endl;
+			
             ofPoint a( SK.pts[bone.a]);
             ofPoint b( SK.pts[bone.b]);
             
