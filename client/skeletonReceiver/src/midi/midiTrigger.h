@@ -19,7 +19,7 @@ public:
 	};
 	
 	virtual void update(kinectBody& body) { };
-	virtual void reset() { };
+	virtual void reset();
 	virtual void setMidiOut(shared_ptr<ofxMidiOut> midiOut);
 	void setSettings(Settings settings) { _settings = settings; }
 	

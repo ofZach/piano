@@ -14,6 +14,12 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 	return _midiOut;
 }
 
+void midiTrigger::reset() {
+	for(const auto& note : getSettings().notes) {
+		getMidiOut()->sendNoteOff(getSettings().channel, note);
+	}
+}
+
 #pragma mark - Util
 
 float NormalizedHeight(kinectSkeleton& sk, int name, int side) {
@@ -22,7 +28,7 @@ float NormalizedHeight(kinectSkeleton& sk, int name, int side) {
 	} else {
 		ofPoint p = sk.getPoint(name, side);
 		ofPoint f = sk.getPoint(::foot, side);
-		return ofMap(p.distance(f), 0, sk.skeletonHeight, 0, 1);
+		return ofMap(p.distance(f), 0, sk.skeletonHeight * 1.25, 0, 1);
 	}
 }
 
@@ -200,14 +206,14 @@ stompNote::stompNote() {
 void stompNote::update(kinectBody &body) {
 	kinectSkeleton& sk = body.getLastSkeleton();
 	
-	float primeThresh = 0.99;
+	float primeThresh = 0.9;
 	float triggerThresh = 0.7;
-	int framesToIgnore = 30; // number of frames to wait for a negative acceleration
+	int framesToIgnore = 10; // number of frames to wait for a negative acceleration
 	
 	size_t idx = SKELETOR::Instance()->getPointIndex(::foot, getSettings().side);
 	size_t opp = SKELETOR::Instance()->getPointIndex(::foot, OtherSide(getSettings().side));
 	
-	float footDiff = ofMap(sk.pts[idx].y - sk.pts[opp].y, 0, sk.skeletonHeight / 8., 0, 1, true);
+	float footDiff = ofMap(sk.pts[idx].y - sk.pts[opp].y, 0, sk.skeletonHeight / 10., 0, 1, true);
 	
 	if(!_primed && footDiff > primeThresh) {
 		_primed = true;
@@ -215,14 +221,16 @@ void stompNote::update(kinectBody &body) {
 		
 		float acc = body.accel[idx].y;
 		
-		if(footDiff < triggerThresh && acc < -0.1) {
-			int velocity = ofMap(acc, -0.1, -4, 80, 100);
-			getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
-			reset();
-		} else {
-			_ignoredFrameCount++;
-			if(_ignoredFrameCount == framesToIgnore) {
+		if(footDiff < triggerThresh) {
+			if(acc < -0.1) {
+				int velocity = ofMap(acc, -0.1, -4, 80, 100);
+				getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
 				reset();
+			} else {
+				_ignoredFrameCount++;
+				if(_ignoredFrameCount == framesToIgnore) {
+					reset();
+				}
 			}
 		}
 	}

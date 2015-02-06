@@ -66,7 +66,7 @@ void musicMaker::setupGraphs() {
 void musicMaker::setupMidiTriggers() {
 	
 	int stringNotes[] = {53, 59, 60, 64, 67, 72};
-	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 72, 77, 79, 84};
+	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 72, 77, 79, 86};
 	int accordNotes[] = {36, 43};
  
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
@@ -96,14 +96,14 @@ void musicMaker::setupMidiTriggers() {
 	triggerRef stompLeft = triggerRef(new stompNote);
 	midiTrigger::Settings stompLeftSettings;
 	stompLeftSettings.side = ::left;
-	stompLeftSettings.notes.push_back(48);
+	stompLeftSettings.notes.push_back(50);
 	stompLeftSettings.channel = 10;
 	stompLeft->setSettings(stompLeftSettings);
 	
 	triggerRef stompRight = triggerRef(new stompNote);
 	midiTrigger::Settings stompRightSettings;
 	stompRightSettings.side = ::right;
-	stompRightSettings.notes.push_back(53);
+	stompRightSettings.notes.push_back(56);
 	stompRightSettings.channel = 10;
 	stompRight->setSettings(stompRightSettings);
 	
@@ -122,8 +122,7 @@ void musicMaker::setupMidiTriggers() {
 		t->setMidiOut(midiOut);
 	}
 	AllNotesOff(*midiOut);
-	
-	
+
 	skeletonMidi.setup(midiOut);
 }
 
@@ -369,5 +368,7 @@ void musicMaker::clearBodies(){
 }
 
 void musicMaker::outputmodeChanged(int &mode) {
-	AllNotesOff(*midiOut);
+	for(auto& trig : midiTriggers) {
+		trig->reset();
+	}
 }
