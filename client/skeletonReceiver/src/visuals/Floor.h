@@ -50,4 +50,11 @@ public:
     ofxSyphonServer floorServer;
     
     unsigned long long lastTrigger;
+    
+    
+    map<int, vector<int> > buttonPtToConnections;
+    vector<connectionMover> buttonMovers;
+    vector<ofPoint> buttonPoints;
+    vector<connection> buttonConnections;
+    
 };

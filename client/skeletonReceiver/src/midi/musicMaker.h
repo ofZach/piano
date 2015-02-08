@@ -59,7 +59,9 @@ public:
     ofParameter<int> numNotes;
     ofParameter<bool> jazzDrums;
     ofParameter<bool> historyAndSkeleton;
-    
+    ofParameter<float> percentile;
+    ofParameter<float> thresholdSmoothing;
+    ofParameter<float> velocityCutOff;
     skeletonMidiController skeletonMidi;
 	
 	shared_ptr<ofxMidiOut> midiOut;

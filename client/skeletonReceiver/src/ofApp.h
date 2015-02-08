@@ -71,7 +71,12 @@ public:
 	ofParameter <float> swayAmount;
 	ofParameter <float> swayRate;
 	
+    ofParameter<float> centerX;
+    ofParameter<float> centerY;
+    ofParameter<float> centerZ;
     
+    ofPoint centerPoint;
+    kinectButton centerButton;
     kinectButton switchMode;
     ofParameter<float> buttonX;
     ofParameter<float> buttonY;
@@ -82,7 +87,7 @@ public:
     bool changeTriggered;
     ofFbo fooFbo;
 
-    
+       
     musicMaker MM;
     
     unsigned long long bodyDropTimer;
