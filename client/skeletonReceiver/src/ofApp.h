@@ -122,5 +122,6 @@ public:
     tvScreen TV;
     Floor floorProjections;
     
+    shared_ptr<ofxMidiOut> midiOut;
 };
 
