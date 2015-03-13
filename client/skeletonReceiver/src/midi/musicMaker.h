@@ -18,7 +18,7 @@ class musicMaker {
     
 public:
     
-    void setup ();
+    void setup (int offset = 0);
     void addToDebugParamGroup ( ofParameterGroup & debugView);
     void drawInScene();
     void drawOverScene();
@@ -73,5 +73,7 @@ public:
 	tvScreen * TV;
     
     vector<kinectButton> buttons;
+    
+    int channelOffset;
         
 };

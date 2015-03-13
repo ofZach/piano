@@ -9,137 +9,145 @@
 #include "musicMaker.h"
 #include "ofApp.h"
 
-void musicMaker::setup (){
-	setupGraphs();
-	setupMidiTriggers();
-    
-    buttonControl.setName("button control");
+void musicMaker::setup (int offset){
+    channelOffset = offset;
+    setupGraphs();
+    setupMidiTriggers();
+    string name;
+    if(channelOffset > 0){
+        name = "button controls 2";
+    }else{
+        name = "button control 1";
+    }
+    buttonControl.setName(name);
     buttonControl.add(buttonDraw.set("Draw Buttons", false));
     buttonControl.add(buttonRadius.set("Radius", 75, 20, 150));
     buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
+    
+    
 }
 
 void musicMaker::setupGraphs() {
-	for (int i = 0; i < 4; i++){
-		graphs.push_back(Graph());
-		graphs.back().setup(ofToString(i));
-		graphs.back().setSize(100, 50);
-		graphs.back().setMinMaxRange(0, 1);
-		graphs.back().setBidirectional(false);
-		graphs.back().setThreshold(0);
-	}
-	
-	graphs[0].setName("kick left");
-	graphs[1].setName("kick right");
-	graphs[2].setName("punch left");
-	graphs[3].setName("punch right");
-	
-	
-	for (int i = 0; i < 25; i++){
-		graphsForSkeleton.push_back(Graph());
-		graphsForSkeleton.back().setup(ofToString(i));
-		graphsForSkeleton.back().setBidirectional(false);
-		graphsForSkeleton.back().setSize(100, 20);
-		graphsForSkeleton.back().setThreshold(0);
-		ofParameter<float> fooParam;
-		fooParam.set("Threshold-"+ofToString(i), 0, 0, 100);
-		graphsSkeletonThresh.push_back(fooParam);
-		graphsControl1.add(graphsSkeletonThresh.back());
-		
-	}
-	
-	for (int i = 0; i < 25; i++){
-		graphsHistory.push_back(Graph());
-		graphsHistory.back().setup(ofToString(i));
-		graphsHistory.back().setSize(100, 20);
-		graphsHistory.back().setThreshold(0);
-		graphsHistory.back().setBidirectional(false);
-		graphsHistory.back().setMinMaxRange(0, 1);
-		ofParameter<float> fooParam;
-		fooParam.set("History Threshold-"+ofToString(i), 0, 0, 100);
-		graphsHistoryThresh.push_back(fooParam);
-		graphsControl2.add(graphsHistoryThresh.back());
-	}
+    for (int i = 0; i < 4; i++){
+        graphs.push_back(Graph());
+        graphs.back().setup(ofToString(i));
+        graphs.back().setSize(100, 50);
+        graphs.back().setMinMaxRange(0, 1);
+        graphs.back().setBidirectional(false);
+        graphs.back().setThreshold(0);
+    }
+    
+    graphs[0].setName("kick left");
+    graphs[1].setName("kick right");
+    graphs[2].setName("punch left");
+    graphs[3].setName("punch right");
+    
+    
+    for (int i = 0; i < 25; i++){
+        graphsForSkeleton.push_back(Graph());
+        graphsForSkeleton.back().setup(ofToString(i));
+        graphsForSkeleton.back().setBidirectional(false);
+        graphsForSkeleton.back().setSize(100, 20);
+        graphsForSkeleton.back().setThreshold(0);
+        ofParameter<float> fooParam;
+        fooParam.set("Threshold-"+ofToString(i), 0, 0, 100);
+        graphsSkeletonThresh.push_back(fooParam);
+        graphsControl1.add(graphsSkeletonThresh.back());
+        
+    }
+    
+    for (int i = 0; i < 25; i++){
+        graphsHistory.push_back(Graph());
+        graphsHistory.back().setup(ofToString(i));
+        graphsHistory.back().setSize(100, 20);
+        graphsHistory.back().setThreshold(0);
+        graphsHistory.back().setBidirectional(false);
+        graphsHistory.back().setMinMaxRange(0, 1);
+        ofParameter<float> fooParam;
+        fooParam.set("History Threshold-"+ofToString(i), 0, 0, 100);
+        graphsHistoryThresh.push_back(fooParam);
+        graphsControl2.add(graphsHistoryThresh.back());
+    }
 }
 
 // TODO: less verbose
 void musicMaker::setupMidiTriggers() {
- 
+    
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
-	
-	triggerRef strings = triggerRef(new gridNote);
-	midiTrigger::Settings stringSettings(5, ::right);
-	int stringNotes[] = {53, 59, 60, 64, 67, 72};
-	stringSettings.notes.assign(stringNotes, END(stringNotes));
-	strings->setSettings(stringSettings);
-	
-	triggerRef piano = triggerRef(new gridNote);
-	midiTrigger::Settings pianoSettings(4, ::left);
-	int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 74, 77, 79, 84, 86, 96};
-	pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
-	piano->setSettings(pianoSettings);
-	
-	triggerRef accord = triggerRef(new accordianNote);
-	midiTrigger::Settings accordSettings(8);
-	int accordNotes[] = {36, 43};
-	accordSettings.notes.assign(accordNotes, END(accordNotes));
-	accord->setSettings(accordSettings);
-	
-	triggerRef legs = triggerRef(new legCC);
-	
-	triggerRef stompLeft = triggerRef(new stompNote);
-	midiTrigger::Settings stompLeftSettings(10, ::left);
-	stompLeftSettings.notes.push_back(50);
-	stompLeft->setSettings(stompLeftSettings);
-	
-	triggerRef stompRight = triggerRef(new stompNote);
-	midiTrigger::Settings stompRightSettings(10, ::right);
-	stompRightSettings.notes.push_back(56);
-	stompRight->setSettings(stompRightSettings);
-	
-	triggerRef drop = triggerRef(new dropDatNote);
-	midiTrigger::Settings dropSettings(3);
-	dropSettings.notes.push_back(57);
-	dropSettings.notes.push_back(60);
-	drop->setSettings(dropSettings);
-	
-	triggerRef drumStompLeft = triggerRef(new stompNote);
-	midiTrigger::Settings drumpStompLeftSettings(3, ::left);
-	int drumpStompLeftNotes[] = {66, 58};
-	drumpStompLeftSettings.notes.assign(drumpStompLeftNotes, END(drumpStompLeftNotes));
-	drumStompLeft->setSettings(drumpStompLeftSettings);
-	
-	triggerRef drumStompRight = triggerRef(new stompNote);
-	midiTrigger::Settings drumStompRightSettings(3, ::right);
-	int drumStompRightNotes[] = {67, 59};
-	drumStompRightSettings.notes.assign(drumStompRightNotes, END(drumStompRightNotes));
-	drumStompRight->setSettings(drumStompRightSettings);
-	
+    
+    triggerRef strings = triggerRef(new gridNote);
+    midiTrigger::Settings stringSettings(5+channelOffset, ::right);
+    int stringNotes[] = {53, 59, 60, 64, 67, 72};
+    stringSettings.notes.assign(stringNotes, END(stringNotes));
+    strings->setSettings(stringSettings);
+    
+    triggerRef piano = triggerRef(new gridNote);
+    midiTrigger::Settings pianoSettings(4+channelOffset, ::left);
+    int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 74, 77, 79, 84, 86, 96};
+    pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
+    piano->setSettings(pianoSettings);
+    
+    triggerRef accord = triggerRef(new accordianNote);
+    midiTrigger::Settings accordSettings(8);
+    int accordNotes[] = {36, 43};
+    accordSettings.notes.assign(accordNotes, END(accordNotes));
+    accord->setSettings(accordSettings);
+    
+    triggerRef legs = triggerRef(new legCC);
+    
+    triggerRef stompLeft = triggerRef(new stompNote);
+    midiTrigger::Settings stompLeftSettings(10+channelOffset, ::left);
+    stompLeftSettings.notes.push_back(50);
+    stompLeft->setSettings(stompLeftSettings);
+    
+    triggerRef stompRight = triggerRef(new stompNote);
+    midiTrigger::Settings stompRightSettings(10+channelOffset, ::right);
+    stompRightSettings.notes.push_back(56);
+    stompRight->setSettings(stompRightSettings);
+    
+    triggerRef drop = triggerRef(new dropDatNote);
+    midiTrigger::Settings dropSettings(3);
+    dropSettings.notes.push_back(57);
+    dropSettings.notes.push_back(60);
+    drop->setSettings(dropSettings);
+    
+    triggerRef drumStompLeft = triggerRef(new stompNote);
+    midiTrigger::Settings drumpStompLeftSettings(3+channelOffset, ::left);
+    int drumpStompLeftNotes[] = {66, 58};
+    drumpStompLeftSettings.notes.assign(drumpStompLeftNotes, END(drumpStompLeftNotes));
+    drumStompLeft->setSettings(drumpStompLeftSettings);
+    
+    triggerRef drumStompRight = triggerRef(new stompNote);
+    midiTrigger::Settings drumStompRightSettings(3+channelOffset, ::right);
+    int drumStompRightNotes[] = {67, 59};
+    drumStompRightSettings.notes.assign(drumStompRightNotes, END(drumStompRightNotes));
+    drumStompRight->setSettings(drumStompRightSettings);
+    
 #undef END
-	
-	midiTriggers.push_back(strings);
-	midiTriggers.push_back(piano);
-	midiTriggers.push_back(accord);
-	midiTriggers.push_back(legs);
-	midiTriggers.push_back(stompLeft);
-	midiTriggers.push_back(stompRight);
-	
-	drumMidiTriggers.push_back(drumStompLeft);
-	drumMidiTriggers.push_back(drumStompRight);
-	drumMidiTriggers.push_back(drop);
-	
-	midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-	//midiOut->openVirtualPort("OF Kinect");
-    midiOut->openPort(1);
-	for(auto& t : midiTriggers) {
-		t->setMidiOut(midiOut);
-	}
-	for(auto& t : drumMidiTriggers) {
-		t->setMidiOut(midiOut);
-	}
-
-	skeletonMidi.setup(midiOut);
+    
+    midiTriggers.push_back(strings);
+    midiTriggers.push_back(piano);
+    midiTriggers.push_back(accord);
+    midiTriggers.push_back(legs);
+    midiTriggers.push_back(stompLeft);
+    midiTriggers.push_back(stompRight);
+    
+    drumMidiTriggers.push_back(drumStompLeft);
+    drumMidiTriggers.push_back(drumStompRight);
+    drumMidiTriggers.push_back(drop);
+    
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Kinect");
+    //midiOut->openPort(1);
+    for(auto& t : midiTriggers) {
+        t->setMidiOut(midiOut);
+    }
+    for(auto& t : drumMidiTriggers) {
+        t->setMidiOut(midiOut);
+    }
+    
+    skeletonMidi.setup(midiOut, channelOffset);
 }
 
 void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
@@ -157,7 +165,7 @@ void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
     debugView.add(percentile.set("Percentile", 0.75, 0, 1));
     debugView.add(thresholdSmoothing.set("ThresholdSmoothing", 0.1, 0, 1));
     debugView.add(velocityCutOff.set("Velocity Cutoff", 1.0, 0.1, 10.0));
-	outputMode.addListener(this, &musicMaker::outputmodeChanged);
+    outputMode.addListener(this, &musicMaker::outputmodeChanged);
 }
 
 void musicMaker::drawInScene(){
@@ -186,7 +194,7 @@ void musicMaker::drawOverScene(){
 }
 
 void musicMaker::analyze (kinectBody & body) {
-	
+    
     if(outputMode == 0){
         updateMidiTriggers(body);
     }else{
@@ -195,7 +203,7 @@ void musicMaker::analyze (kinectBody & body) {
         }else{
             jazzDrums.set(true);
         }
-		updateGraphs(body);
+        updateGraphs(body);
     }
 }
 
@@ -212,7 +220,7 @@ void musicMaker::updateMidiTriggers(kinectBody &body) {
 }
 
 void musicMaker::updateGraphs(kinectBody &body) {
-
+    
     
     for(auto& trig : drumMidiTriggers) {
         trig->update(body);
@@ -282,6 +290,7 @@ void musicMaker::updateGraphs(kinectBody &body) {
                     
                     if(triggers[body.historyPlots[i]->varName]){
                         ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+                        //((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
                     }
                     
                 }
@@ -331,6 +340,7 @@ void musicMaker::updateGraphs(kinectBody &body) {
                                 if(triggers[nameOfPt]){
                                     ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
                                     ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
+                                    ((ofApp*)ofGetAppPtr())->TV.addImpluse();
                                 }
                             }
                         }
@@ -396,28 +406,28 @@ void musicMaker::updateGraphs(kinectBody &body) {
 void musicMaker::clearBodies(){
     for(int i = 0; i < graphsForSkeleton.size(); i++){
         graphsForSkeleton[i].clear();
-		
+        
     }
-	
+    
     for(int i = 0; i < graphsHistory.size(); i++){
         graphsHistory[i].clear();
-		
+        
     }
-	
+    
     for(int i = 0; i < graphs.size(); i++){
         graphs[i].clear();
-		
+        
     }
-	
-	for(auto& t : midiTriggers) {
-		t->reset();
-	}
-	
-	for(auto& t : drumMidiTriggers) {
-		t->reset();
-	}
+    
+    for(auto& t : midiTriggers) {
+        t->reset();
+    }
+    
+    for(auto& t : drumMidiTriggers) {
+        t->reset();
+    }
 }
 
 void musicMaker::outputmodeChanged(int &mode) {
-	clearBodies();
+    clearBodies();
 }

@@ -145,6 +145,7 @@ public:
     }
     
     void draw(){
+        ofPushStyle();
         ofSpherePrimitive primitve(10,10);
         ofVboMesh mesh = primitve.getMesh();
         for (int i = 0; i < pts.size(); i++){
@@ -166,10 +167,13 @@ public:
         
         ofSetColor(255,255,255,255);
         drawBones();
+        ofPopStyle();
     }
     
     void drawDebug(bool boundingbox){
         
+        ofPushStyle();
+        ofEnableAlphaBlending();
         float alpha = 0.3;
         
         // draw HandToHandVector
@@ -308,6 +312,8 @@ public:
             ofSetLineWidth(2);
             ofSetColor(255);
         }
+        ofDisableAlphaBlending();
+        ofPopStyle();
     }
     
     

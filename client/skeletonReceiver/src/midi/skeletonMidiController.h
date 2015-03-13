@@ -13,7 +13,7 @@
 
 class skeletonMidiController{
 public:
-    void setup(shared_ptr<ofxMidiOut> midi);
+    void setup(shared_ptr<ofxMidiOut> midi, int offset);
     
     void triggerNote(int note, int velocity);
     void triggerPunch(int note, int velocity);
@@ -21,5 +21,6 @@ public:
 private:
     shared_ptr<ofxMidiOut> midiOut;
     map<int, unsigned long long> lastSend;
+    int channelOffset;
 
 };

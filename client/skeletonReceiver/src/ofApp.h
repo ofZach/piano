@@ -89,6 +89,7 @@ public:
 
        
     musicMaker MM;
+    musicMaker MM2;
     
     unsigned long long bodyDropTimer;
 
