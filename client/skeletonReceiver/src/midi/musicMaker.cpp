@@ -9,10 +9,9 @@
 #include "musicMaker.h"
 #include "ofApp.h"
 
-void musicMaker::setup (int offset){
+void musicMaker::setup (shared_ptr<ofxMidiOut> _midiOut, int offset){
     channelOffset = offset;
-    setupGraphs();
-    setupMidiTriggers();
+
     string name;
     if(channelOffset > 0){
         name = "button controls 2";
@@ -25,7 +24,9 @@ void musicMaker::setup (int offset){
     buttonControl.add(buttonTriggerScale.set("Trigger Scale", 0.8, 0.3, 1.0));
     buttonControl.add(buttonApproachScale.set("Approach Scale", 1.2, 0.5, 2.0));
     
-    
+    midiOut = _midiOut;
+    setupGraphs();
+    setupMidiTriggers();
 }
 
 void musicMaker::setupGraphs() {
@@ -137,8 +138,6 @@ void musicMaker::setupMidiTriggers() {
     drumMidiTriggers.push_back(drumStompRight);
     drumMidiTriggers.push_back(drop);
     
-    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->openVirtualPort("OF Kinect");
     //midiOut->openPort(1);
     for(auto& t : midiTriggers) {
         t->setMidiOut(midiOut);
@@ -430,4 +429,5 @@ void musicMaker::clearBodies(){
 
 void musicMaker::outputmodeChanged(int &mode) {
     clearBodies();
+//    outputMode = mode;
 }

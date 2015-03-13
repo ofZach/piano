@@ -18,7 +18,7 @@ class musicMaker {
     
 public:
     
-    void setup (int offset = 0);
+    void setup (shared_ptr<ofxMidiOut> midi, int offset = 0);
     void addToDebugParamGroup ( ofParameterGroup & debugView);
     void drawInScene();
     void drawOverScene();

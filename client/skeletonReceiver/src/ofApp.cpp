@@ -25,12 +25,16 @@ void ofApp::setup(){
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
-//    gui.setup("panel");
+
+    
+///Moving midiOut to the OF App because there can be only one midiOut!!
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Kinect");
     
     KS.setup();
     TV.setup();
-    MM.setup();
-    MM2.setup(8);
+    MM.setup(midiOut);
+    MM2.setup(midiOut, 8);
     MM.TV = &TV;
     MM2.TV = &TV;
     
@@ -80,8 +84,7 @@ void ofApp::setup(){
     MM2.addToDebugParamGroup(playerTwo);
     
     
-    gui.setup("controls", ofGetWidth()-300-10, 10, 300, ofGetHeight());
-    gui.addPanel("main control", 4, false);
+    gui.setup("main control", ofGetWidth()-300-10, 10, 300, ofGetHeight());
     gui.addPanel("Debug Controls", 4, false);
     gui.addPanel("Player 1 Controls", 4, false);
     gui.addPanel("Thresholds Skeletons Player 1", 4, false);
@@ -97,32 +100,32 @@ void ofApp::setup(){
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
     
-    gui.setWhichPanel(2);
+    gui.setWhichPanel(1);
     gui.setWhichColumn(0);
     gui.addGroup(debugView);
     
-    gui.setWhichPanel(3);
+    gui.setWhichPanel(2);
     gui.setWhichColumn(0);
     gui.addGroup(playerOne);
     
     
-    gui.setWhichPanel(4);
+    gui.setWhichPanel(3);
     gui.setWhichColumn(0);
     gui.addGroup(MM.graphsControl1);
     
-    gui.setWhichPanel(5);
+    gui.setWhichPanel(4);
     gui.setWhichColumn(0);
     gui.addGroup(MM.graphsControl2);
     
-    gui.setWhichPanel(6);
+    gui.setWhichPanel(5);
     gui.setWhichColumn(0);
     gui.addGroup(playerTwo);
     
-    gui.setWhichPanel(7);
+    gui.setWhichPanel(6);
     gui.setWhichColumn(0);
     gui.addGroup(MM2.graphsControl2);
     
-    gui.setWhichPanel(8);
+    gui.setWhichPanel(7);
     gui.setWhichColumn(0);
     gui.addGroup(MM2.graphsControl2);
     
@@ -230,24 +233,26 @@ void ofApp::update(){
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
-            
+            cout<<i<<endl;
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 if(i == 0){
+                    cout<<"update player one"<<endl;
                     MM.analyze(body);
                 }else{
+                    cout<<"update player two"<<endl;
                     MM2.analyze(body);
                 }
                 TV.update(&body);
                 
                 //switch mode
-                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
-                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
-                vector<std::pair<ofPoint, float> > feet;
-                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
-                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
-                switchMode.update(feet);
+//                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+//                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+//                vector<std::pair<ofPoint, float> > feet;
+//                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
+//                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
+//                switchMode.update(feet);
             }
         }
     }else {
