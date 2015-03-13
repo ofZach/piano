@@ -57,6 +57,10 @@ public:
     ofParameter <bool> drawSkeleton;
     ofParameter <bool> drawAnalyzer;
     ofParameter <bool> drawBoundingCube;
+    ofParameter<float> stageX;
+    ofParameter<float> stageY;
+    ofParameter<float> stageZ;
+    ofParameter<float> stageSize;
     
     
     ofParameterGroup playerOne;

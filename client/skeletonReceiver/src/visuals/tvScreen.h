@@ -29,7 +29,8 @@ public:
     ofVboMesh sphere;
     ofxSyphonServer skeletonServer;
     ofxSyphonServer gridServer;
-    
+    ofVec3f stagePos;
+    float stageSize;
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
@@ -47,6 +48,10 @@ public:
         eng.seed(seed);
     }
     
+    void setStagePos(float x, float y, float z, float size){
+        stagePos.set(x, y, z);
+        stageSize = size;
+    }
     
     void addImpluse(){
         if(pulses.size() < 10){
@@ -314,11 +319,13 @@ public:
         ofSetLineWidth(3);
         ofPushMatrix();
         ofSetColor(100);
-        ofRotate(90,0,0,1);
-        ofDrawGridPlane(1000);
+        ofNoFill();
+        ofRotate(90,1,0,0);
+        ofTranslate(stagePos.x - stageSize/2, stagePos.y - stageSize/2, stagePos.z);
+        ofRect(0, 0, stageSize, stageSize);
         ofPopMatrix();
+        ofFill();
         mainViewCam.end();
-        ofClearAlpha();
         tvGridView.end();
         
         tvSkeletonView.begin();
@@ -348,7 +355,6 @@ public:
             //KB->draw();
         }
         mainViewCam.end();
-        ofClearAlpha();
         tvSkeletonView.end();
         
         skeletonServer.publishTexture(&tvSkeletonView.getTextureReference());

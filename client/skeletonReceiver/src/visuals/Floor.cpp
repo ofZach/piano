@@ -11,7 +11,6 @@
 void Floor::setup(){
     
     gui.setup("Floor Controls", ofGetWidth()-600-10, 10, 300, 400);
-    gui.addPanel("main control",1, false);
     
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
@@ -29,7 +28,7 @@ void Floor::setup(){
     
     
     
-    gui.setWhichPanel(6);
+    gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     gui.addGroup(p);
     

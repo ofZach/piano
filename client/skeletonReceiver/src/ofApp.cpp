@@ -8,7 +8,7 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofSetLogLevel(OF_LOG_SILENT);
     
@@ -25,9 +25,9 @@ void ofApp::setup(){
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
-
     
-///Moving midiOut to the OF App because there can be only one midiOut!!
+    
+    ///Moving midiOut to the OF App because there can be only one midiOut!!
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->openVirtualPort("OF Kinect");
     
@@ -60,6 +60,8 @@ void ofApp::setup(){
     skeletonTransform.add(buttonTriggerScale.set("buttonTriggerScale", 0, 0.1,2.0));
     skeletonTransform.add(buttonRadius.set("buttonRadius", 10, 1,50));
     
+    
+    
     dataPlayer.setName("dataPlayer");
     dataPlayer.add(bUseUdpPlayer.set("use udp player", false));
     dataPlayer.add(bLoadNewUDP.set("load udp", false));
@@ -77,6 +79,10 @@ void ofApp::setup(){
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
+    debugView.add(stageX.set("Stage X", 0, -1000, 1000));
+    debugView.add(stageY.set("Stage Y", 0, -1000, 1000));
+    debugView.add(stageZ.set("Stage Z", 0, -1000, 1000));
+    debugView.add(stageSize.set("Stage Size", 0, 0, 1000));
     
     playerOne.setName("playerOne");
     playerTwo.setName("playerTwo");
@@ -92,7 +98,6 @@ void ofApp::setup(){
     gui.addPanel("Player 2 Controls", 4, false);
     gui.addPanel("Thresholds Skeletons Player 2", 4, false);
     gui.addPanel("Thresholds History Player 2", 4, false);
-    gui.addPanel("Grid Control", 4, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     
@@ -130,7 +135,7 @@ void ofApp::setup(){
     gui.addGroup(MM2.graphsControl2);
     
     
-
+    
     
     
     status = "first frame";
@@ -144,17 +149,14 @@ void ofApp::setup(){
     
     
     
-    //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
-    
-    
-    
     fooFbo.allocate(1024, 728, GL_RGBA, 4);
     fooFbo.begin();
     ofClear(0, 0, 0, 0);
     fooFbo.end();
     
-    floorProjections.setup();
     bodyDropTimer = ofGetElapsedTimeMillis();
+    
+        TV.setStagePos(stageX, stageY, stageZ, stageSize);
 }
 
 
@@ -165,7 +167,7 @@ void ofApp::setup(){
 void ofApp::update(){
     
     gui.update();
-    
+    TV.setStagePos(stageX, stageY, stageZ, stageSize);
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     if (bLoadNewUDP == true){
@@ -233,26 +235,26 @@ void ofApp::update(){
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
-            cout<<i<<endl;
+//            cout<<i<<endl;
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 if(i == 0){
-                    cout<<"update player one"<<endl;
+//                    cout<<"update player one"<<endl;
                     MM.analyze(body);
                 }else{
-                    cout<<"update player two"<<endl;
+//                    cout<<"update player two"<<endl;
                     MM2.analyze(body);
                 }
                 TV.update(&body);
                 
                 //switch mode
-//                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
-//                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
-//                vector<std::pair<ofPoint, float> > feet;
-//                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
-//                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
-//                switchMode.update(feet);
+                //                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+                //                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+                //                vector<std::pair<ofPoint, float> > feet;
+                //                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
+                //                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
+                //                switchMode.update(feet);
             }
         }
     }else {
@@ -275,7 +277,7 @@ void ofApp::update(){
     
     
     TV.drawIntoFbo(cam);
-    
+
 }
 
 
@@ -285,11 +287,11 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofBackground(ofColor::darkGray);
+    ofBackground(0, 0, 0);
     
     ofEnableAlphaBlending();
     fooFbo.begin();
-    ofBackground(ofColor::darkGray);
+    ofBackground(0, 0, 0);
     //ofClear(0, 0, 0);
     cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
     ofSetColor(255,255,255,127);
@@ -297,12 +299,23 @@ void ofApp::draw(){
     ofPushMatrix();
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
+
     ofPopMatrix();
+    
+    
+    ofPushMatrix();
+    ofRotate(90, 1, 0, 0);
+    ofSetColor(0, 100, 100, 200);
+    ofTranslate(stageX-stageSize/2.0, stageY-stageSize/2.0, stageZ);
+    ofRect(0, 0, stageSize, stageSize);
+    ofPopMatrix();
+    
     //    ofPushMatrix();
     //    ofTranslate(centerPoint);
     ofDrawAxis(50);
     //    ofPopMatrix();
     ofLine( ofPoint(0,0), ofPoint(800,0));
+    
     
     
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
@@ -343,8 +356,9 @@ void ofApp::draw(){
     
     
     TV.draw(ofRectangle(0,0,1920/2, 1080/2));
+    
     ofDisableAlphaBlending();
-
+    
 }
 
 
@@ -374,7 +388,7 @@ void ofApp::keyPressed(int key){
     if(key == '4'){
         MM2.outputMode.set(1);
     }
-
+    
 }
 
 //--------------------------------------------------------------

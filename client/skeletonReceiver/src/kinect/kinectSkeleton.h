@@ -174,7 +174,7 @@ public:
         
         ofPushStyle();
         ofEnableAlphaBlending();
-        float alpha = 0.3;
+        float alpha = 1.0;
         
         // draw HandToHandVector
         ofSetColor(
@@ -193,22 +193,22 @@ public:
                getRightPoint(shoulder));
         
         // Draw Left Arm To Hip
-        ofSetColor(ofFloatColor(ofColor::green, leftHandVHip*alpha));
+        ofSetColor(ofFloatColor(ofColor::darkorange, leftHandVHip*alpha));
         ofLine(getLeftPoint(hand),
                getLeftPoint(hip));
         
         // Draw Left Arm To Hip
-        ofSetColor(ofFloatColor(ofColor::green, rightHandVHip*alpha));
+        ofSetColor(ofFloatColor(ofColor::darkorange, rightHandVHip*alpha));
         ofLine(getRightPoint(hand),
                getRightPoint(hip));
         
         // Draw Head to Feet
-        ofSetColor(ofFloatColor(ofColor::darkBlue, (1.0 - distFootLeft)*alpha));
+        ofSetColor(ofFloatColor(ofColor::darkRed, (1.0 - distFootLeft)*alpha));
         ofLine(getCenterPoint(head),
                getLeftPoint(ankle));
         
         // Draw Head to Feet
-        ofSetColor(ofFloatColor(ofColor::darkBlue, (1.0 - distFootRight)*alpha));
+        ofSetColor(ofFloatColor(ofColor::darkRed, (1.0 - distFootRight)*alpha));
         ofLine(getCenterPoint(head),
                getRightPoint(ankle));
         
@@ -233,7 +233,7 @@ public:
         ofVboMesh mesh = primitve.getMesh();
         ofPushMatrix();
         ofSetColor(
-                   ofFloatColor(ofColor::blue, ofMap(angleRightKnee, 0, 180, 0, 1, true)*alpha));
+                   ofFloatColor(ofColor::orangeRed, ofMap(angleRightKnee, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getRightPoint(knee));
         mesh.draw();
@@ -247,7 +247,7 @@ public:
         // Draw Angle Left Knee
         ofPushMatrix();
         ofSetColor(
-                   ofFloatColor(ofColor::blue, ofMap(angleLeftKnee, 0, 180, 0, 1, true)*alpha));
+                   ofFloatColor(ofColor::orangeRed, ofMap(angleLeftKnee, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getLeftPoint(knee));
         mesh.draw();
@@ -260,7 +260,7 @@ public:
         
         // Draw Elbow Left Elbow
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::blue,
+        ofSetColor(ofFloatColor(ofColor::orangeRed,
                                 ofMap(angleRightElbow, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getLeftPoint(elbow));
@@ -274,7 +274,7 @@ public:
         
         // Draw Elbow Right Elbow
         ofPushMatrix();
-        ofSetColor(ofFloatColor(ofColor::blue,
+        ofSetColor(ofFloatColor(ofColor::magenta,
                                 ofMap(angleRightElbow, 0, 180, 0, 1, true)*alpha));
         ofTranslate(
                     getRightPoint(elbow));
@@ -291,13 +291,13 @@ public:
         ofSetColor(255, 255, 255, 200);
         ofTranslate(getCenterPoint(spineMid));
         
-        // Draw Bounding Cube
-        ofRotate(0, orientation.x, orientation.y, orientation.z);
-        
-        //        ofBoxPrimitive p(100,100,100);
-        //        p.drawWireframe();
-        //
-        //        ofDrawAxis(20);
+//        // Draw Bounding Cube
+//        ofRotate(0, orientation.x, orientation.y, orientation.z);
+//        
+//        //        ofBoxPrimitive p(100,100,100);
+//        //        p.drawWireframe();
+//        //
+//        //        ofDrawAxis(20);
         ofPopMatrix();
         
         centerPoint.draw();
