@@ -77,19 +77,19 @@ void musicMaker::setupMidiTriggers() {
 #define END(a) (a + (sizeof(a) / sizeof(a[0])))
     
     triggerRef strings = triggerRef(new gridNote);
-    midiTrigger::Settings stringSettings(5+channelOffset, ::right);
+    midiTrigger::Settings stringSettings(2+channelOffset, ::right);
     int stringNotes[] = {53, 59, 60, 64, 67, 72};
     stringSettings.notes.assign(stringNotes, END(stringNotes));
     strings->setSettings(stringSettings);
     
     triggerRef piano = triggerRef(new gridNote);
-    midiTrigger::Settings pianoSettings(4+channelOffset, ::left);
+    midiTrigger::Settings pianoSettings(1+channelOffset, ::left);
     int pianoNotes[] = {41, 43, 48, 53, 55, 59, 60, 62, 67, 74, 77, 79, 84, 86, 96};
     pianoSettings.notes.assign(pianoNotes, END(pianoNotes));
     piano->setSettings(pianoSettings);
     
     triggerRef accord = triggerRef(new accordianNote);
-    midiTrigger::Settings accordSettings(8);
+    midiTrigger::Settings accordSettings(3+channelOffset);
     int accordNotes[] = {36, 43};
     accordSettings.notes.assign(accordNotes, END(accordNotes));
     accord->setSettings(accordSettings);
@@ -97,29 +97,29 @@ void musicMaker::setupMidiTriggers() {
     triggerRef legs = triggerRef(new legCC);
     
     triggerRef stompLeft = triggerRef(new stompNote);
-    midiTrigger::Settings stompLeftSettings(10+channelOffset, ::left);
+    midiTrigger::Settings stompLeftSettings(4+channelOffset, ::left);
     stompLeftSettings.notes.push_back(50);
     stompLeft->setSettings(stompLeftSettings);
     
     triggerRef stompRight = triggerRef(new stompNote);
-    midiTrigger::Settings stompRightSettings(10+channelOffset, ::right);
+    midiTrigger::Settings stompRightSettings(4+channelOffset, ::right);
     stompRightSettings.notes.push_back(56);
     stompRight->setSettings(stompRightSettings);
     
     triggerRef drop = triggerRef(new dropDatNote);
-    midiTrigger::Settings dropSettings(3);
+    midiTrigger::Settings dropSettings(6+channelOffset);
     dropSettings.notes.push_back(57);
     dropSettings.notes.push_back(60);
     drop->setSettings(dropSettings);
     
     triggerRef drumStompLeft = triggerRef(new stompNote);
-    midiTrigger::Settings drumpStompLeftSettings(3+channelOffset, ::left);
+    midiTrigger::Settings drumpStompLeftSettings(6+channelOffset, ::left);
     int drumpStompLeftNotes[] = {66, 58};
     drumpStompLeftSettings.notes.assign(drumpStompLeftNotes, END(drumpStompLeftNotes));
     drumStompLeft->setSettings(drumpStompLeftSettings);
     
     triggerRef drumStompRight = triggerRef(new stompNote);
-    midiTrigger::Settings drumStompRightSettings(3+channelOffset, ::right);
+    midiTrigger::Settings drumStompRightSettings(6+channelOffset, ::right);
     int drumStompRightNotes[] = {67, 59};
     drumStompRightSettings.notes.assign(drumStompRightNotes, END(drumStompRightNotes));
     drumStompRight->setSettings(drumStompRightSettings);

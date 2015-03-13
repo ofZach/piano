@@ -25,12 +25,12 @@ void ofApp::setup(){
     skeletons = kinect.getSkeletons();
     renderer.setup(skeletons, largeFont);
     
-    gui.setup("panel");
+//    gui.setup("panel");
     
     KS.setup();
     TV.setup();
     MM.setup();
-    MM2.setup(10);
+    MM2.setup(8);
     MM.TV = &TV;
     MM2.TV = &TV;
     
@@ -74,15 +74,19 @@ void ofApp::setup(){
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
     
-    MM.addToDebugParamGroup(debugView);
-    MM2.addToDebugParamGroup(debugView);
+    playerOne.setName("playerOne");
+    playerTwo.setName("playerTwo");
+    MM.addToDebugParamGroup(playerOne);
+    MM2.addToDebugParamGroup(playerTwo);
     
     
     gui.setup("controls", ofGetWidth()-300-10, 10, 300, ofGetHeight());
     gui.addPanel("main control", 4, false);
     gui.addPanel("Debug Controls", 4, false);
+    gui.addPanel("Player 1 Controls", 4, false);
     gui.addPanel("Thresholds Skeletons Player 1", 4, false);
     gui.addPanel("Thresholds History Player 1", 4, false);
+    gui.addPanel("Player 2 Controls", 4, false);
     gui.addPanel("Thresholds Skeletons Player 2", 4, false);
     gui.addPanel("Thresholds History Player 2", 4, false);
     gui.addPanel("Grid Control", 4, false);
@@ -93,35 +97,37 @@ void ofApp::setup(){
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
     
-    
     gui.setWhichPanel(2);
-    gui.setWhichColumn(0);
-    gui.addGroup(MM.graphsControl1);
-    
-    gui.setWhichPanel(3);
-    gui.setWhichColumn(0);
-    gui.addGroup(MM.graphsControl2);
-    
-    gui.setWhichPanel(4);
-    gui.setWhichColumn(0);
-    gui.addGroup(MM2.graphsControl2);
-    
-    gui.setWhichPanel(5);
-    gui.setWhichColumn(0);
-    gui.addGroup(MM2.graphsControl2);
-    
-    
-    gui.setWhichPanel(1);
     gui.setWhichColumn(0);
     gui.addGroup(debugView);
     
-//    gui.setWhichPanel(2);
-//    gui.setWhichColumn(0);
-//    gui.addGroup(MM.buttonControl);
-//    
-//    gui.setWhichPanel(3);
-//    gui.setWhichColumn(0);
-//    gui.addGroup(MM2.buttonControl);
+    gui.setWhichPanel(3);
+    gui.setWhichColumn(0);
+    gui.addGroup(playerOne);
+    
+    
+    gui.setWhichPanel(4);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM.graphsControl1);
+    
+    gui.setWhichPanel(5);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM.graphsControl2);
+    
+    gui.setWhichPanel(6);
+    gui.setWhichColumn(0);
+    gui.addGroup(playerTwo);
+    
+    gui.setWhichPanel(7);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM2.graphsControl2);
+    
+    gui.setWhichPanel(8);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM2.graphsControl2);
+    
+    
+
     
     
     status = "first frame";
