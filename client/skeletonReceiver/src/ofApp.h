@@ -58,6 +58,11 @@ public:
     ofParameter <bool> drawAnalyzer;
     ofParameter <bool> drawBoundingCube;
     
+    
+    ofParameterGroup playerOne;
+    ofParameterGroup playerTwo;
+    
+    
     ofParameterGroup dataPlayer;
     ofParameter <bool> bUseUdpPlayer;
     ofParameter <bool> bLoadNewUDP;
