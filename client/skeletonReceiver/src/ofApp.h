@@ -105,6 +105,7 @@ public:
     ofxControlPanel gui;
     
     ofCamera cam;
+    ofCamera debugCam;
 	
     ofMatrix4x4 mat;
     

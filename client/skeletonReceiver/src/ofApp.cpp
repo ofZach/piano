@@ -12,7 +12,7 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetLogLevel(OF_LOG_SILENT);
     
-    UDPR.setup();
+//    UDPR.setup();
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -157,6 +157,10 @@ void ofApp::setup(){
     bodyDropTimer = ofGetElapsedTimeMillis();
     
         TV.setStagePos(stageX, stageY, stageZ, stageSize);
+    
+    
+    debugCam.setPosition(0, 500, -1000);
+    debugCam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
 }
 
 
@@ -170,18 +174,18 @@ void ofApp::update(){
     TV.setStagePos(stageX, stageY, stageZ, stageSize);
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
-    if (bLoadNewUDP == true){
-        string folder = ofSystemLoadDialog("", true).getPath();
-        if (folder != ""){
-            UDPR.parseFolder(folder);
-        }
-        bLoadNewUDP = false;
-    }
-    
-    if (bUseUdpPlayer){
-        UDPR.update();
-        udpDuration.set(UDPR.pct);
-    }
+//    if (bLoadNewUDP == true){
+//        string folder = ofSystemLoadDialog("", true).getPath();
+//        if (folder != ""){
+//            UDPR.parseFolder(folder);
+//        }
+//        bLoadNewUDP = false;
+//    }
+//    
+//    if (bUseUdpPlayer){
+//        UDPR.update();
+//        udpDuration.set(UDPR.pct);
+//    }
     
     centerPoint.set(centerX, centerY, centerZ);
     centerButton.setPosition(centerX, centerY, centerZ);
@@ -214,9 +218,7 @@ void ofApp::update(){
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
     
-    
-    
-    
+
     kinect.update();
     
     if (skeletons->size() >= 1){
@@ -291,15 +293,15 @@ void ofApp::draw(){
     
     ofEnableAlphaBlending();
     fooFbo.begin();
+    ofClear(0, 0, 0);
     ofBackground(0, 0, 0);
-    //ofClear(0, 0, 0);
-    cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
+    debugCam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
+    ofPushStyle();
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
     ofPushMatrix();
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
-
     ofPopMatrix();
     
     
@@ -309,33 +311,18 @@ void ofApp::draw(){
     ofTranslate(stageX-stageSize/2.0, stageY-stageSize/2.0, stageZ);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
-    
-    //    ofPushMatrix();
-    //    ofTranslate(centerPoint);
+    ofSetColor(255,255,255,127);
     ofDrawAxis(50);
-    //    ofPopMatrix();
-    ofLine( ofPoint(0,0), ofPoint(800,0));
-    
-    
+
     
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
-        if(drawSkeleton){
-            bodyMap[iter->getBodyId()].draw();
-        }
-        if(drawAnalyzer){
-            bodyMap[iter->getBodyId()].drawDebug(drawBoundingCube);
-        }
+        ofPushStyle();
+        bodyMap[iter->getBodyId()].draw();
+        ofPopStyle();
     }
-    
-    centerButton.draw();
-    
-    
-    MM.drawInScene();
-    MM2.drawInScene();
-    
-    switchMode.draw();
-    
-    cam.end();
+
+    ofPopStyle();
+    debugCam.end();
     
     
     

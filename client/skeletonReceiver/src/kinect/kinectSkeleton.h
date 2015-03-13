@@ -146,7 +146,7 @@ public:
     
     void draw(){
         ofPushStyle();
-        ofSpherePrimitive primitve(10,10);
+        ofSpherePrimitive primitve(5,10);
         ofVboMesh mesh = primitve.getMesh();
         for (int i = 0; i < pts.size(); i++){
             
