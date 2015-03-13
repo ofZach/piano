@@ -12,7 +12,8 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetLogLevel(OF_LOG_SILENT);
     
-//    UDPR.setup();
+    //UDPR.setup();
+    setupGUI();
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -38,6 +39,23 @@ void ofApp::setup(){
     MM.TV = &TV;
     MM2.TV = &TV;
     
+    allocateFbos();
+    
+
+    bodyDropTimer = ofGetElapsedTimeMillis();
+    
+        TV.setStagePos(stageX, stageY, stageZ, stageSize);
+    
+    
+    debugCam.setPosition(0, 500, -1000);
+    debugCam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
+    
+    
+}
+
+
+
+void ofApp::setupGUI(){
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
     skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
@@ -147,63 +165,22 @@ void ofApp::setup(){
     
     gui.loadSettings("settings.xml");
     
-    
-    
-    fooFbo.allocate(1024, 728, GL_RGBA, 4);
-    fooFbo.begin();
-    ofClear(0, 0, 0, 0);
-    fooFbo.end();
-    
-    bodyDropTimer = ofGetElapsedTimeMillis();
-    
-        TV.setStagePos(stageX, stageY, stageZ, stageSize);
-    
-    
-    debugCam.setPosition(0, 500, -1000);
-    debugCam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
 }
 
-
-
-
+void ofApp::allocateFbos(){
+    debugFbo.allocate(ofGetWindowWidth()/4, ofGetWindowHeight()/2, GL_RGBA, 4);
+    debugFbo.begin();
+    ofClear(0, 0, 0, 0);
+    debugFbo.end();
+}
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    gui.update();
-    TV.setStagePos(stageX, stageY, stageZ, stageSize);
-    ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    oscWorkhorse();
+    updateGUI();
     
-//    if (bLoadNewUDP == true){
-//        string folder = ofSystemLoadDialog("", true).getPath();
-//        if (folder != ""){
-//            UDPR.parseFolder(folder);
-//        }
-//        bLoadNewUDP = false;
-//    }
-//    
-//    if (bUseUdpPlayer){
-//        UDPR.update();
-//        udpDuration.set(UDPR.pct);
-//    }
-    
-    centerPoint.set(centerX, centerY, centerZ);
-    centerButton.setPosition(centerX, centerY, centerZ);
-    
-    switchMode.setRadius(buttonRadius);
-    switchMode.setApproachScale(buttonApproach);
-    switchMode.setTriggerScale(buttonTriggerScale);
-    switchMode.setPosition(buttonX, buttonY, buttonZ);
-    
-    
-    mat.makeIdentityMatrix();
-    ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
-    mat.glTranslate(offsetPt);
-    mat.glRotate(rotationX, 1,0,0);
-    mat.glRotate(rotationY, 0,1,0);
-    mat.glRotate(rotationZ, 0,0,1);
-    ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
-    mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
+
     
     
     //update the camera
@@ -219,7 +196,7 @@ void ofApp::update(){
     cam.lookAt( ofPoint(0,0,0));
     
 
-    kinect.update();
+
     
     if (skeletons->size() >= 1){
         int index = 0;
@@ -282,7 +259,49 @@ void ofApp::update(){
 
 }
 
+void ofApp::updateGUI(){
+    gui.update();
+    
+    ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    
+    TV.setStagePos(stageX, stageY, stageZ, stageSize);
 
+
+    centerPoint.set(centerX, centerY, centerZ);
+    centerButton.setPosition(centerX, centerY, centerZ);
+    
+    switchMode.setRadius(buttonRadius);
+    switchMode.setApproachScale(buttonApproach);
+    switchMode.setTriggerScale(buttonTriggerScale);
+    switchMode.setPosition(buttonX, buttonY, buttonZ);
+    
+    
+    mat.makeIdentityMatrix();
+    ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
+    mat.glTranslate(offsetPt);
+    mat.glRotate(rotationX, 1,0,0);
+    mat.glRotate(rotationY, 0,1,0);
+    mat.glRotate(rotationZ, 0,0,1);
+    ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
+    mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
+}
+
+void ofApp::oscWorkhorse(){
+    if (bLoadNewUDP == true){
+        string folder = ofSystemLoadDialog("", true).getPath();
+        if (folder != ""){
+            UDPR.parseFolder(folder);
+        }
+        bLoadNewUDP = false;
+    }
+    
+    if (bUseUdpPlayer){
+        UDPR.update();
+        udpDuration.set(UDPR.pct);
+    }
+    kinect.update();
+
+}
 
 
 
@@ -292,10 +311,10 @@ void ofApp::draw(){
     ofBackground(0, 0, 0);
     
     ofEnableAlphaBlending();
-    fooFbo.begin();
+    debugFbo.begin();
     ofClear(0, 0, 0);
     ofBackground(0, 0, 0);
-    debugCam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
+    debugCam.begin(ofRectangle(ofVec2f(0, 0), debugFbo.getWidth(), debugFbo.getHeight()));
     ofPushStyle();
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
@@ -327,11 +346,11 @@ void ofApp::draw(){
     
     
     ofClearAlpha();
-    fooFbo.end();
+    debugFbo.end();
     ofSetLineWidth(1);
     
     ofSetColor(255,255,255);
-    fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
+    debugFbo.draw((ofGetWidth()-debugFbo.getWidth())/2.0, (ofGetHeight()-debugFbo.getHeight())/2.0);
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
         bodyMap[iter->getBodyId()].drawHistory();
     }
@@ -405,7 +424,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    
+    allocateFbos();
 }
 
 //--------------------------------------------------------------

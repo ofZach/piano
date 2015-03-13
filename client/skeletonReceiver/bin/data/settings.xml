@@ -59,7 +59,7 @@
 </skeleton_transform>
 <dataPlayer>
     <use_udp_player>
-        <val_0>1</val_0>
+        <val_0>0</val_0>
     </use_udp_player>
     <load_udp>
         <val_0>0</val_0>
@@ -90,10 +90,10 @@
 </camera_control>
 <DebugView>
     <Draw_Skeleton>
-        <val_0>0</val_0>
+        <val_0>1</val_0>
     </Draw_Skeleton>
     <Draw_Analyzer>
-        <val_0>1</val_0>
+        <val_0>0</val_0>
     </Draw_Analyzer>
     <Draw_Bounding_Cube>
         <val_0>0</val_0>

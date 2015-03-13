@@ -24,6 +24,11 @@ public:
     void update();
     void draw();
 	void exit();
+    
+    void setupGUI();
+    void updateGUI();
+    void oscWorkhorse();
+    void allocateFbos();
 
     void keyPressed(int key);
     void keyReleased(int key);
@@ -94,7 +99,7 @@ public:
     ofParameter<float> buttonTriggerScale;
     ofParameter<float> buttonRadius;
     bool changeTriggered;
-    ofFbo fooFbo;
+    ofFbo debugFbo;
 
        
     musicMaker MM;
