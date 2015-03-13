@@ -30,7 +30,7 @@ void ofApp::setup(){
     KS.setup();
     TV.setup();
     MM.setup();
-    MM2.setup(10);
+    MM2.setup(8);
     MM.TV = &TV;
     MM2.TV = &TV;
     
