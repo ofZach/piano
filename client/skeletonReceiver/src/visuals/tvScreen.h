@@ -363,8 +363,7 @@ public:
     
     void draw( ofRectangle drawRect){
         ofSetColor(255,255,255);
-        //
-        //        tvScreenView.draw(drawRect);
+        tvSkeletonView.draw(drawRect);
     }
     
     ofFbo tvSkeletonView;

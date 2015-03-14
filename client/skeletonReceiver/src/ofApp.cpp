@@ -38,6 +38,7 @@ void ofApp::setup(){
     MM2.setup(midiOut, 8);
     MM.TV = &TV;
     MM2.TV = &TV;
+    floorProjections.setup();
     
     allocateFbos();
     
@@ -168,7 +169,7 @@ void ofApp::setupGUI(){
 }
 
 void ofApp::allocateFbos(){
-    debugFbo.allocate(ofGetWindowWidth()/4, ofGetWindowHeight()/2, GL_RGBA, 4);
+    debugFbo.allocate(ofGetWindowWidth()/2, ofGetWindowHeight()/2, GL_RGBA);
     debugFbo.begin();
     ofClear(0, 0, 0, 0);
     debugFbo.end();
@@ -180,7 +181,6 @@ void ofApp::update(){
     oscWorkhorse();
     updateGUI();
     
-
     
     
     //update the camera
@@ -350,19 +350,23 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     
     ofSetColor(255,255,255);
-    debugFbo.draw((ofGetWidth()-debugFbo.getWidth())/2.0, (ofGetHeight()-debugFbo.getHeight())/2.0);
+    debugFbo.draw(0, 0, debugFbo.getWidth(), debugFbo.getHeight());
+
+
+    TV.draw(ofRectangle(ofGetWindowWidth()/2,0,TV.tvSkeletonView.getWidth()/2, TV.tvSkeletonView.getHeight()/2));
+    floorProjections.floor.draw(0, ofGetWindowHeight()/2, floorProjections.floor.getWidth()/2, floorProjections.floor.getHeight()/2);
+    
+    
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
         bodyMap[iter->getBodyId()].drawHistory();
     }
-    
-    gui.draw();
-    
+
     MM.drawOverScene();
     MM2.drawOverScene();
     
+    gui.draw();
     
-    TV.draw(ofRectangle(0,0,1920/2, 1080/2));
-    
+
     ofDisableAlphaBlending();
     
 }
