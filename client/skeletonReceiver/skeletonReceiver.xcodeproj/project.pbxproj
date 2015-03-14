@@ -221,6 +221,7 @@
 		C70D8946940288799E82131E /* ofxSliderGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSliderGroup.h; path = ../../../addons/ofxGui/src/ofxSliderGroup.h; sourceTree = SOURCE_ROOT; };
 		C80A46921A76A6BE00BC0545 /* ofxHistoryPlot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxHistoryPlot.cpp; sourceTree = "<group>"; };
 		C80A46931A76A6BE00BC0545 /* ofxHistoryPlot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxHistoryPlot.h; sourceTree = "<group>"; };
+		C83C40CB1AB494B700879893 /* LocalAddressGrabber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalAddressGrabber.h; sourceTree = "<group>"; };
 		C83F997A1A827B5C00207A6C /* ofxSyphon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSyphon.h; sourceTree = "<group>"; };
 		C83F997B1A827B5C00207A6C /* ofxSyphonClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSyphonClient.h; sourceTree = "<group>"; };
 		C83F997C1A827B5C00207A6C /* ofxSyphonClient.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonClient.mm; sourceTree = "<group>"; };
@@ -932,6 +933,7 @@
 				FD5DA1801A8066A900FE6303 /* fixed_deque.h */,
 				FD5DA1811A8066A900FE6303 /* Graph.cpp */,
 				FD5DA1821A8066A900FE6303 /* Graph.h */,
+				C83C40CB1AB494B700879893 /* LocalAddressGrabber.h */,
 			);
 			path = utils;
 			sourceTree = "<group>";

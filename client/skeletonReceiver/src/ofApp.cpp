@@ -1,5 +1,5 @@
 #include "ofApp.h"
-
+#include "LocalAddressGrabber.h"
 
 void ofApp::exit(){
     MM.exit();
@@ -10,7 +10,11 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
-    ofSetLogLevel(OF_LOG_SILENT);
+//    ofSetLogLevel(OF_LOG_SILENT);
+    
+
+    LocalAddressGrabber IP;
+    ofLog()<<IP.getIpAddress()<<endl;
     
     UDPR.setup();
     setupGUI();
@@ -24,7 +28,7 @@ void ofApp::setup(){
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
-    renderer.setup(skeletons, largeFont);
+//    renderer.setup(skeletons, largeFont);
     
     
     
@@ -36,8 +40,7 @@ void ofApp::setup(){
     TV.setup();
     MM.setup(midiOut);
     MM2.setup(midiOut, 8);
-    MM.TV = &TV;
-    MM2.TV = &TV;
+
     floorProjections.setup();
     
     allocateFbos();

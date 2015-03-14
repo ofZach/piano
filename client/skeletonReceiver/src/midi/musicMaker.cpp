@@ -33,7 +33,7 @@ void musicMaker::setupGraphs() {
     for (int i = 0; i < 4; i++){
         graphs.push_back(Graph());
         graphs.back().setup(ofToString(i));
-        graphs.back().setSize(100, 50);
+        graphs.back().setSize(100, 25);
         graphs.back().setMinMaxRange(0, 1);
         graphs.back().setBidirectional(false);
         graphs.back().setThreshold(0);
@@ -179,11 +179,11 @@ void musicMaker::drawOverScene(){
     if(debugMode){
         
         for (int i = 0; i < 4; i++){
-            graphs[i].draw(350, i * 50);
+            graphs[i].draw(250, i * 25);
         }
         
         for (int i = 0; i < graphsForSkeleton.size(); i++){
-            graphsForSkeleton[i].draw(150, i*25);
+            graphsForSkeleton[i].draw(125, i*25);
         }
         
         for (int i = 0; i < graphsHistory.size(); i++){
@@ -198,9 +198,9 @@ void musicMaker::analyze(kinectBody & body) {
         updateMidiTriggers(body);
     }else{
         if(outputMode == 1){
-            jazzDrums.set(false);
-        }else{
             jazzDrums.set(true);
+        }else{
+            jazzDrums.set(false);
         }
         updateGraphs(body);
     }
@@ -288,8 +288,8 @@ void musicMaker::updateGraphs(kinectBody &body) {
                     }
                     
                     if(triggers[body.historyPlots[i]->varName]){
-                        ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
-                        //((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+                        ((ofApp*)ofGetAppPtr())->addLineTrace();
+                        lastTrigger.time = ofGetElapsedTimef();
                     }
                     
                 }
@@ -338,8 +338,9 @@ void musicMaker::updateGraphs(kinectBody &body) {
                                 
                                 if(triggers[nameOfPt]){
                                     ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
-                                    ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-                                    ((ofApp*)ofGetAppPtr())->TV.addImpluse();
+                                    ((ofApp*)ofGetAppPtr())->triggerTriangle();
+                                    ((ofApp*)ofGetAppPtr())->addImpulse();
+                                    lastTrigger.time = ofGetElapsedTimef();
                                 }
                             }
                         }
@@ -363,30 +364,34 @@ void musicMaker::updateGraphs(kinectBody &body) {
         
         if(graphs[0].getTriggered()  && !triggers["kick_Left"]){
             skeletonMidi.triggerKick(60, graphs[0].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-            ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+            ((ofApp*)ofGetAppPtr())->triggerTriangle();
+            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            lastTrigger.time = ofGetElapsedTimef();
             triggers["kick_Left"] = true;
         }else if(!graphs[0].getTriggered()  && triggers["kick_Left"]){
             triggers["kick_Left"] = false;
         }
         if(graphs[1].getTriggered()  && !triggers["kick_Right"]){
             skeletonMidi.triggerKick(61, graphs[1].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-            ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+            ((ofApp*)ofGetAppPtr())->triggerTriangle();
+            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[1].getTriggered()  && triggers["kick_Right"]){
             triggers["kick_Right"] = false;
         }
         if(graphs[2].getTriggered()&& !triggers["punch_Left"]){
             skeletonMidi.triggerPunch(62, graphs[2].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-            ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+            ((ofApp*)ofGetAppPtr())->triggerTriangle();
+            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[2].getTriggered()  && triggers["punch_Left"]){
             triggers["punch_Left"] = false;
         }
         if(graphs[3].getTriggered() && !triggers["punch_Right"]){
             skeletonMidi.triggerPunch(63, graphs[3].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->floorProjections.triggerTriangles();
-            ((ofApp*)ofGetAppPtr())->floorProjections.addLineTrace();
+            ((ofApp*)ofGetAppPtr())->triggerTriangle();
+            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[3].getTriggered() && triggers["punch_Right"]){
             triggers["punch_Right"] = false;
         }
@@ -426,8 +431,10 @@ void musicMaker::clearBodies(){
         t->reset();
     }
 }
+Trigger musicMaker::lastTriggeredNote(){
+    return lastTrigger;
+}
 
 void musicMaker::outputmodeChanged(int &mode) {
     clearBodies();
-//    outputMode = mode;
 }
