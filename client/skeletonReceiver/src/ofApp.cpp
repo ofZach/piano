@@ -12,7 +12,7 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetLogLevel(OF_LOG_SILENT);
     
-    //UDPR.setup();
+    UDPR.setup();
     setupGUI();
     
     ofTrueTypeFont smallFont, largeFont;
@@ -42,10 +42,10 @@ void ofApp::setup(){
     
     allocateFbos();
     
-
+    
     bodyDropTimer = ofGetElapsedTimeMillis();
     
-        TV.setStagePos(stageX, stageY, stageZ, stageSize);
+    TV.setStagePos(stageX, stageY, stageZ, stageSize);
     
     
     debugCam.setPosition(0, 500, -1000);
@@ -195,10 +195,11 @@ void ofApp::update(){
     cam.setPosition(position);
     cam.lookAt( ofPoint(0,0,0));
     
-
-
     
-    if (skeletons->size() >= 1){
+    kinect.update();
+    
+    
+    if (skeletons->size() > 0){
         int index = 0;
         float dist = FLT_MAX;
         
@@ -208,21 +209,20 @@ void ofApp::update(){
         //                dist = ((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length());
         //            }
         //        }
-        
         for(int i = 0; i < skeletons->size(); i++){
             KS.setFromSkeleton(skeletons->at(i), mat);
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
             bool bNewFrame = body.addSkeleton(KS);
             
-//            cout<<i<<endl;
+            //            cout<<i<<endl;
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
                 if(i == 0){
-//                    cout<<"update player one"<<endl;
+                    //                    cout<<"update player one"<<endl;
                     MM.analyze(body);
                 }else{
-//                    cout<<"update player two"<<endl;
+                    //                    cout<<"update player two"<<endl;
                     MM2.analyze(body);
                 }
                 TV.update(&body);
@@ -236,6 +236,7 @@ void ofApp::update(){
                 //                switchMode.update(feet);
             }
         }
+        
     }else {
         
         TV.update(NULL);
@@ -256,7 +257,7 @@ void ofApp::update(){
     
     
     TV.drawIntoFbo(cam);
-
+    
 }
 
 void ofApp::updateGUI(){
@@ -265,8 +266,8 @@ void ofApp::updateGUI(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     TV.setStagePos(stageX, stageY, stageZ, stageSize);
-
-
+    
+    
     centerPoint.set(centerX, centerY, centerZ);
     centerButton.setPosition(centerX, centerY, centerZ);
     
@@ -299,8 +300,6 @@ void ofApp::oscWorkhorse(){
         UDPR.update();
         udpDuration.set(UDPR.pct);
     }
-    kinect.update();
-
 }
 
 
@@ -332,14 +331,14 @@ void ofApp::draw(){
     ofPopMatrix();
     ofSetColor(255,255,255,127);
     ofDrawAxis(50);
-
+    
     
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
         ofPushStyle();
         bodyMap[iter->getBodyId()].draw();
         ofPopStyle();
     }
-
+    
     ofPopStyle();
     debugCam.end();
     
@@ -351,22 +350,24 @@ void ofApp::draw(){
     
     ofSetColor(255,255,255);
     debugFbo.draw(0, 0, debugFbo.getWidth(), debugFbo.getHeight());
-
-
+    
+    
     TV.draw(ofRectangle(ofGetWindowWidth()/2,0,TV.tvSkeletonView.getWidth()/2, TV.tvSkeletonView.getHeight()/2));
     floorProjections.floor.draw(0, ofGetWindowHeight()/2, floorProjections.floor.getWidth()/2, floorProjections.floor.getHeight()/2);
     
     
-    for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
-        bodyMap[iter->getBodyId()].drawHistory();
-    }
-
+    
+    
+        for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+            bodyMap[iter->getBodyId()].drawHistory();
+        }
+    
     MM.drawOverScene();
     MM2.drawOverScene();
     
     gui.draw();
     
-
+    
     ofDisableAlphaBlending();
     
 }

@@ -65,12 +65,12 @@ public:
     bool bDrawHairyMan;
     
     void setup () {
-        tvSkeletonView.allocate(1920, 1080, GL_RGBA, 4);
+        tvSkeletonView.allocate(1280, 720, GL_RGBA, 4);
         tvSkeletonView.begin();
         ofClear(0,0,0,255);
         tvSkeletonView.end();
         
-        tvGridView.allocate(1920, 1080, GL_RGBA, 4);
+        tvGridView.allocate(1280, 720, GL_RGBA, 4);
         tvGridView.begin();
         ofClear(0,0,0,255);
         tvGridView.end();
@@ -362,8 +362,13 @@ public:
     }
     
     void draw( ofRectangle drawRect){
+        ofPushStyle();
         ofSetColor(255,255,255);
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+        tvGridView.draw(drawRect);
         tvSkeletonView.draw(drawRect);
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+
     }
     
     ofFbo tvSkeletonView;
