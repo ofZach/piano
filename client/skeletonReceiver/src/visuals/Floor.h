@@ -17,7 +17,7 @@ public:
     void update(ofEventArgs &args);
     void draw(ofEventArgs &args);
     void keyPressed(ofKeyEventArgs &key);
-
+    void drawScene();
     void addLineTrace();
     void triggerTriangles();
     

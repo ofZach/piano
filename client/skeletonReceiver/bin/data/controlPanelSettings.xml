@@ -1,12 +1,12 @@
 <Floor>
     <scale>
-        <val_0>8.24846</val_0>
+        <val_0>8.43885</val_0>
     </scale>
     <horizOffset>
-        <val_0>611.539</val_0>
+        <val_0>657.692</val_0>
     </horizOffset>
     <verticalOffset>
-        <val_0>484.615</val_0>
+        <val_0>473.077</val_0>
     </verticalOffset>
     <speed>
         <val_0>0.0835</val_0>
@@ -18,6 +18,6 @@
         <val_0>100</val_0>
     </lineDistance>
     <bShowDots>
-        <val_0>0</val_0>
+        <val_0>1</val_0>
     </bShowDots>
 </Floor>

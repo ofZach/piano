@@ -24,6 +24,11 @@ public:
     void update();
     void draw();
 	void exit();
+    
+    void setupGUI();
+    void updateGUI();
+    void oscWorkhorse();
+    void allocateFbos();
 
     void keyPressed(int key);
     void keyReleased(int key);
@@ -57,6 +62,10 @@ public:
     ofParameter <bool> drawSkeleton;
     ofParameter <bool> drawAnalyzer;
     ofParameter <bool> drawBoundingCube;
+    ofParameter<float> stageX;
+    ofParameter<float> stageY;
+    ofParameter<float> stageZ;
+    ofParameter<float> stageSize;
     
     
     ofParameterGroup playerOne;
@@ -90,7 +99,7 @@ public:
     ofParameter<float> buttonTriggerScale;
     ofParameter<float> buttonRadius;
     bool changeTriggered;
-    ofFbo fooFbo;
+    ofFbo debugFbo;
 
        
     musicMaker MM;
@@ -101,6 +110,7 @@ public:
     ofxControlPanel gui;
     
     ofCamera cam;
+    ofCamera debugCam;
 	
     ofMatrix4x4 mat;
     

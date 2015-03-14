@@ -197,7 +197,7 @@ void musicMaker::drawOverScene(){
     }
 }
 
-void musicMaker::analyze (kinectBody & body) {
+void musicMaker::analyze(kinectBody & body) {
     
     if(outputMode == 0){
         updateMidiTriggers(body);

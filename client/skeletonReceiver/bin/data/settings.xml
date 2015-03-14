@@ -59,7 +59,7 @@
 </skeleton_transform>
 <dataPlayer>
     <use_udp_player>
-        <val_0>1</val_0>
+        <val_0>0</val_0>
     </use_udp_player>
     <load_udp>
         <val_0>0</val_0>
@@ -70,7 +70,7 @@
 </dataPlayer>
 <camera_control>
     <camera_height>
-        <val_0>0</val_0>
+        <val_0>976.923</val_0>
     </camera_height>
     <camera_radius>
         <val_0>1207.69</val_0>
@@ -90,10 +90,10 @@
 </camera_control>
 <DebugView>
     <Draw_Skeleton>
-        <val_0>0</val_0>
+        <val_0>1</val_0>
     </Draw_Skeleton>
     <Draw_Analyzer>
-        <val_0>1</val_0>
+        <val_0>0</val_0>
     </Draw_Analyzer>
     <Draw_Bounding_Cube>
         <val_0>0</val_0>
@@ -140,6 +140,18 @@
     <Velocity_Cutoff>
         <val_0>1.69923</val_0>
     </Velocity_Cutoff>
+    <Stage_X>
+        <val_0>0</val_0>
+    </Stage_X>
+    <Stage_Y>
+        <val_0>0</val_0>
+    </Stage_Y>
+    <Stage_Z>
+        <val_0>0</val_0>
+    </Stage_Z>
+    <Stage_Size>
+        <val_0>496.154</val_0>
+    </Stage_Size>
 </DebugView>
 <button_control>
     <Draw_Buttons>
@@ -307,3 +319,91 @@
 <History_Threshold-24>
     <val_0>0</val_0>
 </History_Threshold-24>
+<playerOne>
+    <Start_Note>
+        <val_0>36</val_0>
+    </Start_Note>
+    <Num_Note>
+        <val_0>16</val_0>
+    </Num_Note>
+    <Smooth_Up_History>
+        <val_0>0</val_0>
+    </Smooth_Up_History>
+    <Smooth_Down_History>
+        <val_0>0</val_0>
+    </Smooth_Down_History>
+    <Smooth_Down_Skeleton>
+        <val_0>0</val_0>
+    </Smooth_Down_Skeleton>
+    <Smooth_Up_Skeleton>
+        <val_0>0</val_0>
+    </Smooth_Up_Skeleton>
+    <JazzDrums>
+        <val_0>0</val_0>
+    </JazzDrums>
+    <Send_All_Triggers>
+        <val_0>0</val_0>
+    </Send_All_Triggers>
+    <Draw_Graphs>
+        <val_0>0</val_0>
+    </Draw_Graphs>
+    <Body_Drop_Time>
+        <val_0>500</val_0>
+    </Body_Drop_Time>
+    <Output>
+        <val_0>0</val_0>
+    </Output>
+    <Percentile>
+        <val_0>0.75</val_0>
+    </Percentile>
+    <ThresholdSmoothing>
+        <val_0>0.1</val_0>
+    </ThresholdSmoothing>
+    <Velocity_Cutoff>
+        <val_0>1</val_0>
+    </Velocity_Cutoff>
+</playerOne>
+<playerTwo>
+    <Start_Note>
+        <val_0>36</val_0>
+    </Start_Note>
+    <Num_Note>
+        <val_0>16</val_0>
+    </Num_Note>
+    <Smooth_Up_History>
+        <val_0>0</val_0>
+    </Smooth_Up_History>
+    <Smooth_Down_History>
+        <val_0>0</val_0>
+    </Smooth_Down_History>
+    <Smooth_Down_Skeleton>
+        <val_0>0</val_0>
+    </Smooth_Down_Skeleton>
+    <Smooth_Up_Skeleton>
+        <val_0>0</val_0>
+    </Smooth_Up_Skeleton>
+    <JazzDrums>
+        <val_0>0</val_0>
+    </JazzDrums>
+    <Send_All_Triggers>
+        <val_0>0</val_0>
+    </Send_All_Triggers>
+    <Draw_Graphs>
+        <val_0>0</val_0>
+    </Draw_Graphs>
+    <Body_Drop_Time>
+        <val_0>500</val_0>
+    </Body_Drop_Time>
+    <Output>
+        <val_0>0</val_0>
+    </Output>
+    <Percentile>
+        <val_0>0.75</val_0>
+    </Percentile>
+    <ThresholdSmoothing>
+        <val_0>0.1</val_0>
+    </ThresholdSmoothing>
+    <Velocity_Cutoff>
+        <val_0>1</val_0>
+    </Velocity_Cutoff>
+</playerTwo>
