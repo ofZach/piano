@@ -2,7 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    view.setup(ofRectangle(0, 0, 1280, 800));
+    view.setup(ofRectangle(ofGetWindowWidth(), 0, 1280, 800));
+    view.setMainView(true);
 }
 
 //--------------------------------------------------------------
