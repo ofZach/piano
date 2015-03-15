@@ -16,11 +16,14 @@ public:
     ~Floor();
     void setup();
     void update();
-    void draw();
+    void draw(float x, float y, float w, float h);
     void drawScene();
     void addLineTrace();
     void triggerTriangles();
-    void setParamterGroup(ofParameterGroup& squareOptions);
+    void setParamterGroup(ofParameterGroup* squareOptions);
+    float getWidth();
+    float getHeight();
+    
     //Floor Grid vars
     
     ofParameterGroup *squareOptions;

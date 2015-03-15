@@ -127,8 +127,15 @@ void Floor::setup(){
 }
 
 
-void Floor::setParamterGroup(ofParameterGroup& squareOptions){
-    this->squareOptions = &squareOptions;
+float Floor::getWidth(){
+    return floor.getHeight();
+}
+float Floor::getHeight(){
+    return floor.getHeight();
+}
+
+void Floor::setParamterGroup(ofParameterGroup* squareOptions){
+    this->squareOptions = squareOptions;
 }
 
 void Floor::update(){
@@ -315,7 +322,7 @@ void Floor::update(){
     ofClear(0, 0, 0, 0);
     ofPushMatrix();
     ofTranslate(floor.getWidth()/2, floor.getHeight()/2);
-    if (squareOptions->getFloat("bShowDots")){
+    if (squareOptions->getBool("bShowDots")){
         for (int i = 0; i < pts.size(); i++){
             ofCircle(pts[i], 3);
         }
@@ -339,9 +346,7 @@ void Floor::update(){
 
         ofCircle(buttonPoints[i], 3);
     }
-    
-    
-    
+
     ofPopMatrix();
     ofPopStyle();
     floor.end();
@@ -379,6 +384,6 @@ void Floor::triggerTriangles(){
     }
 }
 
-void Floor::draw(){
-    floor.draw(0, 0, floor.getWidth(), floor.getHeight());
+void Floor::draw(float x, float y, float w, float h){
+    floor.draw(x, y, w, h);
 }

@@ -10,21 +10,29 @@
 #include "ofMain.h"
 #include "ofxControlPanel.h"
 #include "Floor.h"
+#include "ofxQuadWarp.h"
 class FloorView{
 public:
     FloorView();
     ~FloorView();
     
-    void setup();
+    void setup(ofRectangle viewport);
     void update();
     void draw();
     
+    void setupQuadWarp();
+    
     void setupGUI();
     
-    Floor floorTexture;
+    Floor p1Floor;
+    Floor p2Floor;
     ofxControlPanel gui;
-    //connectionMover  C;
+    
+    ofFbo projectionFbo;
+    ofRectangle projectionViewport;
     ofParameterGroup        squareOptions;
+
+    
     ofParameter <float>     scale;
     ofParameter <float>     horizOffset;
     ofParameter <float>     verticalOffset;
@@ -34,4 +42,11 @@ public:
     ofParameter <float>     lineDistance;
     ofParameter <float>     speed;
     
+
+    ofxQuadWarp warpOne;
+    ofxQuadWarp warpTwo;
+    
+    ofMatrix4x4 mat, mat2;
+    
+    ofParameter <bool> bSaveWarp;
 };
