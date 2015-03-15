@@ -8,6 +8,7 @@
 #pragma once
 #include "ofMain.h"
 #include "skeletonView.h"
+#include "FloorView.h"
 #include "midiView.h"
 #include "ofxMidi.h"
 #define N_SCENE 4
@@ -38,7 +39,8 @@ private:
     
     class skeletonView kinectSkeleton;
     class midiView musicMaker;
-
+    FloorView floor;
+    
     shared_ptr<ofxMidiOut> midiOut;
     
     int numPlayers;

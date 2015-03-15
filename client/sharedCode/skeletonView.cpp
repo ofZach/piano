@@ -137,7 +137,7 @@ void skeletonView::setupGUI(){
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
     
-    skeletonGui.setup("Skeleton Controls", 0, 0, 300, ofGetWindowHeight(), true, false);
+    skeletonGui.setup("Skeleton Controls", 0, ofGetHeight()-500, 300, 500, true, false);
     skeletonGui.setWhichPanel(0);
     skeletonGui.setWhichColumn(0);
     skeletonGui.addGroup(skeletonTransform);

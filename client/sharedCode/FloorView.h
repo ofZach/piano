@@ -19,10 +19,11 @@ public:
     void setup(ofRectangle viewport);
     void update();
     void draw();
-    
+    void drawDebug();
+    void drawProjections();
     void setupQuadWarp();
-    
     void setupGUI();
+    void setMainView(bool view);
     
     Floor p1Floor;
     Floor p2Floor;
@@ -31,6 +32,7 @@ public:
     ofFbo projectionFbo;
     ofRectangle projectionViewport;
     ofParameterGroup        squareOptions;
+    bool bMainView;
 
     
     ofParameter <float>     scale;

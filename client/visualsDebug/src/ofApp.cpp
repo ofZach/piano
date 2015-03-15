@@ -13,7 +13,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofBackground(0, 0, 0);
     view.draw();
+    view.drawDebug();
+    view.drawProjections();
 }
 
 //--------------------------------------------------------------

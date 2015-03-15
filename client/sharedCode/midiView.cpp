@@ -111,7 +111,7 @@ void midiView::setupGUI(){
     playerOne.setName("playerOne");
     
     musicMakerP1.addToDebugParamGroup(playerOne);
-    midiControlPanel.setup("Player One", 0, 0, 300, ofGetHeight(), true, false);
+    midiControlPanel.setup("Player One", 0, ofGetHeight()-500, 300, 500, true, false);
     midiControlPanel.addPanel("Player Two");
     midiControlPanel.setWhichPanel(0);
     midiControlPanel.setWhichColumn(0);

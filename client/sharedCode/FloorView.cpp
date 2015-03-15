@@ -26,14 +26,13 @@ void FloorView::setup(ofRectangle viewport){
     p1Floor.setParamterGroup(&squareOptions);
     p2Floor.setParamterGroup(&squareOptions);
     
-    
+    bMainView = false;
 }
 void FloorView::update(){
     gui.update();
     p1Floor.update();
     p2Floor.update();
-    warpOne.update();
-    warpTwo.update();
+
     
     if(bSaveWarp){
         bSaveWarp = !bSaveWarp;
@@ -43,28 +42,7 @@ void FloorView::update(){
     }
     
     
-    mat2 = warpTwo.getMatrix();
-    mat = warpOne.getMatrix();
-    
-}
-void FloorView::draw(){
-    ofBackground(0, 0, 0);
-    ofSetColor(ofColor::slateBlue);
-    ofRect(ofGetWindowWidth()-p1Floor.getWidth()/3-2.5, 0, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
-    ofSetColor(255, 255, 255);
-    p1Floor.draw(ofGetWindowWidth()-p1Floor.getWidth()/3, 2.5, p1Floor.getWidth()/3, p1Floor.getHeight()/3);
-    
-    ofSetColor(ofColor::slateBlue);
-    ofRect(ofGetWindowWidth()-p2Floor.getWidth()/3-2.5, p2Floor.getHeight()/3-2.5, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
-    ofSetColor(255, 255, 255);
-    p2Floor.draw(ofGetWindowWidth()-p2Floor.getWidth()/3, p2Floor.getHeight()/3, p2Floor.getWidth()/3, p2Floor.getHeight()/3);
-    
-    mat2 = warpTwo.getMatrix();
-    mat = warpOne.getMatrix();
-    
-    
-    
-    ofSetColor(255, 255, 255);
+
     
     projectionFbo.begin();
     ofClear(0, 0, 0, 0);
@@ -84,21 +62,65 @@ void FloorView::draw(){
     glPopMatrix();
     
     ofSetColor(ofColor::slateBlue);
-    warpTwo.draw();
-    warpOne.draw();
     ofSetColor(255, 255, 255);
     projectionFbo.end();
+}
+void FloorView::draw(){
+    if(bMainView){
+        if(!warpOne.isShowing()){
+            warpOne.show();
+            warpTwo.show();
+        }
+        drawDebug();
+    }else{
+        if(warpOne.isShowing()){
+            warpOne.hide();
+            warpTwo.hide();
+        }
+        projectionFbo.draw(0, 0);
+    }
+}
+
+void FloorView::drawDebug(){
+    
+    mat2 = warpTwo.getMatrix();
+    mat = warpOne.getMatrix();
+    
+    warpOne.update();
+    warpTwo.update();
+    
+    ofBackground(0, 0, 0);
+    ofSetColor(ofColor::slateBlue);
+    ofNoFill();
+    ofRect(ofGetWindowWidth()-p1Floor.getWidth()/3-2.5, 0, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
+    ofSetColor(255, 255, 255);
+    ofFill();
+    p1Floor.draw(ofGetWindowWidth()-p1Floor.getWidth()/3, 2.5, p1Floor.getWidth()/3, p1Floor.getHeight()/3);
+    
+    ofSetColor(ofColor::slateBlue);
+    ofNoFill();
+    ofRect(ofGetWindowWidth()-p2Floor.getWidth()/3-2.5, p2Floor.getHeight()/3+20-2.5, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
+    ofSetColor(255, 255, 255);
+    ofFill();
+    p2Floor.draw(ofGetWindowWidth()-p2Floor.getWidth()/3, p2Floor.getHeight()/3+20, p2Floor.getWidth()/3, p2Floor.getHeight()/3);
     
     projectionFbo.draw(0, 0);
+    
+    warpTwo.draw();
+    warpOne.draw();
+
+    ofSetColor(255, 255, 255);
     ofNoFill();
     ofSetColor(ofColor::slateBlue);
     ofRect(-2.5, -2.5, projectionViewport.width+5, projectionViewport.height+5);
     ofFill();
     ofSetColor(255, 255, 255);
-    projectionFbo.draw(projectionViewport);
-    
+
     gui.draw();
-    
+
+}
+void FloorView::drawProjections(){
+    projectionFbo.draw(projectionViewport);
 }
 
 void FloorView::setupGUI(){
@@ -127,7 +149,10 @@ void FloorView::setupGUI(){
     
     
     gui.loadSettings("floorTexture.xml");
-    
+}
+
+void FloorView::setMainView(bool view){
+    bMainView = view;
 }
 
 void FloorView::setupQuadWarp(){

@@ -55,10 +55,10 @@ void ViewRenderer::setup(int numPlayers){
     midiOut->openVirtualPort("OF Kinect");
     
     musicMaker.setup(this->numPlayers, midiOut);
+    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 800));
     
-    
-    skeletonView.allocate(1280, 720, GL_RGBA, 4);
-    midiView.allocate(1280, 720, GL_RGBA, 4);
+    skeletonView.allocate(1920, 1080, GL_RGBA, 4);
+    midiView.allocate(1920, 1080, GL_RGBA, 4);
     floorView.allocate(1920, 1080, GL_RGBA, 4);
     tvView.allocate(1920, 1080, GL_RGBA, 4);
     
@@ -87,6 +87,7 @@ void ViewRenderer::setup(int numPlayers){
 void ViewRenderer::update(){
     
     kinectSkeleton.update();
+    floor.update();
     
     if(numPlayers == 1){
         musicMaker.update(kinectSkeleton.getBody(0), NULL);
@@ -106,8 +107,7 @@ void ViewRenderer::update(){
     
     floorView.begin();
     ofClear(0, 0, 0);
-    ofSetColor(255, 0, 255);
-    ofRect(ofRectangle(0, 0, floorView.getWidth(), floorView.getHeight()));
+    floor.draw();
     floorView.end();
     
     tvView.begin();
@@ -138,6 +138,7 @@ void ViewRenderer::draw(){
         ofSetColor(255, 255, 255, 255);
         views[iMainView]->draw(viewMain);
     }
+    floor.drawProjections();
     
 //    ofDisableDepthTest();
     ofDisableAlphaBlending();
@@ -154,6 +155,11 @@ void ViewRenderer::setMainView(int i){
         musicMaker.setMainView(true);
     }else{
         musicMaker.setMainView(false);
+    }
+    if(iMainView == 2){
+        floor.setMainView(true);
+    }else{
+        floor.setMainView(false);
     }
 }
 ofRectangle* ViewRenderer::getViews(){
