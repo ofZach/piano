@@ -4,7 +4,6 @@
 #include "ofMain.h"
 #include "kinectSkeleton.h"
 #include "ofxHistoryPlot.h"
-#include "ofxMidi.h"
 
 class kinectBody {
     

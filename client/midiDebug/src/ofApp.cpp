@@ -1,0 +1,75 @@
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup(){
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Kinect");
+    midiView.setup(2, midiOut);
+}
+
+//--------------------------------------------------------------
+void ofApp::update(){
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y ){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseDragged(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::windowResized(int w, int h){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::gotMessage(ofMessage msg){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo){ 
+
+}
+
+void ofApp::addLineTrace(){
+    
+}
+
+void ofApp::addImpulse(){
+    
+}
+
+void ofApp::triggerTriangle(){
+    
+}

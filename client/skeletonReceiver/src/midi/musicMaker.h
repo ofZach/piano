@@ -9,9 +9,13 @@
 #include "ofxMidi.h"
 #include "midiTrigger.h"
 #include "kinectButton.h"
-#include "tvScreen.h"
 
 // I analyze and do midi
+
+struct Trigger{
+    float time;
+    int channel;
+};
 
 class musicMaker {
     
@@ -29,7 +33,8 @@ public:
 	void updateMidiTriggers(kinectBody &body);
 	void updateGraphs(kinectBody &body);
     void clearBodies();
-	
+    Trigger lastTriggeredNote();
+    
 	void outputmodeChanged(int& mode);
 	
     vector < Graph > graphs;
@@ -70,10 +75,11 @@ public:
 	vector<triggerRef> midiTriggers;
 	vector<triggerRef> drumMidiTriggers;
 	
-	tvScreen * TV;
-    
     vector<kinectButton> buttons;
     
     int channelOffset;
-        
+    
+    
+    Trigger lastTrigger;
+    
 };

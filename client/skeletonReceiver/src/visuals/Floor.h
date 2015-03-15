@@ -8,23 +8,25 @@
 
 #pragma once
 #include "ofMain.h"
-#include "ofxSyphon.h"
 #include "Grid.h"
-#include "ofxControlPanel.h"
+
 class Floor{
 public:
+    Floor();
+    ~Floor();
     void setup();
-    void update(ofEventArgs &args);
-    void draw(ofEventArgs &args);
-    void keyPressed(ofKeyEventArgs &key);
+    void update();
+    void draw(float x, float y, float w, float h);
     void drawScene();
     void addLineTrace();
     void triggerTriangles();
+    void setParamterGroup(ofParameterGroup* squareOptions);
+    float getWidth();
+    float getHeight();
     
     //Floor Grid vars
     
-    ofxControlPanel gui;
-    
+    ofParameterGroup *squareOptions;
     ofFbo floor;
     
     vector < ofPoint > pts;
@@ -35,19 +37,6 @@ public:
     vector < connectionMover > movers;
     vector < triangle > triangles;
     
-    
-    //connectionMover  C;
-    ofParameterGroup        squareOptions;
-    ofParameter <float>     scale;
-    ofParameter <float>     horizOffset;
-    ofParameter <float>     verticalOffset;
-    ofParameter <float>     verticalScaleFactor;
-    ofParameter <bool>      bShowDots;
-    ofParameter <float>     lightWeight;
-    ofParameter <float>     lineDistance;
-    ofParameter <float>     speed;
-    
-    ofxSyphonServer floorServer;
     
     unsigned long long lastTrigger;
     

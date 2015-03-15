@@ -8,53 +8,19 @@
 
 #include "Floor.h"
 
+Floor::Floor(){
+    
+}
+Floor::~Floor(){
+    
+}
+
 void Floor::setup(){
-    
-    gui.setup("Floor Controls", ofGetWidth()-600-10, 10, 300, 400);
-    
-    gui.setWhichPanel(0);
-    gui.setWhichColumn(0);
-    
-    ofParameterGroup p;
-    p.setName("Floor");
-    p.add(scale.set("scale", 1,0.1, 10.0));
-    p.add(horizOffset.set("horizOffset", 0, -1500, 1500));
-    p.add(verticalOffset.set("verticalOffset", 0, -1500, 1500));
-    
-    p.add(speed.set("speed", 0.1, 0.01, 0.5));
-    p.add(lightWeight.set("lightWeight", 1,1, 20.0));
-    p.add(lineDistance.set("lineDistance", 20, 1, 100));
-    p.add(bShowDots.set("bShowDots", true));
-    
-    
-    
-    gui.setWhichPanel(0);
-    gui.setWhichColumn(0);
-    gui.addGroup(p);
-    
-    gui.setupEvents();
-    gui.enableEvents();
-    
-    
-    gui.loadSettings("controlPanelSettings.xml");
-    
-    floor.allocate(1280, 1024, GL_RGBA, 4);
+
+    floor.allocate(1024, 1024, GL_RGBA, 4);
     floor.begin();
     ofClear(0, 0, 0, 0);
     floor.end();
-    //    connections.push_back( connection(4,1));
-    //    connections.push_back( connection(5,2));
-    //    connections.push_back( connection(6,3));
-    
-    
-    
-    
-    // .  .   .   .
-    //
-    //
-    //
-    //
-    
     
     float w = 100;
     
@@ -158,19 +124,24 @@ void Floor::setup(){
             }
         }
     }
-    
-    
-    ofAddListener(ofEvents().update, this, &Floor::update);
-    ofAddListener(ofEvents().draw, this, &Floor::draw);
-    ofAddListener(ofEvents().keyPressed, this, &Floor::keyPressed);
-    
-    floorServer.setName("Piano - Floor Projections");
 }
 
-void Floor::update(ofEventArgs &args){
+
+float Floor::getWidth(){
+    return floor.getHeight();
+}
+float Floor::getHeight(){
+    return floor.getHeight();
+}
+
+void Floor::setParamterGroup(ofParameterGroup* squareOptions){
+    this->squareOptions = squareOptions;
+}
+
+void Floor::update(){
     for (int i = 0; i < movers.size(); i++){
         
-        movers[i].speed = speed*1.00001;
+        movers[i].speed = squareOptions->getFloat("speed")*1.00001;
         movers[i].lineDistance = movers[i].lineDistance*0.99999;
         
     }
@@ -178,7 +149,7 @@ void Floor::update(ofEventArgs &args){
     
     for (int i = 0; i < buttonMovers.size(); i++){
         
-        buttonMovers[i].speed = speed*1.00001;
+        buttonMovers[i].speed = squareOptions->getFloat("speed")*1.00001;
         buttonMovers[i].lineDistance = buttonMovers[i].lineDistance*0.99999;
         
     }
@@ -232,8 +203,8 @@ void Floor::update(ofEventArgs &args){
     
     
     for (int i = 0; i < pts.size(); i++){
-        pts[i] *= scale*100;
-        pts[i] += ofPoint(horizOffset,verticalOffset);
+        pts[i] *= squareOptions->getFloat("scale")*100;
+        pts[i] += ofPoint(squareOptions->getFloat("horizOffset"),squareOptions->getFloat("verticalOffset"));
         
     }
     
@@ -245,14 +216,10 @@ void Floor::update(ofEventArgs &args){
     }
     
     for(int i = 0; i < buttonPoints.size(); i++){
-        buttonPoints[i] *= scale*100;
-        buttonPoints[i] += ofPoint(horizOffset,verticalOffset);
+        buttonPoints[i] *= squareOptions->getFloat("scale")*100;
+        buttonPoints[i] += ofPoint(squareOptions->getFloat("horizOffset"),squareOptions->getFloat("verticalOffset"));
     }
-    
-    
-    gui.update();
-    
-    
+
     
     for (int i = 0; i < movers.size(); i++){
         movers[i].update();
@@ -351,11 +318,11 @@ void Floor::update(ofEventArgs &args){
     ofEnableAlphaBlending();
     floor.begin();
     ofPushStyle();
-    ofSetLineWidth(lightWeight);
+    ofSetLineWidth(squareOptions->getFloat("lightWeight"));
     ofClear(0, 0, 0, 0);
     ofPushMatrix();
-    
-    if (bShowDots){
+    ofTranslate(floor.getWidth()/2, floor.getHeight()/2);
+    if (squareOptions->getBool("bShowDots")){
         for (int i = 0; i < pts.size(); i++){
             ofCircle(pts[i], 3);
         }
@@ -379,15 +346,11 @@ void Floor::update(ofEventArgs &args){
 
         ofCircle(buttonPoints[i], 3);
     }
-    
-    
-    
+
     ofPopMatrix();
     ofPopStyle();
     floor.end();
     ofDisableAlphaBlending();
-    
-    floorServer.publishTexture(&floor.getTextureReference());
 }
 
 void Floor::addLineTrace(){
@@ -406,8 +369,8 @@ void Floor::addLineTrace(){
     C.pts = &pts;
     C.setConnection(&(connections[which]), ofRandom(0,1) > 0.5 ? true : false);
     movers.push_back(C);
-    movers.back().lineDistance = lineDistance;
-    movers.back().speed = speed;
+    movers.back().lineDistance = squareOptions->getFloat("lineDistance");
+    movers.back().speed = squareOptions->getFloat("speed");
     
     
 }
@@ -421,19 +384,6 @@ void Floor::triggerTriangles(){
     }
 }
 
-void Floor::draw(ofEventArgs &args){
-    gui.draw();
+void Floor::draw(float x, float y, float w, float h){
+    floor.draw(x, y, w, h);
 }
-
-void Floor::keyPressed(ofKeyEventArgs &key){
-    if(key.key == 'l'){
-        gui.toggleView();
-    }
-    if(key.key == 's'){
-        gui.saveSettings();
-    }
-    if(key.key == ' '){
-        triggerTriangles();
-    }
-}
-

@@ -35,18 +35,18 @@ void setupResources() {
 }
 
 void Graph::drawString(string text, int x, int y) const {
-	ofPushStyle();
-	ofFill();
-	ofRectangle box = font.getStringBoundingBox(text, x, y);
-	box.x -= 1;
-	box.y -= 1;
-	box.width += 2;
-	box.height += 2;
-	ofSetColor(noData ? 64 : 0);
-	ofRect(box);
-	ofSetColor(noData ? 192 : 255);
-	font.drawString(text, x, y);
-	ofPopStyle();
+//	ofPushStyle();
+//	ofFill();
+//	ofRectangle box = font.getStringBoundingBox(text, x, y);
+//	box.x -= 1;
+//	box.y -= 1;
+//	box.width += 2;
+//	box.height += 2;
+//	ofSetColor(noData ? 64 : 0);
+//	ofRect(box);
+//	ofSetColor(noData ? 192 : 255);
+//	font.drawString(text, x, y);
+//	ofPopStyle();
 }
 
 Graph::Graph()
@@ -200,7 +200,7 @@ void Graph::draw(int x, int y) {
 	ofPushStyle();
 	ofTranslate(x, y);
 	
-	drawPosition = worldToScreen(ofVec2f(0, 0));
+//	drawPosition = worldToScreen(ofVec2f(0, 0));
 	
 	ofFill();
 	ofSetColor(ofMap(ofGetElapsedTimef() - lastTrigger, 0, .5, 255, 0, true));
