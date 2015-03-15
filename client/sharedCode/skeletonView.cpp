@@ -110,9 +110,9 @@ void skeletonView::draw(){
     ofPopStyle();
     cam.end();
     
-    if(isMain()){
-        drawControlPanel();
-    }
+//    if(isMain()){
+//        drawControlPanel();
+//    }
 }
 
 void skeletonView::drawControlPanel(){

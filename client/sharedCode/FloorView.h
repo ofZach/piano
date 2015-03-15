@@ -16,7 +16,7 @@ public:
     FloorView();
     ~FloorView();
     
-    void setup(ofRectangle viewport);
+    void setup(ofRectangle projectorViewport, ofRectangle mainViewport=ofGetCurrentViewport());
     void update();
     void draw();
     void drawDebug();
@@ -31,6 +31,7 @@ public:
     
     ofFbo projectionFbo;
     ofRectangle projectionViewport;
+    ofRectangle mainViewport;
     ofParameterGroup        squareOptions;
     bool bMainView;
 

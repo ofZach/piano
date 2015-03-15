@@ -81,14 +81,14 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    ofVec2f fooMousePoint(x, y);
-    if(views.iMainView == N_SCENE){
-        for(int i = 0; i < N_SCENE; i++){
-            if(views.getViews()[i].inside(fooMousePoint)){
-                views.setMainView(i);
-            }
-        }
-    }
+//    ofVec2f fooMousePoint(x, y);
+//    if(views.iMainView == N_SCENE){
+//        for(int i = 0; i < N_SCENE; i++){
+//            if(views.getViews()[i].inside(fooMousePoint)){
+//                views.setMainView(i);
+//            }
+//        }
+//    }
 }
 
 //--------------------------------------------------------------

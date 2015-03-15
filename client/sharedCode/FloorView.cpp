@@ -16,10 +16,11 @@ FloorView::~FloorView(){
     
 }
 
-void FloorView::setup(ofRectangle viewport){
+void FloorView::setup(ofRectangle projector, ofRectangle main){
     p1Floor.setup();
     p2Floor.setup();
-    projectionViewport = viewport;
+    projectionViewport = projector;
+    mainViewport = main;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
     setupGUI();
     setupQuadWarp();
@@ -92,17 +93,17 @@ void FloorView::drawDebug(){
     ofBackground(0, 0, 0);
     ofSetColor(ofColor::slateBlue);
     ofNoFill();
-    ofRect(ofGetWindowWidth()-p1Floor.getWidth()/3-2.5, 0, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
+    ofRect(mainViewport.width-p1Floor.getWidth()/3-2.5, 0, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
     ofSetColor(255, 255, 255);
     ofFill();
-    p1Floor.draw(ofGetWindowWidth()-p1Floor.getWidth()/3, 2.5, p1Floor.getWidth()/3, p1Floor.getHeight()/3);
+    p1Floor.draw(ofGetScreenWidth()-p1Floor.getWidth()/3, 2.5, p1Floor.getWidth()/3, p1Floor.getHeight()/3);
     
     ofSetColor(ofColor::slateBlue);
     ofNoFill();
-    ofRect(ofGetWindowWidth()-p2Floor.getWidth()/3-2.5, p2Floor.getHeight()/3+20-2.5, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
+    ofRect(mainViewport.width-p2Floor.getWidth()/3-2.5, p2Floor.getHeight()/3+20-2.5, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
     ofSetColor(255, 255, 255);
     ofFill();
-    p2Floor.draw(ofGetWindowWidth()-p2Floor.getWidth()/3, p2Floor.getHeight()/3+20, p2Floor.getWidth()/3, p2Floor.getHeight()/3);
+    p2Floor.draw(mainViewport.width-p2Floor.getWidth()/3, p2Floor.getHeight()/3+20, p2Floor.getWidth()/3, p2Floor.getHeight()/3);
     
     projectionFbo.draw(0, 0);
     
