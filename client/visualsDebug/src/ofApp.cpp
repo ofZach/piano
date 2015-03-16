@@ -7,7 +7,7 @@ void ofApp::setup(){
     //void FloorView::setup(ofRectangle projector, ofRectangle main){
     
     
-    mainScreen.set(0,0, 1680, 1050);
+    mainScreen.set(0,0, ofGetScreenWidth(), ofGetScreenHeight());
     projectionScreen.set(mainScreen.width,0, 1280, 768);
     
     view.setup(projectionScreen, mainScreen);

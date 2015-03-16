@@ -39,6 +39,8 @@ private:
     ofParameterGroup playerOne;
     ofParameterGroup playerTwo;
     
+    ofParameter<bool> sendMidiTest;
+    
     ofxControlPanel midiControlPanel;
     
     bool bMainView;

@@ -53,7 +53,8 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     kinectSkeleton.setup(this->numPlayers, mainview);
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    midiOut->openVirtualPort("OF Kinect");
+    midiOut->listPorts();
+    midiOut->openPort(1);
     
     musicMaker.setup(this->numPlayers, midiOut, viewMain);
     floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);

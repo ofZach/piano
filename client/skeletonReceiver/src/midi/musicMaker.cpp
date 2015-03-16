@@ -442,4 +442,6 @@ Trigger musicMaker::lastTriggeredNote(){
 
 void musicMaker::outputmodeChanged(int &mode) {
     clearBodies();
+//    outputMode = mode;
+    cout<<mode<<endl;
 }

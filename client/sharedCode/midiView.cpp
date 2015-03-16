@@ -31,6 +31,10 @@ void midiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
 }
 void midiView::update(kinectBody * playerOne, kinectBody * playerTwo){
     midiControlPanel.update();
+    if(sendMidiTest){
+        musicMakerP1.skeletonMidi.triggerKick(62, 255);
+        sendMidiTest = false;
+    }
     if(numPlayers == 1){
         musicMakerP1.analyze(*playerOne);
     }else{
@@ -111,6 +115,7 @@ void midiView::setupGUI(){
     playerOne.setName("playerOne");
     
     musicMakerP1.addToDebugParamGroup(playerOne);
+    playerOne.add(sendMidiTest.set("Send Test", false));
     midiControlPanel.setup("Player One", 0, ofGetHeight()-500, 300, 500, true, false);
     midiControlPanel.addPanel("Player Two");
     midiControlPanel.setWhichPanel(0);

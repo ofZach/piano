@@ -97,7 +97,7 @@ void FloorView::update(){
             
             //cout << p1Floor.getWidth()/2 << endl;
             
-            //p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
             p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
         }else{
             drawStageCalibration();
