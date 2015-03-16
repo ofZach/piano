@@ -1,3 +1,5 @@
+
+
 //
 //  Floor.cpp
 //  skeletonReceiver
@@ -13,116 +15,48 @@ Floor::Floor(){
 }
 Floor::~Floor(){
     
+    
+    
 }
+//
+//void Floor::spawnLines(){
+//    
+////    for (int i = 0; i < 20; i++){
+////        
+////        traveler t;
+////        t.GI = &GI;
+////        t.trimLength = lastTrimLength;
+////        t.trimLength = lastTrimLength;
+////        
+////        travelers.push_back(t);
+////        
+////        //travelers[i].GI = &GI;
+////        travelers[i].speed = ofRandom(10,15);
+////        travelers[i].start( (int)ofRandom(0, 100) % 16);
+////    }
+//}
+
 
 void Floor::setup(){
-
     floor.allocate(1024, 1024, GL_RGBA, 4);
     floor.begin();
     ofClear(0, 0, 0, 0);
     floor.end();
-    
     float w = 100;
     
-    pts.push_back(ofPoint(0 * w, 0 * w));
-    pts.push_back(ofPoint(1 * w, 0 * w));
-    pts.push_back(ofPoint(2 * w, 0 * w));
-    pts.push_back(ofPoint(3 * w, 0 * w));
+    GI.setupGrid(ofRectangle(0,0,1024,1024), 4);
     
+    for (int i = 0; i < 20; i++){
+        
+        traveler t;
+        t.GI = &GI;
+        t.trimLength = 100;
+        
+        travelers.push_back(t);
     
-    buttonPoints.push_back(ofPoint(2 * w, 0 * w));
-    buttonPoints.push_back(ofPoint(3 * w, 0 * w));
-    buttonPoints.push_back(ofPoint(2 * w, 1 * w));
-    buttonPoints.push_back(ofPoint(3 * w, 1 * w));
-    
-    buttonConnections.push_back(connection(0, 1));
-    buttonConnections.push_back(connection(1, 2));
-    buttonConnections.push_back(connection(2, 3));
-    buttonConnections.push_back(connection(0, 3));
-    
-    
-    
-    pts.push_back(ofPoint(0 * w, 1 * w));
-    pts.push_back(ofPoint(1 * w, 1 * w));
-    pts.push_back(ofPoint(2 * w, 1 * w));
-    pts.push_back(ofPoint(3 * w, 1 * w));
-    
-    pts.push_back(ofPoint(2 * w, 2 * w));
-    pts.push_back(ofPoint(3 * w, 2 * w));
-    
-    
-    pts.push_back(ofPoint(0 * w, 3 * w));
-    pts.push_back(ofPoint(2 * w, 3 * w));
-    pts.push_back(ofPoint(3 * w, 3 * w));
-    
-    
-    connections.push_back( connection(0,1));
-    connections.push_back( connection(1,2));
-    connections.push_back( connection(2,3));
-    
-    connections.push_back( connection(4,5));
-    connections.push_back( connection(5,6));
-    connections.push_back( connection(6,7));
-    
-    connections.push_back( connection(0,4));
-    connections.push_back( connection(1,5));
-    connections.push_back( connection(2,6));
-    connections.push_back( connection(3,7));
-    
-    
-    connections.push_back( connection(5,0));
-    connections.push_back( connection(6,1));
-    connections.push_back( connection(7,2));
-    
-    connections.push_back( connection(6,8));
-    connections.push_back( connection(7,9));
-    connections.push_back( connection(8,9));
-    connections.push_back( connection(6,9));        // diag
-    
-    
-    connections.push_back( connection(8,11));
-    connections.push_back( connection(9,12));
-    connections.push_back( connection(11,12));
-    connections.push_back( connection(8,12));      // diag
-    
-    connections.push_back( connection(4,10));
-    connections.push_back( connection(10,11));
-    
-    
-    triangles.push_back(triangle(0,4,1));
-    triangles.push_back(triangle(4,1,5));
-    triangles.push_back(triangle(5,2,1));
-    triangles.push_back(triangle(6,5,2));
-    triangles.push_back(triangle(6,7,2));
-    triangles.push_back(triangle(3,7,2));
-    triangles.push_back(triangle(8,6,9));
-    triangles.push_back(triangle(7,6,9));
-    triangles.push_back(triangle(8,9,12));
-    triangles.push_back(triangle(11,10,4));
-    triangles.push_back(triangle(11,4,6));
-    triangles.push_back(triangle(11,8,12));
-    
-    
-    
-    for (int i = 0; i < pts.size(); i++){
-        for (int j = 0; j < connections.size(); j++){
-            
-            if (connections[j].a == i ||
-                connections[j].b == i ){
-                ptToConnections[i].push_back(  j );
-            }
-        }
-    }
-    
-    
-    for (int i = 0; i < buttonPoints.size(); i++){
-        for (int j = 0; j < buttonConnections.size(); j++){
-            
-            if (buttonConnections[j].a == i ||
-                buttonConnections[j].b == i ){
-                buttonPtToConnections[i].push_back(  j );
-            }
-        }
+        //travelers[i].GI = &GI;
+        travelers[i].speed = ofRandom(10,15);
+        travelers[i].start( (int)ofRandom(0, 100) % 16);
     }
 }
 
@@ -134,256 +68,109 @@ float Floor::getHeight(){
     return floor.getHeight();
 }
 
-void Floor::setParamterGroup(ofParameterGroup* squareOptions){
-    this->squareOptions = squareOptions;
-}
+
+
+//bool ShouldGo(traveler &p){
+//    return p.shouldIdie();
+//}
 
 void Floor::update(){
-    for (int i = 0; i < movers.size(); i++){
-        
-        movers[i].speed = squareOptions->getFloat("speed")*1.00001;
-        movers[i].lineDistance = movers[i].lineDistance*0.99999;
-        
+    
+    ofPushStyle();
+    
+    for (int i = 0; i < travelers.size(); i++){
+        travelers[i].update();
+        if( travelers[i].hitFlag == true){
+            travelers[i].findNewConnection();
+            
+        }
+        travelers[i].trimToLength();
     }
     
+    //ofRemove(travelers, ShouldGo);
     
-    for (int i = 0; i < buttonMovers.size(); i++){
-        
-        buttonMovers[i].speed = squareOptions->getFloat("speed")*1.00001;
-        buttonMovers[i].lineDistance = buttonMovers[i].lineDistance*0.99999;
-        
-    }
-    
-    int which = (int)ofRandom(0,10000) % connections.size();
-    
-    
-    if(movers.size() < 2){
-        connectionMover C;
-        C.pts = &pts;
-        C.setConnection(&(connections[which]), ofRandom(0,1) > 0.5 ? true : false);
-        movers.push_back(C);
-        movers.back().lineDistance = ofRandom(50, 100);
-        movers.back().speed = 0.05;
-    }
-    
-    float w = 1;
-    int ct = 0;
-    pts[ct++].set(ofPoint(0 * w, 0 * w));
-    pts[ct++].set(ofPoint(1 * w, 0 * w));
-    pts[ct++].set(ofPoint(2 * w, 0 * w));
-    pts[ct++].set(ofPoint(3 * w, 0 * w));
-    
-    
-    pts[ct++].set(ofPoint(0 * w, 1 * w));
-    pts[ct++].set(ofPoint(1 * w, 1 * w));
-    pts[ct++].set(ofPoint(2 * w, 1 * w));
-    pts[ct++].set(ofPoint(3 * w, 1 * w));
-    
-    pts[ct++].set(ofPoint(2 * w, 2 * w));
-    pts[ct++].set(ofPoint(3 * w, 2 * w));
-    
-    
-    pts[ct++].set(ofPoint(0 * w, 3 * w));
-    pts[ct++].set(ofPoint(2 * w, 3 * w));
-    pts[ct++].set(ofPoint(3 * w, 3 * w));
-    
-    
-    ct = 0;
-    buttonPoints[ct++].set(2 * w, 0 * w);
-    buttonPoints[ct++].set(3 * w, 0 * w);
-    buttonPoints[ct++].set(2 * w, 1 * w);
-    buttonPoints[ct++].set(3 * w, 1 * w);
-    
-    
-    for (int i = 0; i < pts.size(); i++){
-        pts[i] -= (ofPoint(1.5, 1.5));
-        pts[i] /= 3.0;
-        float height = ofMap(pts[i].y, -0.5, 0.5, 0,1);
-    }
-    
-    
-    for (int i = 0; i < pts.size(); i++){
-        pts[i] *= squareOptions->getFloat("scale")*100;
-        pts[i] += ofPoint(squareOptions->getFloat("horizOffset"),squareOptions->getFloat("verticalOffset"));
-        
-    }
-    
-    
-    for (int i = 0; i < buttonPoints.size(); i++){
-        buttonPoints[i] -= (ofPoint(1.5, 1.5));
-        buttonPoints[i] /= 3.0;
-        float height = ofMap(buttonPoints[i].y, -0.5, 0.5, 0,1);
-    }
-    
-    for(int i = 0; i < buttonPoints.size(); i++){
-        buttonPoints[i] *= squareOptions->getFloat("scale")*100;
-        buttonPoints[i] += ofPoint(squareOptions->getFloat("horizOffset"),squareOptions->getFloat("verticalOffset"));
-    }
 
-    
-    for (int i = 0; i < movers.size(); i++){
-        movers[i].update();
-    }
-    
-    for (int i = 0; i < buttonMovers.size(); i++){
-        buttonMovers[i].update();
-    }
+    bool bShowGrid = squareOptions->getBool("bShowGrid");
+    bool bShowButton = squareOptions->getBool("bShowButton");
+    float lineWeight = squareOptions->getFloat("lightWeight");
+    float trimLength = squareOptions->getFloat("lineDistance");
+    float lineSpeed = squareOptions->getFloat("lineSpeed");
+    //bool bFadeLines = squareOptions->getBool("bFadeLines");
     
     
-    for (int i = 0; i < movers.size(); i++){
-        if (movers[i].pct > 0.99){
-            connection * weJustCameFrom = movers[i].c;
-            int idWeJustGotTo = movers[i].bFlip ? movers[i].c->a : movers[i].c->b;
-            
-            vector < int > goodConnections;
-            
-            for (int j = 0; j < connections.size(); j++){
-                if (connections[j].a == idWeJustGotTo ||
-                    connections[j].b == idWeJustGotTo ){
-                    
-                    if (&connections[j] != weJustCameFrom){
-                        goodConnections.push_back(j);
-                    }
-                }
-            }
-            
-            bool bFlip = false;
-            
-            if (goodConnections.size() > 0){
-                int which = (int)ofRandom(0,100000) % goodConnections.size();
-                if (connections[goodConnections[which]].a != idWeJustGotTo){
-                    bFlip = true;
-                } else {
-                    bFlip = false;
-                }
-                movers[i].setConnection(&(connections[goodConnections[which]]), bFlip);
-            }
+    if (trimLength != lastTrimLength){
+        for (int i = 0; i < travelers.size(); i++){
+            travelers[i].trimLength=trimLength;
         }
-        if(movers[i].bDead){
-            movers.erase(movers.begin()+i);
+        
+    }
+    
+    if (lastSpeed != lineSpeed){
+        for (int i = 0; i < travelers.size(); i++){
+            travelers[i].speed=lineSpeed;
         }
+        
     }
     
+    lastSpeed = lineSpeed;
+    lastTrimLength = trimLength;
     
-    for (int i = 0; i < buttonMovers.size(); i++){
-        if (buttonMovers[i].pct > 0.99){
-            connection * weJustCameFrom = buttonMovers[i].c;
-            int idWeJustGotTo = buttonMovers[i].bFlip ? buttonMovers[i].c->a : buttonMovers[i].c->b;
-            
-            vector < int > goodConnections;
-            
-            for (int j = 0; j < buttonConnections.size(); j++){
-                if (buttonConnections[j].a == idWeJustGotTo ||
-                    buttonConnections[j].b == idWeJustGotTo ){
-                    
-                    if (&buttonConnections[j] != weJustCameFrom){
-                        goodConnections.push_back(j);
-                    }
-                }
-            }
-            
-            bool bFlip = false;
-            
-            if (goodConnections.size() > 0){
-                int which = (int)ofRandom(0,100000) % goodConnections.size();
-                if (buttonConnections[goodConnections[which]].a != idWeJustGotTo){
-                    bFlip = true;
-                } else {
-                    bFlip = false;
-                }
-                buttonMovers[i].setConnection(&(buttonConnections[goodConnections[which]]), bFlip);
-            }
-        }
-        if(buttonMovers[i].bDead){
-            buttonMovers.erase(buttonMovers.begin()+i);
-            
-        }
-    }
-    if(buttonMovers.size() < 2){
-        int which = (int)ofRandom(0,10000) % buttonConnections.size();
-        connectionMover C;
-        C.pts = &buttonPoints;
-        C.setConnection(&(buttonConnections[which]), ofRandom(0,1) > 0.5 ? true : false);
-        buttonMovers.push_back(C);
-        buttonMovers.back().lineDistance = ofRandom(30, 55);
-        buttonMovers.back().speed = 0.05;
-    }
+//    if (bFadeLines == true){
+//        for (int i = 0; i < travelers.size(); i++){
+//            travelers[i].fadeThings();
+//        }
+//
+//        
+//    }
     
+    //cout << travelers.size() << endl;
     
-    for (int i = 0; i < triangles.size(); i++){
-        triangles[i].update();
-    }
+    ofSetLineWidth(lineWeight);
     
+    string buttonPos = "buttonPos"  + ofToString(idNum);
+    int buttonPosVal = squareOptions->getInt(buttonPos);
+    
+    floor.begin();
+    ofClear(0);
     
     ofEnableAlphaBlending();
-    floor.begin();
-    ofPushStyle();
-    ofSetLineWidth(squareOptions->getFloat("lightWeight"));
-    ofClear(0, 0, 0, 0);
-    ofPushMatrix();
-    ofTranslate(floor.getWidth()/2, floor.getHeight()/2);
-    if (squareOptions->getBool("bShowDots")){
-        for (int i = 0; i < pts.size(); i++){
-            ofCircle(pts[i], 3);
+    for (int i = 0; i < travelers.size(); i++){
+        travelers[i].draw();
+    }
+    
+    
+    if (bShowButton){
+        float r;
+        ofPoint pos;
+        GI.getCircle( buttonPosVal % 4, buttonPosVal/4, pos, r);
+        ofSetColor(255,255,255,200);
+        ofCircle(pos, r);
+    }
+    
+    if (bShowGrid){
+        
+        ofSetColor(255, 255, 255, 100);
+        
+        for (int i = 0; i < GI.connections.size(); i++){
+            int a = GI.connections[i].a;
+            int b = GI.connections[i].b;
+            ofLine( GI.pts[a], GI.pts[b]);
         }
     }
-    ofPushStyle();
-    for (int i = 0; i < triangles.size(); i++){
-        triangles[i].draw(pts);
-    }
-    ofPopStyle();
-    for (int i = 0; i < movers.size(); i++){
-        ofSetColor(255, 255, 255);
-        movers[i].draw();
-    }
-//    
-    for (int i = 0; i < buttonMovers.size(); i++){
-        ofSetColor(255, 255, 255, ofMap(abs(sin(ofGetElapsedTimef()*0.1234)), 0, 1, 100, 255));
-        buttonMovers[i].draw();
-    }
-////
-    for (int i = 0; i < buttonPoints.size(); i++){
-
-        ofCircle(buttonPoints[i], 3);
-    }
-
-    ofPopMatrix();
-    ofPopStyle();
+    
+    
+    
+    ofClearAlpha();
     floor.end();
-    ofDisableAlphaBlending();
-}
-
-void Floor::addLineTrace(){
-    int which = (int)ofRandom(0,10000) % connections.size();
     
+    //ofDisableAlphaBlending();
     
-    for (int i = 0; i < movers.size(); i++){
-        
-        movers[i].speed = ofRandom(0.1, 0.5)*0.01;
-        movers[i].lineDistance = ofRandom(25, 30);
-        
-    }
-    
-    
-    connectionMover C;
-    C.pts = &pts;
-    C.setConnection(&(connections[which]), ofRandom(0,1) > 0.5 ? true : false);
-    movers.push_back(C);
-    movers.back().lineDistance = squareOptions->getFloat("lineDistance");
-    movers.back().speed = squareOptions->getFloat("speed");
-    
+    ofPopStyle();
     
 }
 
-void Floor::triggerTriangles(){
-    if(ofGetElapsedTimeMillis() - lastTrigger > 750){
-        for (int i = 0; i < triangles.size(); i++){
-            triangles[i].impulse();
-        }
-        lastTrigger = ofGetElapsedTimeMillis();
-    }
-}
 
 void Floor::draw(float x, float y, float w, float h){
     floor.draw(x, y, w, h);
+    
 }

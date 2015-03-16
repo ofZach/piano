@@ -8,7 +8,10 @@
 
 #pragma once
 #include "ofMain.h"
-#include "Grid.h"
+#include "gridInfo.h"
+#include "traveler.h"
+
+
 
 class Floor{
 public:
@@ -20,30 +23,26 @@ public:
     void drawScene();
     void addLineTrace();
     void triggerTriangles();
-    void setParamterGroup(ofParameterGroup* squareOptions);
     float getWidth();
     float getHeight();
     
-    //Floor Grid vars
+    //void spawnLines();
+    
     
     ofParameterGroup *squareOptions;
+    
     ofFbo floor;
     
-    vector < ofPoint > pts;
-    vector < connection > connections;
+    gridInfo GI;
+    vector <traveler > travelers;
+    float lastTrimLength;
+    float lastSpeed;
     
-    map < int, vector < int >  > ptToConnections;
-    
-    vector < connectionMover > movers;
-    vector < triangle > triangles;
-    
-    
-    unsigned long long lastTrigger;
+    int idNum;
     
     
-    map<int, vector<int> > buttonPtToConnections;
-    vector<connectionMover> buttonMovers;
-    vector<ofPoint> buttonPoints;
-    vector<connection> buttonConnections;
+    void setParamterGroup(ofParameterGroup* g){
+        this->squareOptions = g;
+    }
     
 };
