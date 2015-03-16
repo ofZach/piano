@@ -66,7 +66,6 @@ private:
     ofParameter <float> offsetZ;
     
     
-    
     ofParameterGroup stageParams;
     ofParameter<float> stageSize;
     
@@ -78,6 +77,7 @@ private:
     ofParameter<float> stageRightY;
     ofParameter<float> stageRightZ;
     
+
     
     ofRectangle viewPort;
     

@@ -41,4 +41,8 @@ private:
     shared_ptr<ofxMidiOut> midiOut;
     
     int numPlayers;
+    
+
+    
+    
 };

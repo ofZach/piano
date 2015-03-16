@@ -26,7 +26,7 @@ public:
     bool isMain();
     
     ofxControlPanel     gui;
-    
+    ofParameterGroup    *stageParameters;
     ofParameterGroup    tvParameters;
     ofParameter<float>  cameraRadius;
     ofParameter<float>  cameraAngle;

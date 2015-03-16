@@ -50,15 +50,27 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     iMainView = 4;
     
     this->numPlayers = numPlayers;
-    kinectSkeleton.setup(this->numPlayers, mainview);
+
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
     midiOut->openPort(0);
     
+    
+//    stageParams.setName("Stage Settings");
+//    stageParams.add(stageLeftX.set("Left Stage X", 0, -500, 500));
+//    stageParams.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
+//    stageParams.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
+//    stageParams.add(stageRightX.set("Right Stage X", 0, -500, 500));
+//    stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
+//    stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
+//    stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
+    
+    
+    kinectSkeleton.setup(this->numPlayers, viewMain);
     musicMaker.setup(this->numPlayers, midiOut, viewMain);
-    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), mainview);
-    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), mainview);
+    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
+    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
     
 //    skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
 //    midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
@@ -92,35 +104,13 @@ void ViewRenderer::update(){
     kinectSkeleton.update();
     floor.update();
     
-    if(numPlayers == 1){
+    if(numPlayers <= 1){
         musicMaker.update(kinectSkeleton.getBody(0), NULL);
         tv.update(kinectSkeleton.getBody(0), NULL);
     }else{
         musicMaker.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
         tv.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
     }
-    ofEnableAlphaBlending();
-//    skeletonView.begin();
-//    ofClear(0, 0, 0, 0);
-//    kinectSkeleton.draw();
-//    skeletonView.end();
-    
-//    midiView.begin();
-//    ofClear(0, 0, 0);
-//    musicMaker.draw();
-//    midiView.end();
-    
-//    floorView.begin();
-//    ofClear(0, 0, 0);
-//    floor.draw();
-//    floorView.end();
-    
-//    tvView.begin();
-//    ofClear(0, 0, 0);
-//    ofSetColor(255, 255, 0);
-//    tv.draw();
-//    tvView.end();
-    ofDisableAlphaBlending();
 }
 
 void ViewRenderer::exit(){
@@ -132,7 +122,6 @@ void ViewRenderer::exit(){
 void ViewRenderer::draw(){
     ofBackground(0, 0, 0);
     ofEnableAlphaBlending();
-//    ofEnableDepthTest();
     
     if(iMainView == N_SCENE){
         ofSetColor(255, 255, 255, 255);
@@ -146,23 +135,19 @@ void ViewRenderer::draw(){
     if(kinectSkeleton.isMain()){
         kinectSkeleton.draw(viewMain);
         kinectSkeleton.drawControlPanel();
-    }
-    if(musicMaker.isMain()){
+    }else if(musicMaker.isMain()){
         musicMaker.draw(viewMain);
         musicMaker.drawControlPanel();
-    }
-    if(floor.isMain()){
+    }else if(floor.isMain()){
         floor.draw(viewMain);
         floor.drawControlPanel();
-    }
-    if(tv.isMain()){
+    }else if(tv.isMain()){
         tv.draw(viewMain);
         tv.drawControlPanel();
     }
     
     floor.drawProjections();
     tv.drawTV();
-//    ofDisableDepthTest();
     ofDisableAlphaBlending();
     
 }

@@ -55,6 +55,7 @@ public:
     kinectBody * playerTwoBody;
 
     ofParameterGroup * tvParams;
+    ofParameterGroup * stageParameters;
     
     ofRectangle tvViewPort;
     

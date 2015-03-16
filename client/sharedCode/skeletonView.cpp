@@ -155,19 +155,20 @@ void skeletonView::setupGUI(){
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
     
     
-    
-    skeletonTransform.add(stageLeftX.set("Left Stage X", 0, -500, 500));
-    skeletonTransform.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
-    skeletonTransform.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
-    skeletonTransform.add(stageRightX.set("Right Stage X", 0, -500, 500));
-    skeletonTransform.add(stageRightY.set("Right Stage Y", 0, -500, 500));
-    skeletonTransform.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
-    skeletonTransform.add(stageSize.set("Stage Size", 300, 1, 500));
+    stageParams.setName("Stage Settings");
+    stageParams.add(stageLeftX.set("Left Stage X", 0, -500, 500));
+    stageParams.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
+    stageParams.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
+    stageParams.add(stageRightX.set("Right Stage X", 0, -500, 500));
+    stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
+    stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
+    stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
     
     
     skeletonGui.setup("Skeleton Controls", 0, ofGetHeight()-500, 300, 500, true, false);
     skeletonGui.setWhichPanel(0);
     skeletonGui.setWhichColumn(0);
     skeletonGui.addGroup(skeletonTransform);
+    skeletonGui.addGroup(stageParams);
     skeletonGui.loadSettings("skeleton-transform.xml");
 }
