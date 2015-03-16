@@ -91,6 +91,7 @@
 		C83C44E91AB4FD7900879893 /* ViewRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E51AB4FD7900879893 /* ViewRenderer.cpp */; };
 		C83C45DA1AB52DBE00879893 /* FloorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45D81AB52DBE00879893 /* FloorView.cpp */; };
 		C83C45E21AB52DDE00879893 /* Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45DC1AB52DDE00879893 /* Floor.cpp */; };
+		C83C45F31AB66C9F00879893 /* ofxCalibrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -411,6 +412,8 @@
 		C83C45DD1AB52DDE00879893 /* Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Floor.h; sourceTree = "<group>"; };
 		C83C45DE1AB52DDE00879893 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		C83C45DF1AB52DDE00879893 /* prng_engine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = prng_engine.hh; sourceTree = "<group>"; };
+		C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCalibrate.cpp; sourceTree = "<group>"; };
+		C83C45F21AB66C9F00879893 /* ofxCalibrate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCalibrate.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -467,6 +470,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				C83C45EF1AB66C9F00879893 /* ofxCalibrate */,
 				C83C445C1AB4F3DB00879893 /* ofxOpenCv */,
 				C83C44571AB4F3C600879893 /* ofxQuadWarp */,
 				C83C43DC1AB4C39800879893 /* ofxMidi */,
@@ -1211,6 +1215,24 @@
 			path = ../../skeletonReceiver/src/visuals;
 			sourceTree = "<group>";
 		};
+		C83C45EF1AB66C9F00879893 /* ofxCalibrate */ = {
+			isa = PBXGroup;
+			children = (
+				C83C45F01AB66C9F00879893 /* src */,
+			);
+			name = ofxCalibrate;
+			sourceTree = "<group>";
+		};
+		C83C45F01AB66C9F00879893 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */,
+				C83C45F21AB66C9F00879893 /* ofxCalibrate.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxCalibrate/src;
+			sourceTree = "<group>";
+		};
 		E4328144138ABC890047C5CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1385,6 +1407,7 @@
 				C83C445B1AB4F3C600879893 /* ofxQuadWarp.cpp in Sources */,
 				C83C427D1AB4AB7F00879893 /* guiTypeLogger.cpp in Sources */,
 				C83C42151AB4AB7400879893 /* UdpSocket.cpp in Sources */,
+				C83C45F31AB66C9F00879893 /* ofxCalibrate.cpp in Sources */,
 				C83C440F1AB4C39800879893 /* ofxMidiMessage.cpp in Sources */,
 				C83C44E81AB4FD7900879893 /* skeletonView.cpp in Sources */,
 				C83C42871AB4AB7F00879893 /* ofxControlPanel.cpp in Sources */,
