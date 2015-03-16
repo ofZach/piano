@@ -42,13 +42,24 @@ public:
     bool bMainView;
 
     
-    ofParameter <float>     scale;
-    ofParameter <float>     horizOffset;
-    ofParameter <float>     verticalOffset;
-    ofParameter <float>     verticalScaleFactor;
     ofParameter <bool>      bShowDots;
+    ofParameter <bool>      bShowGrid;
+    ofParameter <bool>      bShowButton;
+    
+    
+    
+    ofParameter <int> buttonPos0;
+    ofParameter <int> buttonPos1;
+    
+    
     ofParameter <float>     lightWeight;
     ofParameter <float>     lineDistance;
+    ofParameter <float>     lineSpeed;  //lastSpeed
+    
+    ofParameter <bool>      bFadeLines;
+    ofParameter <bool>      spawnLines0;
+    ofParameter <bool>      spawnLines1;
+    
     ofParameter <float>     speed;
     ofParameter <float>     floorOffset;
     ofParameter <bool>      dualWarp;

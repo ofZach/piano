@@ -27,9 +27,29 @@ void FloorView::setup(ofRectangle projector, ofRectangle main){
     p1Floor.setParamterGroup(&squareOptions);
     p2Floor.setParamterGroup(&squareOptions);
     
+    p1Floor.idNum = 0;
+    p2Floor.idNum = 1;
+    
+    
     bMainView = false;
 }
 void FloorView::update(){
+    
+    
+//    if (squareOptions.getBool("spawnLines0")){
+//        p1Floor.spawnLines();
+//        spawnLines0 = false;
+//        
+//    }
+//    
+//    if (squareOptions.getBool("spawnLines1")){
+//        p2Floor.spawnLines();
+//        
+//        spawnLines1 = false;
+//        
+//    }
+    
+    
     gui.update();
     p1Floor.update();
     p2Floor.update();
@@ -74,8 +94,10 @@ void FloorView::update(){
     {
         
         if(!bDrawCalibration){
-        
-            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+            
+            //cout << p1Floor.getWidth()/2 << endl;
+            
+            //p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
             p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
         }else{
             drawStageCalibration();
@@ -252,14 +274,30 @@ void FloorView::setupGUI(){
     gui.setWhichColumn(0);
     
     squareOptions.setName("Floor");
-    squareOptions.add(scale.set("scale", 1,0.1, 10.0));
-    squareOptions.add(horizOffset.set("horizOffset", 0, -1500, 1500));
-    squareOptions.add(verticalOffset.set("verticalOffset", 0, -1500, 1500));
-    squareOptions.add(speed.set("speed", 0.1, 0.01, 0.5));
+    
     squareOptions.add(lightWeight.set("lightWeight", 1,1, 20.0));
-    squareOptions.add(lineDistance.set("lineDistance", 20, 1, 100));
+    squareOptions.add(lineDistance.set("lineDistance", 50, 1, 500));
+    squareOptions.add(lineSpeed.set("lineSpeed", 5, 0.1, 30));
+    
     squareOptions.add(bShowWarp.set("bShowWarp", true));
     squareOptions.add(bShowDots.set("bShowDots", true));
+    squareOptions.add(bShowGrid.set("bShowGrid", true));
+    squareOptions.add(bShowButton.set("bShowButton", true));
+    
+//    squareOptions.add(bFadeLines.set("bFadeLines", false));
+//    squareOptions.add(spawnLines0.set("spawnLines0", false));
+//    squareOptions.add(spawnLines1.set("spawnLines1", false));
+//    
+    
+    
+    
+    squareOptions.add(buttonPos0.set("buttonPos0", 0,0, 16));
+    squareOptions.add(buttonPos1.set("buttonPos1", 0,0, 16));
+    
+    //--------------------------------------------
+    //ofParameter <float> lineSpeed;  //lastSpeed
+    
+
     squareOptions.add(bSaveWarp.set("bSaveWarp", true));
     squareOptions.add(bDrawCalibration.set("bDrawCalibration", true));
     squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));

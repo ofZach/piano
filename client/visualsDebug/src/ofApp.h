@@ -20,4 +20,7 @@ public:
     void gotMessage(ofMessage msg);
     
     FloorView view;
+    ofRectangle mainScreen;
+    ofRectangle projectionScreen;
+    
 };
