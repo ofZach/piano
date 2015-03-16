@@ -44,12 +44,21 @@ public:
     ofParameter <float>     lightWeight;
     ofParameter <float>     lineDistance;
     ofParameter <float>     speed;
+    ofParameter <float>     floorOffset;
+    ofParameter <bool>      dualWarp;
     
+    ofParameter <bool>      bShowWarp;
+    ofParameter <bool>      showWarpOne;
+    ofParameter <bool>      showWarpTwo;
 
-    ofxQuadWarp warpOne;
-    ofxQuadWarp warpTwo;
+
     
-    ofMatrix4x4 mat, mat2;
+    ofxQuadWarp warpFloor;
+
+//    ofxQuadWarp warpOne;
+//    ofxQuadWarp warpTwo;
+    
+    ofMatrix4x4 mat, mat1, mat2;
     
     ofParameter <bool> bSaveWarp;
 };

@@ -33,62 +33,77 @@ void FloorView::update(){
     gui.update();
     p1Floor.update();
     p2Floor.update();
-
+    
     
     if(bSaveWarp){
         bSaveWarp = !bSaveWarp;
-        warpOne.save("playerOne.xml");
-        warpTwo.save("playerTwo.xml");
-        gui.saveSettings("floorTexture.xml");
+        warpFloor.save("warp-settings.xml");
+        //        warpTwo.save("playerTwo.xml");
+        gui.saveSettings("floor-settings.xml");
     }
     
     
-
     
     projectionFbo.begin();
     ofClear(0, 0, 0, 0);
+    
+    //    if(dualWarp){
+    //
+    //        glPushMatrix();
+    //        glMultMatrixf( mat1.getPtr() );
+    //        {
+    //            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+    //        }
+    //        glPopMatrix();
+    //
+    //        glPushMatrix();
+    //        glMultMatrixf( mat2.getPtr() );
+    //        {
+    //            p2Floor.draw(0, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+    //        }
+    //        glPopMatrix();
+    //    }else{
+    
     glPushMatrix();
     glMultMatrixf( mat.getPtr() );
     {
+        
+        
         p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+        
+        
+        p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
     }
     glPopMatrix();
-    
-    
-    glPushMatrix();
-    glMultMatrixf( mat2.getPtr() );
-    {
-        p2Floor.draw(p2Floor.getWidth()/2+15, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
-    }
-    glPopMatrix();
-    
-    ofSetColor(ofColor::slateBlue);
-    ofSetColor(255, 255, 255);
+    //    }
     projectionFbo.end();
 }
 void FloorView::draw(){
     if(bMainView){
-        if(!warpOne.isShowing()){
-            warpOne.show();
-            warpTwo.show();
+        if(bShowWarp){
+            warpFloor.show();
         }
-        drawDebug();
-    }else{
-        if(warpOne.isShowing()){
-            warpOne.hide();
-            warpTwo.hide();
-        }
-        projectionFbo.draw(0, 0);
     }
+    if(!bMainView || !bShowWarp){
+        warpFloor.hide();
+    }
+    projectionFbo.draw(0, 0);
+    
 }
 
 void FloorView::drawDebug(){
     
-    mat2 = warpTwo.getMatrix();
-    mat = warpOne.getMatrix();
+    //    mat2 = warpTwo.getMatrix();
+    mat = warpFloor.getMatrix();
     
-    warpOne.update();
-    warpTwo.update();
+    
+    //    if(dualWarp){
+    //        warpOne.update();
+    //        warpTwo.update();
+    //    }else{
+    warpFloor.update();
+    //    }
+    
     
     ofBackground(0, 0, 0);
     ofSetColor(ofColor::slateBlue);
@@ -107,25 +122,25 @@ void FloorView::drawDebug(){
     
     projectionFbo.draw(0, 0);
     
-    warpTwo.draw();
-    warpOne.draw();
-
+    warpFloor.draw();
+    //    warpOne.draw();
+    
     ofSetColor(255, 255, 255);
     ofNoFill();
     ofSetColor(ofColor::slateBlue);
     ofRect(-2.5, -2.5, projectionViewport.width+5, projectionViewport.height+5);
     ofFill();
     ofSetColor(255, 255, 255);
-
+    
     gui.draw();
-
+    
 }
 void FloorView::drawProjections(){
     projectionFbo.draw(projectionViewport);
 }
 
 void FloorView::setupGUI(){
-    gui.setup("Floor Controls", 0, ofGetHeight()-400, 300, 400, true, false);
+    gui.setup("Floor Controls", ofGetWidth()-300, ofGetHeight()-350, 300, 350, true, false);
     
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
@@ -134,12 +149,14 @@ void FloorView::setupGUI(){
     squareOptions.add(scale.set("scale", 1,0.1, 10.0));
     squareOptions.add(horizOffset.set("horizOffset", 0, -1500, 1500));
     squareOptions.add(verticalOffset.set("verticalOffset", 0, -1500, 1500));
-    
     squareOptions.add(speed.set("speed", 0.1, 0.01, 0.5));
     squareOptions.add(lightWeight.set("lightWeight", 1,1, 20.0));
     squareOptions.add(lineDistance.set("lineDistance", 20, 1, 100));
+    squareOptions.add(bShowWarp.set("bShowWarp", true));
     squareOptions.add(bShowDots.set("bShowDots", true));
     squareOptions.add(bSaveWarp.set("bSaveWarp", true));
+    squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));
+    
     
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
@@ -149,7 +166,7 @@ void FloorView::setupGUI(){
     gui.enableEvents();
     
     
-    gui.loadSettings("floorTexture.xml");
+    gui.loadSettings("floor-settings.xml");
 }
 
 void FloorView::setMainView(bool view){
@@ -159,30 +176,44 @@ void FloorView::setMainView(bool view){
 void FloorView::setupQuadWarp(){
     
     
-    float w = p1Floor.getWidth()/2;
+    float w = p1Floor.getWidth()+floorOffset;
     float h = p1Floor.getHeight()/2;
     float x = 0;
     float y = 0;
     
-    warpOne.setSourceRect( ofRectangle( x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
-    warpOne.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
-    warpOne.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
-    warpOne.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
-    warpOne.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
-    warpOne.setup();
-    warpOne.show();
+    warpFloor.setSourceRect( ofRectangle( x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
+    warpFloor.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
+    warpFloor.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
+    warpFloor.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
+    warpFloor.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
+    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, 8*projectionFbo.getWidth()/10, 8*projectionFbo.getHeight()/10));
+    warpFloor.setup();
     
-    warpOne.load("playerOne.xml");
+    warpFloor.load("stage-warp.xml");
     
-    x = (w+15);
     
-    warpTwo.setSourceRect( ofRectangle(x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
-    warpTwo.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
-    warpTwo.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
-    warpTwo.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
-    warpTwo.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
-    warpTwo.setup();
-    warpTwo.show();
     
-    warpTwo.load("playerTwo.xml");
+    //    x = (w+15);
+    //
+    
+    //
+    //    warpOne.setSourceRect( ofRectangle(x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
+    //    warpOne.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
+    //    warpOne.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
+    //    warpOne.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
+    //    warpOne.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
+    //    warpOne.setup();
+    //    warpOne.show();
+    //
+    //    warpOne.load("playerOne.xml");
+    //
+    //    warpTwo.setSourceRect( ofRectangle(x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
+    //    warpTwo.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
+    //    warpTwo.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
+    //    warpTwo.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
+    //    warpTwo.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
+    //    warpTwo.setup();
+    //    warpTwo.show();
+    //    
+    //    warpTwo.load("playerTwo.xml");
 }
