@@ -152,13 +152,9 @@ void skeletonView::setupGUI(){
     skeletonTransform.add(stageLeftX.set("Left Stage X", 0, -500, 500));
     skeletonTransform.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
     skeletonTransform.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
-    
-    
     skeletonTransform.add(stageRightX.set("Right Stage X", 0, -500, 500));
     skeletonTransform.add(stageRightY.set("Right Stage Y", 0, -500, 500));
     skeletonTransform.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
-    
-    
     skeletonTransform.add(stageSize.set("Stage Size", 300, 1, 500));
     
     

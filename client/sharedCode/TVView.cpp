@@ -36,6 +36,14 @@ void TVView::setupGUI(){
     tvParameters.add(swayAmount.set("swayAmount", 0.1, 0, 1));
     tvParameters.add(bDrawHairyMan.set("bDrawHairyMan", false));
     
+    tvParameters.add(stageLeftX.set("Left Stage X", 0, -500, 500));
+    tvParameters.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
+    tvParameters.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
+    tvParameters.add(stageRightX.set("Right Stage X", 0, -500, 500));
+    tvParameters.add(stageRightY.set("Right Stage Y", 0, -500, 500));
+    tvParameters.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
+    tvParameters.add(stageSize.set("Stage Size", 300, 1, 500));
+    
     gui.setup("TV Controls", 0, mainViewPort.height - 400, 300, 400, true, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);

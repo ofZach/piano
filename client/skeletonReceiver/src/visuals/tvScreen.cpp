@@ -288,6 +288,7 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK){
 
 void tvScreen::drawIntoFbo(){
     
+
     
     tvGridView.begin();
     ofClear(0,0,0,0);
@@ -299,7 +300,15 @@ void tvScreen::drawIntoFbo(){
     ofSetColor(100);
     ofNoFill();
     ofRotate(90,1,0,0);
-    ofTranslate(stagePos.x - stageSize/2, stagePos.y - stageSize/2, stagePos.z);
+    ofTranslate(tvParams->getFloat("Left Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Z"));
+    ofRect(0, 0, stageSize, stageSize);
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofSetColor(100);
+    ofNoFill();
+    ofRotate(90,1,0,0);
+    ofTranslate(tvParams->getFloat("Right Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Z"));
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     ofFill();

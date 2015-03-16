@@ -159,7 +159,7 @@ void ViewRenderer::draw(){
     }
     
     floor.drawProjections();
-    
+    tv.drawTV();
 //    ofDisableDepthTest();
     ofDisableAlphaBlending();
     
