@@ -33,7 +33,8 @@ void FloorView::update(){
     gui.update();
     p1Floor.update();
     p2Floor.update();
-    
+    mat = warpFloor.getMatrix();
+    warpFloor.update();
     
     if(bSaveWarp){
         bSaveWarp = !bSaveWarp;
@@ -92,18 +93,6 @@ void FloorView::draw(){
 }
 
 void FloorView::drawDebug(){
-    
-    //    mat2 = warpTwo.getMatrix();
-    mat = warpFloor.getMatrix();
-    
-    
-    //    if(dualWarp){
-    //        warpOne.update();
-    //        warpTwo.update();
-    //    }else{
-    warpFloor.update();
-    //    }
-    
     
     ofBackground(0, 0, 0);
     ofSetColor(ofColor::slateBlue);
@@ -189,7 +178,7 @@ void FloorView::setupQuadWarp(){
     warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, 8*projectionFbo.getWidth()/10, 8*projectionFbo.getHeight()/10));
     warpFloor.setup();
     
-    warpFloor.load("stage-warp.xml");
+    warpFloor.load("warp-settings.xml");
     
     
     
