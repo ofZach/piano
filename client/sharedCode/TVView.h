@@ -18,7 +18,7 @@ public:
     void setup(ofRectangle tv, ofRectangle main);
     void setupGUI();
     void update(kinectBody *kinectBodyOne, kinectBody *kinectBodyTwo);
-    void draw();
+    void draw(ofRectangle viewport);
     void drawTV();
     void drawControlPanel();
     
@@ -31,6 +31,7 @@ public:
     ofParameter<float>  cameraRadius;
     ofParameter<float>  cameraAngle;
     ofParameter<float>  cameraHeight;
+    ofParameter<float>  lookAtPointHeight;
     ofParameter<bool>   swayCamera;
     ofParameter<float>  swayRate;
     ofParameter<float>  swayAmount;

@@ -78,7 +78,7 @@ void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
     }
     
     cam.setPosition(position);
-    cam.lookAt( ofPoint(0,0,0));
+    cam.lookAt( ofPoint(0,tvParams->getFloat("View Height"),0));
     
     drawIntoFbo();
 }
@@ -289,7 +289,7 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK){
 void tvScreen::drawIntoFbo(){
     
 
-    
+    ofPushStyle();
     tvGridView.begin();
     ofClear(0,0,0,0);
     //ofClear(0, 0, 0);
@@ -301,7 +301,7 @@ void tvScreen::drawIntoFbo(){
     ofNoFill();
     ofRotate(90,1,0,0);
     ofTranslate(tvParams->getFloat("Left Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Z"));
-    ofRect(0, 0, stageSize, stageSize);
+    ofRect(0, 0, tvParams->getFloat("Stage Size"), tvParams->getFloat("Stage Size"));
     ofPopMatrix();
     
     ofPushMatrix();
@@ -309,7 +309,7 @@ void tvScreen::drawIntoFbo(){
     ofNoFill();
     ofRotate(90,1,0,0);
     ofTranslate(tvParams->getFloat("Right Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Z"));
-    ofRect(0, 0, stageSize, stageSize);
+    ofRect(0, 0, tvParams->getFloat("Stage Size"), tvParams->getFloat("Stage Size"));
     ofPopMatrix();
     ofFill();
     cam.end();
@@ -353,6 +353,7 @@ void tvScreen::drawIntoFbo(){
     }
     cam.end();
     tvSkeletonView.end();
+    ofPopStyle();
 }
 
 void tvScreen::draw( ofRectangle drawRect){
@@ -362,5 +363,6 @@ void tvScreen::draw( ofRectangle drawRect){
     tvGridView.draw(drawRect);
     tvSkeletonView.draw(drawRect);
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofPopStyle();
     
 }

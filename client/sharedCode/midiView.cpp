@@ -26,7 +26,8 @@ void midiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
         musicMakerP2.setup(midiOut);
     }
     setupGUI();
-    font.loadFont(OF_TTF_SANS, 50);
+    fontDebug.loadFont(OF_TTF_SANS, 25);
+    fontMain.loadFont(OF_TTF_SANS, 50);
     bMainView = false;
 }
 void midiView::update(kinectBody * playerOne, kinectBody * playerTwo){
@@ -47,7 +48,12 @@ void midiView::update(kinectBody * playerOne, kinectBody * playerTwo){
     lastTriggerP1 = musicMakerP1.lastTriggeredNote();
     lastTriggerP2 = musicMakerP2.lastTriggeredNote();
 }
-void midiView::draw(){
+void midiView::draw(ofRectangle viewport){
+    if(isMain()){
+        font = fontMain;
+    }else{
+        font = fontDebug;
+    }
     if(musicMakerP1.debugMode){
         ofPushMatrix();
         ofTranslate(325, 0);
@@ -65,36 +71,36 @@ void midiView::draw(){
     
     
     ofSetColor(ofColor::slateGray, 200);
-    ofRect(0, 0, viewPort.width/2, viewPort.height);
+    ofRect(viewport.x, viewport.y, viewport.width/2, viewport.height);
     
     ofSetColor(ofColor::white, 255);
     ofRectangle bounding = font.getStringBoundingBox("Player One", 0, 0);
-    font.drawString("Player One", (viewPort.width/4-bounding.width/2), 100);
+    font.drawString("Player One", viewport.x+(viewport.width/4-bounding.width/2), 100);
     bounding = font.getStringBoundingBox("Note Triggered", 0, 0);
     
     ofSetColor(ofColor::white, 255);
     ofSetColor(ofColor::white, ofMap(ofGetElapsedTimef() - lastTriggerP1.time, 0, 1, 255, 0, true));
-    font.drawString("Note Triggered", (viewPort.width/4-bounding.width/2), 200);
+    font.drawString("Note Triggered", viewport.x+(viewport.width/4-bounding.width/2), viewport.y+200);
     
     bounding = font.getStringBoundingBox("Output Mode: "+ofToString(musicMakerP1.outputMode), 0, 0);
     ofSetColor(255, 255, 255, 255);
-    font.drawString("Output Mode: "+ofToString(musicMakerP1.outputMode), (viewPort.width/4-bounding.width/2), 300);
+    font.drawString("Output Mode: "+ofToString(musicMakerP1.outputMode), viewport.x+(viewport.width/4-bounding.width/2), viewport.y+300);
     
     ofSetColor(ofColor::slateBlue, 200);
-    ofRect(viewPort.width/2, 0, viewPort.width/2, viewPort.height);
+    ofRect(viewport.x+viewport.width/2, viewport.y, viewport.width/2, viewport.height);
     bounding = font.getStringBoundingBox("Player One", 0, 0);
     
     ofSetColor(ofColor::white, 255);
-    font.drawString("Player Two", viewPort.width/2+(viewPort.width/4-bounding.width/2), 100);
+    font.drawString("Player Two", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+100);
     bounding = font.getStringBoundingBox("Note Triggered", 0, 0);
     
     ofSetColor(ofColor::white, ofMap(ofGetElapsedTimef() - lastTriggerP2.time, 0, 1, 255, 0, true));
-    font.drawString("Note Triggered", viewPort.width/2+(viewPort.width/4-bounding.width/2), 200);
+    font.drawString("Note Triggered", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+200);
     
     bounding = font.getStringBoundingBox("Output Mode: "+ofToString(musicMakerP2.outputMode), 0, 0);
     
     ofSetColor(255, 255, 255, 255);
-    font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewPort.width/2+(viewPort.width/4-bounding.width/2), 300);
+    font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+300);
 }
 bool midiView::isMain(){
     return bMainView;

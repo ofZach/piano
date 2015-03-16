@@ -31,6 +31,7 @@ void TVView::setupGUI(){
     tvParameters.add(cameraAngle.set("cameraAngle", 0, 0, TWO_PI));
     tvParameters.add(cameraRadius.set("cameraRadius", 0, 0, 1000));
     tvParameters.add(cameraHeight.set("cameraHeight", 0, 0, 1000));
+    tvParameters.add(lookAtPointHeight.set("View Height", 0, 0, 500));
     tvParameters.add(swayCamera.set("swayCamera", true));
     tvParameters.add(swayRate.set("swayRate", 0.1, 0.01, 10));
     tvParameters.add(swayAmount.set("swayAmount", 0.1, 0, 1));
@@ -44,7 +45,7 @@ void TVView::setupGUI(){
     tvParameters.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
     tvParameters.add(stageSize.set("Stage Size", 300, 1, 500));
     
-    gui.setup("TV Controls", 0, mainViewPort.height - 400, 300, 400, true, false);
+    gui.setup("TV Controls", 0, 0, 300, 500, true, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     gui.addGroup(tvParameters);
@@ -55,8 +56,8 @@ void TVView::update(kinectBody *kinectBodyOne, kinectBody *kinectBodyTwo){
     gui.update();
     TV.update(kinectBodyOne, kinectBodyTwo);
 }
-void TVView::draw(){
-    TV.draw(mainViewPort);
+void TVView::draw(ofRectangle viewport){
+    TV.draw(viewport);
 }
 
 void TVView::drawTV(){

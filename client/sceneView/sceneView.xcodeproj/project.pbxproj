@@ -91,7 +91,6 @@
 		C83C44E91AB4FD7900879893 /* ViewRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E51AB4FD7900879893 /* ViewRenderer.cpp */; };
 		C83C45DA1AB52DBE00879893 /* FloorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45D81AB52DBE00879893 /* FloorView.cpp */; };
 		C83C45E21AB52DDE00879893 /* Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45DC1AB52DDE00879893 /* Floor.cpp */; };
-		C83C45F31AB66C9F00879893 /* ofxCalibrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */; };
 		C83C45FA1AB7180D00879893 /* gridInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F51AB7180D00879893 /* gridInfo.cpp */; };
 		C83C45FB1AB7180D00879893 /* traveler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F81AB7180D00879893 /* traveler.cpp */; };
 		C83C467E1AB748FC00879893 /* TVView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C467C1AB748FC00879893 /* TVView.cpp */; };
@@ -416,8 +415,6 @@
 		C83C45DD1AB52DDE00879893 /* Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Floor.h; sourceTree = "<group>"; };
 		C83C45DE1AB52DDE00879893 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		C83C45DF1AB52DDE00879893 /* prng_engine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = prng_engine.hh; sourceTree = "<group>"; };
-		C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCalibrate.cpp; sourceTree = "<group>"; };
-		C83C45F21AB66C9F00879893 /* ofxCalibrate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxCalibrate.h; sourceTree = "<group>"; };
 		C83C45F51AB7180D00879893 /* gridInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gridInfo.cpp; sourceTree = "<group>"; };
 		C83C45F61AB7180D00879893 /* gridInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gridInfo.h; sourceTree = "<group>"; };
 		C83C45F71AB7180D00879893 /* prng_engine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = prng_engine.hh; sourceTree = "<group>"; };
@@ -483,7 +480,6 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				C83C45EF1AB66C9F00879893 /* ofxCalibrate */,
 				C83C445C1AB4F3DB00879893 /* ofxOpenCv */,
 				C83C44571AB4F3C600879893 /* ofxQuadWarp */,
 				C83C43DC1AB4C39800879893 /* ofxMidi */,
@@ -1237,24 +1233,6 @@
 			path = ../../skeletonReceiver/src/visuals;
 			sourceTree = "<group>";
 		};
-		C83C45EF1AB66C9F00879893 /* ofxCalibrate */ = {
-			isa = PBXGroup;
-			children = (
-				C83C45F01AB66C9F00879893 /* src */,
-			);
-			name = ofxCalibrate;
-			sourceTree = "<group>";
-		};
-		C83C45F01AB66C9F00879893 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */,
-				C83C45F21AB66C9F00879893 /* ofxCalibrate.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxCalibrate/src;
-			sourceTree = "<group>";
-		};
 		E4328144138ABC890047C5CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1431,7 +1409,6 @@
 				C83C445B1AB4F3C600879893 /* ofxQuadWarp.cpp in Sources */,
 				C83C427D1AB4AB7F00879893 /* guiTypeLogger.cpp in Sources */,
 				C83C42151AB4AB7400879893 /* UdpSocket.cpp in Sources */,
-				C83C45F31AB66C9F00879893 /* ofxCalibrate.cpp in Sources */,
 				C83C440F1AB4C39800879893 /* ofxMidiMessage.cpp in Sources */,
 				C83C44E81AB4FD7900879893 /* skeletonView.cpp in Sources */,
 				C83C42871AB4AB7F00879893 /* ofxControlPanel.cpp in Sources */,

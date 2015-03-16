@@ -30,12 +30,7 @@ public:
     ofRectangle viewGrid[N_SCENE];
     int iMainView;
     
-private:
-    ofFbo skeletonView;
-    ofFbo floorView;
-    ofFbo midiView;
-    ofFbo tvView;
-    
+private:    
     vector<ofFbo*> views;
     
     class skeletonView kinectSkeleton;

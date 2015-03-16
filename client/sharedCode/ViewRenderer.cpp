@@ -57,34 +57,34 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     midiOut->openPort(0);
     
     musicMaker.setup(this->numPlayers, midiOut, viewMain);
-    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
-    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
+    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), mainview);
+    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), mainview);
     
-    skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-    midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-    floorView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-    tvView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+//    skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+//    midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+//    floorView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+//    tvView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+//    
+//    skeletonView.begin();
+//    ofClear(0, 0, 0, 0);
+//    skeletonView.end();
+//    
+//    midiView.begin();
+//    ofClear(0, 0, 0, 0);
+//    midiView.end();
+//    
+//    floorView.begin();
+//    ofClear(0, 0, 0, 0);
+//    floorView.end();
+//    
+//    tvView.begin();
+//    ofClear(0, 0, 0, 0);
+//    tvView.end();
     
-    skeletonView.begin();
-    ofClear(0, 0, 0, 0);
-    skeletonView.end();
-    
-    midiView.begin();
-    ofClear(0, 0, 0, 0);
-    midiView.end();
-    
-    floorView.begin();
-    ofClear(0, 0, 0, 0);
-    floorView.end();
-    
-    tvView.begin();
-    ofClear(0, 0, 0, 0);
-    tvView.end();
-    
-    views.push_back(&skeletonView);
-    views.push_back(&midiView);
-    views.push_back(&floorView);
-    views.push_back(&tvView);
+//    views.push_back(&skeletonView);
+//    views.push_back(&midiView);
+//    views.push_back(&floorView);
+//    views.push_back(&tvView);
     
 }
 void ViewRenderer::update(){
@@ -100,26 +100,26 @@ void ViewRenderer::update(){
         tv.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
     }
     ofEnableAlphaBlending();
-    skeletonView.begin();
-    ofClear(0, 0, 0, 0);
-    kinectSkeleton.draw();
-    skeletonView.end();
+//    skeletonView.begin();
+//    ofClear(0, 0, 0, 0);
+//    kinectSkeleton.draw();
+//    skeletonView.end();
     
-    midiView.begin();
-    ofClear(0, 0, 0);
-    musicMaker.draw();
-    midiView.end();
+//    midiView.begin();
+//    ofClear(0, 0, 0);
+//    musicMaker.draw();
+//    midiView.end();
     
-    floorView.begin();
-    ofClear(0, 0, 0);
-    floor.draw();
-    floorView.end();
+//    floorView.begin();
+//    ofClear(0, 0, 0);
+//    floor.draw();
+//    floorView.end();
     
-    tvView.begin();
-    ofClear(0, 0, 0);
-    ofSetColor(255, 255, 0);
-    tv.draw();
-    tvView.end();
+//    tvView.begin();
+//    ofClear(0, 0, 0);
+//    ofSetColor(255, 255, 0);
+//    tv.draw();
+//    tvView.end();
     ofDisableAlphaBlending();
 }
 
@@ -136,25 +136,27 @@ void ViewRenderer::draw(){
     
     if(iMainView == N_SCENE){
         ofSetColor(255, 255, 255, 255);
-        for(int i = 0; i < views.size(); i++){
-            views[i]->draw(viewGrid[i]);
-        }
-    }else{
-        ofSetColor(255, 255, 255, 255);
-        views[iMainView]->draw(viewMain);
+        kinectSkeleton.draw(viewGrid[0]);
+        musicMaker.draw(viewGrid[1]);
+        floor.draw(viewGrid[2]);
+        tv.draw(viewGrid[3]);
     }
 
     
     if(kinectSkeleton.isMain()){
+        kinectSkeleton.draw(viewMain);
         kinectSkeleton.drawControlPanel();
     }
     if(musicMaker.isMain()){
+        musicMaker.draw(viewMain);
         musicMaker.drawControlPanel();
     }
     if(floor.isMain()){
+        floor.draw(viewMain);
         floor.drawControlPanel();
     }
     if(tv.isMain()){
+        tv.draw(viewMain);
         tv.drawControlPanel();
     }
     

@@ -18,7 +18,7 @@ public:
     
     void setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle viewport = ofGetCurrentViewport());
     void update(kinectBody * playerOne, kinectBody * playerTwo);
-    void draw();
+    void draw(ofRectangle viewport);
     
     void exit();
     
@@ -31,6 +31,8 @@ private:
     int numPlayers;
     
     ofTrueTypeFont font;
+    ofTrueTypeFont fontDebug;
+     ofTrueTypeFont fontMain;
     
     musicMaker musicMakerP1;
     musicMaker musicMakerP2;    

@@ -48,6 +48,13 @@ void skeletonView::update(){
     ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
+    ofQuaternion foo = kinect.getQuaternion();
+    ofMatrix4x4 fooMat;
+    foo.get(fooMat);
+    
+    mat*=fooMat.getInverse();
+    
+    
     if (skeletons->size() > 0){
         int index = 0;
         float dist = FLT_MAX;
@@ -80,9 +87,9 @@ kinectBody * skeletonView::getBody(int i){
 void skeletonView::setMainView(bool mainView){
     bMainView = mainView;
 }
-void skeletonView::draw(){
+void skeletonView::draw(ofRectangle viewport){
     ofBackground(0, 0, 0);
-    cam.begin(viewPort);
+    cam.begin(viewport);
     ofPushStyle();
     ofSetColor(255,255,255,200);
     ofSetLineWidth(2);

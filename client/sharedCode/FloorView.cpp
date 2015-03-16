@@ -108,7 +108,7 @@ void FloorView::update(){
     projectionFbo.end();
     ofDisableAlphaBlending();
 }
-void FloorView::draw(){
+void FloorView::draw(ofRectangle viewport){
     if(bMainView){
         if(bShowWarp){
             warpFloor.show();
@@ -117,8 +117,7 @@ void FloorView::draw(){
     if(!bMainView || !bShowWarp){
         warpFloor.hide();
     }
-    projectionFbo.draw(0, 0);
-    
+    projectionFbo.draw(viewport);
 }
 
 void FloorView::drawStageCalibration(){
@@ -170,31 +169,20 @@ void FloorView::drawStageCalibration(){
 void FloorView::drawControlPanel(){
     
     ofBackground(0, 0, 0);
-    ofSetColor(ofColor::slateBlue);
-    ofNoFill();
-    ofRect(mainViewport.width-p1Floor.getWidth()/3-2.5, 0, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
+    ofPushStyle();
     ofSetColor(255, 255, 255);
-    ofFill();
-    p1Floor.draw(ofGetScreenWidth()-p1Floor.getWidth()/3, 2.5, p1Floor.getWidth()/3, p1Floor.getHeight()/3);
-    
-    ofSetColor(ofColor::slateBlue);
-    ofNoFill();
-    ofRect(mainViewport.width-p2Floor.getWidth()/3-2.5, p2Floor.getHeight()/3+20-2.5, p1Floor.getWidth()/3+5, p1Floor.getHeight()/3+5);
-    ofSetColor(255, 255, 255);
-    ofFill();
-    p2Floor.draw(mainViewport.width-p2Floor.getWidth()/3, p2Floor.getHeight()/3+20, p2Floor.getWidth()/3, p2Floor.getHeight()/3);
-    
     projectionFbo.draw(0, 0);
     
     warpFloor.draw();
     //    warpOne.draw();
     
-    ofSetColor(255, 255, 255);
+
     ofNoFill();
     ofSetColor(ofColor::slateBlue);
     ofRect(-2.5, -2.5, projectionViewport.width+5, projectionViewport.height+5);
     ofFill();
     ofSetColor(255, 255, 255);
+    ofPopStyle();
     
     gui.draw();
     
@@ -268,7 +256,7 @@ void FloorView::drawProjections(){
 }
 
 void FloorView::setupGUI(){
-    gui.setup("Floor Controls", mainViewport.width-300, mainViewport.height-350, 300, 350, true, false);
+    gui.setup("Floor Controls", mainViewport.width-300, 0, 300, 500, true, false);
     
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);

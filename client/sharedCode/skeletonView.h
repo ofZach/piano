@@ -22,7 +22,7 @@ public:
     
     void setup(int numPlayer, ofRectangle viewPort = ofGetCurrentViewport());
     void update();
-    void draw();
+    void draw(ofRectangle viewport);
     void drawControlPanel();
     void exit();
     void setupGUI();
