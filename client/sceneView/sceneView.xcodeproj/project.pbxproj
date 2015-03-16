@@ -94,6 +94,8 @@
 		C83C45F31AB66C9F00879893 /* ofxCalibrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F11AB66C9F00879893 /* ofxCalibrate.cpp */; };
 		C83C45FA1AB7180D00879893 /* gridInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F51AB7180D00879893 /* gridInfo.cpp */; };
 		C83C45FB1AB7180D00879893 /* traveler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F81AB7180D00879893 /* traveler.cpp */; };
+		C83C467E1AB748FC00879893 /* TVView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C467C1AB748FC00879893 /* TVView.cpp */; };
+		C83C46811AB7491A00879893 /* tvScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C467F1AB7491A00879893 /* tvScreen.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -421,6 +423,10 @@
 		C83C45F71AB7180D00879893 /* prng_engine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = prng_engine.hh; sourceTree = "<group>"; };
 		C83C45F81AB7180D00879893 /* traveler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = traveler.cpp; sourceTree = "<group>"; };
 		C83C45F91AB7180D00879893 /* traveler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traveler.h; sourceTree = "<group>"; };
+		C83C467C1AB748FC00879893 /* TVView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TVView.cpp; path = ../../sharedCode/TVView.cpp; sourceTree = "<group>"; };
+		C83C467D1AB748FC00879893 /* TVView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVView.h; path = ../../sharedCode/TVView.h; sourceTree = "<group>"; };
+		C83C467F1AB7491A00879893 /* tvScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tvScreen.cpp; sourceTree = "<group>"; };
+		C83C46801AB7491A00879893 /* tvScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tvScreen.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -522,6 +528,8 @@
 		C83C41E21AB4AB4400879893 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				C83C467C1AB748FC00879893 /* TVView.cpp */,
+				C83C467D1AB748FC00879893 /* TVView.h */,
 				C83C45D81AB52DBE00879893 /* FloorView.cpp */,
 				C83C45D91AB52DBE00879893 /* FloorView.h */,
 				C83C44E11AB4FD7900879893 /* midiView.cpp */,
@@ -1213,6 +1221,8 @@
 		C83C45DB1AB52DDE00879893 /* visuals */ = {
 			isa = PBXGroup;
 			children = (
+				C83C467F1AB7491A00879893 /* tvScreen.cpp */,
+				C83C46801AB7491A00879893 /* tvScreen.h */,
 				C83C45DC1AB52DDE00879893 /* Floor.cpp */,
 				C83C45DD1AB52DDE00879893 /* Floor.h */,
 				C83C45DE1AB52DDE00879893 /* Grid.h */,
@@ -1393,6 +1403,8 @@
 				C83C42361AB4AB7A00879893 /* Logger.cpp in Sources */,
 				C83C42AF1AB4ABB900879893 /* Graph.cpp in Sources */,
 				C83C42121AB4AB7400879893 /* ofxOscSender.cpp in Sources */,
+				C83C46811AB7491A00879893 /* tvScreen.cpp in Sources */,
+				C83C467E1AB748FC00879893 /* TVView.cpp in Sources */,
 				C83C440E1AB4C39800879893 /* ofxMidiIn.cpp in Sources */,
 				C83C42A81AB4ABA800879893 /* kinectSkeletonAnalyser.cpp in Sources */,
 				C83C42771AB4AB7F00879893 /* guiType2DSlider.cpp in Sources */,

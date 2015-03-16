@@ -26,11 +26,11 @@ class tvScreen {
 public:
     
     
-    void setup(ofRectangle viewport);
-    void update( kinectBody * kinectBody);
+    void setup(ofRectangle viewport, ofParameterGroup* params);
+    void update( kinectBody * kinectBodyOne, kinectBody * kinectBodyTwo);
     void drawHistoryMan( kinectBody & BODY);
     void drawHairyMan( kinectSkeleton & SK);
-    void drawIntoFbo( ofCamera & mainViewCam);
+    void drawIntoFbo();
     void draw( ofRectangle drawRect);
     void setStagePos(float x, float y, float z, float size);
     void addImpluse();
@@ -51,6 +51,12 @@ public:
 
     ofFbo tvSkeletonView;
     ofFbo tvGridView;
-    kinectBody * KB;
+    kinectBody * playerOneBody;
+    kinectBody * playerTwoBody;
 
+    ofParameterGroup * tvParams;
+    
+    ofRectangle tvViewPort;
+    
+    ofCamera cam;
 };

@@ -11,6 +11,7 @@
 #include "FloorView.h"
 #include "midiView.h"
 #include "ofxMidi.h"
+#include "TVView.h"
 #define N_SCENE 4
 class ViewRenderer{
 public:
@@ -39,6 +40,7 @@ private:
     
     class skeletonView kinectSkeleton;
     class midiView musicMaker;
+    TVView tv;
     FloorView floor;
     
     shared_ptr<ofxMidiOut> midiOut;

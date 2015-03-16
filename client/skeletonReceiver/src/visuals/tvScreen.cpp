@@ -26,13 +26,14 @@ void tvScreen::addImpluse(){
 }
 bool bDrawHairyMan;
 
-void tvScreen::setup (ofRectangle viewport) {
-    tvSkeletonView.allocate(viewport.width, viewport.height, GL_RGBA, 4);
+void tvScreen::setup (ofRectangle viewport, ofParameterGroup* params) {
+    tvViewPort = viewport;
+    tvSkeletonView.allocate(tvViewPort.width, tvViewPort.height, GL_RGBA, 4);
     tvSkeletonView.begin();
     ofClear(0,0,0,255);
     tvSkeletonView.end();
     
-    tvGridView.allocate(viewport.width, viewport.height, GL_RGBA, 4);
+    tvGridView.allocate(tvViewPort.width, tvViewPort.height, GL_RGBA, 4);
     tvGridView.begin();
     ofClear(0,0,0,255);
     tvGridView.end();
@@ -53,16 +54,33 @@ void tvScreen::setup (ofRectangle viewport) {
     
     bDrawHairyMan = false;
     twist = 0;
+    
+    tvParams = params;
 }
 
-void tvScreen::update( kinectBody * kinectBody){
-    KB = kinectBody;
+void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
+    playerOneBody = kinectBodyOne;
+    playerTwoBody = kinectBodyTwo;
     
     for (int i = 0; i < pulses.size(); i++){
         pulses[i].lifetime -= 0.01;
     }
     
     ofRemove(pulses, removeIfZero);
+    
+    //update the camera
+    ofPoint position (0 + tvParams->getFloat("cameraRadius") * cos(tvParams->getFloat("cameraAngle")), tvParams->getFloat("cameraHeight"), 0 + tvParams->getFloat("cameraRadius")  * sin(tvParams->getFloat("cameraAngle")));
+    
+    if(tvParams->getBool("swayCamera")) {
+        float t = ofGetElapsedTimef() * tvParams->getFloat("swayRate");
+        ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
+        position += swayDir * (tvParams->getFloat("swayAmount") * 100.);
+    }
+    
+    cam.setPosition(position);
+    cam.lookAt( ofPoint(0,0,0));
+    
+    drawIntoFbo();
 }
 
 float energy;
@@ -268,13 +286,13 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK){
     
 }
 
-void tvScreen::drawIntoFbo( ofCamera & mainViewCam){
+void tvScreen::drawIntoFbo(){
     
     
     tvGridView.begin();
-    ofClear(0,0,0,255);
+    ofClear(0,0,0,0);
     //ofClear(0, 0, 0);
-    mainViewCam.begin(ofRectangle(ofVec2f(0, 0), tvGridView.getWidth(), tvGridView.getHeight()));
+    cam.begin(ofRectangle(ofVec2f(0, 0), tvViewPort.width, tvViewPort.height));
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
     ofPushMatrix();
@@ -285,13 +303,13 @@ void tvScreen::drawIntoFbo( ofCamera & mainViewCam){
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     ofFill();
-    mainViewCam.end();
+    cam.end();
     tvGridView.end();
     
     tvSkeletonView.begin();
-    ofClear(0,0,0,255);
+    ofClear(0,0,0,0);
     //ofClear(0, 0, 0);
-    mainViewCam.begin(ofRectangle(ofVec2f(0, 0), tvSkeletonView.getWidth(), tvSkeletonView.getHeight()));
+    cam.begin(ofRectangle(ofVec2f(0, 0), tvViewPort.width, tvViewPort.height));
     
     energy*= 0.9;
     if (ofGetMousePressed()){
@@ -300,21 +318,31 @@ void tvScreen::drawIntoFbo( ofCamera & mainViewCam){
     if (energy > 1) energy = 1;
     if (energy < 0.01) energy = 0;
     
-    if (KB != NULL){
+    if (playerOneBody != NULL){
         
-        kinectSkeleton SK = KB->getLastSkeleton();
+        kinectSkeleton SK = playerOneBody->getLastSkeleton();
         
-        if (bDrawHairyMan == true){
+        if (tvParams->getBool("bDrawHairyMan") == true){
             drawHairyMan(SK);
         } else {
             
-            drawHistoryMan(*KB);
+            drawHistoryMan(*playerOneBody);
         }
-        
-        
-        //KB->draw();
     }
-    mainViewCam.end();
+    
+    
+    if (playerTwoBody != NULL){
+        
+        kinectSkeleton SK = playerTwoBody->getLastSkeleton();
+        
+        if (tvParams->getBool("bDrawHairyMan") == true){
+            drawHairyMan(SK);
+        } else {
+            
+            drawHistoryMan(*playerTwoBody);
+        }
+    }
+    cam.end();
     tvSkeletonView.end();
 }
 

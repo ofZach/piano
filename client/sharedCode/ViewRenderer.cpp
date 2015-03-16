@@ -58,6 +58,7 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     
     musicMaker.setup(this->numPlayers, midiOut, viewMain);
     floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
+    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
     
     skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
     midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
@@ -93,8 +94,10 @@ void ViewRenderer::update(){
     
     if(numPlayers == 1){
         musicMaker.update(kinectSkeleton.getBody(0), NULL);
+        tv.update(kinectSkeleton.getBody(0), NULL);
     }else{
         musicMaker.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
+        tv.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
     }
     ofEnableAlphaBlending();
     skeletonView.begin();
@@ -115,7 +118,7 @@ void ViewRenderer::update(){
     tvView.begin();
     ofClear(0, 0, 0);
     ofSetColor(255, 255, 0);
-    ofRect(ofRectangle(0, 0, tvView.getWidth(), tvView.getHeight()));
+    tv.draw();
     tvView.end();
     ofDisableAlphaBlending();
 }
@@ -151,6 +154,9 @@ void ViewRenderer::draw(){
     if(floor.isMain()){
         floor.drawControlPanel();
     }
+    if(tv.isMain()){
+        tv.drawControlPanel();
+    }
     
     floor.drawProjections();
     
@@ -174,6 +180,11 @@ void ViewRenderer::setMainView(int i){
         floor.setMainView(true);
     }else{
         floor.setMainView(false);
+    }
+    if(iMainView == 3){
+        tv.setMainView(true);
+    }else{
+        tv.setMainView(false);
     }
 }
 ofRectangle* ViewRenderer::getViews(){
