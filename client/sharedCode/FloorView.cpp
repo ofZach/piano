@@ -44,7 +44,7 @@ void FloorView::update(){
     }
     
     
-    
+    ofEnableAlphaBlending();
     projectionFbo.begin();
     ofClear(0, 0, 0, 0);
     
@@ -65,19 +65,26 @@ void FloorView::update(){
     //        glPopMatrix();
     //    }else{
     
+    if(bDrawCalibration){
+        drawProjectorCalibration();
+    }
+    
     glPushMatrix();
     glMultMatrixf( mat.getPtr() );
     {
         
+        if(!bDrawCalibration){
         
-        p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
-        
-        
-        p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+            p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+        }else{
+            drawStageCalibration();
+        }
     }
     glPopMatrix();
     //    }
     projectionFbo.end();
+    ofDisableAlphaBlending();
 }
 void FloorView::draw(){
     if(bMainView){
@@ -92,7 +99,53 @@ void FloorView::draw(){
     
 }
 
-void FloorView::drawDebug(){
+void FloorView::drawStageCalibration(){
+    int width=p1Floor.getWidth()+floorOffset;
+    int height=p1Floor.getHeight()/2;
+    int squareSize = 10;
+    int counter=0;
+    
+    ofPushStyle();
+    for (int j=0; j<height;j=j+squareSize) {
+        
+        for (int i=0; i<width; i=i+squareSize*2){
+            if (counter%2==0){
+                ofSetColor(0);
+                ofFill();
+                ofRect(i, j, squareSize, squareSize);
+                
+                
+                ofSetColor(255);
+                ofFill();
+                ofRect(i+squareSize, j, squareSize, squareSize);
+                ofNoFill();
+                ofCircle(i+squareSize/2, j+squareSize/2, squareSize/4*sin(i+1/150+5*ofGetElapsedTimef())+squareSize/4);
+                ofSetColor(0);
+                ofCircle(i+squareSize+squareSize/2, j+squareSize/2, squareSize/4*sin((i+1)/200+5*ofGetElapsedTimef())+squareSize/4);
+                
+                
+            }else {
+                ofSetColor(255);
+                ofFill();
+                ofRect(i, j, squareSize, squareSize);
+                
+                
+                ofSetColor(0);
+                ofFill();
+                ofRect(i+squareSize, j, squareSize, squareSize);
+                ofNoFill();
+                ofCircle(i+squareSize/2, j+squareSize/2, squareSize/4*sin((i+1)/175+5*ofGetElapsedTimef())+squareSize/4);
+                ofSetColor(255);
+                ofCircle(i+squareSize+squareSize/2, j+squareSize/2, squareSize/4*sin((i+1)/250+5*ofGetElapsedTimef())+squareSize/4);
+            }
+            
+        }
+        counter++;
+    }
+    ofPopStyle();
+}
+
+void FloorView::drawControlPanel(){
     
     ofBackground(0, 0, 0);
     ofSetColor(ofColor::slateBlue);
@@ -124,8 +177,72 @@ void FloorView::drawDebug(){
     gui.draw();
     
 }
+
+void FloorView::drawProjectorCalibration(){
+    ofPushStyle();
+    ofSetLineWidth(1);
+    
+    
+    int height = projectionViewport.height;
+    int width = projectionViewport.width;
+    
+    ofFill();
+    ofSetColor(255, 0, 0,100);
+    ofRect(0,0,width, height/3);
+    
+    ofSetColor(0, 255, 0,100);
+    ofRect(0,height/3,width, height/3);
+    
+    ofSetColor(0, 0, 255,100);
+    ofRect(0,height-(height/3),width, height/3);
+    
+    ofSetCircleResolution(40);
+    ofSetColor(255);
+    int spacing = 50;
+    for (int i = 0; i<width; i=i+spacing) {
+        if ((i/spacing)%3) {
+            ofSetLineWidth(1);
+            ofSetColor(127);
+        }
+        else{
+            ofNoFill();
+            ofSetColor(255);
+            ofCircle(i+1.5*spacing, height/2, (height/3)/2);
+            ofRect(i+1.5*spacing, height/2, (height/3)/2,(height/3)/2);
+            ofRect(i+1.5*spacing-((height/3)/2), (height/2)- (height/3)/2, (height/3)/2,(height/3)/2);
+            ofSetLineWidth(2);
+            ofSetColor(100, 100, ofMap(i,0,width,0,255, true));
+            ofLine(i,0,i+spacing*3,height);
+            ofLine(i+spacing*3,0,i,height);
+        }
+        ofLine(i, 0, i, height);
+        ofDrawBitmapString(ofToString(i), i+5,20);
+    }
+    //Text
+    for (int i = 0; i<height; i=i+spacing) {
+        if ((i/spacing)%3) {
+            ofSetLineWidth(1);
+        }
+        else{
+            ofSetLineWidth(5);
+        }
+        ofLine(0, i, width, i);
+        ofDrawBitmapString(ofToString(i), 20,i+5);
+        ofDrawBitmapString(ofToString(i), 200,i+5);
+    }
+    ofPopStyle();
+}
+
 void FloorView::drawProjections(){
     projectionFbo.draw(projectionViewport);
+    if(bDrawCalibration){
+
+        ofPushStyle();
+        ofNoFill();
+        ofRect(projectionViewport);
+        ofFill();
+        ofPopStyle();
+    }
 }
 
 void FloorView::setupGUI(){
@@ -144,6 +261,7 @@ void FloorView::setupGUI(){
     squareOptions.add(bShowWarp.set("bShowWarp", true));
     squareOptions.add(bShowDots.set("bShowDots", true));
     squareOptions.add(bSaveWarp.set("bSaveWarp", true));
+    squareOptions.add(bDrawCalibration.set("bDrawCalibration", true));
     squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));
     
     
@@ -160,6 +278,9 @@ void FloorView::setupGUI(){
 
 void FloorView::setMainView(bool view){
     bMainView = view;
+}
+bool FloorView::isMain(){
+    return bMainView;
 }
 
 void FloorView::setupQuadWarp(){

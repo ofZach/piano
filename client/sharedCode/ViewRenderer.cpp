@@ -55,7 +55,7 @@ void ViewRenderer::setup(int numPlayers){
     midiOut->openVirtualPort("OF Kinect");
     
     musicMaker.setup(this->numPlayers, midiOut);
-    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 800));
+    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1024, 768));
     
     skeletonView.allocate(1920, 1080, GL_RGBA, 4);
     midiView.allocate(1920, 1080, GL_RGBA, 4);
@@ -138,6 +138,18 @@ void ViewRenderer::draw(){
         ofSetColor(255, 255, 255, 255);
         views[iMainView]->draw(viewMain);
     }
+
+    
+    if(kinectSkeleton.isMain()){
+        kinectSkeleton.drawControlPanel();
+    }
+    if(musicMaker.isMain()){
+        musicMaker.drawControlPanel();
+    }
+    if(floor.isMain()){
+        floor.drawControlPanel();
+    }
+    
     floor.drawProjections();
     
 //    ofDisableDepthTest();

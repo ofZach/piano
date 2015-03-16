@@ -11,6 +11,7 @@
 #include "ofxControlPanel.h"
 #include "Floor.h"
 #include "ofxQuadWarp.h"
+#include "ofxCalibrate.h"
 class FloorView{
 public:
     FloorView();
@@ -19,11 +20,16 @@ public:
     void setup(ofRectangle projectorViewport, ofRectangle mainViewport=ofGetCurrentViewport());
     void update();
     void draw();
-    void drawDebug();
+    void drawControlPanel();
     void drawProjections();
     void setupQuadWarp();
     void setupGUI();
     void setMainView(bool view);
+    bool isMain();
+    
+    
+    void drawStageCalibration();
+    void drawProjectorCalibration();
     
     Floor p1Floor;
     Floor p2Floor;
@@ -47,6 +53,7 @@ public:
     ofParameter <float>     floorOffset;
     ofParameter <bool>      dualWarp;
     
+    ofParameter<bool>       bDrawCalibration;
     ofParameter <bool>      bShowWarp;
     ofParameter <bool>      showWarpOne;
     ofParameter <bool>      showWarpTwo;
