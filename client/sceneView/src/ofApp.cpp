@@ -4,8 +4,8 @@
 void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(60);
-    ofSetEscapeQuitsApp(false);
-    views.setup(2);
+    //ofSetEscapeQuitsApp(false);
+    views.setup(2, ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
 }
 
 

@@ -246,7 +246,7 @@ void FloorView::drawProjections(){
 }
 
 void FloorView::setupGUI(){
-    gui.setup("Floor Controls", ofGetWidth()-300, ofGetHeight()-350, 300, 350, true, false);
+    gui.setup("Floor Controls", mainViewport.width-300, mainViewport.height-350, 300, 350, true, false);
     
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);

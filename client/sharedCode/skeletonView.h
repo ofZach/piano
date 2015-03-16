@@ -71,4 +71,6 @@ private:
     //GUI
     ofxControlPanel skeletonGui;
     bool bMainView;
+    
+    ofPlanePrimitive plane;
 };

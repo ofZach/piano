@@ -29,6 +29,7 @@ void skeletonView::setup(int numPlayer, ofRectangle viewPort){
     numPlayers = numPlayer;
     bMainView = false;
 
+    plane.set(1000, 1000, 20, 20);
 }
 
 bool skeletonView::isMain(){
@@ -84,9 +85,10 @@ void skeletonView::draw(){
     cam.begin(viewPort);
     ofPushStyle();
     ofSetColor(255,255,255,200);
-    ofSetLineWidth(3);
+    ofSetLineWidth(2);
     ofPushMatrix();
     ofRotate(90,0,0,1);
+    //plane.drawWireframe();
     ofDrawGridPlane(1000);
     ofPopMatrix();
     

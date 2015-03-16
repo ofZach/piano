@@ -17,8 +17,8 @@ ViewRenderer::~ViewRenderer(){
 }
 
 void ViewRenderer::setupViewports(){
-    int xOffset = ofGetWindowWidth() / 2;
-    int yOffset = ofGetWindowHeight() / 2;
+    int xOffset = viewMain.width / 2;
+    int yOffset = viewMain.height / 2;
     int x = 0;
     int y = 0;
     
@@ -41,21 +41,22 @@ void ViewRenderer::setupViewports(){
             y = yOffset;
         }
     }
-    
-    viewMain = ofRectangle(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+//    
+//    viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
 }
-void ViewRenderer::setup(int numPlayers){
+void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
+    viewMain = mainview;
     setupViewports();
     iMainView = 4;
     
     this->numPlayers = numPlayers;
-    kinectSkeleton.setup(this->numPlayers);
+    kinectSkeleton.setup(this->numPlayers, mainview);
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->openVirtualPort("OF Kinect");
     
-    musicMaker.setup(this->numPlayers, midiOut);
-    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1024, 768));
+    musicMaker.setup(this->numPlayers, midiOut, viewMain);
+    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
     
     skeletonView.allocate(1920, 1080, GL_RGBA, 4);
     midiView.allocate(1920, 1080, GL_RGBA, 4);

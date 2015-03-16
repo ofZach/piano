@@ -16,7 +16,7 @@ class ViewRenderer{
 public:
     ViewRenderer();
     virtual ~ViewRenderer();
-    void setup(int numPlayers);
+    void setup(int numPlayers, ofRectangle mainview = ofGetCurrentViewport());
     void update();
     void draw();
     void setMainView(int i);
