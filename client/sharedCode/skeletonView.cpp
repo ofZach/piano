@@ -23,12 +23,12 @@ void skeletonView::setup(int numPlayer, ofRectangle viewPort){
     cam.setPosition(0, 500, -1000);
     cam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
     
-
+    
     this->viewPort = viewPort;
     
     numPlayers = numPlayer;
     bMainView = false;
-
+    
     plane.set(1000, 1000, 20, 20);
 }
 
@@ -93,14 +93,22 @@ void skeletonView::draw(){
     ofPopMatrix();
     
     
-//    ofPushMatrix();
-//    ofRotate(90, 1, 0, 0);
-//    ofSetColor(0, 100, 100, 200);
-//    ofTranslate(stageX-stageSize/2.0, stageY-stageSize/2.0, stageZ);
-//    ofRect(0, 0, stageSize, stageSize);
-//    ofPopMatrix();
-//    ofSetColor(255,255,255,127);
-//    ofDrawAxis(50);
+    ofPushMatrix();
+    ofRotate(90, 1, 0, 0);
+    ofSetColor(ofColor::slateBlue, 200);
+    ofTranslate(stageRightX-stageSize/2.0, stageRightY-stageSize/2.0, stageRightZ);
+    ofRect(0, 0, stageSize, stageSize);
+    ofPopMatrix();
+    
+    
+    ofPushMatrix();
+    ofRotate(90, 1, 0, 0);
+    ofSetColor(ofColor::slateGray, 200);
+    ofTranslate(stageLeftX-stageSize/2.0, stageLeftY-stageSize/2.0, stageLeftZ);
+    ofRect(0, 0, stageSize, stageSize);
+    ofPopMatrix();
+    
+    
     
     ofSetColor(255, 255, 255, 255);
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
@@ -112,9 +120,9 @@ void skeletonView::draw(){
     ofPopStyle();
     cam.end();
     
-//    if(isMain()){
-//        drawControlPanel();
-//    }
+    //    if(isMain()){
+    //        drawControlPanel();
+    //    }
 }
 
 void skeletonView::drawControlPanel(){
@@ -138,6 +146,21 @@ void skeletonView::setupGUI(){
     skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
     skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
     skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
+    
+    
+    
+    skeletonTransform.add(stageLeftX.set("Left Stage X", 0, -500, 500));
+    skeletonTransform.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
+    skeletonTransform.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
+    
+    
+    skeletonTransform.add(stageRightX.set("Right Stage X", 0, -500, 500));
+    skeletonTransform.add(stageRightY.set("Right Stage Y", 0, -500, 500));
+    skeletonTransform.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
+    
+    
+    skeletonTransform.add(stageSize.set("Stage Size", 300, 1, 500));
+    
     
     skeletonGui.setup("Skeleton Controls", 0, ofGetHeight()-500, 300, 500, true, false);
     skeletonGui.setWhichPanel(0);

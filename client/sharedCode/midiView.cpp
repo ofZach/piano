@@ -95,9 +95,6 @@ void midiView::draw(){
     
     ofSetColor(255, 255, 255, 255);
     font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewPort.width/2+(viewPort.width/4-bounding.width/2), 300);
-    
-    
-    drawControlPanel();
 }
 bool midiView::isMain(){
     return bMainView;

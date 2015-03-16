@@ -54,15 +54,15 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-    midiOut->openPort(1);
+    midiOut->openPort(0);
     
     musicMaker.setup(this->numPlayers, midiOut, viewMain);
     floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
     
-    skeletonView.allocate(1920, 1080, GL_RGBA, 4);
-    midiView.allocate(1920, 1080, GL_RGBA, 4);
-    floorView.allocate(1920, 1080, GL_RGBA, 4);
-    tvView.allocate(1920, 1080, GL_RGBA, 4);
+    skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+    midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+    floorView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
+    tvView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
     
     skeletonView.begin();
     ofClear(0, 0, 0, 0);
