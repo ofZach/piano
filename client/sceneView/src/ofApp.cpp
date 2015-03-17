@@ -62,6 +62,11 @@ void ofApp::keyPressed(int key){
     if(key == OF_KEY_ESC){
         views.setMainView(4);
     }
+    
+    
+    if (key == 'f'){
+        ofToggleFullscreen();
+    }
 }
 
 //--------------------------------------------------------------

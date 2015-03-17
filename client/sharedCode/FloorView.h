@@ -52,6 +52,11 @@ public:
     // Line Parameters
     ofParameter <float>     lightWeight;
     ofParameter <float>     lineDistance;
+    
+    ofParameter <bool>     bPersonPresent0;
+    ofParameter <bool>     bPersonPresent1;
+    
+    
     ofParameter <float>     lineSpeed;  //lastSpeed
     ofParameter <bool>      bFadeLines;
     ofParameter <bool>      spawnLines0;

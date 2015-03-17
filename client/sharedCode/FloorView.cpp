@@ -36,18 +36,18 @@ void FloorView::setup(ofRectangle projector, ofRectangle main){
 void FloorView::update(){
     
     
-//    if (squareOptions.getBool("spawnLines0")){
-//        p1Floor.spawnLines();
-//        spawnLines0 = false;
-//        
-//    }
-//    
-//    if (squareOptions.getBool("spawnLines1")){
-//        p2Floor.spawnLines();
-//        
-//        spawnLines1 = false;
-//        
-//    }
+    if (squareOptions.getBool("spawnLines0")){
+        p1Floor.spawnLines();
+        spawnLines0 = false;
+        
+    }
+    
+    if (squareOptions.getBool("spawnLines1")){
+        p2Floor.spawnLines();
+        
+        spawnLines1 = false;
+        
+    }
     
     
     gui.update();
@@ -272,10 +272,14 @@ void FloorView::setupGUI(){
     squareOptions.add(bShowGrid.set("bShowGrid", true));
     squareOptions.add(bShowButton.set("bShowButton", true));
     
-//    squareOptions.add(bFadeLines.set("bFadeLines", false));
-//    squareOptions.add(spawnLines0.set("spawnLines0", false));
-//    squareOptions.add(spawnLines1.set("spawnLines1", false));
-//    
+    squareOptions.add(bPersonPresent0.set("bPersonPresent0", true));
+    squareOptions.add(bPersonPresent1.set("bPersonPresent1", true));
+ 
+    
+    squareOptions.add(bFadeLines.set("bFadeLines", false));
+    squareOptions.add(spawnLines0.set("spawnLines0", false));
+    squareOptions.add(spawnLines1.set("spawnLines1", false));
+    
     
     
     

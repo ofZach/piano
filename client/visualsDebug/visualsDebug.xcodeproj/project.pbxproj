@@ -69,6 +69,7 @@
 		FD3D20F31AB6ECA2005B2C17 /* ofxCalibrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20EE1AB6ECA2005B2C17 /* ofxCalibrate.cpp */; };
 		FD3D20FD1AB6F096005B2C17 /* gridInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20F91AB6F096005B2C17 /* gridInfo.cpp */; };
 		FD3D20FE1AB6F096005B2C17 /* traveler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20FB1AB6F096005B2C17 /* traveler.cpp */; };
+		FD3D21141AB7CFC8005B2C17 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D21101AB7CFC8005B2C17 /* ofxBlur.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,8 @@
 		FD3D20FA1AB6F096005B2C17 /* gridInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gridInfo.h; path = ../../skeletonReceiver/src/visuals/gridInfo.h; sourceTree = "<group>"; };
 		FD3D20FB1AB6F096005B2C17 /* traveler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = traveler.cpp; path = ../../skeletonReceiver/src/visuals/traveler.cpp; sourceTree = "<group>"; };
 		FD3D20FC1AB6F096005B2C17 /* traveler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = traveler.h; path = ../../skeletonReceiver/src/visuals/traveler.h; sourceTree = "<group>"; };
+		FD3D21101AB7CFC8005B2C17 /* ofxBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBlur.cpp; sourceTree = "<group>"; };
+		FD3D21111AB7CFC8005B2C17 /* ofxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBlur.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +332,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				FD3D21011AB7CFC8005B2C17 /* ofxBlur */,
 				FD3D20D91AB6ECA1005B2C17 /* ofxCalibrate */,
 				C83C45D01AB5172500879893 /* ofxQuadWarp */,
 				C83C454E1AB5171500879893 /* ofxOpenCv */,
@@ -837,6 +841,24 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		FD3D21011AB7CFC8005B2C17 /* ofxBlur */ = {
+			isa = PBXGroup;
+			children = (
+				FD3D210F1AB7CFC8005B2C17 /* src */,
+			);
+			name = ofxBlur;
+			path = ../../../addons/ofxBlur;
+			sourceTree = "<group>";
+		};
+		FD3D210F1AB7CFC8005B2C17 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FD3D21101AB7CFC8005B2C17 /* ofxBlur.cpp */,
+				FD3D21111AB7CFC8005B2C17 /* ofxBlur.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -964,6 +986,7 @@
 				C83C45301AB50DE100879893 /* guiTypeDrawable.cpp in Sources */,
 				FD3D20FE1AB6F096005B2C17 /* traveler.cpp in Sources */,
 				C83C45321AB50DE100879893 /* guiTypeLabel.cpp in Sources */,
+				FD3D21141AB7CFC8005B2C17 /* ofxBlur.cpp in Sources */,
 				C83C453D1AB50DE100879893 /* ofxControlPanel.cpp in Sources */,
 				C83C45C91AB5171500879893 /* ofxCvContourFinder.cpp in Sources */,
 				C83C453A1AB50DE100879893 /* guiTypeVairableLister.cpp in Sources */,

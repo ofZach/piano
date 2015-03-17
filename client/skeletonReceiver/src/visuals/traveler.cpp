@@ -42,7 +42,7 @@ void traveler::update(){
     ofSetCircleResolution(100);
 }
 
-void traveler::draw(){
+void traveler::draw( float alpha = 1.0){
     
     //    ofLine(GI->pts[GI->connections[currentConnection].a] + ofPoint(0,10,0),
     //           GI->pts[GI->connections[currentConnection].b] + ofPoint(0,10,0));
@@ -60,8 +60,9 @@ void traveler::draw(){
         m.addVertex(trail[i]);
         float pct = (i / (float)trail.size());
         //pct *= pct;
+        pct = powf(pct, 0.3);
         
-        m.addColor(ofColor(255,255,255,pct * 200));
+        m.addColor(ofColor(255,255,255,pct * 255 * alpha * energy));
     }
     m.draw();
     
@@ -100,26 +101,25 @@ void traveler::findNewConnection(){
 void traveler::fadeThings(){
     
     //speed *= 0.99;
-    trimLength *= 0.96;
-    speed *= 0.99;
+    //trimLength *= 0.99;
+    //speed *= 0.99;
     
+    energy *= 0.98f;
 }
 
 
 
 bool traveler::shouldIdie(){
     
+    
+    
     if (ofGetElapsedTimeMillis() - birthday < 1000) return false;
     
     else {
         
-        float len = 0;
-         ofPoint lastPt = trail[trail.size()-1];
-        for (int i = trail.size()-1; i >= 0; i--){
-            len += ( lastPt - trail[i] ).length();
-        }
+
         //cout << len << endl;
-        if (len < 10) return true;
+        if (energy < 0.01) return true;
         else return false;
         
         
@@ -159,6 +159,7 @@ void traveler::trimToLength(){
 void traveler::start( int node ){
     birthday = ofGetElapsedTimeMillis();
     
+    energy = 1;
     trail.clear();
     hitFlag = false;
     pos = GI->pts[node];

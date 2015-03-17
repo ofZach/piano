@@ -113,6 +113,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		FD3D212C1AB7D53C005B2C17 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D21281AB7D53C005B2C17 /* ofxBlur.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -446,6 +447,8 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		FD3D21281AB7D53C005B2C17 /* ofxBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBlur.cpp; sourceTree = "<group>"; };
+		FD3D21291AB7D53C005B2C17 /* ofxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBlur.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -480,6 +483,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				FD3D21191AB7D53C005B2C17 /* ofxBlur */,
 				C83C445C1AB4F3DB00879893 /* ofxOpenCv */,
 				C83C44571AB4F3C600879893 /* ofxQuadWarp */,
 				C83C43DC1AB4C39800879893 /* ofxMidi */,
@@ -1287,6 +1291,24 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
+		FD3D21191AB7D53C005B2C17 /* ofxBlur */ = {
+			isa = PBXGroup;
+			children = (
+				FD3D21271AB7D53C005B2C17 /* src */,
+			);
+			name = ofxBlur;
+			path = ../../../addons/ofxBlur;
+			sourceTree = "<group>";
+		};
+		FD3D21271AB7D53C005B2C17 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FD3D21281AB7D53C005B2C17 /* ofxBlur.cpp */,
+				FD3D21291AB7D53C005B2C17 /* ofxBlur.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1408,6 +1430,7 @@
 				C83C42351AB4AB7A00879893 /* Skeleton.cpp in Sources */,
 				C83C445B1AB4F3C600879893 /* ofxQuadWarp.cpp in Sources */,
 				C83C427D1AB4AB7F00879893 /* guiTypeLogger.cpp in Sources */,
+				FD3D212C1AB7D53C005B2C17 /* ofxBlur.cpp in Sources */,
 				C83C42151AB4AB7400879893 /* UdpSocket.cpp in Sources */,
 				C83C440F1AB4C39800879893 /* ofxMidiMessage.cpp in Sources */,
 				C83C44E81AB4FD7900879893 /* skeletonView.cpp in Sources */,
@@ -1620,7 +1643,7 @@
 					"/Users/dantheman/src/of_v0.8.4_osx_release-kinect-piano-yyn/addons/ofxOpenCv/libs/opencv/lib/osx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx10.9;
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxCv/libs/ofxCv/include/ ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxOpenCv/libs/opencv/include/ ../../../addons/ofxOsc/libs/oscpack/src/";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1709,7 +1732,7 @@
 					"/Users/dantheman/src/of_v0.8.4_osx_release-kinect-piano-yyn/addons/ofxOpenCv/libs/opencv/lib/osx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.10;
+				SDKROOT = macosx10.9;
 				USER_HEADER_SEARCH_PATHS = "../../../addons/ofxCv/libs/ofxCv/include/ ../../../addons/ofxCv/libs/CLD/include/ ../../../addons/ofxOpenCv/libs/opencv/include/ ../../../addons/ofxOsc/libs/oscpack/src/";
 				WRAPPER_EXTENSION = app;
 			};

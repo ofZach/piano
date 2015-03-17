@@ -1,0 +1,14 @@
+<quadwarp>
+	<src>
+		<point x="0" y="0"/>
+		<point x="1074" y="0"/>
+		<point x="1074" y="512"/>
+		<point x="0" y="512"/>
+	</src>
+	<dst>
+		<point x="77" y="178"/>
+		<point x="1192" y="169"/>
+		<point x="1272" y="631"/>
+		<point x="0" y="617"/>
+	</dst>
+</quadwarp>

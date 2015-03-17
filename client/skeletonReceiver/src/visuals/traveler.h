@@ -21,7 +21,7 @@ public:
     
     
     void update();
-    void draw();
+    void draw( float alpha );
     void start(int node);
     void findNewConnection();
     void trimToLength();
@@ -32,6 +32,7 @@ public:
     
     bool hitFlag;
     
+    float energy;
     
     gridInfo * GI;
     

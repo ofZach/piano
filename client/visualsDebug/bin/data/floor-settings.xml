@@ -12,7 +12,7 @@
         <val_0>0.1</val_0>
     </speed>
     <lightWeight>
-        <val_0>13.4962</val_0>
+        <val_0>10.0615</val_0>
     </lightWeight>
     <lineDistance>
         <val_0>334.946</val_0>
@@ -27,7 +27,7 @@
         <val_0>0</val_0>
     </bSaveWarp>
     <bDrawCalibration>
-        <val_0>1</val_0>
+        <val_0>0</val_0>
     </bDrawCalibration>
     <Stage_Offset>
         <val_0>0</val_0>
@@ -39,16 +39,16 @@
         <val_0>1</val_0>
     </bShowButton>
     <buttonPos0>
-        <val_0>10</val_0>
+        <val_0>8</val_0>
     </buttonPos0>
     <buttonPos1>
-        <val_0>4</val_0>
+        <val_0>10</val_0>
     </buttonPos1>
     <lineSpeed>
-        <val_0>14.245</val_0>
+        <val_0>21.03</val_0>
     </lineSpeed>
     <bFadeLines>
-        <val_0>0</val_0>
+        <val_0>1</val_0>
     </bFadeLines>
     <spawnLines0>
         <val_0>0</val_0>
@@ -56,4 +56,10 @@
     <spawnLines1>
         <val_0>0</val_0>
     </spawnLines1>
+    <bPersonPresent0>
+        <val_0>1</val_0>
+    </bPersonPresent0>
+    <bPersonPresent1>
+        <val_0>1</val_0>
+    </bPersonPresent1>
 </Floor>
