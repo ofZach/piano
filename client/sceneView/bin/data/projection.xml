@@ -7,20 +7,20 @@
 		<bShowDots>0</bShowDots>
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
-		<bPersonPresent>1</bPersonPresent>
+		<bPersonPresent>0</bPersonPresent>
 		<bFadeLines>1</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
 		<buttonPos>15</buttonPos>
 		<lineWeight>26.7449</lineWeight>
 		<lineSpeed>7.95918</lineSpeed>
 		<speed>28.5714</speed>
-		<lineDistnace>95.4541</lineDistnace>
+		<lineDistnace>99.5959</lineDistnace>
 	</Floor_Controls_0>
 	<Floor_Controls_1>
 		<bShowDots>0</bShowDots>
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
-		<bPersonPresent>1</bPersonPresent>
+		<bPersonPresent>0</bPersonPresent>
 		<bFadeLines>1</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
 		<buttonPos>0</buttonPos>

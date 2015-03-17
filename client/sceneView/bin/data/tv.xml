@@ -3,9 +3,9 @@
 	<cameraRadius>575</cameraRadius>
 	<cameraHeight>185</cameraHeight>
 	<View_Height>107.5</View_Height>
-	<swayCamera>1</swayCamera>
+	<swayCamera>0</swayCamera>
 	<swayRate>0.6094</swayRate>
-	<swayAmount>0.45</swayAmount>
+	<swayAmount>0.07</swayAmount>
 	<bDrawHairyMan>0</bDrawHairyMan>
 	<Left_Stage_X>122.449</Left_Stage_X>
 	<Left_Stage_Y>0</Left_Stage_Y>

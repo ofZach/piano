@@ -35,7 +35,23 @@
 			<Smooth_Up_History>0.0918367</Smooth_Up_History>
 			<Smooth_Down_History>0.617347</Smooth_Down_History>
 			<Smooth_Down_Skeleton>0.622449</Smooth_Down_Skeleton>
-			<Smooth_Up_Skeleton>0.102041</Smooth_Up_Skeleton>
+			<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output>1</Output>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.208163</ThresholdSmoothing>
+			<Velocity_Cutoff>2.16082</Velocity_Cutoff>
+		</playerOne>
+		<playerTwo>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0.0938776</Smooth_Up_History>
+			<Smooth_Down_History>0.596939</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0.586735</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 			<JazzDrums>0</JazzDrums>
 			<Send_All_Triggers>0</Send_All_Triggers>
 			<Draw_Graphs>0</Draw_Graphs>
@@ -43,23 +59,7 @@
 			<Output>1</Output>
 			<Percentile>0.75</Percentile>
 			<ThresholdSmoothing>0.1</ThresholdSmoothing>
-			<Velocity_Cutoff>1</Velocity_Cutoff>
-		</playerOne>
-		<playerTwo>
-			<Start_Note>36</Start_Note>
-			<Num_Note>16</Num_Note>
-			<Smooth_Up_History>0.137755</Smooth_Up_History>
-			<Smooth_Down_History>0.596939</Smooth_Down_History>
-			<Smooth_Down_Skeleton>0.586735</Smooth_Down_Skeleton>
-			<Smooth_Up_Skeleton>0.127551</Smooth_Up_Skeleton>
-			<JazzDrums>0</JazzDrums>
-			<Send_All_Triggers>0</Send_All_Triggers>
-			<Draw_Graphs>0</Draw_Graphs>
-			<Body_Drop_Time>500</Body_Drop_Time>
-			<Output>0</Output>
-			<Percentile>0.75</Percentile>
-			<ThresholdSmoothing>0.1</ThresholdSmoothing>
-			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<Velocity_Cutoff>2.16082</Velocity_Cutoff>
 		</playerTwo>
 	</MidiSettings>
 <TV_Controls>
@@ -86,14 +86,14 @@
 		<offsetX>0</offsetX>
 		<offsetY>0</offsetY>
 		<offsetZ>0</offsetZ>
-		<rotationX>0</rotationX>
+		<rotationX>180</rotationX>
 		<rotationY>0</rotationY>
-		<rotationZ>180</rotationZ>
+		<rotationZ>0</rotationZ>
 	<Stage_Settings>
-			<Left_Stage_X>122.449</Left_Stage_X>
+			<Left_Stage_X>132.653</Left_Stage_X>
 			<Left_Stage_Y>0</Left_Stage_Y>
 			<Left_Stage_Z>0</Left_Stage_Z>
-			<Right_Stage_X>-122.449</Right_Stage_X>
+			<Right_Stage_X>-132.653</Right_Stage_X>
 			<Right_Stage_Y>0</Right_Stage_Y>
 			<Right_Stage_Z>0</Right_Stage_Z>
 			<Stage_Size>242.862</Stage_Size>

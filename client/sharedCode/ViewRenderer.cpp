@@ -68,6 +68,13 @@ void ViewRenderer::setup(){
     midiGUI.setup(musicMaker.midiGroup);
     
     midiGUI.setSize(250, 400);
+    projectionGUI.setSize(250, 400);
+    projectionGUI.setWidthElements(250);
+    projectionGUI.setPosition(ofGetScreenWidth()-250, 0);
+    
+    skeletonGUI.setSize(250, 400);
+    skeletonGUI.setWidthElements(250);
+    skeletonGUI.setPosition(ofGetScreenWidth()-250, 0);
     
     skeletonGUI.loadFromFile("skeleton.xml");
     projectionGUI.loadFromFile("projection.xml");
@@ -83,11 +90,31 @@ void ViewRenderer::update(){
     floor.update();
     
     if(numPlayers <= 1){
-        musicMaker.update(kinectSkeleton.getBody(0), NULL);
-        tv.update(kinectSkeleton.getBody(0), NULL);
+        kinectBody * kb1 = kinectSkeleton.getBody(0);
+        musicMaker.update(kb1, NULL);
+        tv.update(kb1, NULL);
+        if(kb1 != NULL){
+            floor.setPlayerOne(true);
+        }else{
+            floor.setPlayerOne(false);
+        }
     }else{
-        musicMaker.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
-        tv.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
+        kinectBody * kb1 = kinectSkeleton.getBody(0);
+        kinectBody * kb2 = kinectSkeleton.getBody(1);
+        musicMaker.update(kb1, kb2);
+        tv.update(kb1, kb2);
+        
+        if(kb1 != NULL){
+            floor.setPlayerOne(true);
+        }else{
+            floor.setPlayerOne(false);
+        }
+        
+        if(kb2 != NULL){
+            floor.setPlayerTwo(true);
+        }else{
+            floor.setPlayerTwo(false);
+        }
     }
     
     tv.setStageParameters(kinectSkeleton.stageParams);

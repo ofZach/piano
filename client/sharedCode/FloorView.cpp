@@ -130,6 +130,13 @@ void FloorView::drawStageCalibration(){
     ofPopStyle();
 }
 
+
+void FloorView::setPlayerOne(bool populated){
+    p1Floor.bPersonPresent = populated;
+}
+void FloorView::setPlayerTwo(bool populated){
+    p2Floor.bPersonPresent = populated;
+}
 ofPoint FloorView::getPlayerOneButtonPos(){
     return p1Floor.getButtonPos();
 }

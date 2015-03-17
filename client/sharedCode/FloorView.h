@@ -27,6 +27,9 @@ public:
     void drawStageCalibration();
     void drawProjectorCalibration();
     
+    void setPlayerOne(bool populated);
+    void setPlayerTwo(bool populated);
+    
     ofPoint getPlayerOneButtonPos();
     ofPoint getPlayerTwoButtonPos();
     

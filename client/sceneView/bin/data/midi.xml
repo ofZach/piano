@@ -6,14 +6,14 @@
 		<Smooth_Down_History>0.617347</Smooth_Down_History>
 		<Smooth_Down_Skeleton>0.622449</Smooth_Down_Skeleton>
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
-		<JazzDrums>0</JazzDrums>
+		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>500</Body_Drop_Time>
 		<Output>1</Output>
 		<Percentile>0.75</Percentile>
-		<ThresholdSmoothing>0.1</ThresholdSmoothing>
-		<Velocity_Cutoff>1</Velocity_Cutoff>
+		<ThresholdSmoothing>0.208163</ThresholdSmoothing>
+		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
 	</playerOne>
 	<playerTwo>
 		<Start_Note>36</Start_Note>
@@ -29,7 +29,7 @@
 		<Output>1</Output>
 		<Percentile>0.75</Percentile>
 		<ThresholdSmoothing>0.1</ThresholdSmoothing>
-		<Velocity_Cutoff>1</Velocity_Cutoff>
+		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
 	</playerTwo>
 <MidiSettings/>
 </MidiSettings>

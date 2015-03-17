@@ -5,15 +5,15 @@
 	<offsetX>0</offsetX>
 	<offsetY>0</offsetY>
 	<offsetZ>0</offsetZ>
-	<rotationX>0</rotationX>
+	<rotationX>180</rotationX>
 	<rotationY>0</rotationY>
-	<rotationZ>180</rotationZ>
+	<rotationZ>0</rotationZ>
 <skeleton_transform/>
 <Stage_Settings>
-		<Left_Stage_X>122.449</Left_Stage_X>
+		<Left_Stage_X>132.653</Left_Stage_X>
 		<Left_Stage_Y>0</Left_Stage_Y>
 		<Left_Stage_Z>0</Left_Stage_Z>
-		<Right_Stage_X>-122.449</Right_Stage_X>
+		<Right_Stage_X>-132.653</Right_Stage_X>
 		<Right_Stage_Y>0</Right_Stage_Y>
 		<Right_Stage_Z>0</Right_Stage_Z>
 		<Stage_Size>242.862</Stage_Size>
