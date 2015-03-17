@@ -44,11 +44,36 @@ void ViewRenderer::setupViewports(){
 }
 void ViewRenderer::setup(){
     viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
+    
+    
+    settings.globalSettings.setName("Microsoft Music Box");
+    settings.globalSettings.add(settings.numPlayers.set("Number of Players", 2, 1, 2));
+    
+    settings.globalSettings.add(settings.projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
+    settings.globalSettings.add(settings.projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
+    settings.globalSettings.add(settings.projectorViewWidth.set("Projector Screen Width In Pixels", 1280, 640, 1920));
+    settings.globalSettings.add(settings.projectorViewHeight.set("Projector Screen Height In Pixel", 768, 480, 1080));
+    
+    settings.globalSettings.add(settings.tvViewX.set("TV X Pos", settings.projectorViewX+settings.projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
+    settings.globalSettings.add(settings.tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
+    settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width In Pixels", 1920, 1280, 1920));
+    settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height In Pixel", 1080, 720, 1200));
+    
+    
+    
+    appGUI.setup(settings.globalSettings);
+    appGUI.setSize(350, 250);
+    appGUI.setWidthElements(350);
+    appGUI.loadFromFile("app-settings.xml");
+    
+    projectorView = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
+    tvView = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
+    
     setupViewports();
     iMainView = 4;
     
-    numPlayers = 2;
-
+    numPlayers = settings.numPlayers;
+    
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
@@ -82,7 +107,6 @@ void ViewRenderer::setup(){
     midiGUI.loadFromFile("midi.xml");
     
     midiGUI.setWidthElements(250);
-    
 }
 void ViewRenderer::update(){
     
@@ -132,6 +156,7 @@ void ViewRenderer::exit(){
     projectionGUI.saveToFile("projection.xml");
     tvGUI.saveToFile("tv.xml");
     midiGUI.saveToFile("midi.xml");
+    appGUI.saveToFile("app-settings.xml");
 }
 
 
@@ -146,7 +171,7 @@ void ViewRenderer::draw(){
         floor.draw(viewGrid[2]);
         tv.draw(viewGrid[3]);
     }
-
+    
     if(kinectSkeleton.isMain()){
         kinectSkeleton.draw(viewMain);
         skeletonGUI.draw();
@@ -160,7 +185,8 @@ void ViewRenderer::draw(){
         tv.draw(viewMain);
         tvGUI.draw();
         skeletonGUI.draw();
-
+    }else{
+        appGUI.draw();
     }
     
     floor.drawProjections();
@@ -170,7 +196,7 @@ void ViewRenderer::draw(){
 }
 
 void ViewRenderer::triggerFloor(){
-
+    
 }
 
 

@@ -13,6 +13,7 @@
 #include "MidiView.h"
 #include "TVView.h"
 #include "ofxGui.h"
+#include "AppSettings.h"
 #define N_SCENE 4
 class ViewRenderer{
 public:
@@ -29,6 +30,9 @@ public:
     
     ofRectangle* getViews();
     
+    ofRectangle projectorView;
+    ofRectangle tvView;
+    
     ofRectangle viewMain;
     ofRectangle viewGrid[N_SCENE];
     int iMainView;
@@ -36,6 +40,7 @@ public:
 private:    
     vector<ofFbo*> views;
     
+    AppSettings settings;
     SkeletonView kinectSkeleton;
     MidiView musicMaker;
     TVView tv;
@@ -47,8 +52,6 @@ private:
     ofxPanel projectionGUI;
     ofxPanel tvGUI;
     ofxPanel midiGUI;
-    
+    ofxPanel appGUI;
     int numPlayers;
-
-    
 };

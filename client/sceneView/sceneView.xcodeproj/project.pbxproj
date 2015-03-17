@@ -78,6 +78,7 @@
 		C83C47671AB8D2A100879893 /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C475C1AB8D2A100879893 /* ofxSlider.cpp */; };
 		C83C47681AB8D2A100879893 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C475E1AB8D2A100879893 /* ofxSliderGroup.cpp */; };
 		C83C47691AB8D2A100879893 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C47601AB8D2A100879893 /* ofxToggle.cpp */; };
+		C83C476C1AB8ED2700879893 /* AppSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C476A1AB8ED2700879893 /* AppSettings.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -372,6 +373,8 @@
 		C83C475F1AB8D2A100879893 /* ofxSliderGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
 		C83C47601AB8D2A100879893 /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		C83C47611AB8D2A100879893 /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
+		C83C476A1AB8ED2700879893 /* AppSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppSettings.cpp; sourceTree = "<group>"; };
+		C83C476B1AB8ED2700879893 /* AppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettings.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -703,6 +706,8 @@
 				C83C42AC1AB4ABB900879893 /* Graph.h */,
 				C83C42AD1AB4ABB900879893 /* LocalAddressGrabber.h */,
 				C83C42AE1AB4ABB900879893 /* singleton.h */,
+				C83C476A1AB8ED2700879893 /* AppSettings.cpp */,
+				C83C476B1AB8ED2700879893 /* AppSettings.h */,
 			);
 			name = utils;
 			path = ../../skeletonReceiver/src/utils;
@@ -1349,6 +1354,7 @@
 				C83C420E1AB4AB7400879893 /* ofxOscBundle.cpp in Sources */,
 				C83C42391AB4AB7A00879893 /* BodyRenderer.cpp in Sources */,
 				C83C42A71AB4ABA800879893 /* kinectSkeleton.cpp in Sources */,
+				C83C476C1AB8ED2700879893 /* AppSettings.cpp in Sources */,
 				C83C44D61AB4F3DB00879893 /* ofxCvColorImage.cpp in Sources */,
 				C83C42A41AB4ABA800879893 /* kinectBody.cpp in Sources */,
 				C83C42381AB4AB7A00879893 /* Parser.cpp in Sources */,

@@ -6,9 +6,28 @@
 //
 //
 
-#ifndef __sceneView__AppSettings__
-#define __sceneView__AppSettings__
+#pragma once
+#include "ofMain.h"
 
-#include <stdio.h>
+class AppSettings{
+public:
+    AppSettings();
+    ~AppSettings();
+    
+    ofParameterGroup globalSettings;
 
-#endif /* defined(__sceneView__AppSettings__) */
+    
+    ofParameter<float> projectorViewWidth;
+    ofParameter<float> tvViewWidth;
+    
+    ofParameter<float> projectorViewHeight;
+    ofParameter<float> tvViewHeight;
+    
+    ofParameter<float> projectorViewX;
+    ofParameter<float> tvViewX;
+    
+    ofParameter<float> projectorViewY;
+    ofParameter<float> tvViewY;
+    
+    ofParameter<int> numPlayers;
+};
