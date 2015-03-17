@@ -2,7 +2,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxControlPanel.h"
 #include "kinectBody.h"
 #include "skeletonMidiController.h"
 #include "Graph.h"

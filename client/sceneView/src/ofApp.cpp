@@ -5,7 +5,7 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetFrameRate(60);
     //ofSetEscapeQuitsApp(false);
-    views.setup(2, ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
+    views.setup();
 }
 
 
@@ -34,7 +34,7 @@ void ofApp::triggerTriangle(){
     
 }
 void ofApp::addImpulse(){
-    
+    views.triggerFloor();
 }
 
 //--------------------------------------------------------------

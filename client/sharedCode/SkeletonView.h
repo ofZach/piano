@@ -1,5 +1,5 @@
 //
-//  skeletonView.h
+//  SkeletonView.h
 //  kinectDebug
 //
 //  Created by dantheman on 3/14/15.
@@ -14,21 +14,22 @@
 #include "kinectSkeleton.h"
 #include "kinectBodyAnalyser.h"
 #include "kinectSkeletonAnalyser.h"
-#include "ofxControlPanel.h"
-class skeletonView{
+class SkeletonView{
 public:
-    skeletonView();
-    virtual ~skeletonView();
+    SkeletonView();
+    virtual ~SkeletonView();
     
     void setup(int numPlayer, ofRectangle viewPort = ofGetCurrentViewport());
     void update();
     void draw(ofRectangle viewport);
-    void drawControlPanel();
     void exit();
     void setupGUI();
     bool isMain();
     void setMainView(bool mainView);
     kinectBody * getBody(int i);
+    
+    ofParameterGroup skeletonTransform;
+    ofParameterGroup stageParams;
 private:
     //Kinect
     ofxKinectV2OSC kinect;
@@ -54,7 +55,7 @@ private:
     //3D Drawing
     ofCamera cam;
     
-    ofParameterGroup skeletonTransform;
+    
     ofParameter <float> scaleX;
     ofParameter <float> scaleY;
     ofParameter <float> scaleZ;
@@ -64,25 +65,15 @@ private:
     ofParameter <float> offsetX;
     ofParameter <float> offsetY;
     ofParameter <float> offsetZ;
-    
-    
-    ofParameterGroup stageParams;
     ofParameter<float> stageSize;
-    
     ofParameter<float> stageLeftX;
     ofParameter<float> stageLeftY;
     ofParameter<float> stageLeftZ;
-    
     ofParameter<float> stageRightX;
     ofParameter<float> stageRightY;
     ofParameter<float> stageRightZ;
     
-
-    
     ofRectangle viewPort;
-    
-    //GUI
-    ofxControlPanel skeletonGui;
     bool bMainView;
     
     ofPlanePrimitive plane;

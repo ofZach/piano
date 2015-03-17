@@ -7,22 +7,25 @@
 //
 #pragma once
 #include "ofMain.h"
-#include "skeletonView.h"
-#include "FloorView.h"
-#include "midiView.h"
 #include "ofxMidi.h"
+#include "SkeletonView.h"
+#include "FloorView.h"
+#include "MidiView.h"
 #include "TVView.h"
+#include "ofxGui.h"
 #define N_SCENE 4
 class ViewRenderer{
 public:
     ViewRenderer();
     virtual ~ViewRenderer();
-    void setup(int numPlayers, ofRectangle mainview = ofGetCurrentViewport());
+    void setup();
     void update();
     void draw();
     void setMainView(int i);
     void setupViewports();
     void exit();
+    
+    void triggerFloor();
     
     ofRectangle* getViews();
     
@@ -33,16 +36,19 @@ public:
 private:    
     vector<ofFbo*> views;
     
-    class skeletonView kinectSkeleton;
-    class midiView musicMaker;
+    SkeletonView kinectSkeleton;
+    MidiView musicMaker;
     TVView tv;
     FloorView floor;
     
     shared_ptr<ofxMidiOut> midiOut;
     
+    ofxPanel skeletonGUI;
+    ofxPanel projectionGUI;
+    ofxPanel tvGUI;
+    ofxPanel midiGUI;
+    
     int numPlayers;
-    
 
-    
     
 };

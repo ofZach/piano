@@ -38,18 +38,18 @@ void Floor::spawnLines(){
         t.speed = lastSpeed;
         t.start(where);
         travelers.push_back(t);
-
+        
     }
 }
 
 
-void Floor::setup(){
+void Floor::setup(int i){
     floor.allocate(1024, 1024, GL_RGBA, 4);
     floor.begin();
     ofClear(0, 0, 0, 0);
     floor.end();
     float w = 100;
-    
+    idNum = i;
     GI.setupGrid(ofRectangle(30,30,1024-60,1024-60), 5);
     
     for (int i = 0; i < 20; i++){
@@ -59,7 +59,7 @@ void Floor::setup(){
         t.trimLength = 100;
         
         travelers.push_back(t);
-    
+        
         //travelers[i].GI = &GI;
         travelers[i].speed = ofRandom(10,15);
         travelers[i].start( (int)ofRandom(0, 100) % 16);
@@ -69,6 +69,20 @@ void Floor::setup(){
     for (int i = 0; i < connectionEnergyLevel.size(); i++){
         connectionEnergyLevel[i] = 0;
     }
+    
+    squareOptions.setName("Floor Controls "+ofToString(idNum));
+
+    squareOptions.add(bShowDots.set("bShowDots", true));
+    squareOptions.add(bShowGrid.set("bShowGrid", true));
+    squareOptions.add(bShowButton.set("bShowButton", true));
+    squareOptions.add(bPersonPresent.set("bPersonPresent", true));
+    squareOptions.add(bFadeLines.set("bFadeLines", false));
+    squareOptions.add(bSpawnLines.set("bSpawnLines", false));
+    squareOptions.add(buttonPos.set("buttonPos", 0,0, 16));
+    squareOptions.add(lineWeight.set("lineWeight", 10, 1, 30));
+    squareOptions.add(lineSpeed.set("lineSpeed", 10, 0, 40));
+    squareOptions.add(speed.set("speed", 10, 0, 40));
+    squareOptions.add(trimLength.set("lineDistnace", 10, 1, 100));
 }
 
 
@@ -79,14 +93,13 @@ float Floor::getHeight(){
     return floor.getHeight();
 }
 
-
-
 bool ShouldGo(traveler &p){
     return p.shouldIdie();
 }
 
-
-
+ofPoint Floor::getButtonPos(){
+    return buttonPoint;
+}
 
 void Floor::update(){
     
@@ -116,31 +129,17 @@ void Floor::update(){
         }
     }
     
+    if(bSpawnLines){
+        bSpawnLines = false;
+        spawnLines();
+    }
+    
 
-    bool bShowGrid = squareOptions->getBool("bShowGrid");
-    bool bShowButton = squareOptions->getBool("bShowButton");
-    float lineWeight = squareOptions->getFloat("lightWeight");
-    float trimLength = squareOptions->getFloat("lineDistance");
-    float lineSpeed = squareOptions->getFloat("lineSpeed");
-    
-    string personPresent = "bPersonPresent" + ofToString(idNum);
-    
-    bool bPresent = squareOptions->getBool(personPresent);
-    
-    if (bPresent){
+    if (bPersonPresent){
         personEnergyLevel = 0.96f * personEnergyLevel + 0.04 * 1.0;
     } else {
         personEnergyLevel = 0.96f * personEnergyLevel + 0.04 * 0.0;
     }
-    //cout << personEnergyLevel << endl;
-    
-    
-    
-    //bool bPresent = squareOptions->getBool(personPresent);
-    
-    
-    
-    bool bFadeLines = squareOptions->getBool("bFadeLines");
     
     
     if (trimLength != lastTrimLength){
@@ -164,16 +163,11 @@ void Floor::update(){
         for (int i = 0; i < travelers.size(); i++){
             travelers[i].fadeThings();
         }
-
+        
         
     }
     
-    //cout << travelers.size() << endl;
-    
     ofSetLineWidth(lineWeight);
-    
-    string buttonPos = "buttonPos"  + ofToString(idNum);
-    int buttonPosVal = squareOptions->getInt(buttonPos);
     
     floor.begin();
     ofClear(0);
@@ -188,10 +182,9 @@ void Floor::update(){
     
     if (bShowButton){
         float r;
-        ofPoint pos;
-        GI.getCircle( buttonPosVal % 4, buttonPosVal/4, pos, r);
+        GI.getCircle( buttonPos % 4, buttonPos/4, buttonPoint, r);
         ofSetColor(255,255,255,200);
-        ofCircle(pos, r);
+        ofCircle(buttonPoint, r);
     }
     
     if (bShowGrid){
@@ -211,7 +204,7 @@ void Floor::update(){
             ofLine( GI.pts[a], GI.pts[b]);
         }
     }
-
+    
     ofClearAlpha();
     
     
@@ -235,7 +228,7 @@ void Floor::update(){
     if (bShowButton){
         float r;
         ofPoint pos;
-        GI.getCircle( buttonPosVal % 4, buttonPosVal/4, pos, r);
+        GI.getCircle( buttonPos % 4, buttonPos/4, pos, r);
         ofSetColor(255,255,255,200);
         ofCircle(pos, r);
     }
@@ -260,15 +253,15 @@ void Floor::update(){
     //ofClearAlpha();
     blur.end();
     
-//    floor.begin();
-//    ofDisableAlphaBlending();
-//    ofEnableBlendMode(OF_BLENDMODE_ADD);
-//    blur.draw();
-//    ofEnableAlphaBlending();
-//    //ofClearAlpha();
-//    floor.end();
+    //    floor.begin();
+    //    ofDisableAlphaBlending();
+    //    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    //    blur.draw();
+    //    ofEnableAlphaBlending();
+    //    //ofClearAlpha();
+    //    floor.end();
     
-   
+    
     
     //ofDisableAlphaBlending();
     ofPopStyle();

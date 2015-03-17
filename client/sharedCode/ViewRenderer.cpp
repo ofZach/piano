@@ -41,15 +41,13 @@ void ViewRenderer::setupViewports(){
             y = yOffset;
         }
     }
-//    
-//    viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
 }
-void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
-    viewMain = mainview;
+void ViewRenderer::setup(){
+    viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
     setupViewports();
     iMainView = 4;
     
-    this->numPlayers = numPlayers;
+    numPlayers = 2;
 
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
@@ -57,46 +55,26 @@ void ViewRenderer::setup(int numPlayers, ofRectangle mainview){
     midiOut->openPort(0);
     
     
-//    stageParams.setName("Stage Settings");
-//    stageParams.add(stageLeftX.set("Left Stage X", 0, -500, 500));
-//    stageParams.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
-//    stageParams.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
-//    stageParams.add(stageRightX.set("Right Stage X", 0, -500, 500));
-//    stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
-//    stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
-//    stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
-    
-    
-    kinectSkeleton.setup(this->numPlayers, viewMain);
-    musicMaker.setup(this->numPlayers, midiOut, viewMain);
+    kinectSkeleton.setup(numPlayers, viewMain);
+    musicMaker.setup(numPlayers, midiOut, viewMain);
     floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
     tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
     
-//    skeletonView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-//    midiView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-//    floorView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-//    tvView.allocate(mainview.width, mainview.height, GL_RGBA, 4);
-//    
-//    skeletonView.begin();
-//    ofClear(0, 0, 0, 0);
-//    skeletonView.end();
-//    
-//    midiView.begin();
-//    ofClear(0, 0, 0, 0);
-//    midiView.end();
-//    
-//    floorView.begin();
-//    ofClear(0, 0, 0, 0);
-//    floorView.end();
-//    
-//    tvView.begin();
-//    ofClear(0, 0, 0, 0);
-//    tvView.end();
     
-//    views.push_back(&skeletonView);
-//    views.push_back(&midiView);
-//    views.push_back(&floorView);
-//    views.push_back(&tvView);
+    skeletonGUI.setup(kinectSkeleton.skeletonTransform);
+    skeletonGUI.add(kinectSkeleton.stageParams);
+    projectionGUI.setup(floor.squareOptions);
+    tvGUI.setup(tv.tvParameters);
+    midiGUI.setup(musicMaker.midiGroup);
+    
+    midiGUI.setSize(250, 400);
+    
+    skeletonGUI.loadFromFile("skeleton.xml");
+    projectionGUI.loadFromFile("projection.xml");
+    tvGUI.loadFromFile("tv.xml");
+    midiGUI.loadFromFile("midi.xml");
+    
+    midiGUI.setWidthElements(250);
     
 }
 void ViewRenderer::update(){
@@ -111,11 +89,22 @@ void ViewRenderer::update(){
         musicMaker.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
         tv.update(kinectSkeleton.getBody(0), kinectSkeleton.getBody(1));
     }
+    
+    tv.setStageParameters(kinectSkeleton.stageParams);
+    
+    if(numPlayers == 1){
+        
+    }else{
+        floor.getPlayerOneButtonPos();
+        floor.getPlayerTwoButtonPos();
+    }
 }
 
 void ViewRenderer::exit(){
-    kinectSkeleton.exit();
-    musicMaker.exit();
+    skeletonGUI.saveToFile("skeleton.xml");
+    projectionGUI.saveToFile("projection.xml");
+    tvGUI.saveToFile("tv.xml");
+    midiGUI.saveToFile("midi.xml");
 }
 
 
@@ -131,19 +120,20 @@ void ViewRenderer::draw(){
         tv.draw(viewGrid[3]);
     }
 
-    
     if(kinectSkeleton.isMain()){
         kinectSkeleton.draw(viewMain);
-        kinectSkeleton.drawControlPanel();
+        skeletonGUI.draw();
     }else if(musicMaker.isMain()){
         musicMaker.draw(viewMain);
-        musicMaker.drawControlPanel();
+        midiGUI.draw();
     }else if(floor.isMain()){
-        floor.draw(viewMain);
-        floor.drawControlPanel();
+        floor.drawDebug();
+        projectionGUI.draw();
     }else if(tv.isMain()){
         tv.draw(viewMain);
-        tv.drawControlPanel();
+        tvGUI.draw();
+        skeletonGUI.draw();
+
     }
     
     floor.drawProjections();
@@ -151,6 +141,12 @@ void ViewRenderer::draw(){
     ofDisableAlphaBlending();
     
 }
+
+void ViewRenderer::triggerFloor(){
+
+}
+
+
 void ViewRenderer::setMainView(int i){
     iMainView = i;
     if(iMainView == 0){

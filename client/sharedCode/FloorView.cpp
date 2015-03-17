@@ -17,15 +17,13 @@ FloorView::~FloorView(){
 }
 
 void FloorView::setup(ofRectangle projector, ofRectangle main){
-    p1Floor.setup();
-    p2Floor.setup();
+    p1Floor.setup(0);
+    p2Floor.setup(1);
     projectionViewport = projector;
     mainViewport = main;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
     setupGUI();
     setupQuadWarp();
-    p1Floor.setParamterGroup(&squareOptions);
-    p2Floor.setParamterGroup(&squareOptions);
     
     p1Floor.idNum = 0;
     p2Floor.idNum = 1;
@@ -34,23 +32,6 @@ void FloorView::setup(ofRectangle projector, ofRectangle main){
     bMainView = false;
 }
 void FloorView::update(){
-    
-    
-    if (squareOptions.getBool("spawnLines0")){
-        p1Floor.spawnLines();
-        spawnLines0 = false;
-        
-    }
-    
-    if (squareOptions.getBool("spawnLines1")){
-        p2Floor.spawnLines();
-        
-        spawnLines1 = false;
-        
-    }
-    
-    
-    gui.update();
     p1Floor.update();
     p2Floor.update();
     mat = warpFloor.getMatrix();
@@ -59,31 +40,12 @@ void FloorView::update(){
     if(bSaveWarp){
         bSaveWarp = !bSaveWarp;
         warpFloor.save("warp-settings.xml");
-        //        warpTwo.save("playerTwo.xml");
-        gui.saveSettings("floor-settings.xml");
     }
     
     
     ofEnableAlphaBlending();
     projectionFbo.begin();
     ofClear(0, 0, 0, 0);
-    
-    //    if(dualWarp){
-    //
-    //        glPushMatrix();
-    //        glMultMatrixf( mat1.getPtr() );
-    //        {
-    //            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
-    //        }
-    //        glPopMatrix();
-    //
-    //        glPushMatrix();
-    //        glMultMatrixf( mat2.getPtr() );
-    //        {
-    //            p2Floor.draw(0, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
-    //        }
-    //        glPopMatrix();
-    //    }else{
     
     if(bDrawCalibration){
         drawProjectorCalibration();
@@ -107,8 +69,7 @@ void FloorView::update(){
     //    }
     projectionFbo.end();
     ofDisableAlphaBlending();
-}
-void FloorView::draw(ofRectangle viewport){
+    
     if(bMainView){
         if(bShowWarp){
             warpFloor.show();
@@ -117,6 +78,9 @@ void FloorView::draw(ofRectangle viewport){
     if(!bMainView || !bShowWarp){
         warpFloor.hide();
     }
+}
+void FloorView::draw(ofRectangle viewport){
+    
     projectionFbo.draw(viewport);
 }
 
@@ -166,7 +130,13 @@ void FloorView::drawStageCalibration(){
     ofPopStyle();
 }
 
-void FloorView::drawControlPanel(){
+ofPoint FloorView::getPlayerOneButtonPos(){
+    return p1Floor.getButtonPos();
+}
+ofPoint FloorView::getPlayerTwoButtonPos(){
+    return p2Floor.getButtonPos();
+}
+void FloorView::drawDebug(){
     
     ofBackground(0, 0, 0);
     ofPushStyle();
@@ -176,16 +146,13 @@ void FloorView::drawControlPanel(){
     warpFloor.draw();
     //    warpOne.draw();
     
-
+    
     ofNoFill();
     ofSetColor(ofColor::slateBlue);
     ofRect(-2.5, -2.5, projectionViewport.width+5, projectionViewport.height+5);
     ofFill();
     ofSetColor(255, 255, 255);
     ofPopStyle();
-    
-    gui.draw();
-    
 }
 
 void FloorView::drawProjectorCalibration(){
@@ -246,7 +213,7 @@ void FloorView::drawProjectorCalibration(){
 void FloorView::drawProjections(){
     projectionFbo.draw(projectionViewport);
     if(bDrawCalibration){
-
+        
         ofPushStyle();
         ofNoFill();
         ofRect(projectionViewport);
@@ -256,54 +223,16 @@ void FloorView::drawProjections(){
 }
 
 void FloorView::setupGUI(){
-    gui.setup("Floor Controls", mainViewport.width-300, 0, 300, 500, true, false);
-    
-    gui.setWhichPanel(0);
-    gui.setWhichColumn(0);
     
     squareOptions.setName("Floor");
     
-    squareOptions.add(lightWeight.set("lightWeight", 1,1, 20.0));
-    squareOptions.add(lineDistance.set("lineDistance", 50, 1, 500));
-    squareOptions.add(lineSpeed.set("lineSpeed", 5, 0.1, 30));
-    
     squareOptions.add(bShowWarp.set("bShowWarp", true));
-    squareOptions.add(bShowDots.set("bShowDots", true));
-    squareOptions.add(bShowGrid.set("bShowGrid", true));
-    squareOptions.add(bShowButton.set("bShowButton", true));
-    
-    squareOptions.add(bPersonPresent0.set("bPersonPresent0", true));
-    squareOptions.add(bPersonPresent1.set("bPersonPresent1", true));
- 
-    
-    squareOptions.add(bFadeLines.set("bFadeLines", false));
-    squareOptions.add(spawnLines0.set("spawnLines0", false));
-    squareOptions.add(spawnLines1.set("spawnLines1", false));
-    
-    
-    
-    
-    squareOptions.add(buttonPos0.set("buttonPos0", 0,0, 16));
-    squareOptions.add(buttonPos1.set("buttonPos1", 0,0, 16));
-    
-    //--------------------------------------------
-    //ofParameter <float> lineSpeed;  //lastSpeed
-    
-
     squareOptions.add(bSaveWarp.set("bSaveWarp", true));
     squareOptions.add(bDrawCalibration.set("bDrawCalibration", true));
     squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));
     
-    
-    gui.setWhichPanel(0);
-    gui.setWhichColumn(0);
-    gui.addGroup(squareOptions);
-    
-    gui.setupEvents();
-    gui.enableEvents();
-    
-    
-    gui.loadSettings("floor-settings.xml");
+    squareOptions.add(p1Floor.squareOptions);
+    squareOptions.add(p2Floor.squareOptions);
 }
 
 void FloorView::setMainView(bool view){
@@ -330,30 +259,4 @@ void FloorView::setupQuadWarp(){
     warpFloor.setup();
     
     warpFloor.load("warp-settings.xml");
-    
-    
-    
-    //    x = (w+15);
-    //
-    
-    //
-    //    warpOne.setSourceRect( ofRectangle(x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
-    //    warpOne.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
-    //    warpOne.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
-    //    warpOne.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
-    //    warpOne.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
-    //    warpOne.setup();
-    //    warpOne.show();
-    //
-    //    warpOne.load("playerOne.xml");
-    //
-    //    warpTwo.setSourceRect( ofRectangle(x, y, w, h) );              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
-    //    warpTwo.setTopLeftCornerPosition( ofPoint( x, y ) );             // this is position of the quad warp corners, centering the image on the screen.
-    //    warpTwo.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
-    //    warpTwo.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
-    //    warpTwo.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
-    //    warpTwo.setup();
-    //    warpTwo.show();
-    //    
-    //    warpTwo.load("playerTwo.xml");
 }

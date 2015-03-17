@@ -1,0 +1,4 @@
+ofxOsc
+ofxXmlSettings
+ofxControlPanel
+ofxKinectV2-OSC

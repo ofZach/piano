@@ -1,21 +1,21 @@
 //
-//  midiView.cpp
+//  MidiView.cpp
 //  midiDebug
 //
 //  Created by dantheman on 3/14/15.
 //
 //
 
-#include "midiView.h"
+#include "MidiView.h"
 
-midiView::midiView(){
+MidiView::MidiView(){
     
 }
-midiView::~midiView(){
+MidiView::~MidiView(){
     
 }
 
-void midiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle viewport){
+void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle viewport){
     this->numPlayers = numPlayers;
     this->midiOut = midiOut;
     viewPort = viewport;
@@ -30,12 +30,7 @@ void midiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
     fontMain.loadFont(OF_TTF_SANS, 50);
     bMainView = false;
 }
-void midiView::update(kinectBody * playerOne, kinectBody * playerTwo){
-    midiControlPanel.update();
-    if(sendMidiTest){
-        musicMakerP1.skeletonMidi.triggerKick(62, 255);
-        sendMidiTest = false;
-    }
+void MidiView::update(kinectBody * playerOne, kinectBody * playerTwo){
     if(numPlayers == 1){
         musicMakerP1.analyze(*playerOne);
     }else{
@@ -48,7 +43,7 @@ void midiView::update(kinectBody * playerOne, kinectBody * playerTwo){
     lastTriggerP1 = musicMakerP1.lastTriggeredNote();
     lastTriggerP2 = musicMakerP2.lastTriggeredNote();
 }
-void midiView::draw(ofRectangle viewport){
+void MidiView::draw(ofRectangle viewport){
     if(isMain()){
         font = fontMain;
     }else{
@@ -102,38 +97,31 @@ void midiView::draw(ofRectangle viewport){
     ofSetColor(255, 255, 255, 255);
     font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+300);
 }
-bool midiView::isMain(){
+
+bool MidiView::isMain(){
     return bMainView;
 }
-void midiView::setMainView(bool mainView){
+
+void MidiView::setMainView(bool mainView){
     bMainView = mainView;
 }
 
-void midiView::drawControlPanel(){
-    if(isMain()){
-        midiControlPanel.draw();
-    }
-}
-void midiView::setupGUI(){
+void MidiView::setupGUI(){
     playerOne.setName("playerOne");
     
+    
+    midiGroup.setName("MidiSettings");
+    midiGroup.add(playerOne);
     musicMakerP1.addToDebugParamGroup(playerOne);
-    playerOne.add(sendMidiTest.set("Send Test", false));
-    midiControlPanel.setup("Player One", 0, ofGetHeight()-500, 300, 500, true, false);
-    midiControlPanel.addPanel("Player Two");
-    midiControlPanel.setWhichPanel(0);
-    midiControlPanel.setWhichColumn(0);
-    midiControlPanel.addGroup(playerOne);
     if(numPlayers == 2){
         playerTwo.setName("playerTwo");
         musicMakerP2.addToDebugParamGroup(playerTwo);
-        midiControlPanel.setWhichPanel(1);
-        midiControlPanel.setWhichColumn(0);
-        midiControlPanel.addGroup(playerTwo);
+        midiGroup.add(playerTwo);
     }
-    midiControlPanel.loadSettings("midi-settings.xml");
+
+
 }
 
-void midiView::exit(){
-    midiControlPanel.saveSettings("midi-settings.xml");
+void MidiView::exit(){
+    
 }

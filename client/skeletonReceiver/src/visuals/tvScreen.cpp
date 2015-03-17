@@ -26,7 +26,7 @@ void tvScreen::addImpluse(){
 }
 bool bDrawHairyMan;
 
-void tvScreen::setup (ofRectangle viewport, ofParameterGroup* params) {
+void tvScreen::setup(ofRectangle viewport) {
     tvViewPort = viewport;
     tvSkeletonView.allocate(tvViewPort.width, tvViewPort.height, GL_RGBA, 4);
     tvSkeletonView.begin();
@@ -54,8 +54,6 @@ void tvScreen::setup (ofRectangle viewport, ofParameterGroup* params) {
     
     bDrawHairyMan = false;
     twist = 0;
-    
-    tvParams = params;
 }
 
 void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
@@ -69,16 +67,16 @@ void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
     ofRemove(pulses, removeIfZero);
     
     //update the camera
-    ofPoint position (0 + tvParams->getFloat("cameraRadius") * cos(tvParams->getFloat("cameraAngle")), tvParams->getFloat("cameraHeight"), 0 + tvParams->getFloat("cameraRadius")  * sin(tvParams->getFloat("cameraAngle")));
+    ofPoint position (0 + cameraRadius * cos(ofDegToRad(cameraAngle)), cameraHeight, 0 + cameraRadius  * sin(ofDegToRad(cameraAngle)));
     
-    if(tvParams->getBool("swayCamera")) {
-        float t = ofGetElapsedTimef() * tvParams->getFloat("swayRate");
+    if(swayCamera) {
+        float t = ofGetElapsedTimef() * swayRate;
         ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
-        position += swayDir * (tvParams->getFloat("swayAmount") * 100.);
+        position += swayDir * (swayAmount * 100.);
     }
     
     cam.setPosition(position);
-    cam.lookAt( ofPoint(0,tvParams->getFloat("View Height"),0));
+    cam.lookAt( ofPoint(0,lookAtPointHeight,0));
     
     drawIntoFbo();
 }
@@ -286,9 +284,32 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK){
     
 }
 
+void tvScreen::setStageParameters(ofParameterGroup params){
+    stageLeftX = params.getFloat("Left Stage X");
+    stageLeftY = params.getFloat("Left Stage Y");
+    stageLeftZ = params.getFloat("Left Stage Z");
+    
+    stageRightX = params.getFloat("Right Stage X");
+    stageRightY = params.getFloat("Right Stage Y");
+    stageRightZ = params.getFloat("Right Stage Z");
+ 
+    stageSize = params.getFloat("Stage Size");
+}
+
+void tvScreen::addParameters(ofParameterGroup & params){
+    params.add(cameraAngle.set("cameraAngle", 0, 0, 360));
+    params.add(cameraRadius.set("cameraRadius", 0, 0, 1000));
+    params.add(cameraHeight.set("cameraHeight", 0, 0, 1000));
+    params.add(lookAtPointHeight.set("View Height", 0, 0, 500));
+    params.add(swayCamera.set("swayCamera", true));
+    params.add(swayRate.set("swayRate", 0.1, 0.01, 10));
+    params.add(swayAmount.set("swayAmount", 0.1, 0, 1));
+    params.add(bDrawHairyMan.set("bDrawHairyMan", false));
+}
+
 void tvScreen::drawIntoFbo(){
     
-
+    
     ofPushStyle();
     tvGridView.begin();
     ofClear(0,0,0,0);
@@ -300,16 +321,16 @@ void tvScreen::drawIntoFbo(){
     ofSetColor(100);
     ofNoFill();
     ofRotate(90,1,0,0);
-    ofTranslate(tvParams->getFloat("Left Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Left Stage Z"));
-    ofRect(0, 0, tvParams->getFloat("Stage Size"), tvParams->getFloat("Stage Size"));
+    ofTranslate(stageLeftX - stageSize/2, stageLeftY - stageSize/2, stageLeftZ);
+    ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     
     ofPushMatrix();
     ofSetColor(100);
     ofNoFill();
     ofRotate(90,1,0,0);
-    ofTranslate(tvParams->getFloat("Right Stage X") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Y") - tvParams->getFloat("Stage Size")/2, tvParams->getFloat("Right Stage Z"));
-    ofRect(0, 0, tvParams->getFloat("Stage Size"), tvParams->getFloat("Stage Size"));
+    ofTranslate(stageRightX - stageSize/2, stageRightY - stageSize/2, stageRightZ);
+    ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     ofFill();
     cam.end();
@@ -331,7 +352,7 @@ void tvScreen::drawIntoFbo(){
         
         kinectSkeleton SK = playerOneBody->getLastSkeleton();
         
-        if (tvParams->getBool("bDrawHairyMan") == true){
+        if (bDrawHairyMan){
             drawHairyMan(SK);
         } else {
             
@@ -344,7 +365,7 @@ void tvScreen::drawIntoFbo(){
         
         kinectSkeleton SK = playerTwoBody->getLastSkeleton();
         
-        if (tvParams->getBool("bDrawHairyMan") == true){
+        if (bDrawHairyMan){
             drawHairyMan(SK);
         } else {
             

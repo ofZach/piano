@@ -1,25 +1,26 @@
 //
-//  skeletonView.cpp
+//  SkeletonView.cpp
 //  kinectDebug
 //
 //  Created by dantheman on 3/14/15.
 //
 //
 
-#include "skeletonView.h"
+#include "SkeletonView.h"
 
-skeletonView::skeletonView(){
+SkeletonView::SkeletonView(){
     
 }
-skeletonView::~skeletonView(){
+SkeletonView::~SkeletonView(){
     
 }
-void skeletonView::setup(int numPlayer, ofRectangle viewPort){
+void SkeletonView::setup(int numPlayer, ofRectangle viewPort){
+    setupGUI();
     kinect.setup(12345);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
     KS.setup();
-    setupGUI();
+
     cam.setPosition(0, 500, -1000);
     cam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
     
@@ -32,13 +33,12 @@ void skeletonView::setup(int numPlayer, ofRectangle viewPort){
     plane.set(1000, 1000, 20, 20);
 }
 
-bool skeletonView::isMain(){
+bool SkeletonView::isMain(){
     return bMainView;
 }
 
-void skeletonView::update(){
+void SkeletonView::update(){
     kinect.update();
-    skeletonGui.update();
     mat.makeIdentityMatrix();
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
@@ -76,7 +76,7 @@ void skeletonView::update(){
     }
 }
 
-kinectBody * skeletonView::getBody(int i){
+kinectBody * SkeletonView::getBody(int i){
     if(skeletons->size() >= i+1){
         return &bodyMap[skeletons->at(i).getBodyId()];
     }else{
@@ -84,10 +84,10 @@ kinectBody * skeletonView::getBody(int i){
     }
 }
 
-void skeletonView::setMainView(bool mainView){
+void SkeletonView::setMainView(bool mainView){
     bMainView = mainView;
 }
-void skeletonView::draw(ofRectangle viewport){
+void SkeletonView::draw(ofRectangle viewport){
     ofBackground(0, 0, 0);
     cam.begin(viewport);
     ofPushStyle();
@@ -132,17 +132,12 @@ void skeletonView::draw(ofRectangle viewport){
     //    }
 }
 
-void skeletonView::drawControlPanel(){
-    if(isMain()){
-        skeletonGui.draw();
-    }
+
+void SkeletonView::exit(){
+
 }
 
-void skeletonView::exit(){
-    skeletonGui.saveSettings("skeleton-transform.xml");
-}
-
-void skeletonView::setupGUI(){
+void SkeletonView::setupGUI(){
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
     skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
@@ -163,12 +158,4 @@ void skeletonView::setupGUI(){
     stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
     stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
-    
-    
-    skeletonGui.setup("Skeleton Controls", 0, ofGetHeight()-500, 300, 500, true, false);
-    skeletonGui.setWhichPanel(0);
-    skeletonGui.setWhichColumn(0);
-    skeletonGui.addGroup(skeletonTransform);
-    skeletonGui.addGroup(stageParams);
-    skeletonGui.loadSettings("skeleton-transform.xml");
 }

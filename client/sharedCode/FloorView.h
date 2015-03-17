@@ -8,7 +8,6 @@
 
 #pragma once
 #include "ofMain.h"
-#include "ofxControlPanel.h"
 #include "Floor.h"
 #include "ofxQuadWarp.h"
 class FloorView{
@@ -19,20 +18,23 @@ public:
     void setup(ofRectangle projectorViewport, ofRectangle mainViewport=ofGetCurrentViewport());
     void update();
     void draw(ofRectangle viewport);
-    void drawControlPanel();
+    void drawDebug();
     void drawProjections();
     void setupQuadWarp();
     void setupGUI();
     void setMainView(bool view);
     bool isMain();
-    
-    
     void drawStageCalibration();
     void drawProjectorCalibration();
     
+    ofPoint getPlayerOneButtonPos();
+    ofPoint getPlayerTwoButtonPos();
+    
     Floor p1Floor;
     Floor p2Floor;
-    ofxControlPanel gui;
+    
+//    ofPoint playerOneButton;
+//    ofPoing playerTwoButton;
     
     ofFbo projectionFbo;
     ofRectangle projectionViewport;
@@ -40,28 +42,6 @@ public:
     ofParameterGroup        squareOptions;
     bool bMainView;
 
-    // Debug Parameters
-    ofParameter <bool>      bShowDots;
-    ofParameter <bool>      bShowGrid;
-    ofParameter <bool>      bShowButton;
-    
-    // Button Parameters
-    ofParameter <int> buttonPos0;
-    ofParameter <int> buttonPos1;
-    
-    // Line Parameters
-    ofParameter <float>     lightWeight;
-    ofParameter <float>     lineDistance;
-    
-    ofParameter <bool>     bPersonPresent0;
-    ofParameter <bool>     bPersonPresent1;
-    
-    
-    ofParameter <float>     lineSpeed;  //lastSpeed
-    ofParameter <bool>      bFadeLines;
-    ofParameter <bool>      spawnLines0;
-    ofParameter <bool>      spawnLines1;
-    ofParameter <float>     speed;
     ofParameter <float>     floorOffset;
     ofParameter <bool>      dualWarp;
     

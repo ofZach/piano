@@ -26,13 +26,16 @@ class tvScreen {
 public:
     
     
-    void setup(ofRectangle viewport, ofParameterGroup* params);
+    void setup(ofRectangle viewport);
     void update( kinectBody * kinectBodyOne, kinectBody * kinectBodyTwo);
     void drawHistoryMan( kinectBody & BODY);
     void drawHairyMan( kinectSkeleton & SK);
     void drawIntoFbo();
     void draw( ofRectangle drawRect);
     void setStagePos(float x, float y, float z, float size);
+    void addParameters(ofParameterGroup & params);
+    void setStageParameters(ofParameterGroup params);
+    
     void addImpluse();
     
     float nonOfRandom(float x, float y);
@@ -40,13 +43,11 @@ public:
     
     ofVboMesh sphere;
     ofVec3f stagePos;
-    float stageSize;
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
     vector < pulseData > pulses;    // go from 1 to 0
     float twist;
-    bool bDrawHairyMan;
     float energy;
 
     ofFbo tvSkeletonView;
@@ -54,8 +55,22 @@ public:
     kinectBody * playerOneBody;
     kinectBody * playerTwoBody;
 
-    ofParameterGroup * tvParams;
-    ofParameterGroup * stageParameters;
+    ofParameter<float>  cameraRadius;
+    ofParameter<float>  cameraAngle;
+    ofParameter<float>  cameraHeight;
+    ofParameter<float>  lookAtPointHeight;
+    ofParameter<bool>   swayCamera;
+    ofParameter<float>  swayRate;
+    ofParameter<float>  swayAmount;
+    ofParameter<bool>   bDrawHairyMan;
+    
+    ofParameter<float> stageSize;
+    ofParameter<float> stageLeftX;
+    ofParameter<float> stageLeftY;
+    ofParameter<float> stageLeftZ;
+    ofParameter<float> stageRightX;
+    ofParameter<float> stageRightY;
+    ofParameter<float> stageRightZ;
     
     ofRectangle tvViewPort;
     

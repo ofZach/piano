@@ -18,42 +18,24 @@ TVView::~TVView(){
 
 
 void TVView::setup(ofRectangle tv, ofRectangle main){
+    setupGUI();
     tvViewPort = tv;
     mainViewPort = main;
-    setupGUI();
-    TV.setup(tvViewPort, &tvParameters);
+    TV.setup(tvViewPort);
     TV.setStagePos(0, 0, 0, 100);
     bMainView = false;
 }
 
+void TVView::setStageParameters(ofParameterGroup settings){
+    TV.setStageParameters(settings);
+}
+
 void TVView::setupGUI(){
     tvParameters.setName("TV Controls");
-    tvParameters.add(cameraAngle.set("cameraAngle", 0, 0, TWO_PI));
-    tvParameters.add(cameraRadius.set("cameraRadius", 0, 0, 1000));
-    tvParameters.add(cameraHeight.set("cameraHeight", 0, 0, 1000));
-    tvParameters.add(lookAtPointHeight.set("View Height", 0, 0, 500));
-    tvParameters.add(swayCamera.set("swayCamera", true));
-    tvParameters.add(swayRate.set("swayRate", 0.1, 0.01, 10));
-    tvParameters.add(swayAmount.set("swayAmount", 0.1, 0, 1));
-    tvParameters.add(bDrawHairyMan.set("bDrawHairyMan", false));
-    
-    tvParameters.add(stageLeftX.set("Left Stage X", 0, -500, 500));
-    tvParameters.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
-    tvParameters.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
-    tvParameters.add(stageRightX.set("Right Stage X", 0, -500, 500));
-    tvParameters.add(stageRightY.set("Right Stage Y", 0, -500, 500));
-    tvParameters.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
-    tvParameters.add(stageSize.set("Stage Size", 300, 1, 500));
-    
-    gui.setup("TV Controls", 0, 0, 300, 500, true, false);
-    gui.setWhichPanel(0);
-    gui.setWhichColumn(0);
-    gui.addGroup(tvParameters);
-    gui.loadSettings("tv-settings.xml");
+    TV.addParameters(tvParameters);
 }
 
 void TVView::update(kinectBody *kinectBodyOne, kinectBody *kinectBodyTwo){
-    gui.update();
     TV.update(kinectBodyOne, kinectBodyTwo);
 }
 void TVView::draw(ofRectangle viewport){
@@ -62,9 +44,6 @@ void TVView::draw(ofRectangle viewport){
 
 void TVView::drawTV(){
     TV.draw(tvViewPort);
-}
-void TVView::drawControlPanel(){
-    gui.draw();
 }
 
 void TVView::setMainView(bool main){

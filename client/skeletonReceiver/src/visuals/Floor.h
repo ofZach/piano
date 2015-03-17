@@ -17,41 +17,48 @@
 class Floor{
 public:
     
-
+    
     Floor();
     ~Floor();
-    void setup();
+    void setup(int i);
     void update();
     void draw(float x, float y, float w, float h);
-    
-    void realDraw();
     
     void drawScene();
     void addLineTrace();
     void triggerTriangles();
     float getWidth();
     float getHeight();
-    
+    ofVec3f getButtonPos();
     void spawnLines();
+    
+    ofParameterGroup squareOptions;
+    
+    ofParameter <float>     lineWeight;
+    ofParameter <float>     trimLength;
+    ofParameter <bool>     bPersonPresent;
+    ofParameter <float>     lineSpeed;  //lastSpeed
+    ofParameter <bool>      bFadeLines;
+    ofParameter <bool>      bSpawnLines;
+    ofParameter <float>     speed;
+    ofParameter <bool>      bShowButton;
+    ofParameter <int>       buttonPos;
+    ofParameter <bool>      bShowDots;
+    ofParameter <bool>      bShowGrid;
+    
+    
+    ofPoint buttonPoint;
 
-    ofParameterGroup *squareOptions;
     ofFbo floor;
     gridInfo GI;
     vector <traveler > travelers;
     float lastTrimLength;
     float lastSpeed;
     int idNum;
-    void setParamterGroup(ofParameterGroup* g){
-        this->squareOptions = g;
-    }
+    
     
     float personEnergyLevel;
     
     ofxBlur blur;
-    
     vector < float > connectionEnergyLevel;
-    
-    
-    
-    
 };
