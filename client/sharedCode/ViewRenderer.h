@@ -14,7 +14,7 @@
 #include "TVView.h"
 #include "ofxGui.h"
 #include "AppSettings.h"
-#define N_SCENE 4
+#define N_SCENE 5
 class ViewRenderer{
 public:
     ViewRenderer();

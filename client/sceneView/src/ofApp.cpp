@@ -60,7 +60,7 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == OF_KEY_ESC){
-        views.setMainView(4);
+        views.setMainView(N_SCENE);
     }
     
     

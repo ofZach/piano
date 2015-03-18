@@ -23,13 +23,15 @@ void FloorView::setup(ofRectangle projector, ofRectangle main){
     mainViewport = main;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
     setupGUI();
-    setupQuadWarp();
+
     
     p1Floor.idNum = 0;
     p2Floor.idNum = 1;
     
     
     bMainView = false;
+    
+    setupQuadWarp();
 }
 void FloorView::update(){
     p1Floor.update();
@@ -150,8 +152,8 @@ void FloorView::drawDebug(){
     ofSetColor(255, 255, 255);
     projectionFbo.draw(0, 0);
     
+    ofSetColor(ofColor::orangeRed);
     warpFloor.draw();
-    //    warpOne.draw();
     
     
     ofNoFill();

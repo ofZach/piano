@@ -185,13 +185,29 @@ void ViewRenderer::draw(){
         tv.draw(viewMain);
         tvGUI.draw();
         skeletonGUI.draw();
-    }else{
-        appGUI.draw();
     }
     
     floor.drawProjections();
     tv.drawTV();
     ofDisableAlphaBlending();
+    
+    if(iMainView == 4){
+        ofSetColor(255, 0, 0);
+        ofRect(viewMain);
+        ofSetColor(0, 255, 0);
+        ofRect(projectorView);
+        ofSetColor(0, 0, 255);
+        ofRect(tvView);
+        ofSetColor(255, 255, 255);
+        ofLine(viewMain.x, viewMain.y, viewMain.x+viewMain.width, viewMain.y+viewMain.height);
+        ofLine(viewMain.x+viewMain.width, viewMain.y, viewMain.x, viewMain.y+viewMain.height);
+        
+        ofLine(tvView.x, tvView.y, tvView.x+tvView.width, tvView.y+tvView.height);
+        ofLine(tvView.x+tvView.width, tvView.y, tvView.x, tvView.y+tvView.height);
+        
+        ofLine(projectorView.x, projectorView.y, projectorView.x+projectorView.width, projectorView.y+projectorView.height);
+        ofLine(projectorView.x+projectorView.width, projectorView.y, projectorView.x, projectorView.y+projectorView.height);
+    }
     
 }
 

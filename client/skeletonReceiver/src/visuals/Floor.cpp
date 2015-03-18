@@ -14,6 +14,7 @@ Floor::Floor(){
     
     //32, float shape = .2, int passes = 1, float downsample = .5
     
+    
     blur.setup(1024, 1024, 16, .2, 2, 0.5 );
     blur.begin();
     ofClear(0,0,0,0);
@@ -44,6 +45,8 @@ void Floor::spawnLines(){
 
 
 void Floor::setup(int i){
+
+    
     floor.allocate(1024, 1024, GL_RGBA, 4);
     floor.begin();
     ofClear(0, 0, 0, 0);
@@ -170,7 +173,7 @@ void Floor::update(){
     ofSetLineWidth(lineWeight);
     
     floor.begin();
-    ofClear(0);
+    ofClear(0, 0, 0, 0);
     
     blur.draw();
     
