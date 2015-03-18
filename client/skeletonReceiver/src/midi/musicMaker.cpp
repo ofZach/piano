@@ -138,12 +138,6 @@ void musicMaker::setupMidiTriggers() {
     drumMidiTriggers.push_back(drumStompRight);
     drumMidiTriggers.push_back(drop);
     
-
-    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
-    
-    //midiOut->openVirtualPort("OF Kinect");
-    midiOut->openPort(0);
-    
     for(auto& t : midiTriggers) {
         t->setMidiOut(midiOut);
     }

@@ -77,7 +77,7 @@ void ViewRenderer::setup(){
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-    midiOut->openPort(0);
+    midiOut->openPort(1);
     
     
     kinectSkeleton.setup(numPlayers, viewMain);
