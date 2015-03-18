@@ -12,6 +12,25 @@ SkeletonView::SkeletonView(){
     
 }
 SkeletonView::~SkeletonView(){
+    //    <buttonApproach>
+    //    <val_0>1.86154</val_0>
+    //    </buttonApproach>
+    //    <buttonTriggerScale>
+    //    <val_0>0.575</val_0>
+    //    </buttonTriggerScale>
+    //    <buttonRadius>
+    //    <val_0>47.1731</val_0>
+    //    </buttonRadius>
+    
+    
+    
+    
+    playerOneSwitchMode.setTriggerScale(0.575);
+    playerOneSwitchMode.setApproachScale(1.86154);
+    
+    
+    playerTwoSwitchMode.setTriggerScale(0.575);
+    playerTwoSwitchMode.setApproachScale(1.86154);
     
 }
 void SkeletonView::setup(int numPlayer, ofRectangle viewPort){
@@ -20,7 +39,7 @@ void SkeletonView::setup(int numPlayer, ofRectangle viewPort){
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
     KS.setup();
-
+    
     cam.setPosition(0, 500, -1000);
     cam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
     
@@ -66,6 +85,40 @@ void SkeletonView::update(){
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
                 KBA.analyze(body);
+                
+                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+                vector<std::pair<ofPoint, float> > feet;
+                
+                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
+                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
+                if( i == 0){
+                    playerOneSwitchMode.update(feet);
+                    if (playerOneSwitchMode.isTriggered() && !changeTriggered) {
+                        if(playerOneMode == 1){
+                            playerOneMode = 0;
+                        }else{
+                            playerOneMode = 1;
+                        }
+                        changeTriggered = true;
+                    }else if(!playerOneSwitchMode.isTriggered()){
+                        changeTriggered = false;
+                    }
+                }
+                else if(i == 1){
+                    playerTwoSwitchMode.update(feet);
+                    
+                    if (playerTwoSwitchMode.isTriggered() && !changeTriggered) {
+                        if(playerTwoMode == 1){
+                            playerTwoMode = 0;
+                        }else{
+                            playerTwoMode = 1;
+                        }
+                        changeTriggered = true;
+                    }else if(!playerTwoSwitchMode.isTriggered()){
+                        changeTriggered = false;
+                    }
+                }
             }
         }
     }else {
@@ -74,6 +127,22 @@ void SkeletonView::update(){
             
         }
     }
+}
+
+//void SkeletonView::setPlayerOneModeParam(ofParameterGroup & params){
+//    playerOneMode = params.get<int>("Output Mode");
+//}
+//void SkeletonView::setPlayerTwoModeParam(ofParameterGroup & params){
+//    playerTwoMode = params.get<int>("Output Mode");
+//}
+
+int SkeletonView::getPlayerOneMode(){
+    return playerOneMode;
+}
+
+
+int SkeletonView::getPlayerTwoMode(){
+    return playerTwoMode;
 }
 
 kinectBody * SkeletonView::getBody(int i){
@@ -117,19 +186,11 @@ void SkeletonView::draw(ofRectangle viewport){
     
     
     ofPushMatrix();
-    ofTranslate(stageRightX, -stageRightZ, stageRightY);
-    ofPushMatrix();
-    ofTranslate(p2SwitchMode);
-    ofDrawAxis(10);
-    ofPopMatrix();
+    playerOneSwitchMode.draw();
     ofPopMatrix();
     
     ofPushMatrix();
-    ofTranslate(stageLeftX, -stageLeftZ, stageLeftY);
-    ofPushMatrix();
-    ofTranslate(p1SwitchMode);
-    ofDrawAxis(10);
-    ofPopMatrix();
+    playerTwoSwitchMode.draw();
     ofPopMatrix();
     
     
@@ -151,28 +212,23 @@ void SkeletonView::draw(ofRectangle viewport){
 void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     
     
-    cout<<p1<<endl;
     p1SwitchMode.set((p1.x-512)/1024*stageSize, 0, (p1.y-512)/1024*stageSize);
-    cout<<p1SwitchMode<<endl;
+    p1SwitchMode+=ofVec3f(stageLeftX, -stageLeftZ, stageLeftY);
     p2SwitchMode.set((p2.x-512)/1024*stageSize, 0, (p2.y-512)/1024*stageSize);
+    p2SwitchMode+=ofVec3f(stageRightX, -stageRightZ, stageRightY);
     
-////    p1SwitchMode*=stageSize;
-////    p2SwitchMode*=stageSize;
-//    
-//    
-////    p1SwitchMode = (ofVec3f(stageLeftX, stageLeftY, stageLeftZ)) - p1SwitchMode;
-////    p2SwitchMode = (ofVec3f(stageRightX, stageRightY, stageRightZ)) - p2SwitchMode;
-//////    p1SwitchMode-=stageSize/2;
-//////    p2SwitchMode-=stageSize/2;
-//    
-//    
-//    
-//    cout<<p1SwitchMode<<endl;
+    
+    playerOneSwitchMode.setPosition(p1SwitchMode);
+    playerTwoSwitchMode.setPosition(p2SwitchMode);
+    
+    
+    playerTwoSwitchMode.setRadius(stageSize/4/2);
+    playerOneSwitchMode.setRadius(stageSize/4/2);
 }
 
 
 void SkeletonView::exit(){
-
+    
 }
 
 void SkeletonView::setupGUI(){

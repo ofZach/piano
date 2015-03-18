@@ -8,9 +8,9 @@
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
 		<bPersonPresent>0</bPersonPresent>
-		<bFadeLines>1</bFadeLines>
+		<bFadeLines>0</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
-		<buttonPos>15</buttonPos>
+		<buttonPos>0</buttonPos>
 		<lineWeight>14.4939</lineWeight>
 		<lineSpeed>7.95918</lineSpeed>
 		<speed>28.5714</speed>

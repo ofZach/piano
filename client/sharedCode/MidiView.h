@@ -23,12 +23,15 @@ public:
     void setupGUI();
     bool isMain();
     void setMainView(bool mainView);
-    
+    void setPlayerTwoMode(int mode);
+    void setPlayerOneMode(int mode);
     ofParameterGroup midiGroup;
     ofParameterGroup playerOne;
     ofParameterGroup playerTwo;
     
 private:
+    
+    
     int numPlayers;
     
     ofTrueTypeFont font;

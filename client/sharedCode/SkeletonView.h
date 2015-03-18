@@ -14,6 +14,7 @@
 #include "kinectSkeleton.h"
 #include "kinectBodyAnalyser.h"
 #include "kinectSkeletonAnalyser.h"
+#include "kinectButton.h"
 class SkeletonView{
 public:
     SkeletonView();
@@ -27,7 +28,12 @@ public:
     bool isMain();
     void setMainView(bool mainView);
     void setButtonPos(ofVec3f p1, ofVec3f p2);
+    void setPlayerOneModeParam(ofParameterGroup & params);
+    void setPlayerTwoModeParam(ofParameterGroup & params);
     kinectBody * getBody(int i);
+    
+    int getPlayerOneMode();
+    int getPlayerTwoMode();
     
     ofParameterGroup skeletonTransform;
     ofParameterGroup stageParams;
@@ -35,6 +41,9 @@ private:
     //Kinect
     ofxKinectV2OSC kinect;
 
+    int playerOneMode;
+    int playerTwoMode;
+    
     //Matrix Transform
     ofMatrix4x4 mat;
     
@@ -57,7 +66,7 @@ private:
     int numPlayers;
     //3D Drawing
     ofCamera cam;
-    
+    bool changeTriggered;
     
     ofParameter <float> scaleX;
     ofParameter <float> scaleY;
@@ -76,8 +85,12 @@ private:
     ofParameter<float> stageRightY;
     ofParameter<float> stageRightZ;
     
+
     ofRectangle viewPort;
     bool bMainView;
     
     ofPlanePrimitive plane;
+    
+    kinectButton playerOneSwitchMode;
+    kinectButton playerTwoSwitchMode;
 };

@@ -30,6 +30,15 @@ void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
     fontMain.loadFont(OF_TTF_SANS, 50);
     bMainView = false;
 }
+
+void MidiView::setPlayerOneMode(int mode){
+    musicMakerP1.outputMode.set(mode);
+}
+
+void MidiView::setPlayerTwoMode(int mode){
+    musicMakerP2.outputMode.set(mode);
+}
+
 void MidiView::update(kinectBody * playerOne, kinectBody * playerTwo){
     if(numPlayers == 1){
         musicMakerP1.analyze(*playerOne);

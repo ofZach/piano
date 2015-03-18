@@ -55,11 +55,4 @@ private:
     ofxPanel midiGUI;
     ofxPanel appGUI;
     int numPlayers;
-    
-    kinectButton playerOneSwitchMode;
-    kinectButton playerTwoSwitchMode;
-    
-    ofParameter<int> playerOneMode;
-    ofParameter<int> playerTwoMode;
-    
 };

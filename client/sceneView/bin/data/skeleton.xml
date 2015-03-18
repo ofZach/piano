@@ -1,21 +1,21 @@
 <skeleton_transform>
 	<scaleX>1</scaleX>
 	<scaleY>1</scaleY>
-	<scaleZ>26.8881</scaleZ>
-	<offsetX>-32</offsetX>
-	<offsetY>352</offsetY>
-	<offsetZ>-832</offsetZ>
+	<scaleZ>14.569</scaleZ>
+	<offsetX>-240</offsetX>
+	<offsetY>320</offsetY>
+	<offsetZ>-32</offsetZ>
 	<rotationX>180</rotationX>
 	<rotationY>0</rotationY>
 	<rotationZ>0</rotationZ>
 <skeleton_transform/>
 <Stage_Settings>
-		<Left_Stage_X>-197.959</Left_Stage_X>
-		<Left_Stage_Y>-18.3673</Left_Stage_Y>
-		<Left_Stage_Z>-10.2041</Left_Stage_Z>
-		<Right_Stage_X>202.041</Right_Stage_X>
-		<Right_Stage_Y>2.0408</Right_Stage_Y>
-		<Right_Stage_Z>2.0408</Right_Stage_Z>
-		<Stage_Size>400.2</Stage_Size>
+		<Left_Stage_X>-108.163</Left_Stage_X>
+		<Left_Stage_Y>-165.306</Left_Stage_Y>
+		<Left_Stage_Z>-2.0408</Left_Stage_Z>
+		<Right_Stage_X>108.163</Right_Stage_X>
+		<Right_Stage_Y>-165.306</Right_Stage_Y>
+		<Right_Stage_Z>-2.0408</Right_Stage_Z>
+		<Stage_Size>214.857</Stage_Size>
 	</Stage_Settings>
 </skeleton_transform>

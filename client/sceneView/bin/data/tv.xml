@@ -1,8 +1,8 @@
 <TV_Controls>
 	<cameraAngle>270</cameraAngle>
-	<cameraRadius>905</cameraRadius>
-	<cameraHeight>425</cameraHeight>
-	<View_Height>240</View_Height>
+	<cameraRadius>815</cameraRadius>
+	<cameraHeight>390</cameraHeight>
+	<View_Height>132.5</View_Height>
 	<swayCamera>0</swayCamera>
 	<swayRate>1.4086</swayRate>
 	<swayAmount>0.11</swayAmount>
