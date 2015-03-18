@@ -26,6 +26,7 @@ public:
     void setupGUI();
     bool isMain();
     void setMainView(bool mainView);
+    void setButtonPos(ofVec3f p1, ofVec3f p2);
     kinectBody * getBody(int i);
     
     ofParameterGroup skeletonTransform;
@@ -45,6 +46,8 @@ private:
     //Kinect Analysers
     kinectBodyAnalyser KBA;
     kinectSkeletonAnalyser KSA;
+    
+    ofPoint p1SwitchMode, p2SwitchMode;
     
     //Collections
     vector<Skeleton>* skeletons;

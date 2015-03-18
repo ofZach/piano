@@ -92,6 +92,9 @@ void ViewRenderer::setup(){
     tvGUI.setup(tv.tvParameters);
     midiGUI.setup(musicMaker.midiGroup);
     
+    playerOneMode = musicMaker.playerOne.getInt("Output Mode");
+    playerTwoMode = musicMaker.playerTwo.getInt("Output Mode");
+    
     midiGUI.setSize(250, 400);
     projectionGUI.setSize(250, 400);
     projectionGUI.setWidthElements(250);
@@ -107,6 +110,7 @@ void ViewRenderer::setup(){
     midiGUI.loadFromFile("midi.xml");
     
     midiGUI.setWidthElements(250);
+    
 }
 void ViewRenderer::update(){
     
@@ -122,20 +126,71 @@ void ViewRenderer::update(){
         }else{
             floor.setPlayerOne(false);
         }
+        
+        playerOneSwitchMode.setPosition(floor.getPlayerOneButtonPos());
+        kinectSkeleton.setButtonPos(playerOneSwitchMode.getPosition(), playerOneSwitchMode.getPosition());
+        
+        
+        int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+        int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+        vector<std::pair<ofPoint, float> > feet;
+        feet.push_back(make_pair(kb1->getLastSkeleton().pts[whichLeft], 0.f));
+        feet.push_back(make_pair(kb1->getLastSkeleton().pts[whichRight], 0.f));
+        playerOneSwitchMode.update(feet);
+        if (playerOneSwitchMode.isTriggered()) {
+            playerOneMode+=1;
+            if(playerOneMode > 1){
+                playerOneMode = 0;
+            }
+        }
+        
     }else{
         kinectBody * kb1 = kinectSkeleton.getBody(0);
         kinectBody * kb2 = kinectSkeleton.getBody(1);
         musicMaker.update(kb1, kb2);
         tv.update(kb1, kb2);
         
+        
+        playerOneSwitchMode.setPosition(floor.getPlayerOneButtonPos());
+        playerTwoSwitchMode.setPosition(floor.getPlayerTwoButtonPos());
+        
+                cout<<playerOneSwitchMode.getPosition()<<endl;
+        
+        kinectSkeleton.setButtonPos(playerOneSwitchMode.getPosition(), playerTwoSwitchMode.getPosition());
+        int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+        int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+        vector<std::pair<ofPoint, float> > feet;
+        
         if(kb1 != NULL){
             floor.setPlayerOne(true);
+            feet.push_back(make_pair(kb1->getLastSkeleton().pts[whichLeft], 0.f));
+            feet.push_back(make_pair(kb1->getLastSkeleton().pts[whichRight], 0.f));
+            playerOneSwitchMode.update(feet);
+            if (playerOneSwitchMode.isTriggered()) {
+                playerOneMode+=1;
+                if(playerOneMode > 1){
+                    playerOneMode = 0;
+                }
+            }
         }else{
             floor.setPlayerOne(false);
         }
         
         if(kb2 != NULL){
             floor.setPlayerTwo(true);
+            whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+            whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+            feet.clear();
+            feet.push_back(make_pair(kb2->getLastSkeleton().pts[whichLeft], 0.f));
+            feet.push_back(make_pair(kb2->getLastSkeleton().pts[whichRight], 0.f));
+            playerTwoSwitchMode.update(feet);
+            
+            if (playerTwoSwitchMode.isTriggered()) {
+                playerTwoMode+=1;
+                if(playerTwoMode > 1){
+                    playerTwoMode = 0;
+                }
+            }
         }else{
             floor.setPlayerTwo(false);
         }
@@ -143,12 +198,7 @@ void ViewRenderer::update(){
     
     tv.setStageParameters(kinectSkeleton.stageParams);
     
-    if(numPlayers == 1){
-        
-    }else{
-        floor.getPlayerOneButtonPos();
-        floor.getPlayerTwoButtonPos();
-    }
+    
 }
 
 void ViewRenderer::exit(){

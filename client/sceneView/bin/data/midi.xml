@@ -10,10 +10,11 @@
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>500</Body_Drop_Time>
-		<Output>0</Output>
-		<Percentile>0.75</Percentile>
-		<ThresholdSmoothing>0.208163</ThresholdSmoothing>
+		<Output>1</Output>
+		<Percentile>0.963265</Percentile>
+		<ThresholdSmoothing>0.428571</ThresholdSmoothing>
 		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
+	<Output_Mode>0</Output_Mode>
 	</playerOne>
 	<playerTwo>
 		<Start_Note>36</Start_Note>
@@ -26,10 +27,11 @@
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>500</Body_Drop_Time>
-		<Output>0</Output>
-		<Percentile>0.75</Percentile>
+		<Output>1</Output>
+		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.1</ThresholdSmoothing>
 		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
+	<Output_Mode>0</Output_Mode>
 	</playerTwo>
 <MidiSettings/>
 </MidiSettings>

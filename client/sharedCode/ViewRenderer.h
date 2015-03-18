@@ -14,6 +14,7 @@
 #include "TVView.h"
 #include "ofxGui.h"
 #include "AppSettings.h"
+#include "kinectButton.h"
 #define N_SCENE 5
 class ViewRenderer{
 public:
@@ -54,4 +55,11 @@ private:
     ofxPanel midiGUI;
     ofxPanel appGUI;
     int numPlayers;
+    
+    kinectButton playerOneSwitchMode;
+    kinectButton playerTwoSwitchMode;
+    
+    ofParameter<int> playerOneMode;
+    ofParameter<int> playerTwoMode;
+    
 };

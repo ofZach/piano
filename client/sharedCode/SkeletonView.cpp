@@ -43,8 +43,8 @@ void SkeletonView::update(){
     ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
     mat.glTranslate(offsetPt);
     mat.glRotate(rotationX, 1,0,0);
-    mat.glRotate(rotationY, 0,1,0);
     mat.glRotate(rotationZ, 0,0,1);
+    mat.glRotate(rotationY, 0,1,0);
     ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
@@ -116,6 +116,22 @@ void SkeletonView::draw(ofRectangle viewport){
     ofPopMatrix();
     
     
+    ofPushMatrix();
+    ofTranslate(stageRightX, -stageRightZ, stageRightY);
+    ofPushMatrix();
+    ofTranslate(p2SwitchMode);
+    ofDrawAxis(10);
+    ofPopMatrix();
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofTranslate(stageLeftX, -stageLeftZ, stageLeftY);
+    ofPushMatrix();
+    ofTranslate(p1SwitchMode);
+    ofDrawAxis(10);
+    ofPopMatrix();
+    ofPopMatrix();
+    
     
     ofSetColor(255, 255, 255, 255);
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
@@ -130,6 +146,28 @@ void SkeletonView::draw(ofRectangle viewport){
     //    if(isMain()){
     //        drawControlPanel();
     //    }
+}
+
+void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
+    
+    
+    cout<<p1<<endl;
+    p1SwitchMode.set((p1.x-512)/1024*stageSize, 0, (p1.y-512)/1024*stageSize);
+    cout<<p1SwitchMode<<endl;
+    p2SwitchMode.set((p2.x-512)/1024*stageSize, 0, (p2.y-512)/1024*stageSize);
+    
+////    p1SwitchMode*=stageSize;
+////    p2SwitchMode*=stageSize;
+//    
+//    
+////    p1SwitchMode = (ofVec3f(stageLeftX, stageLeftY, stageLeftZ)) - p1SwitchMode;
+////    p2SwitchMode = (ofVec3f(stageRightX, stageRightY, stageRightZ)) - p2SwitchMode;
+//////    p1SwitchMode-=stageSize/2;
+//////    p2SwitchMode-=stageSize/2;
+//    
+//    
+//    
+//    cout<<p1SwitchMode<<endl;
 }
 
 
