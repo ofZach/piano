@@ -129,6 +129,7 @@ void FloorView::drawStageCalibration(){
         }
         counter++;
     }
+    
     ofPopStyle();
 }
 

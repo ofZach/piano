@@ -28,16 +28,18 @@ public:
     
     void setup(ofRectangle viewport);
     void update( kinectBody * kinectBodyOne, kinectBody * kinectBodyTwo);
-    void drawHistoryMan( kinectBody & BODY);
-    void drawHairyMan( kinectSkeleton & SK);
+    void drawHistoryMan( kinectBody & BODY, int playerID);
+    void drawHairyMan( kinectSkeleton & SK, int playerID);
     void drawIntoFbo();
     void draw( ofRectangle drawRect);
     void setStagePos(float x, float y, float z, float size);
     void addParameters(ofParameterGroup & params);
     void setStageParameters(ofParameterGroup params);
     
-    void addImpluse();
-    
+    void addImplusePlayerOne();
+
+    void addImplusePlayerTwo();
+
     float nonOfRandom(float x, float y);
     float nonOfSeedRandom(int seed);
     
@@ -46,7 +48,8 @@ public:
     vector < boneConnection > connections;
     vector < boneConnection > connectionsScambled;
     sitmo::prng_engine eng; /// don't laugh.
-    vector < pulseData > pulses;    // go from 1 to 0
+    vector < pulseData > pulsesP1;
+    vector < pulseData > pulsesP2; // go from 1 to 0
     float twist;
     float energy;
 
@@ -62,7 +65,8 @@ public:
     ofParameter<bool>   swayCamera;
     ofParameter<float>  swayRate;
     ofParameter<float>  swayAmount;
-    ofParameter<bool>   bDrawHairyMan;
+    ofParameter<bool>   bDrawHairyManP2;
+    ofParameter<bool>   bDrawHairyManP1;
     
     ofParameter<float> stageSize;
     ofParameter<float> stageLeftX;

@@ -47,4 +47,10 @@ private:
     ofRectangle viewPort;
     Trigger lastTriggerP1;
     Trigger lastTriggerP2;
+    
+    bool clearOne;
+    bool clearTwo;
+    
+    float lastBodyPlayerOne;
+    float lastBodyPlayerTwo;
 };

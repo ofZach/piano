@@ -21,9 +21,12 @@ void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
     viewPort = viewport;
     if(this->numPlayers == 1){
         musicMakerP1.setup(midiOut);
+        musicMakerP1.playerID = 0;
     }else{
         musicMakerP1.setup(midiOut);
+        musicMakerP1.playerID = 0;
         musicMakerP2.setup(midiOut);
+        musicMakerP2.playerID = 1;
     }
     setupGUI();
     fontDebug.loadFont(OF_TTF_SANS, 25);
@@ -32,25 +35,48 @@ void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
 }
 
 void MidiView::setPlayerOneMode(int mode){
-    musicMakerP1.outputMode.set(mode);
+    if(mode != musicMakerP1.outputMode){
+        musicMakerP1.outputMode.set(mode);
+    }
 }
 
 void MidiView::setPlayerTwoMode(int mode){
-    musicMakerP2.outputMode.set(mode);
+    if(mode != musicMakerP2.outputMode){
+        musicMakerP2.outputMode.set(mode);
+    }
 }
 
-void MidiView::update(kinectBody * playerOne, kinectBody * playerTwo){
+void MidiView::update(kinectBody * p1, kinectBody * p2){
     if(numPlayers == 1){
-        musicMakerP1.analyze(*playerOne);
+        if(p1){
+            lastBodyPlayerOne = ofGetElapsedTimef();
+            musicMakerP1.analyze(*p1);
+        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time")){
+            musicMakerP1.clearBodies();
+            
+        }
     }else{
-        if(playerOne != NULL)
-            musicMakerP1.analyze(*playerOne);
-        if(playerTwo != NULL)
-            musicMakerP2.analyze(*playerTwo);
+        if(p1 != NULL){
+            lastBodyPlayerOne = ofGetElapsedTimef();
+            musicMakerP1.analyze(*p1);
+            clearOne = true;
+        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
+            musicMakerP1.clearBodies();
+            clearOne = false;
+        }
+        if(p2 != NULL){
+            lastBodyPlayerTwo = ofGetElapsedTimef();
+            musicMakerP2.analyze(*p2);
+            clearTwo = true;
+        }else if(ofGetElapsedTimef() - lastBodyPlayerTwo > playerOne.getFloat("Body Drop Time") && clearTwo){
+            musicMakerP2.clearBodies();
+            clearTwo = false;
+            
+        }
+        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
+        lastTriggerP2 = musicMakerP2.lastDrumTriggeredNote();
     }
     
-    lastTriggerP1 = musicMakerP1.lastTriggeredNote();
-    lastTriggerP2 = musicMakerP2.lastTriggeredNote();
 }
 void MidiView::draw(ofRectangle viewport){
     if(isMain()){
@@ -120,15 +146,17 @@ void MidiView::setupGUI(){
     
     
     midiGroup.setName("MidiSettings");
-    midiGroup.add(playerOne);
     musicMakerP1.addToDebugParamGroup(playerOne);
+    playerOne.add(musicMakerP1.buttonControl);
+    midiGroup.add(playerOne);
     if(numPlayers == 2){
         playerTwo.setName("playerTwo");
         musicMakerP2.addToDebugParamGroup(playerTwo);
+        playerTwo.add(musicMakerP2.buttonControl);
         midiGroup.add(playerTwo);
     }
-
-
+    
+    
 }
 
 void MidiView::exit(){

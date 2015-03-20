@@ -205,6 +205,12 @@ void musicMaker::analyze(kinectBody & body) {
     }
 }
 
+Trigger musicMaker::lastPianoTriggeredNote(){
+    for(auto& t : midiTriggers) {
+        
+    }
+}
+
 
 void musicMaker::exit() {
     AllNotesOff(*midiOut);
@@ -287,7 +293,12 @@ void musicMaker::updateGraphs(kinectBody &body) {
                     }
                     
                     if(triggers[body.historyPlots[i]->varName]){
-                        ((ofApp*)ofGetAppPtr())->addLineTrace();
+                        if(playerID == 0){
+                            ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+                        }
+                        if(playerID == 1){
+                            ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
+                        }
                         lastTrigger.time = ofGetElapsedTimef();
                     }
                     
@@ -337,8 +348,12 @@ void musicMaker::updateGraphs(kinectBody &body) {
                                 
                                 if(triggers[nameOfPt]){
                                     ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
-                                    ((ofApp*)ofGetAppPtr())->triggerTriangle();
-                                    ((ofApp*)ofGetAppPtr())->addImpulse();
+                                    if(playerID == 0){
+                                        ((ofApp*)ofGetAppPtr())->addImpulsePlayerOne();
+                                    }
+                                    if(playerID == 1){
+                                        ((ofApp*)ofGetAppPtr())->addImpulsePlayerTwo();
+                                    }
                                     lastTrigger.time = ofGetElapsedTimef();
                                 }
                             }
@@ -363,8 +378,12 @@ void musicMaker::updateGraphs(kinectBody &body) {
         
         if(graphs[0].getTriggered()  && !triggers["kick_Left"]){
             skeletonMidi.triggerKick(60, graphs[0].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->triggerTriangle();
-            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            if(playerID == 0){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
+            if(playerID == 1){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
             lastTrigger.time = ofGetElapsedTimef();
             triggers["kick_Left"] = true;
         }else if(!graphs[0].getTriggered()  && triggers["kick_Left"]){
@@ -372,24 +391,36 @@ void musicMaker::updateGraphs(kinectBody &body) {
         }
         if(graphs[1].getTriggered()  && !triggers["kick_Right"]){
             skeletonMidi.triggerKick(61, graphs[1].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->triggerTriangle();
-            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            if(playerID == 0){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
+            if(playerID == 1){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
             lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[1].getTriggered()  && triggers["kick_Right"]){
             triggers["kick_Right"] = false;
         }
         if(graphs[2].getTriggered()&& !triggers["punch_Left"]){
             skeletonMidi.triggerPunch(62, graphs[2].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->triggerTriangle();
-            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            if(playerID == 0){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
+            if(playerID == 1){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
             lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[2].getTriggered()  && triggers["punch_Left"]){
             triggers["punch_Left"] = false;
         }
         if(graphs[3].getTriggered() && !triggers["punch_Right"]){
             skeletonMidi.triggerPunch(63, graphs[3].getNormalized()*127);
-            ((ofApp*)ofGetAppPtr())->triggerTriangle();
-            ((ofApp*)ofGetAppPtr())->addLineTrace();
+            if(playerID == 0){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
+            if(playerID == 1){
+                ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+            }
             lastTrigger.time = ofGetElapsedTimef();
         }else if(!graphs[3].getTriggered() && triggers["punch_Right"]){
             triggers["punch_Right"] = false;
@@ -430,12 +461,22 @@ void musicMaker::clearBodies(){
         t->reset();
     }
 }
-Trigger musicMaker::lastTriggeredNote(){
+
+void musicMaker::resetMidi(){
+    for(auto& t : midiTriggers) {
+        t->reset();
+    }
+    
+    for(auto& t : drumMidiTriggers) {
+        t->reset();
+    }
+}
+
+Trigger musicMaker::lastDrumTriggeredNote(){
     return lastTrigger;
 }
 
 void musicMaker::outputmodeChanged(int &mode) {
     clearBodies();
-//    outputMode = mode;
-    cout<<mode<<endl;
+    cout<<"mode changed"<<endl;
 }

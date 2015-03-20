@@ -35,11 +35,36 @@ void TVView::setupGUI(){
     TV.addParameters(tvParameters);
 }
 
+void TVView::addPulsePlayerOne(){
+     TV.addImplusePlayerOne();
+}
+void TVView::addPlusePlayerTwo(){
+    TV.addImplusePlayerTwo();
+}
+
 void TVView::update(kinectBody *kinectBodyOne, kinectBody *kinectBodyTwo){
     TV.update(kinectBodyOne, kinectBodyTwo);
 }
 void TVView::draw(ofRectangle viewport){
     TV.draw(viewport);
+}
+
+void TVView::setPlayerOneMode(int mode){
+    if(mode == 0){
+        TV.bDrawHairyManP1 = true;
+    }
+    if(mode == 1){
+        TV.bDrawHairyManP1 = false;
+    }
+}
+
+void TVView::setPlayerTwoMode(int mode){
+    if(mode == 0){
+        TV.bDrawHairyManP2 = true;
+    }
+    if(mode == 1){
+        TV.bDrawHairyManP2 = false;
+    }
 }
 
 void TVView::drawTV(){

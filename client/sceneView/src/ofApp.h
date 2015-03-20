@@ -24,7 +24,11 @@ public:
     void gotMessage(ofMessage msg);
     ViewRenderer views;
     
-    void addLineTrace();
-    void triggerTriangle();
-    void addImpulse();
+    void addLineTracePlayerOne();
+    void triggerTrianglePlayerOne();
+    void addImpulsePlayerOne();
+    
+    void addLineTracePlayerTwo();
+    void triggerTrianglePlayerTwo();
+    void addImpulsePlayerTwo();
 };

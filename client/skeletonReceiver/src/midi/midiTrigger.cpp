@@ -15,6 +15,7 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 }
 
 void midiTrigger::reset() {
+    ofLog()<<"reset midi"<<endl;
 	for(const auto& note : getSettings().notes) {
 		getMidiOut()->sendNoteOff(getSettings().channel, note);
 	}

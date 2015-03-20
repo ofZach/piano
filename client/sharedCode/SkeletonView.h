@@ -15,6 +15,8 @@
 #include "kinectBodyAnalyser.h"
 #include "kinectSkeletonAnalyser.h"
 #include "kinectButton.h"
+#define D_CAMERAS 4
+
 class SkeletonView{
 public:
     SkeletonView();
@@ -30,12 +32,14 @@ public:
     void setButtonPos(ofVec3f p1, ofVec3f p2);
     void setPlayerOneModeParam(ofParameterGroup & params);
     void setPlayerTwoModeParam(ofParameterGroup & params);
+    void drawScene(ofRectangle viewport, ofCamera camera);
     kinectBody * getBody(int i);
     
     int getPlayerOneMode();
     int getPlayerTwoMode();
     
     ofParameterGroup skeletonTransform;
+    ofParameterGroup hiddenSettings;
     ofParameterGroup stageParams;
 private:
     //Kinect
@@ -66,7 +70,17 @@ private:
     int numPlayers;
     //3D Drawing
     ofCamera cam;
-    bool changeTriggered;
+    
+    ofCamera leftCam;
+    ofCamera topCam;
+    ofCamera frontCam;
+    
+    
+
+    
+    ofRectangle rect[D_CAMERAS];
+    
+    bool changeTriggeredOne, changeTriggeredTwo;
     
     ofParameter <float> scaleX;
     ofParameter <float> scaleY;
@@ -85,6 +99,8 @@ private:
     ofParameter<float> stageRightY;
     ofParameter<float> stageRightZ;
     
+    ofParameter<bool> bCalibrate;
+    
 
     ofRectangle viewPort;
     bool bMainView;
@@ -93,4 +109,6 @@ private:
     
     kinectButton playerOneSwitchMode;
     kinectButton playerTwoSwitchMode;
+    
+
 };

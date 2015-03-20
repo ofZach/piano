@@ -11,6 +11,6 @@
 class orthoCamera : public ofCamera {
 	public:
 		orthoCamera();
-		void begin(ofRectangle rect = ofGetWindowRect());
+		void begin(ofRectangle rect);
 		float scale;
 };

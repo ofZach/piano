@@ -27,14 +27,24 @@ void ofApp::exit(){
 }
 
 
-void ofApp::addLineTrace(){
+void ofApp::addLineTracePlayerOne(){
+    views.addLineTracePlayerOne();
+}
+void ofApp::triggerTrianglePlayerOne(){
+
+}
+void ofApp::addImpulsePlayerOne(){
+    views.addImpulsePlayerOne();
+}
+
+void ofApp::addLineTracePlayerTwo(){
+    views.addImpulsePlayerTwo();
+}
+void ofApp::triggerTrianglePlayerTwo(){
     
 }
-void ofApp::triggerTriangle(){
-    
-}
-void ofApp::addImpulse(){
-    views.triggerFloor();
+void ofApp::addImpulsePlayerTwo(){
+    views.addImpulsePlayerTwo();
 }
 
 //--------------------------------------------------------------

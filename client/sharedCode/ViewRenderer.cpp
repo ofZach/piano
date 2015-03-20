@@ -87,7 +87,8 @@ void ViewRenderer::setup(){
     
     
     skeletonGUI.setup(kinectSkeleton.skeletonTransform);
-    skeletonGUI.add(kinectSkeleton.stageParams);
+    stageGUI.setup(kinectSkeleton.stageParams);
+    hiddenSettings.setup(kinectSkeleton.hiddenSettings);
     projectionGUI.setup(floor.squareOptions);
     tvGUI.setup(tv.tvParameters);
     midiGUI.setup(musicMaker.midiGroup);
@@ -101,7 +102,14 @@ void ViewRenderer::setup(){
     skeletonGUI.setWidthElements(250);
     skeletonGUI.setPosition(ofGetScreenWidth()-250, 0);
     
+    stageGUI.setSize(250, 400);
+    stageGUI.setWidthElements(250);
+    stageGUI.setPosition(ofGetScreenWidth()-500, 0);
+    
+
+    stageGUI.loadFromFile("stage.xml");
     skeletonGUI.loadFromFile("skeleton.xml");
+    hiddenSettings.loadFromFile("hiddensettings.xml");
     projectionGUI.loadFromFile("projection.xml");
     tvGUI.loadFromFile("tv.xml");
     midiGUI.loadFromFile("midi.xml");
@@ -148,6 +156,8 @@ void ViewRenderer::update(){
         
         musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
         musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        tv.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        tv.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
         
     }
     
@@ -158,10 +168,12 @@ void ViewRenderer::update(){
 
 void ViewRenderer::exit(){
     skeletonGUI.saveToFile("skeleton.xml");
+    stageGUI.saveToFile("stage.xml");
     projectionGUI.saveToFile("projection.xml");
     tvGUI.saveToFile("tv.xml");
     midiGUI.saveToFile("midi.xml");
     appGUI.saveToFile("app-settings.xml");
+    hiddenSettings.saveToFile("hiddensettings.xml");
 }
 
 
@@ -183,6 +195,7 @@ void ViewRenderer::draw(){
     if(kinectSkeleton.isMain()){
         kinectSkeleton.draw(viewMain);
         skeletonGUI.draw();
+        stageGUI.draw();
     }else if(musicMaker.isMain()){
         musicMaker.draw(viewMain);
         midiGUI.draw();
@@ -193,6 +206,7 @@ void ViewRenderer::draw(){
         tv.draw(viewMain);
         tvGUI.draw();
         skeletonGUI.draw();
+        stageGUI.draw();
     }
     
     floor.drawProjections();
@@ -219,8 +233,25 @@ void ViewRenderer::draw(){
     
 }
 
-void ViewRenderer::triggerFloor(){
+void ViewRenderer::addLineTracePlayerOne(){
+    floor.p1Floor.addLineTrace();
+}
+void ViewRenderer::triggerTrianglePlayerOne(){
+    floor.p1Floor.triggerTriangles();
+}
+void ViewRenderer::addImpulsePlayerOne(){
+    tv.addPulsePlayerOne();
+}
+
+void ViewRenderer::addLineTracePlayerTwo(){
+    floor.p2Floor.addLineTrace();
+}
+void ViewRenderer::triggerTrianglePlayerTwo(){
+    floor.p2Floor.triggerTriangles();
     
+}
+void ViewRenderer::addImpulsePlayerTwo(){
+    tv.addPlusePlayerTwo();
 }
 
 

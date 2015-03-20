@@ -23,6 +23,12 @@ public:
     void setMainView(bool main);
     bool isMain();
     
+    void setPlayerOneMode(int mode);
+    void setPlayerTwoMode(int mode);
+    
+    void addPulsePlayerOne();
+    void addPlusePlayerTwo();
+    
     ofParameterGroup    tvParameters;
     
     ofRectangle         mainViewPort;

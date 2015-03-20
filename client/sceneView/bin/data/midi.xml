@@ -9,12 +9,12 @@
 		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
-		<Body_Drop_Time>500</Body_Drop_Time>
+		<Body_Drop_Time>1084</Body_Drop_Time>
 		<Output>1</Output>
 		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.428571</ThresholdSmoothing>
 		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
-	<Output_Mode>0</Output_Mode>
+	<Output_Mode>1</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>0</Draw_Buttons>
 			<Radius>75.8226</Radius>
@@ -32,7 +32,7 @@
 		<JazzDrums>0</JazzDrums>
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
-		<Body_Drop_Time>500</Body_Drop_Time>
+		<Body_Drop_Time>1069</Body_Drop_Time>
 		<Output>1</Output>
 		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.1</ThresholdSmoothing>

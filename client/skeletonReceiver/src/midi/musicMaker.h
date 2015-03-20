@@ -32,7 +32,9 @@ public:
 	void updateMidiTriggers(kinectBody &body);
 	void updateGraphs(kinectBody &body);
     void clearBodies();
-    Trigger lastTriggeredNote();
+    void resetMidi();
+    Trigger lastDrumTriggeredNote();
+    Trigger lastPianoTriggeredNote();
     
 	void outputmodeChanged(int& mode);
 	
@@ -78,6 +80,7 @@ public:
     
     int channelOffset;
     
+    int playerID;
     
     Trigger lastTrigger;
     

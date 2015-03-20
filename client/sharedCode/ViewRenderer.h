@@ -38,6 +38,15 @@ public:
     ofRectangle viewGrid[N_SCENE];
     int iMainView;
     
+    
+    void addLineTracePlayerOne();
+    void triggerTrianglePlayerOne();
+    void addImpulsePlayerOne();
+    
+    void addLineTracePlayerTwo();
+    void triggerTrianglePlayerTwo();
+    void addImpulsePlayerTwo();
+    
 private:    
     vector<ofFbo*> views;
     
@@ -49,7 +58,9 @@ private:
     
     shared_ptr<ofxMidiOut> midiOut;
     
+    ofxPanel hiddenSettings;
     ofxPanel skeletonGUI;
+    ofxPanel stageGUI;
     ofxPanel projectionGUI;
     ofxPanel tvGUI;
     ofxPanel midiGUI;

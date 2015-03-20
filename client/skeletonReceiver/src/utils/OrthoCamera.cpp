@@ -14,10 +14,7 @@ orthoCamera::orthoCamera(){
 void orthoCamera::begin(ofRectangle rect){
 	ofCamera::begin(rect);
 
-	//--
-	// Calculate aspect ratio
-
-	float vw = ofGetViewportWidth();
+    float vw = ofGetViewportWidth();
 	float vh = ofGetViewportHeight();
 
 	//aspect ratio
@@ -36,8 +33,6 @@ void orthoCamera::begin(ofRectangle rect){
 		scaley = scale / ar;
 	}
 
-	//--
-	// Setup projection
 
 	ofSetMatrixMode(OF_MATRIX_PROJECTION);
 	
@@ -46,7 +41,4 @@ void orthoCamera::begin(ofRectangle rect){
     ofLoadMatrix( ortho );
 
     ofSetMatrixMode(OF_MATRIX_MODELVIEW);
-
-	//
-	//--
 }

@@ -104,6 +104,10 @@ ofPoint Floor::getButtonPos(){
     return buttonPoint;
 }
 
+void Floor::addLineTrace(){
+    bSpawnLines = true;
+}
+
 void Floor::update(){
     
     

@@ -9,31 +9,12 @@
 #include "SkeletonView.h"
 
 SkeletonView::SkeletonView(){
-    
+
 }
 SkeletonView::~SkeletonView(){
-    //    <buttonApproach>
-    //    <val_0>1.86154</val_0>
-    //    </buttonApproach>
-    //    <buttonTriggerScale>
-    //    <val_0>0.575</val_0>
-    //    </buttonTriggerScale>
-    //    <buttonRadius>
-    //    <val_0>47.1731</val_0>
-    //    </buttonRadius>
-    
-    
-    
-    
-    playerOneSwitchMode.setTriggerScale(0.575);
-    playerOneSwitchMode.setApproachScale(1.86154);
-    
-    
-    playerTwoSwitchMode.setTriggerScale(0.575);
-    playerTwoSwitchMode.setApproachScale(1.86154);
     
 }
-void SkeletonView::setup(int numPlayer, ofRectangle viewPort){
+void SkeletonView::setup(int numPlayer, ofRectangle viewport){
     setupGUI();
     kinect.setup(12345);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
@@ -44,12 +25,38 @@ void SkeletonView::setup(int numPlayer, ofRectangle viewPort){
     cam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
     
     
-    this->viewPort = viewPort;
+    this->viewPort = viewport;
     
     numPlayers = numPlayer;
     bMainView = false;
     
     plane.set(1000, 1000, 20, 20);
+    
+    
+    rect[0].set(ofVec2f(0, 0), viewPort.getWidth()/2, viewPort.getHeight()/2);
+    rect[1].set(ofVec2f(viewPort.getWidth()/2, 0), viewPort.getWidth()/2, viewPort.getHeight()/2);
+    rect[2].set(ofVec2f(0, viewPort.getHeight()/2), viewPort.getWidth()/2, viewPort.getHeight()/2);
+    rect[3].set(ofVec2f(viewPort.getWidth()/2, viewPort.getHeight()/2), viewPort.getWidth()/2, viewPort.getHeight()/2);
+    
+    
+    
+    frontCam.setPosition(0, 1, -1000);
+    frontCam.lookAt(ofVec3f(0, 0, 0));
+//    frontCam.enableOrtho();
+    
+    topCam.setPosition(0, 1000, 1);
+    topCam.lookAt(ofVec3f(0, 0, 0));
+//    topCam.enableOrtho();
+    
+    leftCam.setPosition(1000, 1, 0);
+    leftCam.lookAt(ofVec3f(0, 0, 0));
+//    leftCam.enableOrtho();
+    
+    playerOneSwitchMode.setTriggerScale(0.775);
+    playerOneSwitchMode.setApproachScale(1.86154);
+    
+    playerTwoSwitchMode.setTriggerScale(0.775);
+    playerTwoSwitchMode.setApproachScale(1.86154);
 }
 
 bool SkeletonView::isMain(){
@@ -92,33 +99,33 @@ void SkeletonView::update(){
                 
                 feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
                 feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
-                if( i == 0){
+//                if( i == 0){
                     playerOneSwitchMode.update(feet);
-                    if (playerOneSwitchMode.isTriggered() && !changeTriggered) {
+                    if (playerOneSwitchMode.isTriggered() && !changeTriggeredOne) {
                         if(playerOneMode == 1){
                             playerOneMode = 0;
                         }else{
                             playerOneMode = 1;
                         }
-                        changeTriggered = true;
+                        changeTriggeredOne = true;
                     }else if(!playerOneSwitchMode.isTriggered()){
-                        changeTriggered = false;
+                        changeTriggeredOne = false;
                     }
-                }
-                else if(i == 1){
+//                }
+//                else if(i == 1){
                     playerTwoSwitchMode.update(feet);
                     
-                    if (playerTwoSwitchMode.isTriggered() && !changeTriggered) {
+                    if (playerTwoSwitchMode.isTriggered() && !changeTriggeredTwo) {
                         if(playerTwoMode == 1){
                             playerTwoMode = 0;
                         }else{
                             playerTwoMode = 1;
                         }
-                        changeTriggered = true;
+                        changeTriggeredTwo = true;
                     }else if(!playerTwoSwitchMode.isTriggered()){
-                        changeTriggered = false;
+                        changeTriggeredTwo = false;
                     }
-                }
+//                }
             }
         }
     }else {
@@ -127,14 +134,11 @@ void SkeletonView::update(){
             
         }
     }
+    
+    if(!bMainView && bCalibrate){
+        bCalibrate = false;
+    }
 }
-
-//void SkeletonView::setPlayerOneModeParam(ofParameterGroup & params){
-//    playerOneMode = params.get<int>("Output Mode");
-//}
-//void SkeletonView::setPlayerTwoModeParam(ofParameterGroup & params){
-//    playerTwoMode = params.get<int>("Output Mode");
-//}
 
 int SkeletonView::getPlayerOneMode(){
     return playerOneMode;
@@ -156,57 +160,79 @@ kinectBody * SkeletonView::getBody(int i){
 void SkeletonView::setMainView(bool mainView){
     bMainView = mainView;
 }
-void SkeletonView::draw(ofRectangle viewport){
-    ofBackground(0, 0, 0);
-    cam.begin(viewport);
-    ofPushStyle();
-    ofSetColor(255,255,255,200);
-    ofSetLineWidth(2);
+
+void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
+    
+    camera.begin(view);
     ofPushMatrix();
-    ofRotate(90,0,0,1);
-    //plane.drawWireframe();
-    ofDrawGridPlane(1000);
-    ofPopMatrix();
-    
-    
-    ofPushMatrix();
-    ofRotate(90, 1, 0, 0);
-    ofSetColor(ofColor::slateBlue, 200);
-    ofTranslate(stageRightX-stageSize/2.0, stageRightY-stageSize/2.0, stageRightZ);
-    ofRect(0, 0, stageSize, stageSize);
-    ofPopMatrix();
-    
-    
-    ofPushMatrix();
-    ofRotate(90, 1, 0, 0);
-    ofSetColor(ofColor::slateGray, 200);
-    ofTranslate(stageLeftX-stageSize/2.0, stageLeftY-stageSize/2.0, stageLeftZ);
-    ofRect(0, 0, stageSize, stageSize);
-    ofPopMatrix();
-    
-    
-    ofPushMatrix();
-    playerOneSwitchMode.draw();
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    playerTwoSwitchMode.draw();
-    ofPopMatrix();
-    
-    
-    ofSetColor(255, 255, 255, 255);
-    for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+    {
         ofPushStyle();
-        bodyMap[iter->getBodyId()].draw();
+        {
+            ofSetColor(255,255,255,200);
+            ofSetLineWidth(2);
+            ofPushMatrix();
+            {
+            ofRotate(90,0,0,1);
+            ofDrawGridPlane(1000);
+            }
+            ofPopMatrix();
+            
+            
+            ofPushMatrix();
+            {
+            ofRotate(90, 1, 0, 0);
+            ofSetColor(ofColor::slateBlue, 200);
+            ofTranslate(stageRightX-stageSize/2.0, stageRightY-stageSize/2.0, stageRightZ);
+            ofRect(0, 0, stageSize, stageSize);
+            }
+            ofPopMatrix();
+            
+            
+            ofPushMatrix();
+            {
+            ofRotate(90, 1, 0, 0);
+            ofSetColor(ofColor::slateGray, 200);
+            ofTranslate(stageLeftX-stageSize/2.0, stageLeftY-stageSize/2.0, stageLeftZ);
+            ofRect(0, 0, stageSize, stageSize);
+            }
+            ofPopMatrix();
+            
+            
+            playerOneSwitchMode.draw();
+    
+            playerTwoSwitchMode.draw();
+
+            
+            ofSetColor(255, 255, 255, 255);
+            for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+                ofPushStyle();
+                bodyMap[iter->getBodyId()].draw();
+                ofPopStyle();
+            }
+        }
         ofPopStyle();
     }
+    ofPopMatrix();
+    camera.end();
     
-    ofPopStyle();
-    cam.end();
+}
+
+
+void SkeletonView::draw(ofRectangle viewport){
     
-    //    if(isMain()){
-    //        drawControlPanel();
-    //    }
+    if(bCalibrate){
+        drawScene(rect[0], cam);
+        ofDrawBitmapString("3D View", rect[0].x+50, rect[0].y+50);
+        drawScene(rect[1], frontCam);
+        ofDrawBitmapString("Front View", rect[1].x+50, rect[1].y+50);
+        drawScene(rect[2], leftCam);
+        ofDrawBitmapString("Left View", rect[2].x+50, rect[2].y+50);
+        drawScene(rect[3], topCam);
+        ofDrawBitmapString("Top View", rect[3].x+50, rect[3].y+50);
+        
+    }else{
+        drawScene(viewport, cam);
+    }
 }
 
 void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
@@ -233,16 +259,9 @@ void SkeletonView::exit(){
 
 void SkeletonView::setupGUI(){
     skeletonTransform.setName("skeleton transform");
-    skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
-    skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
-    skeletonTransform.add(scaleZ.set("scaleZ", 1.0,0.01, 140));
     skeletonTransform.add(offsetX.set("offsetX", 0, -2000,2000));
     skeletonTransform.add(offsetY.set("offsetY", 0, -2000,2000));
     skeletonTransform.add(offsetZ.set("offsetZ", 0, -2000,2000));
-    skeletonTransform.add(rotationX.set("rotationX", 0,-180,180));
-    skeletonTransform.add(rotationY.set("rotationY", 0,-180,180));
-    skeletonTransform.add(rotationZ.set("rotationZ", 0,-180,180));
-    
     
     stageParams.setName("Stage Settings");
     stageParams.add(stageLeftX.set("Left Stage X", 0, -500, 500));
@@ -252,4 +271,14 @@ void SkeletonView::setupGUI(){
     stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
     stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
+    stageParams.add(bCalibrate.set("Calibration View", true));
+    
+    
+    hiddenSettings.setName("skeleton transform");
+    hiddenSettings.add(rotationX.set("rotationX", 0,-180,180));
+    hiddenSettings.add(rotationY.set("rotationY", 0,-180,180));
+    hiddenSettings.add(rotationZ.set("rotationZ", 0,-180,180));
+    hiddenSettings.add(scaleX.set("scaleX", 1.0,0.01, 20));
+    hiddenSettings.add(scaleY.set("scaleY", 1.0,0.01, 20));
+    hiddenSettings.add(scaleZ.set("scaleZ", 1.0,0.01, 140));
 }

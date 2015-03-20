@@ -15,16 +15,24 @@ void tvScreen::setStagePos(float x, float y, float z, float size){
     stageSize = size;
 }
 
-void tvScreen::addImpluse(){
-    if(pulses.size() < 10){
-        pulses.push_back((pulseData){
+void tvScreen::addImplusePlayerTwo(){
+    if(pulsesP2.size() < 10){
+        pulsesP2.push_back((pulseData){
             .lifetime = 1.0 + 0.2,
             .noiseSeed = ofGetElapsedTimef()
         });
-        
     }
 }
-bool bDrawHairyMan;
+
+void tvScreen::addImplusePlayerOne(){
+    if(pulsesP1.size() < 10){
+        pulsesP1.push_back((pulseData){
+            .lifetime = 1.0 + 0.2,
+            .noiseSeed = ofGetElapsedTimef()
+        });
+    }
+}
+
 
 void tvScreen::setup(ofRectangle viewport) {
     tvViewPort = viewport;
@@ -52,7 +60,6 @@ void tvScreen::setup(ofRectangle viewport) {
     }
     energy = 0.0;
     
-    bDrawHairyMan = false;
     twist = 0;
 }
 
@@ -60,11 +67,16 @@ void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
     playerOneBody = kinectBodyOne;
     playerTwoBody = kinectBodyTwo;
     
-    for (int i = 0; i < pulses.size(); i++){
-        pulses[i].lifetime -= 0.01;
+    for (int i = 0; i < pulsesP1.size(); i++){
+        pulsesP1[i].lifetime -= 0.01;
     }
     
-    ofRemove(pulses, removeIfZero);
+    for (int i = 0; i < pulsesP2.size(); i++){
+        pulsesP2[i].lifetime -= 0.01;
+    }
+    
+    ofRemove(pulsesP1, removeIfZero);
+    ofRemove(pulsesP2, removeIfZero);
     
     //update the camera
     ofPoint position (0 + cameraRadius * cos(ofDegToRad(cameraAngle)), cameraHeight, 0 + cameraRadius  * sin(ofDegToRad(cameraAngle)));
@@ -85,7 +97,7 @@ float energy;
 
 
 
-void tvScreen::drawHistoryMan( kinectBody & BODY){
+void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
     
     ofMatrix4x4 transform;
     transform.makeIdentityMatrix();
@@ -105,14 +117,27 @@ void tvScreen::drawHistoryMan( kinectBody & BODY){
         
         float pctMap = ofMap(i, BODY.history.size()/3, BODY.history.size(), 0, 1);
         float strength = 0;
-        for (int j = 0; j < pulses.size(); j++){
-            float diff = pulses[j].lifetime - pctMap;
-            
-            float pctToLook = ofMap(pctMap, 1, 0, 0.25, 0.01);
-            if (fabs(diff) < pctToLook){
-                strength += 1.0 - (fabs(diff)/pctToLook);
+        float diff;
+        if(playerID == 0){
+            for (int j = 0; j < pulsesP1.size(); j++){
+                diff = pulsesP1[j].lifetime - pctMap;
+                
+                float pctToLook = ofMap(pctMap, 1, 0, 0.25, 0.01);
+                if (fabs(diff) < pctToLook){
+                    strength += 1.0 - (fabs(diff)/pctToLook);
+                }
+            }
+        }else{
+            for (int j = 0; j < pulsesP2.size(); j++){
+                diff = pulsesP2[j].lifetime - pctMap;
+                
+                float pctToLook = ofMap(pctMap, 1, 0, 0.25, 0.01);
+                if (fabs(diff) < pctToLook){
+                    strength += 1.0 - (fabs(diff)/pctToLook);
+                }
             }
         }
+        
         
         strength = ofClamp(strength, 0, 1);
         
@@ -209,14 +234,9 @@ void tvScreen::drawHistoryMan( kinectBody & BODY){
         }
         
     }
-    
-    
-    
-    
-    
 }
 
-void tvScreen::drawHairyMan( kinectSkeleton & SK){
+void tvScreen::drawHairyMan( kinectSkeleton & SK, int playerID){
     
     nonOfSeedRandom((int)(energy*100));
     for (auto & bone : connections){
@@ -292,7 +312,7 @@ void tvScreen::setStageParameters(ofParameterGroup params){
     stageRightX = params.getFloat("Right Stage X");
     stageRightY = params.getFloat("Right Stage Y");
     stageRightZ = params.getFloat("Right Stage Z");
- 
+    
     stageSize = params.getFloat("Stage Size");
 }
 
@@ -304,7 +324,8 @@ void tvScreen::addParameters(ofParameterGroup & params){
     params.add(swayCamera.set("swayCamera", true));
     params.add(swayRate.set("swayRate", 0.1, 0.01, 10));
     params.add(swayAmount.set("swayAmount", 0.1, 0, 1));
-    params.add(bDrawHairyMan.set("bDrawHairyMan", false));
+    params.add(bDrawHairyManP1.set("bDrawHairyMan Player Two", false));
+    params.add(bDrawHairyManP2.set("bDrawHairyMan Player One", false));
 }
 
 void tvScreen::drawIntoFbo(){
@@ -352,11 +373,11 @@ void tvScreen::drawIntoFbo(){
         
         kinectSkeleton SK = playerOneBody->getLastSkeleton();
         
-        if (bDrawHairyMan){
-            drawHairyMan(SK);
+        if (bDrawHairyManP1){
+            drawHairyMan(SK, 0);
         } else {
             
-            drawHistoryMan(*playerOneBody);
+            drawHistoryMan(*playerOneBody, 0);
         }
     }
     
@@ -365,11 +386,11 @@ void tvScreen::drawIntoFbo(){
         
         kinectSkeleton SK = playerTwoBody->getLastSkeleton();
         
-        if (bDrawHairyMan){
-            drawHairyMan(SK);
+        if (bDrawHairyManP2){
+            drawHairyMan(SK, 1);
         } else {
             
-            drawHistoryMan(*playerTwoBody);
+            drawHistoryMan(*playerTwoBody, 1);
         }
     }
     cam.end();
