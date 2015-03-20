@@ -1,0 +1,12 @@
+<group>
+	<Stage_Settings>
+		<Left_Stage_X>-136</Left_Stage_X>
+		<Left_Stage_Y>8.00003</Left_Stage_Y>
+		<Left_Stage_Z>-12</Left_Stage_Z>
+		<Right_Stage_X>132</Right_Stage_X>
+		<Right_Stage_Y>-20</Right_Stage_Y>
+		<Right_Stage_Z>-12</Right_Stage_Z>
+		<Stage_Size>234.532</Stage_Size>
+		<Calibration_View>0</Calibration_View>
+	</Stage_Settings>
+</group>
