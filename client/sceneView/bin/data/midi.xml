@@ -29,7 +29,7 @@
 		<Smooth_Down_History>0.596939</Smooth_Down_History>
 		<Smooth_Down_Skeleton>0.586735</Smooth_Down_Skeleton>
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
-		<JazzDrums>0</JazzDrums>
+		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>0</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>1069</Body_Drop_Time>
@@ -37,7 +37,7 @@
 		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.1</ThresholdSmoothing>
 		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
-	<Output_Mode>0</Output_Mode>
+	<Output_Mode>1</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>1</Draw_Buttons>
 			<Radius>75.2811</Radius>

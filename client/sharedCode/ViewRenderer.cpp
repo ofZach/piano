@@ -142,6 +142,12 @@ void ViewRenderer::update(){
         
         kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerTwoButtonPos());
         
+        
+        musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        tv.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        tv.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        
         if(kb1 != NULL){
             floor.setPlayerOne(true);
         }else{
@@ -154,10 +160,7 @@ void ViewRenderer::update(){
             floor.setPlayerTwo(false);
         }
         
-        musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
-        musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
-        tv.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
-        tv.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+
         
     }
     

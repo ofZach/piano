@@ -111,4 +111,7 @@ private:
     kinectButton playerTwoSwitchMode;
     
 
+    kinectButton stageOne;
+    kinectButton stageTwo;
+    
 };

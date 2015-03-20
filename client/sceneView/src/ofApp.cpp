@@ -38,7 +38,7 @@ void ofApp::addImpulsePlayerOne(){
 }
 
 void ofApp::addLineTracePlayerTwo(){
-    views.addImpulsePlayerTwo();
+    views.addLineTracePlayerTwo();
 }
 void ofApp::triggerTrianglePlayerTwo(){
     
