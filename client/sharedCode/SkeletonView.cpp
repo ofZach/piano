@@ -52,11 +52,11 @@ void SkeletonView::setup(int numPlayer, ofRectangle viewport){
     leftCam.lookAt(ofVec3f(0, 0, 0));
     //    leftCam.enableOrtho();
     
-    playerOneSwitchMode.setTriggerScale(0.775);
-    playerOneSwitchMode.setApproachScale(1.86154);
+    playerOneSwitchMode.setTriggerScale(1.0);
+    playerOneSwitchMode.setApproachScale(1.26154);
     
-    playerTwoSwitchMode.setTriggerScale(0.775);
-    playerTwoSwitchMode.setApproachScale(1.86154);
+    playerTwoSwitchMode.setTriggerScale(1.0);
+    playerTwoSwitchMode.setApproachScale(1.26154);
 }
 
 bool SkeletonView::isMain(){
@@ -139,14 +139,14 @@ void SkeletonView::update(){
         bCalibrate = false;
     }
     
-    stageOne.setPosition(stageLeftX, stageLeftZ+stageSize/3, stageLeftY);
-    stageTwo.setPosition(stageRightX, stageRightZ+stageSize/3, stageRightY);
-    stageOne.setRadius(stageSize/3);
-    stageTwo.setRadius(stageSize/3);
-    stageOne.setApproachScale(0.5);
-    stageTwo.setApproachScale(0.5);
-    stageOne.setTriggerScale(0.9);
-    stageTwo.setTriggerScale(0.9);
+    stageOne.setPosition(stageLeftX, stageLeftY+stageSize/4, stageLeftZ);
+    stageTwo.setPosition(stageRightX, stageRightY+stageSize/4, stageRightZ);
+    stageOne.setRadius(stageSize);
+    stageTwo.setRadius(stageSize);
+    stageOne.setApproachScale(1);
+    stageTwo.setApproachScale(1);
+    stageOne.setTriggerScale(0.8);
+    stageTwo.setTriggerScale(0.8);
 }
 
 int SkeletonView::getPlayerOneMode(){
@@ -161,7 +161,6 @@ int SkeletonView::getPlayerTwoMode(){
 kinectBody * SkeletonView::getBody(int stageID){
     if(skeletons->size() > 0){
         if(stageID == 0){
-            bool present = false;
             for(int i = 0; i < skeletons->size(); i++){
                 kinectBody & body  = bodyMap[skeletons->at(i).getBodyId()];
                 int kneeLeftBase = SKELETOR::Instance()->getPointIndex(knee, ::left);
@@ -170,17 +169,14 @@ kinectBody * SkeletonView::getBody(int stageID){
                 center.push_back(make_pair(body.getLastSkeleton().pts[kneeLeftBase], 0.f));
                 center.push_back(make_pair(body.getLastSkeleton().pts[kneeRightBase], 0.f));
                 stageOne.update(center);
-                if(stageOne.isTriggered() && !present){
-                    cout<<"Body Found"<<endl;
+                if(stageOne.isTriggered()){
+                    //                    cout<<"Body Found"<<endl;
                     return &bodyMap[skeletons->at(i).getBodyId()];
                 }
             }
-            if(!present){
-                return NULL;
-            }
+            return NULL;
         }
         if(stageID == 1){
-            bool present = false;
             for(int i = 0; i < skeletons->size(); i++){
                 kinectBody & body  = bodyMap[skeletons->at(i).getBodyId()];
                 int kneeLeftBase = SKELETOR::Instance()->getPointIndex(knee, ::left);
@@ -189,14 +185,12 @@ kinectBody * SkeletonView::getBody(int stageID){
                 center.push_back(make_pair(body.getLastSkeleton().pts[kneeLeftBase], 0.f));
                 center.push_back(make_pair(body.getLastSkeleton().pts[kneeRightBase], 0.f));
                 stageTwo.update(center);
-                if(stageTwo.isTriggered() && !present){
-                    cout<<"Body Found"<<endl;
+                if(stageTwo.isTriggered()){
+                    //                    cout<<"Body Found"<<endl;
                     return &bodyMap[skeletons->at(i).getBodyId()];
                 }
             }
-            if(!present){
-                return NULL;
-            }
+            return NULL;
         }
     }else{
         return NULL;
@@ -226,9 +220,10 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             
             ofPushMatrix();
             {
+
                 ofRotate(90, 1, 0, 0);
                 ofSetColor(ofColor::slateBlue, 200);
-                ofTranslate(stageRightX-stageSize/2.0, stageRightY-stageSize/2.0, stageRightZ);
+                ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
                 ofRect(0, 0, stageSize, stageSize);
             }
             ofPopMatrix();
@@ -238,7 +233,7 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             {
                 ofRotate(90, 1, 0, 0);
                 ofSetColor(ofColor::slateGray, 200);
-                ofTranslate(stageLeftX-stageSize/2.0, stageLeftY-stageSize/2.0, stageLeftZ);
+                ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
                 ofRect(0, 0, stageSize, stageSize);
             }
             ofPopMatrix();
@@ -288,9 +283,9 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     
     
     p1SwitchMode.set((p1.x-512)/1024*stageSize, 0, (p1.y-512)/1024*stageSize);
-    p1SwitchMode+=ofVec3f(stageLeftX, -stageLeftZ, stageLeftY);
+    p1SwitchMode+=ofVec3f(stageLeftX, stageLeftY, stageLeftZ);
     p2SwitchMode.set((p2.x-512)/1024*stageSize, 0, (p2.y-512)/1024*stageSize);
-    p2SwitchMode+=ofVec3f(stageRightX, -stageRightZ, stageRightY);
+    p2SwitchMode+=ofVec3f(stageRightX, stageRightY, stageRightZ);
     
     
     playerOneSwitchMode.setPosition(p1SwitchMode);

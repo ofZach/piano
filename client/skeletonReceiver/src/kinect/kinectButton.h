@@ -15,7 +15,7 @@ public:
 	
     bool isTriggered();
     
-	void setRadius(float radius);
+	void setRadius(float width);
 	float getRadius() const { return _radius; }
 	
 	void setTriggerScale(float triggerScale);

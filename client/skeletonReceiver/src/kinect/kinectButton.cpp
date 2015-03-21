@@ -17,8 +17,8 @@ kinectButton::kinectButton() : _radius(10), _triggerScale(0.6), _approachScale(1
 
 #pragma mark - Hitbox
 
-void kinectButton::setRadius(float radius) {
-    _radius = radius;
+void kinectButton::setRadius(float width) {
+    _radius = width;
     updateHitbox();
 }
 
@@ -33,9 +33,9 @@ void kinectButton::setApproachScale(float approachScale) {
 }
 
 void kinectButton::updateHitbox() {
-    _radiusSquared = pow(_radius, 2);
-    _triggerRadiusSquared = pow(_radius * _triggerScale, 2);
-    _approachRadiusSquared = pow(_radius * _approachScale, 2);
+    _radiusSquared = pow(_radius/2, 2);
+    _triggerRadiusSquared = pow(_radius/2 * _triggerScale, 2);
+    _approachRadiusSquared = pow(_radius/2 * _approachScale, 2);
 }
 
 #pragma mark - Hit Testing
@@ -94,14 +94,11 @@ void kinectButton::setIsApproached(bool isApproached) {
 void kinectButton::customDraw() {
     ofPushStyle();
     
-    ofSetColor(ofColor::purple, 10);
-    ofDrawBox(0, 0, 0, _radius*2* _approachScale, _radius*2* _approachScale, _radius*2* _approachScale);
-    
-    ofSetColor(_isTriggered ? ofColor::lightBlue : ofColor::white, _isTriggered ? 70 : 30);
-    ofDrawBox(0, 0, 0, _radius*2, _radius*2, _radius*2);
+    ofSetColor(ofColor::green, 10);
+    ofDrawBox(0, 0, 0, _radius* _approachScale, _radius* _approachScale, _radius* _approachScale);
     
     ofSetColor(_isTriggered ? ofColor::red : ofColor::green, 50);
-        ofDrawBox(0, 0, 0, _radius*2* _triggerScale, _radius*2* _triggerScale, _radius*2* _triggerScale);
+        ofDrawBox(0, 0, 0, _radius* _triggerScale, _radius* _triggerScale, _radius* _triggerScale);
     
     ofPopStyle();
 }

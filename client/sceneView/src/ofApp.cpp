@@ -6,6 +6,7 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     //ofSetEscapeQuitsApp(false);
     views.setup();
+    views.setMainView(5);
 }
 
 

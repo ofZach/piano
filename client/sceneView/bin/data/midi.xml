@@ -37,13 +37,19 @@
 		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.1</ThresholdSmoothing>
 		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
-	<Output_Mode>1</Output_Mode>
+	<Output_Mode>0</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>1</Draw_Buttons>
 			<Radius>75.2811</Radius>
 			<Trigger_Scale>0.801749</Trigger_Scale>
 			<Approach_Scale>1.25656</Approach_Scale>
 		</button_control_1>
+	<button_controls_2>
+			<Draw_Buttons>0</Draw_Buttons>
+			<Radius>75</Radius>
+			<Trigger_Scale>0.8</Trigger_Scale>
+			<Approach_Scale>1.2</Approach_Scale>
+		</button_controls_2>
 	</playerTwo>
 <MidiSettings/>
 </MidiSettings>
