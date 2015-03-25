@@ -1,11 +1,11 @@
 <TV_Controls>
-	<cameraAngle>270</cameraAngle>
+	<cameraAngle>109.8</cameraAngle>
 	<cameraRadius>970</cameraRadius>
-	<cameraHeight>825</cameraHeight>
-	<View_Height>132.5</View_Height>
-	<swayCamera>0</swayCamera>
-	<swayRate>6.85315</swayRate>
-	<swayAmount>0.745</swayAmount>
+	<cameraHeight>1000</cameraHeight>
+	<View_Height>107.5</View_Height>
+	<swayCamera>1</swayCamera>
+	<swayRate>0.25975</swayRate>
+	<swayAmount>0.24</swayAmount>
 	<bDrawHairyMan>0</bDrawHairyMan>
 	<Left_Stage_X>122.449</Left_Stage_X>
 	<Left_Stage_Y>0</Left_Stage_Y>
@@ -15,6 +15,6 @@
 	<Right_Stage_Z>0</Right_Stage_Z>
 	<Stage_Size>242.862</Stage_Size>
 <TV_Controls/>
-<bDrawHairyMan_Player_Two>0</bDrawHairyMan_Player_Two>
+<bDrawHairyMan_Player_Two>1</bDrawHairyMan_Player_Two>
 	<bDrawHairyMan_Player_One>1</bDrawHairyMan_Player_One>
 </TV_Controls>

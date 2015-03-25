@@ -160,6 +160,10 @@ void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
     debugView.add(debugMode.set("Draw Graphs", false));
     debugView.add(bodyDropThreshold.set("Body Drop Time", 500, 100, 2000));
     debugView.add(outputMode.set("Output Mode", 0, 0, 2));
+    
+    debugView.add((ableToChangeModeManually.set("ableToChangeModeManually", false)));
+                  
+    
     debugView.add(percentile.set("Percentile", 0.75, 0, 1));
     debugView.add(thresholdSmoothing.set("ThresholdSmoothing", 0.1, 0, 1));
     debugView.add(velocityCutOff.set("Velocity Cutoff", 1.0, 0.1, 10.0));

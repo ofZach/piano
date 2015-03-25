@@ -77,7 +77,7 @@ void ViewRenderer::setup(){
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-    midiOut->openPort(1);
+    midiOut->openPort(0);
     
     
     kinectSkeleton.setup(numPlayers, viewMain);
@@ -143,10 +143,16 @@ void ViewRenderer::update(){
         kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerTwoButtonPos());
         
         
-        musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
-        musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
-        tv.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
-        tv.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        if (musicMaker.playerOne.getBool("ableToChangeModeManually") == false){
+            musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        }
+        
+        if (musicMaker.playerTwo.getBool("ableToChangeModeManually") == false){
+            musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        }
+        
+        tv.setPlayerOneMode(musicMaker.playerOne.getInt("outputMode"));
+        tv.setPlayerTwoMode(musicMaker.playerTwo.getInt("outputMode"));
         
         if(kb1 != NULL){
             floor.setPlayerOne(true);
