@@ -119,11 +119,11 @@ void MidiView::draw(ofRectangle viewport){
     ofSetColor(255, 255, 255, 255);
     font.drawString("Output Mode: "+ofToString(musicMakerP1.outputMode), viewport.x+(viewport.width/4-bounding.width/2), viewport.y+300);
     
+    if(numPlayers > 1){
     ofSetColor(ofColor::slateBlue, 200);
     ofRect(viewport.x+viewport.width/2, viewport.y, viewport.width/2, viewport.height);
     bounding = font.getStringBoundingBox("Player One", 0, 0);
     
-    if(numPlayers > 1){
     ofSetColor(ofColor::white, 255);
     font.drawString("Player Two", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+100);
     bounding = font.getStringBoundingBox("Note Triggered", 0, 0);

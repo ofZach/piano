@@ -7,7 +7,7 @@
 		<bShowDots>0</bShowDots>
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
-		<bPersonPresent>0</bPersonPresent>
+		<bPersonPresent>1</bPersonPresent>
 		<bFadeLines>1</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
 		<buttonPos>0</buttonPos>
@@ -30,4 +30,5 @@
 		<lineDistnace>95.4541</lineDistnace>
 	</Floor_Controls_1>
 <Floor/>
+<group/>
 </Floor>

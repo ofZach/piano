@@ -18,7 +18,9 @@ FloorView::~FloorView(){
 
 void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     p1Floor.setup(0);
-    p2Floor.setup(1);
+    if(num > 1){
+        p2Floor.setup(1);
+    }
     projectionViewport = projector;
     mainViewport = main;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
@@ -37,7 +39,9 @@ void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
 }
 void FloorView::update(){
     p1Floor.update();
-    p2Floor.update();
+    if(numPlayers > 1){
+        p2Floor.update();
+    }
     mat = warpFloor.getMatrix();
     warpFloor.update();
     
@@ -62,10 +66,10 @@ void FloorView::update(){
         if(!bDrawCalibration){
             
             //cout << p1Floor.getWidth()/2 << endl;
-            
+            ofSetColor(255, 255, 255);
             p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
             if(numPlayers > 1){
-            p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+                p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
             }
         }else{
             drawStageCalibration();
@@ -86,7 +90,7 @@ void FloorView::update(){
     }
 }
 void FloorView::draw(ofRectangle viewport){
-    
+    ofSetColor(255, 255, 255);
     projectionFbo.draw(viewport);
 }
 
