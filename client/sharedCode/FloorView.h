@@ -15,7 +15,7 @@ public:
     FloorView();
     ~FloorView();
     
-    void setup(ofRectangle projectorViewport, ofRectangle mainViewport=ofGetCurrentViewport());
+    void setup(int numplayers, ofRectangle projectorViewport, ofRectangle mainViewport=ofGetCurrentViewport());
     void update();
     void draw(ofRectangle viewport);
     void drawDebug();
@@ -33,6 +33,7 @@ public:
     ofPoint getPlayerOneButtonPos();
     ofPoint getPlayerTwoButtonPos();
     
+    int numPlayers;
     Floor p1Floor;
     Floor p2Floor;
     

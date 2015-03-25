@@ -82,8 +82,8 @@ void ViewRenderer::setup(){
     
     kinectSkeleton.setup(numPlayers, viewMain);
     musicMaker.setup(numPlayers, midiOut, viewMain);
-    floor.setup(ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
-    tv.setup(ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
+    floor.setup(numPlayers, ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
+    tv.setup(numPlayers, ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
     
     
     skeletonGUI.setup(kinectSkeleton.skeletonTransform);
@@ -106,7 +106,7 @@ void ViewRenderer::setup(){
     stageGUI.setWidthElements(250);
     stageGUI.setPosition(ofGetScreenWidth()-500, 0);
     
-
+    
     stageGUI.loadFromFile("stage.xml");
     skeletonGUI.loadFromFile("skeleton.xml");
     hiddenSettings.loadFromFile("hiddensettings.xml");
@@ -131,7 +131,11 @@ void ViewRenderer::update(){
         }else{
             floor.setPlayerOne(false);
         }
+        if (musicMaker.playerOne.getBool("ableToChangeModeManually") == false){
+            musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        }
         
+        tv.setPlayerOneMode(musicMaker.playerOne.getInt("Output Mode"));
         kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerOneButtonPos());
         
     }else{
@@ -167,7 +171,7 @@ void ViewRenderer::update(){
             floor.setPlayerTwo(false);
         }
         
-
+        
         
     }
     

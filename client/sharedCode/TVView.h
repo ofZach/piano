@@ -14,7 +14,7 @@ public:
     TVView();
     ~TVView();
     
-    void setup(ofRectangle tv, ofRectangle main);
+    void setup(int numplayers, ofRectangle tv, ofRectangle main);
     void setupGUI();
     void update(kinectBody *kinectBodyOne, kinectBody *kinectBodyTwo);
     void draw(ofRectangle viewport);
@@ -35,4 +35,5 @@ public:
     ofRectangle         tvViewPort;
     bool                bMainView;
     tvScreen            TV;
+    int numplayers;
 };

@@ -26,7 +26,7 @@ class tvScreen {
 public:
     
     
-    void setup(ofRectangle viewport);
+    void setup(int numPlayers, ofRectangle viewport);
     void update( kinectBody * kinectBodyOne, kinectBody * kinectBodyTwo);
     void drawHistoryMan( kinectBody & BODY, int playerID);
     void drawHairyMan( kinectSkeleton & SK, int playerID);
@@ -79,4 +79,6 @@ public:
     ofRectangle tvViewPort;
     
     ofCamera cam;
+    
+    int numPlayers;
 };

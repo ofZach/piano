@@ -17,13 +17,14 @@ TVView::~TVView(){
 }
 
 
-void TVView::setup(ofRectangle tv, ofRectangle main){
+void TVView::setup(int num, ofRectangle tv, ofRectangle main){
     setupGUI();
     tvViewPort = tv;
     mainViewPort = main;
-    TV.setup(tvViewPort);
+    TV.setup(num, tvViewPort);
     TV.setStagePos(0, 0, 0, 100);
     bMainView = false;
+    numplayers = num;
 }
 
 void TVView::setStageParameters(ofParameterGroup settings){

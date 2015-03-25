@@ -228,15 +228,16 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             }
             ofPopMatrix();
             
-            
-            ofPushMatrix();
-            {
-                ofRotate(90, 1, 0, 0);
-                ofSetColor(ofColor::slateGray, 200);
-                ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
-                ofRect(0, 0, stageSize, stageSize);
+            if(numPlayers > 1){
+                ofPushMatrix();
+                {
+                    ofRotate(90, 1, 0, 0);
+                    ofSetColor(ofColor::slateGray, 200);
+                    ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
+                    ofRect(0, 0, stageSize, stageSize);
+                }
+                ofPopMatrix();
             }
-            ofPopMatrix();
             
             
             if(bCalibrate){

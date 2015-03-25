@@ -16,7 +16,7 @@ FloorView::~FloorView(){
     
 }
 
-void FloorView::setup(ofRectangle projector, ofRectangle main){
+void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     p1Floor.setup(0);
     p2Floor.setup(1);
     projectionViewport = projector;
@@ -32,6 +32,8 @@ void FloorView::setup(ofRectangle projector, ofRectangle main){
     bMainView = false;
     
     setupQuadWarp();
+    
+    numPlayers = num;
 }
 void FloorView::update(){
     p1Floor.update();
@@ -62,7 +64,9 @@ void FloorView::update(){
             //cout << p1Floor.getWidth()/2 << endl;
             
             p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+            if(numPlayers > 1){
             p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+            }
         }else{
             drawStageCalibration();
         }
@@ -254,8 +258,11 @@ bool FloorView::isMain(){
 
 void FloorView::setupQuadWarp(){
     
-    
+
     float w = p1Floor.getWidth()+floorOffset;
+    if(numPlayers == 1){
+        w = p1Floor.getWidth()/2;
+    }
     float h = p1Floor.getHeight()/2;
     float x = 0;
     float y = 0;

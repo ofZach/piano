@@ -34,7 +34,7 @@ void tvScreen::addImplusePlayerOne(){
 }
 
 
-void tvScreen::setup(ofRectangle viewport) {
+void tvScreen::setup(int num, ofRectangle viewport) {
     tvViewPort = viewport;
     tvSkeletonView.allocate(tvViewPort.width, tvViewPort.height, GL_RGBA, 4);
     tvSkeletonView.begin();
@@ -48,7 +48,6 @@ void tvScreen::setup(ofRectangle viewport) {
     
     sphere = ofSpherePrimitive(5, 10).getMesh();
     
-    
     SKELETOR::Instance()->setup();  // don't know who does this first.
     connections = SKELETOR::Instance()->connections;
     connectionsScambled = connections;
@@ -61,6 +60,9 @@ void tvScreen::setup(ofRectangle viewport) {
     energy = 0.0;
     
     twist = 0;
+    
+    
+    numPlayers = num;
 }
 
 void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
@@ -345,7 +347,8 @@ void tvScreen::drawIntoFbo(){
     ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
-    
+
+    if(numPlayers > 1){
     ofPushMatrix();
     ofSetColor(100);
     ofNoFill();
@@ -353,6 +356,7 @@ void tvScreen::drawIntoFbo(){
     ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
+    }
     ofFill();
     cam.end();
     tvGridView.end();
@@ -382,7 +386,7 @@ void tvScreen::drawIntoFbo(){
     }
     
     
-    if (playerTwoBody != NULL){
+    if (playerTwoBody != NULL && numPlayers > 1){
         
         kinectSkeleton SK = playerTwoBody->getLastSkeleton();
         
