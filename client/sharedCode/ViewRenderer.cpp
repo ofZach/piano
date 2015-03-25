@@ -133,6 +133,7 @@ void ViewRenderer::update(){
         }
         
         kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerOneButtonPos());
+        
     }else{
         kinectBody * kb1 = kinectSkeleton.getBody(0);
         kinectBody * kb2 = kinectSkeleton.getBody(1);

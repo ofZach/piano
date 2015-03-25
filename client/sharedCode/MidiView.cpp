@@ -48,13 +48,15 @@ void MidiView::setPlayerTwoMode(int mode){
 
 void MidiView::update(kinectBody * p1, kinectBody * p2){
     if(numPlayers == 1){
-        if(p1){
+        if(p1 != NULL){
             lastBodyPlayerOne = ofGetElapsedTimef();
             musicMakerP1.analyze(*p1);
-        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time")){
+            clearOne = true;
+        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
             musicMakerP1.clearBodies();
-            
+            clearOne = false;
         }
+        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
     }else{
         if(p1 != NULL){
             lastBodyPlayerOne = ofGetElapsedTimef();

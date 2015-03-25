@@ -342,7 +342,7 @@ void tvScreen::drawIntoFbo(){
     ofSetColor(100);
     ofNoFill();
     ofRotate(90,1,0,0);
-    ofTranslate(stageLeftX - stageSize/2, stageLeftY - stageSize/2, stageLeftZ);
+    ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     
@@ -350,7 +350,7 @@ void tvScreen::drawIntoFbo(){
     ofSetColor(100);
     ofNoFill();
     ofRotate(90,1,0,0);
-    ofTranslate(stageRightX - stageSize/2, stageRightY - stageSize/2, stageRightZ);
+    ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
     ofFill();

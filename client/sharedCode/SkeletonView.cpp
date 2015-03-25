@@ -220,7 +220,7 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             
             ofPushMatrix();
             {
-
+                
                 ofRotate(90, 1, 0, 0);
                 ofSetColor(ofColor::slateBlue, 200);
                 ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
@@ -240,11 +240,15 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             
             
             if(bCalibrate){
-                stageTwo.draw();
+                if(numPlayers > 1){
+                    stageTwo.draw();
+                }
                 stageOne.draw();
             }
             playerOneSwitchMode.draw();
-            playerTwoSwitchMode.draw();
+            if(numPlayers > 1){
+                playerTwoSwitchMode.draw();
+            }
             
             
             ofSetColor(255, 255, 255, 255);
