@@ -151,8 +151,8 @@ void ViewRenderer::update(){
             musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
         }
         
-        tv.setPlayerOneMode(musicMaker.playerOne.getInt("outputMode"));
-        tv.setPlayerTwoMode(musicMaker.playerTwo.getInt("outputMode"));
+        tv.setPlayerOneMode(musicMaker.playerOne.getInt("Output Mode"));
+        tv.setPlayerTwoMode(musicMaker.playerTwo.getInt("Output Mode"));
         
         if(kb1 != NULL){
             floor.setPlayerOne(true);
