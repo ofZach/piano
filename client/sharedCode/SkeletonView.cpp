@@ -139,6 +139,7 @@ void SkeletonView::update(){
         bCalibrate = false;
     }
     
+    
     stageOne.setPosition(stageLeftX, stageLeftY+stageSize/4, stageLeftZ);
     stageTwo.setPosition(stageRightX, stageRightY+stageSize/4, stageRightZ);
     stageOne.setRadius(stageSize);
@@ -147,6 +148,9 @@ void SkeletonView::update(){
     stageTwo.setApproachScale(1);
     stageOne.setTriggerScale(0.8);
     stageTwo.setTriggerScale(0.8);
+    
+    
+    
 }
 
 int SkeletonView::getPlayerOneMode(){
@@ -293,12 +297,25 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     p2SwitchMode+=ofVec3f(stageRightX, stageRightY, stageRightZ);
     
     
-    playerOneSwitchMode.setPosition(p1SwitchMode);
-    playerTwoSwitchMode.setPosition(p2SwitchMode);
+    if(overRideLeftTrigger){
+        playerOneSwitchMode.setPosition(ofVec3f(stageLeftTriggerX, stageLeftTriggerY, stageLeftTriggerZ));
+        
+        playerOneSwitchMode.setRadius(stageLeftTriggerScale);
+    }else{
+        playerOneSwitchMode.setPosition(p1SwitchMode);
+        playerOneSwitchMode.setRadius(stageSize/4/2);
+    }
     
+    if(overRideRightTrigger){
+        playerTwoSwitchMode.setPosition(ofVec3f(stageRightTriggerX, stageRightTriggerY, stageRightTriggerZ));
+        playerTwoSwitchMode.setRadius(stageRightTriggerScale);
+    }else{
+        playerTwoSwitchMode.setPosition(p2SwitchMode);
+        playerTwoSwitchMode.setRadius(stageSize/4/2);
+    }
     
-    playerTwoSwitchMode.setRadius(stageSize/4/2);
-    playerOneSwitchMode.setRadius(stageSize/4/2);
+
+
 }
 
 
@@ -321,6 +338,21 @@ void SkeletonView::setupGUI(){
     stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
     stageParams.add(bCalibrate.set("Calibration View", true));
+    
+    stageParams.add(overRideLeftTrigger.set("overRideLeftTrigger", true));
+    stageParams.add(overRideRightTrigger.set("overRideRightTrigger", true));
+    
+    stageParams.add(stageLeftTriggerX.set("stageLeftTriggerX", 0, -500, 500));
+    stageParams.add(stageLeftTriggerY.set("stageLeftTriggerY", 0, -500, 500));
+    stageParams.add(stageLeftTriggerZ.set("stageLeftTriggerZ", 0, -500, 500));
+    stageParams.add(stageLeftTriggerScale.set("stageLeftTriggerScale", 0, 0, 500));
+    
+    
+    stageParams.add(stageRightTriggerX.set("stageRightTriggerX", 0, -500, 500));
+    stageParams.add(stageRightTriggerY.set("stageRightTriggerY", 0, -500, 500));
+    stageParams.add(stageRightTriggerZ.set("stageRightTriggerZ", 0, -500, 500));
+    stageParams.add(stageRightTriggerScale.set("stageRightTriggerScale", 0, 0, 500));
+    
     
     
     hiddenSettings.setName("skeleton transform");

@@ -101,7 +101,23 @@ private:
     
     ofParameter<bool> bCalibrate;
     
+    
+    ofParameter<bool> overRideLeftTrigger;
+    ofParameter<float> stageLeftTriggerX;
+    ofParameter<float> stageLeftTriggerY;
+    ofParameter<float> stageLeftTriggerZ;
+    ofParameter<float> stageLeftTriggerScale;
 
+    
+    ofParameter<bool> overRideRightTrigger;
+    ofParameter<float> stageRightTriggerX;
+    ofParameter<float> stageRightTriggerY;
+    ofParameter<float> stageRightTriggerZ;
+    ofParameter<float> stageRightTriggerScale;
+
+    
+    
+    
     ofRectangle viewPort;
     bool bMainView;
     

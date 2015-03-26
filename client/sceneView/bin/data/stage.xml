@@ -8,5 +8,15 @@
 		<Right_Stage_Z>-40</Right_Stage_Z>
 		<Stage_Size>258.484</Stage_Size>
 		<Calibration_View>0</Calibration_View>
+	<overRideLeftTrigger>0</overRideLeftTrigger>
+		<overRideRightTrigger>0</overRideRightTrigger>
+		<stageLeftTriggerX>284</stageLeftTriggerX>
+		<stageLeftTriggerY>-284</stageLeftTriggerY>
+		<stageLeftTriggerZ>-80</stageLeftTriggerZ>
+		<stageLeftTriggerScale>90</stageLeftTriggerScale>
+		<stageRightTriggerX>48</stageRightTriggerX>
+		<stageRightTriggerY>44</stageRightTriggerY>
+		<stageRightTriggerZ>-112</stageRightTriggerZ>
+		<stageRightTriggerScale>56</stageRightTriggerScale>
 	</Stage_Settings>
 </group>
