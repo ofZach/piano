@@ -22,6 +22,9 @@ void tvScreen::addImplusePlayerTwo(){
             .noiseSeed = ofGetElapsedTimef()
         });
     }
+    
+    energy+=energyAdder;
+    
 }
 
 void tvScreen::addImplusePlayerOne(){
@@ -31,6 +34,9 @@ void tvScreen::addImplusePlayerOne(){
             .noiseSeed = ofGetElapsedTimef()
         });
     }
+    
+    energy+=energyAdder;
+    
 }
 
 
@@ -334,6 +340,7 @@ void tvScreen::addParameters(ofParameterGroup & params){
     params.add(swayAmount.set("swayAmount", 0.1, 0, 1));
     params.add(bDrawHairyManP1.set("bDrawHairyMan Player Two", false));
     params.add(bDrawHairyManP2.set("bDrawHairyMan Player One", false));
+    params.add(energyAdder.set("energyAdder", 0.25, 0.1, 2.0));
 }
 
 void tvScreen::drawIntoFbo(){
@@ -353,15 +360,15 @@ void tvScreen::drawIntoFbo(){
     ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
     ofRect(0, 0, stageSize, stageSize);
     ofPopMatrix();
-
+    
     if(numPlayers > 1){
-    ofPushMatrix();
-    ofSetColor(100);
-    ofNoFill();
-    ofRotate(90,1,0,0);
-    ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
-    ofRect(0, 0, stageSize, stageSize);
-    ofPopMatrix();
+        ofPushMatrix();
+        ofSetColor(100);
+        ofNoFill();
+        ofRotate(90,1,0,0);
+        ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
+        ofRect(0, 0, stageSize, stageSize);
+        ofPopMatrix();
     }
     ofFill();
     cam.end();

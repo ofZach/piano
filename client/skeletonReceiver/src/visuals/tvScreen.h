@@ -76,6 +76,9 @@ public:
     ofParameter<float> stageRightY;
     ofParameter<float> stageRightZ;
     
+    
+    ofParameter<float>  energyAdder;
+    
     ofRectangle tvViewPort;
     
     ofCamera cam;

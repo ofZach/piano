@@ -131,7 +131,6 @@ void SkeletonView::update(){
     }else {
         if(bodyMap.size() > 0){
             bodyMap.clear();
-            
         }
     }
     
