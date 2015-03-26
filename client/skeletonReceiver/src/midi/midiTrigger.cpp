@@ -15,7 +15,7 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 }
 
 void midiTrigger::reset() {
-    ofLog()<<"reset midi"<<endl;
+    //ofLog()<<"reset midi"<<endl;
 	for(const auto& note : getSettings().notes) {
 		getMidiOut()->sendNoteOff(getSettings().channel, note);
 	}
@@ -234,6 +234,10 @@ void stompNote::update(kinectBody &body) {
 				int velocity = ofMap(acc, -0.1, -4, 80, 100);
 				getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
 				reset();
+            
+            
+                
+            
 		}
 	}
 }

@@ -113,6 +113,8 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
     float currentTwist = ofMap(spineBase.x - spineTop.x, -30, 30, -1, 1, true);
     twist = ofLerp(twist, currentTwist, 0.1);
     
+    //cout << BODY.history.size()  << endl;
+    
     for (int i = BODY.history.size()-1; i >= 0; i--){
         
         if (i < BODY.history.size()/3) continue;
@@ -159,6 +161,7 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
             }
         }
         
+        
         kinectSkeleton & SKtemp = BODY.history[i];
         
         ofPoint avg;
@@ -173,6 +176,9 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
             
             ofPoint a(SKtemp.pts[bone.a]);
             ofPoint b(SKtemp.pts[bone.b]);
+            
+            
+            
             
             float scale = energy;
             
@@ -378,9 +384,11 @@ void tvScreen::drawIntoFbo(){
         kinectSkeleton SK = playerOneBody->getLastSkeleton();
         
         if (bDrawHairyManP1){
+            //cout << " hairy 1 " << endl;
             drawHairyMan(SK, 0);
         } else {
             
+            //cout << " history 1 " << endl;
             drawHistoryMan(*playerOneBody, 0);
         }
     }
@@ -391,8 +399,12 @@ void tvScreen::drawIntoFbo(){
         kinectSkeleton SK = playerTwoBody->getLastSkeleton();
         
         if (bDrawHairyManP2){
+            //cout << " hairy 2 " << endl;
+            
             drawHairyMan(SK, 1);
         } else {
+            
+            //cout << " history 2 " << endl;
             
             drawHistoryMan(*playerTwoBody, 1);
         }

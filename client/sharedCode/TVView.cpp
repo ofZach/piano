@@ -52,19 +52,19 @@ void TVView::draw(ofRectangle viewport){
 
 void TVView::setPlayerOneMode(int mode){
     if(mode == 0){
-        TV.bDrawHairyManP1 = true;
+        TV.bDrawHairyManP1 = false;
     }
     if(mode == 1){
-        TV.bDrawHairyManP1 = false;
+        TV.bDrawHairyManP1 = true;
     }
 }
 
 void TVView::setPlayerTwoMode(int mode){
     if(mode == 0){
-        TV.bDrawHairyManP2 = true;
+        TV.bDrawHairyManP2 = false;
     }
     if(mode == 1){
-        TV.bDrawHairyManP2 = false;
+        TV.bDrawHairyManP2 = true;
     }
 }
 

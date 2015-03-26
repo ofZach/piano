@@ -4,9 +4,9 @@
 		<Left_Stage_Y>0</Left_Stage_Y>
 		<Left_Stage_Z>-40</Left_Stage_Z>
 		<Right_Stage_X>148</Right_Stage_X>
-		<Right_Stage_Y>0</Right_Stage_Y>
+		<Right_Stage_Y>-8</Right_Stage_Y>
 		<Right_Stage_Z>-40</Right_Stage_Z>
-		<Stage_Size>250.5</Stage_Size>
+		<Stage_Size>258.484</Stage_Size>
 		<Calibration_View>0</Calibration_View>
 	</Stage_Settings>
 </group>
