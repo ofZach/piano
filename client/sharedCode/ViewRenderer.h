@@ -57,8 +57,6 @@ private:
     
     AppSettings settings;
     
-    
-    
     SkeletonView skelView;
     MidiView midiView;
     TVView tvView;
