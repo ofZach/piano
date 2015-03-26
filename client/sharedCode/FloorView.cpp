@@ -36,6 +36,8 @@ void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     setupQuadWarp();
     
     numPlayers = num;
+    
+    font.loadFont(OF_TTF_MONO, 35);
 }
 void FloorView::update(){
     p1Floor.update();
@@ -73,6 +75,9 @@ void FloorView::update(){
             }
         }else{
             drawStageCalibration();
+            ofSetColor(255, 0, 255);
+            font.drawString("FRONT OF STAGE", projectionFbo.getWidth()/2, 50);
+            font.drawString("FRONT OF STAGE", 0, 50);
         }
     }
     glPopMatrix();

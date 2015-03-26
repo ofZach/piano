@@ -55,7 +55,7 @@ public:
     ofParameter <bool>      showWarpOne;
     ofParameter <bool>      showWarpTwo;
 
-
+    ofTrueTypeFont font;
     
     ofxQuadWarp warpFloor;
 
