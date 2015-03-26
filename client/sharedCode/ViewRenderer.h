@@ -16,6 +16,11 @@
 #include "AppSettings.h"
 #include "kinectButton.h"
 #define N_SCENE 5
+
+
+// change view to viewport
+
+
 class ViewRenderer{
 public:
     ViewRenderer();
@@ -31,8 +36,8 @@ public:
     
     ofRectangle* getViews();
     
-    ofRectangle projectorView;
-    ofRectangle tvView;
+    ofRectangle projectorRect;
+    ofRectangle tvRect;
     
     ofRectangle viewMain;
     ofRectangle viewGrid[N_SCENE];
@@ -51,10 +56,13 @@ private:
     vector<ofFbo*> views;
     
     AppSettings settings;
-    SkeletonView kinectSkeleton;
-    MidiView musicMaker;
-    TVView tv;
-    FloorView floor;
+    
+    
+    
+    SkeletonView skelView;
+    MidiView midiView;
+    TVView tvView;
+    FloorView floorView;
     
     shared_ptr<ofxMidiOut> midiOut;
     

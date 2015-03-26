@@ -66,8 +66,8 @@ void ViewRenderer::setup(){
     appGUI.setWidthElements(350);
     appGUI.loadFromFile("app-settings.xml");
     
-    projectorView = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
-    tvView = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
+    projectorRect = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
+    tvRect = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
     
     setupViewports();
     iMainView = 4;
@@ -80,18 +80,18 @@ void ViewRenderer::setup(){
     midiOut->openPort(0);
     
     
-    kinectSkeleton.setup(numPlayers, viewMain);
-    musicMaker.setup(numPlayers, midiOut, viewMain);
-    floor.setup(numPlayers, ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
-    tv.setup(numPlayers, ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
+    skelView.setup(numPlayers, viewMain);
+    midiView.setup(numPlayers, midiOut, viewMain);
+    floorView.setup(numPlayers, ofRectangle(ofGetScreenWidth(), 0, 1280, 768), viewMain);
+    tvView.setup(numPlayers, ofRectangle(ofGetScreenWidth()+1280, 0, 1920, 1080), viewMain);
     
     
-    skeletonGUI.setup(kinectSkeleton.skeletonTransform);
-    stageGUI.setup(kinectSkeleton.stageParams);
-    hiddenSettings.setup(kinectSkeleton.hiddenSettings);
-    projectionGUI.setup(floor.squareOptions);
-    tvGUI.setup(tv.tvParameters);
-    midiGUI.setup(musicMaker.midiGroup);
+    skeletonGUI.setup(skelView.skeletonTransform);
+    stageGUI.setup(skelView.stageParams);
+    hiddenSettings.setup(skelView.hiddenSettings);
+    projectionGUI.setup(floorView.squareOptions);
+    tvGUI.setup(tvView.tvParameters);
+    midiGUI.setup(midiView.midiGroup);
     
     midiGUI.setSize(250, 400);
     projectionGUI.setSize(250, 400);
@@ -111,7 +111,7 @@ void ViewRenderer::setup(){
     skeletonGUI.loadFromFile("skeleton.xml");
     hiddenSettings.loadFromFile("hiddensettings.xml");
     projectionGUI.loadFromFile("projection.xml");
-    tvGUI.loadFromFile("tv.xml");
+    tvGUI.loadFromFile("tvView.xml");
     midiGUI.loadFromFile("midi.xml");
     
     midiGUI.setWidthElements(250);
@@ -119,63 +119,63 @@ void ViewRenderer::setup(){
 }
 void ViewRenderer::update(){
     
-    kinectSkeleton.update();
-    floor.update();
+    skelView.update();
+    floorView.update();
     
     if(numPlayers <= 1){
-        kinectBody * kb1 = kinectSkeleton.getBody(0);
-        musicMaker.update(kb1, NULL);
-        tv.update(kb1, NULL);
+        kinectBody * kb1 = skelView.getBody(0);
+        midiView.update(kb1, NULL);
+        tvView.update(kb1, NULL);
         if(kb1 != NULL){
-            floor.setPlayerOne(true);
+            floorView.setPlayerOne(true);
         }else{
-            floor.setPlayerOne(false);
+            floorView.setPlayerOne(false);
         }
-        if (musicMaker.playerOne.getBool("ableToChangeModeManually") == false){
-            musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        if (midiView.playerOne.getBool("ableToChangeModeManually") == false){
+            midiView.setPlayerOneMode(skelView.getPlayerOneMode());
         }
         
-        tv.setPlayerOneMode(musicMaker.playerOne.getInt("Output Mode"));
-        kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerOneButtonPos());
+        tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
+        skelView.setButtonPos(floorView.getPlayerOneButtonPos(), floorView.getPlayerOneButtonPos());
         
     }else{
-        kinectBody * kb1 = kinectSkeleton.getBody(0);
-        kinectBody * kb2 = kinectSkeleton.getBody(1);
-        musicMaker.update(kb1, kb2);
-        tv.update(kb1, kb2);
+        kinectBody * kb1 = skelView.getBody(0);
+        kinectBody * kb2 = skelView.getBody(1);
+        midiView.update(kb1, kb2);
+        tvView.update(kb1, kb2);
         
         
-        kinectSkeleton.setButtonPos(floor.getPlayerOneButtonPos(), floor.getPlayerTwoButtonPos());
+        skelView.setButtonPos(floorView.getPlayerOneButtonPos(), floorView.getPlayerTwoButtonPos());
         
         
-        if (musicMaker.playerOne.getBool("ableToChangeModeManually") == false){
-            musicMaker.setPlayerOneMode(kinectSkeleton.getPlayerOneMode());
+        if (midiView.playerOne.getBool("ableToChangeModeManually") == false){
+            midiView.setPlayerOneMode(skelView.getPlayerOneMode());
         }
         
-        if (musicMaker.playerTwo.getBool("ableToChangeModeManually") == false){
-            musicMaker.setPlayerTwoMode(kinectSkeleton.getPlayerTwoMode());
+        if (midiView.playerTwo.getBool("ableToChangeModeManually") == false){
+            midiView.setPlayerTwoMode(skelView.getPlayerTwoMode());
         }
         
-        tv.setPlayerOneMode(musicMaker.playerOne.getInt("Output Mode"));
-        tv.setPlayerTwoMode(musicMaker.playerTwo.getInt("Output Mode"));
+        tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
+        tvView.setPlayerTwoMode(midiView.playerTwo.getInt("Output Mode"));
         
         if(kb1 != NULL){
-            floor.setPlayerOne(true);
+            floorView.setPlayerOne(true);
         }else{
-            floor.setPlayerOne(false);
+            floorView.setPlayerOne(false);
         }
         
         if(kb2 != NULL){
-            floor.setPlayerTwo(true);
+            floorView.setPlayerTwo(true);
         }else{
-            floor.setPlayerTwo(false);
+            floorView.setPlayerTwo(false);
         }
         
         
         
     }
     
-    tv.setStageParameters(kinectSkeleton.stageParams);
+    tvView.setStageParameters(skelView.stageParams);
     
     
 }
@@ -184,7 +184,7 @@ void ViewRenderer::exit(){
     skeletonGUI.saveToFile("skeleton.xml");
     stageGUI.saveToFile("stage.xml");
     projectionGUI.saveToFile("projection.xml");
-    tvGUI.saveToFile("tv.xml");
+    tvGUI.saveToFile("tvView.xml");
     midiGUI.saveToFile("midi.xml");
     appGUI.saveToFile("app-settings.xml");
     hiddenSettings.saveToFile("hiddensettings.xml");
@@ -197,99 +197,99 @@ void ViewRenderer::draw(){
     
     if(iMainView == N_SCENE){
         ofSetColor(255, 255, 255, 255);
-        kinectSkeleton.draw(viewGrid[0]);
-        musicMaker.draw(viewGrid[1]);
-        floor.draw(viewGrid[2]);
-        tv.draw(viewGrid[3]);
+        skelView.draw(viewGrid[0]);
+        midiView.draw(viewGrid[1]);
+        floorView.draw(viewGrid[2]);
+        tvView.draw(viewGrid[3]);
         
         ofSetColor(255, 255, 255);
         ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetScreenWidth()-50, ofGetScreenHeight()-50);
     }
     
-    if(kinectSkeleton.isMain()){
-        kinectSkeleton.draw(viewMain);
+    if(skelView.isMain()){
+        skelView.draw(viewMain);
         skeletonGUI.draw();
         stageGUI.draw();
-    }else if(musicMaker.isMain()){
-        musicMaker.draw(viewMain);
+    }else if(midiView.isMain()){
+        midiView.draw(viewMain);
         midiGUI.draw();
-    }else if(floor.isMain()){
-        floor.drawDebug();
+    }else if(floorView.isMain()){
+        floorView.drawDebug();
         projectionGUI.draw();
-    }else if(tv.isMain()){
-        tv.draw(viewMain);
+    }else if(tvView.isMain()){
+        tvView.draw(viewMain);
         tvGUI.draw();
         skeletonGUI.draw();
         stageGUI.draw();
     }
     
-    floor.drawProjections();
-    tv.drawTV();
+    floorView.drawProjections();
+    tvView.drawTV();
     ofDisableAlphaBlending();
     
     if(iMainView == 4){
         ofSetColor(255, 0, 0);
         ofRect(viewMain);
         ofSetColor(0, 255, 0);
-        ofRect(projectorView);
+        ofRect(projectorRect);
         ofSetColor(0, 0, 255);
-        ofRect(tvView);
+        ofRect(tvRect);
         ofSetColor(255, 255, 255);
         ofLine(viewMain.x, viewMain.y, viewMain.x+viewMain.width, viewMain.y+viewMain.height);
         ofLine(viewMain.x+viewMain.width, viewMain.y, viewMain.x, viewMain.y+viewMain.height);
         
-        ofLine(tvView.x, tvView.y, tvView.x+tvView.width, tvView.y+tvView.height);
-        ofLine(tvView.x+tvView.width, tvView.y, tvView.x, tvView.y+tvView.height);
+        ofLine(tvRect.x, tvRect.y, tvRect.x+tvRect.width, tvRect.y+tvRect.height);
+        ofLine(tvRect.x+tvRect.width, tvRect.y, tvRect.x, tvRect.y+tvRect.height);
         
-        ofLine(projectorView.x, projectorView.y, projectorView.x+projectorView.width, projectorView.y+projectorView.height);
-        ofLine(projectorView.x+projectorView.width, projectorView.y, projectorView.x, projectorView.y+projectorView.height);
+        ofLine(projectorRect.x, projectorRect.y, projectorRect.x+projectorRect.width, projectorRect.y+projectorRect.height);
+        ofLine(projectorRect.x+projectorRect.width, projectorRect.y, projectorRect.x, projectorRect.y+projectorRect.height);
     }
     
 }
 
 void ViewRenderer::addLineTracePlayerOne(){
-    floor.p1Floor.addLineTrace();
+    floorView.p1Floor.addLineTrace();
 }
 void ViewRenderer::triggerTrianglePlayerOne(){
-    floor.p1Floor.triggerTriangles();
+    floorView.p1Floor.triggerTriangles();
 }
 void ViewRenderer::addImpulsePlayerOne(){
-    tv.addPulsePlayerOne();
+    tvView.addPulsePlayerOne();
 }
 
 void ViewRenderer::addLineTracePlayerTwo(){
-    floor.p2Floor.addLineTrace();
+    floorView.p2Floor.addLineTrace();
 }
 void ViewRenderer::triggerTrianglePlayerTwo(){
-    floor.p2Floor.triggerTriangles();
+    floorView.p2Floor.triggerTriangles();
     
 }
 void ViewRenderer::addImpulsePlayerTwo(){
-    tv.addPlusePlayerTwo();
+    tvView.addPlusePlayerTwo();
 }
 
 
 void ViewRenderer::setMainView(int i){
     iMainView = i;
     if(iMainView == 0){
-        kinectSkeleton.setMainView(true);
+        skelView.setMainView(true);
     }else{
-        kinectSkeleton.setMainView(false);
+        skelView.setMainView(false);
     }
     if(iMainView == 1){
-        musicMaker.setMainView(true);
+        midiView.setMainView(true);
     }else{
-        musicMaker.setMainView(false);
+        midiView.setMainView(false);
     }
     if(iMainView == 2){
-        floor.setMainView(true);
+        floorView.setMainView(true);
     }else{
-        floor.setMainView(false);
+        floorView.setMainView(false);
     }
     if(iMainView == 3){
-        tv.setMainView(true);
+        tvView.setMainView(true);
     }else{
-        tv.setMainView(false);
+        tvView.setMainView(false);
     }
 }
 ofRectangle* ViewRenderer::getViews(){
