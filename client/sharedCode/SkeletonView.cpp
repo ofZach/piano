@@ -298,19 +298,20 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     
     if(overRideLeftTrigger){
         playerOneSwitchMode.setPosition(ofVec3f(stageLeftTriggerX, stageLeftTriggerY, stageLeftTriggerZ));
-        
         playerOneSwitchMode.setRadius(stageLeftTriggerScale);
     }else{
+        p1SwitchMode+=ofVec3f(stageLeftTriggerX, stageLeftTriggerY, stageLeftTriggerZ);
         playerOneSwitchMode.setPosition(p1SwitchMode);
-        playerOneSwitchMode.setRadius(stageSize/4/2);
+        playerOneSwitchMode.setRadius(stageSize/4/2+stageLeftTriggerScale);
     }
     
     if(overRideRightTrigger){
         playerTwoSwitchMode.setPosition(ofVec3f(stageRightTriggerX, stageRightTriggerY, stageRightTriggerZ));
         playerTwoSwitchMode.setRadius(stageRightTriggerScale);
     }else{
+        p2SwitchMode+=ofVec3f(stageRightTriggerX, stageRightTriggerY, stageRightTriggerZ);
         playerTwoSwitchMode.setPosition(p2SwitchMode);
-        playerTwoSwitchMode.setRadius(stageSize/4/2);
+        playerTwoSwitchMode.setRadius(stageSize/4/2+stageRightTriggerScale);
     }
     
 

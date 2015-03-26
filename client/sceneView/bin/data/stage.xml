@@ -10,13 +10,13 @@
 		<Calibration_View>0</Calibration_View>
 	<overRideLeftTrigger>0</overRideLeftTrigger>
 		<overRideRightTrigger>0</overRideRightTrigger>
-		<stageLeftTriggerX>-208</stageLeftTriggerX>
+		<stageLeftTriggerX>0</stageLeftTriggerX>
 		<stageLeftTriggerY>0</stageLeftTriggerY>
 		<stageLeftTriggerZ>0</stageLeftTriggerZ>
-		<stageLeftTriggerScale>96</stageLeftTriggerScale>
-		<stageRightTriggerX>48</stageRightTriggerX>
-		<stageRightTriggerY>52</stageRightTriggerY>
-		<stageRightTriggerZ>-172</stageRightTriggerZ>
-		<stageRightTriggerScale>52</stageRightTriggerScale>
+		<stageLeftTriggerScale>0</stageLeftTriggerScale>
+		<stageRightTriggerX>0</stageRightTriggerX>
+		<stageRightTriggerY>0</stageRightTriggerY>
+		<stageRightTriggerZ>4</stageRightTriggerZ>
+		<stageRightTriggerScale>0</stageRightTriggerScale>
 	</Stage_Settings>
 </group>
