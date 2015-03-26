@@ -197,6 +197,7 @@ void musicMaker::drawOverScene(){
 
 void musicMaker::analyze(kinectBody & body) {
     
+    
     if(outputMode == 0){
         updateMidiTriggers(body);
     }else{
@@ -230,6 +231,7 @@ void musicMaker::updateMidiTriggers(kinectBody &body) {
 void musicMaker::updateGraphs(kinectBody &body) {
     
     
+    
     for(auto& trig : drumMidiTriggers) {
         trig->update(body);
     }
@@ -244,6 +246,9 @@ void musicMaker::updateGraphs(kinectBody &body) {
             graphsHistory[i].thresholdSmoothing = thresholdSmoothing;
             graphsHistory[i].setMinMaxRange(body.historyPlots[i]->getLowerRange(), body.historyPlots[i]->getHigerRange());
             if((!jazzDrums || historyAndSkeleton)){
+                
+                
+                
                 if(!triggers[body.historyPlots[i]->varName]){
                     if(ofIsStringInString(body.historyPlots[i]->varName, "arm")){
                         skeletonMidi.triggerNote(62+i%2, ofMap(body.historyPlots[i]->getValues().back(),
@@ -297,12 +302,15 @@ void musicMaker::updateGraphs(kinectBody &body) {
                     }
                     
                     if(triggers[body.historyPlots[i]->varName]){
+                        
                         if(playerID == 0){
                             ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
                         }
                         if(playerID == 1){
                             ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
                         }
+                        
+                        
                         lastTrigger.time = ofGetElapsedTimef();
                     }
                     
@@ -324,6 +332,7 @@ void musicMaker::updateGraphs(kinectBody &body) {
             if(body.velLen[i]> velocityCutOff){
                 graphsForSkeleton[i].addSample(body.velLen[i]);
                 if (graphsForSkeleton[i].getTriggered()){
+                    
                     
                     if((jazzDrums || historyAndSkeleton)){
                         if(!ofIsStringInString(nameOfPt, "Spine")){
@@ -351,6 +360,9 @@ void musicMaker::updateGraphs(kinectBody &body) {
                                 }
                                 
                                 if(triggers[nameOfPt]){
+                                    
+                                    cout << "adding impulse " << " " << playerID << endl;
+                                    
                                     ofLog(OF_LOG_NOTICE)<<"Trigger "<<nameOfPt<<endl;
                                     if(playerID == 0){
                                         ((ofApp*)ofGetAppPtr())->addImpulsePlayerOne();

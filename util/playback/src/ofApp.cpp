@@ -65,7 +65,7 @@ void ofApp::setup(){
 
     loadTimeMillis = 0;
 
-    
+    ofSetFrameRate(20);
 }
 
 int lastWho = -1;
