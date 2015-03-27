@@ -6,8 +6,8 @@
 	<swayCamera>1</swayCamera>
 	<swayRate>0.35965</swayRate>
 	<swayAmount>0.75</swayAmount>
-	<bDrawHairyMan_Player_Two>1</bDrawHairyMan_Player_Two>
-	<bDrawHairyMan_Player_One>0</bDrawHairyMan_Player_One>
+	<bDrawHairyMan_Player_Two>0</bDrawHairyMan_Player_Two>
+	<bDrawHairyMan_Player_One>1</bDrawHairyMan_Player_One>
 <TV_Controls/>
 <energyAdder>0.25</energyAdder>
 </TV_Controls>

@@ -105,7 +105,7 @@ ofPoint Floor::getButtonPos(){
 }
 
 void Floor::addLineTrace(){
-    if(travelers.size() < 40){
+    if(travelers.size() < 100){
         bSpawnLines = true;
     }
 }

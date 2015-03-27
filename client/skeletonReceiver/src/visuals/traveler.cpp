@@ -116,13 +116,8 @@ bool traveler::shouldIdie(){
     if (ofGetElapsedTimeMillis() - birthday < 1000) return false;
     
     else {
-        
-
-        //cout << len << endl;
         if (energy < 0.05) return true;
-        else return false;
-        
-        
+        else return false; 
     }
     
 }
