@@ -22,12 +22,14 @@ public:
 	virtual void reset();
 	virtual void setMidiOut(shared_ptr<ofxMidiOut> midiOut);
 	void setSettings(Settings settings) { _settings = settings; }
-	
+    bool _triggered;
+    float _time;
 protected:
 	shared_ptr<ofxMidiOut> getMidiOut();
 	Settings& getSettings() { return _settings; }
 	
 private:
+
 	shared_ptr<ofxMidiOut> _midiOut;
 	Settings _settings;
 };
@@ -39,7 +41,7 @@ public:
 	virtual void update(kinectBody& body);
 	
 private:
-	bool _triggered;
+//	bool _triggered;
 	int _currentNote;
 };
 
@@ -62,7 +64,7 @@ public:
 	virtual void update(kinectBody& body);
 	
 private:
-	bool _triggered;
+//	bool _triggered;
 	int _currentNote;
 	float _lastDist;
 };

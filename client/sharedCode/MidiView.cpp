@@ -47,38 +47,39 @@ void MidiView::setPlayerTwoMode(int mode){
 }
 
 void MidiView::update(kinectBody * p1, kinectBody * p2){
-    if(numPlayers == 1){
-        if(p1 != NULL){
-            lastBodyPlayerOne = ofGetElapsedTimef();
-            musicMakerP1.analyze(*p1);
-            clearOne = true;
-        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
-            musicMakerP1.clearBodies();
-            clearOne = false;
-        }
-        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
-    }else{
-        if(p1 != NULL){
-            lastBodyPlayerOne = ofGetElapsedTimef();
-            musicMakerP1.analyze(*p1);
-            clearOne = true;
-        }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
-            musicMakerP1.clearBodies();
-            clearOne = false;
-        }
-        if(p2 != NULL){
-            lastBodyPlayerTwo = ofGetElapsedTimef();
-            musicMakerP2.analyze(*p2);
-            clearTwo = true;
-        }else if(ofGetElapsedTimef() - lastBodyPlayerTwo > playerOne.getFloat("Body Drop Time") && clearTwo){
-            musicMakerP2.clearBodies();
-            clearTwo = false;
-            
-        }
-        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
-        lastTriggerP2 = musicMakerP2.lastDrumTriggeredNote();
+    
+    if(p1 != NULL){
+        lastBodyPlayerOne = ofGetElapsedTimef();
+        musicMakerP1.analyze(*p1);
+        clearOne = true;
+        
+    }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
+        musicMakerP1.clearBodies();
+        clearOne = false;
     }
     
+    
+    if(p2 != NULL){
+        lastBodyPlayerTwo = ofGetElapsedTimef();
+        musicMakerP2.analyze(*p2);
+        clearTwo = true;
+    }else if(ofGetElapsedTimef() - lastBodyPlayerTwo > playerOne.getFloat("Body Drop Time") && clearTwo){
+        musicMakerP2.clearBodies();
+        clearTwo = false;
+        
+    }
+  
+    
+    if(playerOne.getInt("Output Mode") == 1){
+        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
+    }else{
+        lastTriggerP1 = musicMakerP1.lastPianoTriggeredNote();
+    }
+    if(numPlayers == 2 && playerTwo.getInt("Output Mode") == 1){
+        lastTriggerP2 = musicMakerP2.lastDrumTriggeredNote();
+    }else{
+        lastTriggerP2 = musicMakerP2.lastPianoTriggeredNote();
+    }
 }
 void MidiView::draw(ofRectangle viewport){
     if(isMain()){
@@ -123,17 +124,17 @@ void MidiView::draw(ofRectangle viewport){
     bounding = font.getStringBoundingBox("Player One", 0, 0);
     
     if(numPlayers > 1){
-    ofSetColor(ofColor::white, 255);
-    font.drawString("Player Two", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+100);
-    bounding = font.getStringBoundingBox("Note Triggered", 0, 0);
-    
-    ofSetColor(ofColor::white, ofMap(ofGetElapsedTimef() - lastTriggerP2.time, 0, 1, 255, 0, true));
-    font.drawString("Note Triggered", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+200);
-    
-    bounding = font.getStringBoundingBox("Output Mode: "+ofToString(musicMakerP2.outputMode), 0, 0);
-    
-    ofSetColor(255, 255, 255, 255);
-    font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+300);
+        ofSetColor(ofColor::white, 255);
+        font.drawString("Player Two", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+100);
+        bounding = font.getStringBoundingBox("Note Triggered", 0, 0);
+        
+        ofSetColor(ofColor::white, ofMap(ofGetElapsedTimef() - lastTriggerP2.time, 0, 1, 255, 0, true));
+        font.drawString("Note Triggered", viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+200);
+        
+        bounding = font.getStringBoundingBox("Output Mode: "+ofToString(musicMakerP2.outputMode), 0, 0);
+        
+        ofSetColor(255, 255, 255, 255);
+        font.drawString("Output Mode: "+ofToString(musicMakerP2.outputMode), viewport.x+viewport.width/2+(viewport.width/4-bounding.width/2), viewport.y+300);
     }
 }
 

@@ -212,7 +212,10 @@ void musicMaker::analyze(kinectBody & body) {
 
 Trigger musicMaker::lastPianoTriggeredNote(){
     for(auto& t : midiTriggers) {
-        
+        if(t->_triggered){
+            lastTrigger.time = t->_time;
+            return lastTrigger;
+        }
     }
 }
 

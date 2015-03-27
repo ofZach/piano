@@ -2,7 +2,7 @@
 #include "ofApp.h"
 #pragma mark - Interface
 
-midiTrigger::midiTrigger() : _settings() {
+midiTrigger::midiTrigger() : _settings(), _triggered(false){
     
 }
 
@@ -61,7 +61,7 @@ bool GreatestLength(ofPoint a, ofPoint b) {
 
 #pragma mark - Grabbed Note
 
-grabbedNote::grabbedNote() : _triggered(false), _currentNote(0) {
+grabbedNote::grabbedNote() :  _currentNote(0) {
     
 }
 
@@ -89,6 +89,7 @@ void grabbedNote::update(kinectBody &body) {
         }else{
             ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
         }
+        _time = ofGetElapsedTimef();
         _triggered = true;
         _currentNote = note;
     } else if(shouldStop && _triggered) {
@@ -104,6 +105,7 @@ void grabbedNote::update(kinectBody &body) {
         }else{
             ((ofApp*)ofGetAppPtr())->addImpulsePlayerTwo();
         }
+        _time = ofGetElapsedTimef();
     }
 }
 
@@ -144,7 +146,7 @@ void gridNote::update(kinectBody &body) {
         }else{
             ((ofApp*)ofGetAppPtr())->addImpulsePlayerTwo();
         }
-        
+        _time = ofGetElapsedTimef();
         _triggered = true;
         _currentNote = note;
         _lastTrigger = now;
@@ -158,7 +160,7 @@ void gridNote::update(kinectBody &body) {
 
 #pragma mark - Accordian Note
 
-accordianNote::accordianNote() : _triggered(false), _currentNote(0), _lastDist(0) {
+accordianNote::accordianNote() : _currentNote(0), _lastDist(0) {
     getSettings().notes.resize(2);
 }
 
@@ -179,6 +181,7 @@ void accordianNote::update(kinectBody &body) {
             }else{
                 ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
             }
+            _time = ofGetElapsedTimef();
         } else if(note != _currentNote && abs(_lastDist - dist) > retrigThresh) {
             getMidiOut()->sendNoteOn(getSettings().channel, note);
             getMidiOut()->sendNoteOff(getSettings().channel, _currentNote);
@@ -187,6 +190,7 @@ void accordianNote::update(kinectBody &body) {
             }else{
                 ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
             }
+            _time = ofGetElapsedTimef();
         }
         _currentNote = note;
         _triggered = true;
@@ -222,6 +226,12 @@ void legCC::update(kinectBody &body) {
     float amt = ofMap(greatest, 0, sk.skeletonHeight / 32., 0, 1, true);
     _accumulator = ofLerp(_accumulator, amt, 0.07);
     getMidiOut()->sendControlChange(1, 1, _accumulator * 127);
+    _time = ofGetElapsedTimef();
+    if(getSettings().channel-8 < 0){
+        ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
+    }else{
+        ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
+    }
 }
 
 #pragma mark - Stomp
@@ -251,6 +261,7 @@ void stompNote::update(kinectBody &body) {
         _primed = true;
         if(getSettings().notes.size() > 1) {
             getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes[1]);
+            _time = ofGetElapsedTimef();
             if(getSettings().channel-8 < 0){
                 ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
             }else{
@@ -265,6 +276,7 @@ void stompNote::update(kinectBody &body) {
             int velocity = ofMap(acc, -0.1, -4, 80, 100);
             getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front(), velocity);
             reset();
+            _time = ofGetElapsedTimef();
             if(getSettings().channel-8 < 0){
                 ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
             }else{
@@ -296,10 +308,11 @@ void dropDatNote::update(kinectBody &body) {
     bool abovePrime = (left > primeThresh) && (right > primeThresh);
     bool belowTrigger = (left < triggerThresh) && (right < triggerThresh);
     
-    if(!_primed && abovePrime) {
-        _primed = true;
+    if(!_triggered && abovePrime) {
+        _triggered = true;
         if(getSettings().notes.size() > 1) {
             getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes[1]);
+            _time = ofGetElapsedTimef();
             if(getSettings().channel-8 < 0){
                 ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
             }else{
@@ -307,13 +320,14 @@ void dropDatNote::update(kinectBody &body) {
             }
             
         }
-    } else if(_primed && belowTrigger) {
+    } else if(_triggered && belowTrigger) {
         getMidiOut()->sendNoteOn(getSettings().channel, getSettings().notes.front());
+        _time = ofGetElapsedTimef();
         if(getSettings().channel-8 < 0){
             ((ofApp*)ofGetAppPtr())->addLineTracePlayerOne();
         }else{
             ((ofApp*)ofGetAppPtr())->addLineTracePlayerTwo();
         }
-        _primed = false;
+        _triggered = false;
     }
 }
