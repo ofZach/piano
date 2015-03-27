@@ -22,8 +22,11 @@ void tvScreen::addImplusePlayerTwo(){
             .noiseSeed = ofGetElapsedTimef()
         });
     }
-    
-    energy+=energyAdder;
+    if(bDrawHairyManP2){
+        energyHairy[1]+=energyAdder;
+    }else{
+        energyHistory[1]+=energyAdder;
+    }
     
 }
 
@@ -34,9 +37,11 @@ void tvScreen::addImplusePlayerOne(){
             .noiseSeed = ofGetElapsedTimef()
         });
     }
-    
-    energy+=energyAdder;
-    
+    if(bDrawHairyManP1){
+        energyHairy[0]+=energyAdder;
+    }else{
+        energyHistory[0]+=energyAdder;
+    }
 }
 
 
@@ -63,7 +68,8 @@ void tvScreen::setup(int num, ofRectangle viewport) {
     for (int i = 0; i < connections.size(); i++){
         connectionsScambled[i].a = connections[i].a;
     }
-    energy = 0.0;
+    energyHairy.assign(2, 0.0);
+    energyHistory.assign(2, 0.0);
     
     twist = 0;
     
@@ -100,9 +106,6 @@ void tvScreen::update( kinectBody * kinectBodyOne,  kinectBody * kinectBodyTwo){
     
     drawIntoFbo();
 }
-
-float energy;
-
 
 
 void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
@@ -186,7 +189,7 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
             
             
             
-            float scale = energy;
+            float scale = energyHistory[playerID];
             
             ofPoint midPt = (a+b)/2.0;
             float dist = (a-b).length();
@@ -217,13 +220,13 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
         ofPoint a( SK.pts[bone.a]);
         ofPoint b( SK.pts[bone.b]);
         
-        float scale = energy;
+        float scale = energyHistory[playerID];
         
         ofSetColor(255,255,255);
         
         ofPoint midPt = (a+b)/2.0;
         float dist = (a-b).length();
-        dist -= 20 * (1-energy);
+        dist -= 20 * (1-scale);
         if (dist < 0) dist = 0;
         ofPoint normal = (a-b).getNormalized();
         
@@ -235,7 +238,7 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
     
     for (int i= 0; i < SK.pts.size(); i++){
         
-        float scale = 1.0 - energy;
+        float scale = 1.0 - energyHistory[playerID];;
         scale = powf(scale, 4.0);
         if (!SKELETOR::Instance()->bIsSkipPoint(i)){
             ofPushMatrix();
@@ -252,20 +255,20 @@ void tvScreen::drawHistoryMan( kinectBody & BODY, int playerID){
 
 void tvScreen::drawHairyMan( kinectSkeleton & SK, int playerID){
     
-    nonOfSeedRandom((int)(energy*100));
+    nonOfSeedRandom((int)(energyHairy[playerID]*100));
     for (auto & bone : connections){
         
         //cout << bone.a <<  " " << bone.b << endl;
         ofPoint a( SK.pts[bone.a]);
         ofPoint b( SK.pts[bone.b]);
         
-        float scale = energy;
+        float scale = energyHairy[playerID];
         
         ofSetColor(255,255,255);
         
         ofPoint midPt = (a+b)/2.0;
         float dist = (a-b).length();
-        dist -= 20 * (1-energy);
+        dist -= 20 * (1-scale);
         if (dist < 0) dist = 0;
         ofPoint normal = (a-b).getNormalized();
         
@@ -284,7 +287,7 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK, int playerID){
             ofTranslate(midPT);
             if (true){
                 
-                ofRotate(100 * energy, nonOfRandom(0,3*energy), nonOfRandom(0,3*energy),nonOfRandom(0,3*energy));
+                ofRotate(100 * scale, nonOfRandom(0,3*scale), nonOfRandom(0,3*scale),nonOfRandom(0,3*scale));
                 ofTranslate(nonOfRandom(0, 0+10*scale), nonOfRandom(0, 0+10*scale), nonOfRandom(0, 0+10*scale));
                 float ss =nonOfRandom(1 + 10 * powf(scale, 4.0), 1+20*powf(scale, 4.0));
                 ofScale(ss,ss,ss);
@@ -302,7 +305,7 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK, int playerID){
     
     for (int i= 0; i < SK.pts.size(); i++){
         
-        float scale = 1.0 - energy;
+        float scale = 1.0 - scale;
         scale = powf(scale, 4.0);
         if (!SKELETOR::Instance()->bIsSkipPoint(i)){
             ofPushMatrix();
@@ -379,12 +382,7 @@ void tvScreen::drawIntoFbo(){
     //ofClear(0, 0, 0);
     cam.begin(ofRectangle(ofVec2f(0, 0), tvViewPort.width, tvViewPort.height));
     
-    energy*= 0.9;
-    if (ofGetMousePressed()){
-        energy += 0.1;
-    }
-    if (energy > 1) energy = 1;
-    if (energy < 0.01) energy = 0;
+    
     
     if (playerOneBody != NULL){
         
@@ -392,9 +390,14 @@ void tvScreen::drawIntoFbo(){
         
         if (bDrawHairyManP1){
             //cout << " hairy 1 " << endl;
+            energyHairy[0]*= 0.9;
+            if (energyHairy[0] > 1) energyHairy[0] = 1;
+            if (energyHairy[0] < 0.01) energyHairy[0] = 0;
             drawHairyMan(SK, 0);
         } else {
-            
+            energyHistory[0]*= 0.9;
+            if (energyHistory[0] > 1) energyHistory[0] = 1;
+            if (energyHistory[0] < 0.01) energyHistory[0] = 0;
             //cout << " history 1 " << endl;
             drawHistoryMan(*playerOneBody, 0);
         }
@@ -407,12 +410,16 @@ void tvScreen::drawIntoFbo(){
         
         if (bDrawHairyManP2){
             //cout << " hairy 2 " << endl;
-            
+            energyHairy[1]*= 0.9;
+            if (energyHairy[1] > 1) energyHairy[1] = 1;
+            if (energyHairy[1] < 0.01) energyHairy[1] = 0;
             drawHairyMan(SK, 1);
         } else {
             
             //cout << " history 2 " << endl;
-            
+            energyHistory[1]*= 0.9;
+            if (energyHistory[1] > 1) energyHistory[1] = 1;
+            if (energyHistory[1] < 0.01) energyHistory[1] = 0;
             drawHistoryMan(*playerTwoBody, 1);
         }
     }

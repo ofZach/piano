@@ -51,7 +51,8 @@ public:
     vector < pulseData > pulsesP1;
     vector < pulseData > pulsesP2; // go from 1 to 0
     float twist;
-    float energy;
+    vector<float> energyHairy;
+    vector<float> energyHistory;
 
     ofFbo tvSkeletonView;
     ofFbo tvGridView;
