@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxMidi.h"
-#include "midiView.h"
+#include "MidiView.h"
 class ofApp : public ofBaseApp{
     
 public:
@@ -25,7 +25,16 @@ public:
     
     shared_ptr<ofxMidiOut> midiOut;
     
-    class midiView midiView;
+    MidiView midiView;
+    
+    void addLineTracePlayerOne();
+    void triggerTrianglePlayerOne();
+    void addImpulsePlayerOne();
+    
+    void addLineTracePlayerTwo();
+    void triggerTrianglePlayerTwo();
+    void addImpulsePlayerTwo();
+    
     
 };
 

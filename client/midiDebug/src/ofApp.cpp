@@ -7,6 +7,27 @@ void ofApp::setup(){
     midiView.setup(2, midiOut);
 }
 
+
+void ofApp::addLineTracePlayerOne(){
+
+}
+void ofApp::triggerTrianglePlayerOne(){
+    
+}
+void ofApp::addImpulsePlayerOne(){
+
+}
+
+void ofApp::addLineTracePlayerTwo(){
+ 
+}
+void ofApp::triggerTrianglePlayerTwo(){
+    
+}
+void ofApp::addImpulsePlayerTwo(){
+ 
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -14,7 +35,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    midiView.draw(ofGetCurrentViewport());
 }
 
 //--------------------------------------------------------------
