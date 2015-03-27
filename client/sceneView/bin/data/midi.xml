@@ -7,7 +7,7 @@
 		<Smooth_Down_Skeleton>0.622449</Smooth_Down_Skeleton>
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 		<JazzDrums>1</JazzDrums>
-		<Send_All_Triggers>0</Send_All_Triggers>
+		<Send_All_Triggers>1</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>1030</Body_Drop_Time>
 		<Output>1</Output>
@@ -21,7 +21,7 @@
 			<Trigger_Scale>0.813411</Trigger_Scale>
 			<Approach_Scale>1.26281</Approach_Scale>
 		</button_control_1>
-	<ableToChangeModeManually>1</ableToChangeModeManually>
+	<ableToChangeModeManually>0</ableToChangeModeManually>
 	</playerOne>
 	<playerTwo>
 		<Start_Note>36</Start_Note>
@@ -31,7 +31,7 @@
 		<Smooth_Down_Skeleton>0.586735</Smooth_Down_Skeleton>
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 		<JazzDrums>1</JazzDrums>
-		<Send_All_Triggers>0</Send_All_Triggers>
+		<Send_All_Triggers>1</Send_All_Triggers>
 		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>1069</Body_Drop_Time>
 		<Output>1</Output>
@@ -51,7 +51,7 @@
 			<Trigger_Scale>0.8</Trigger_Scale>
 			<Approach_Scale>1.2</Approach_Scale>
 		</button_controls_2>
-	<ableToChangeModeManually>1</ableToChangeModeManually>
+	<ableToChangeModeManually>0</ableToChangeModeManually>
 	</playerTwo>
 <MidiSettings/>
 </MidiSettings>

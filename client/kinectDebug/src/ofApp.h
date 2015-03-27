@@ -25,5 +25,5 @@ public:
     ofxPanel skeletonGUI;
     ofxPanel stageGUI;
     ofxPanel hiddenSettings;
-    
+    bool debug;
 };

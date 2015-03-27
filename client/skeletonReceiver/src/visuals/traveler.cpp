@@ -119,7 +119,7 @@ bool traveler::shouldIdie(){
         
 
         //cout << len << endl;
-        if (energy < 0.01) return true;
+        if (energy < 0.05) return true;
         else return false;
         
         

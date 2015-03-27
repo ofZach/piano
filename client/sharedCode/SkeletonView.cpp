@@ -87,7 +87,6 @@ void SkeletonView::update(){
         for(int i = 0; i < skeletons->size(); i++){
             KS.setFromSkeleton(skeletons->at(i), mat);
             kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
-            KB = body;
             bool bNewFrame = body.addSkeleton(KS);
             if (bNewFrame){
                 KSA.analyze(body.getLastSkeleton());
@@ -207,64 +206,63 @@ void SkeletonView::setMainView(bool mainView){
 void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
     
     camera.begin(view);
-    ofPushMatrix();
+    
+    ofPushStyle();
     {
-        ofPushStyle();
-        {
-            ofSetColor(255,255,255,200);
-            ofSetLineWidth(2);
+        ofSetColor(255,255,255,200);
+        ofSetLineWidth(2);
+        if(bMainView){
             ofPushMatrix();
             {
                 ofRotate(90,0,0,1);
                 ofDrawGridPlane(1000);
             }
             ofPopMatrix();
+        }
+        
+        ofPushMatrix();
+        {
             
-            
+            ofRotate(90, 1, 0, 0);
+            ofSetColor(ofColor::slateBlue, 200);
+            ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
+            ofRect(0, 0, stageSize, stageSize);
+        }
+        ofPopMatrix();
+        
+        if(numPlayers > 1){
             ofPushMatrix();
             {
-                
                 ofRotate(90, 1, 0, 0);
-                ofSetColor(ofColor::slateBlue, 200);
-                ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
+                ofSetColor(ofColor::slateGray, 200);
+                ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
                 ofRect(0, 0, stageSize, stageSize);
             }
             ofPopMatrix();
-            
-            if(numPlayers > 1){
-                ofPushMatrix();
-                {
-                    ofRotate(90, 1, 0, 0);
-                    ofSetColor(ofColor::slateGray, 200);
-                    ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
-                    ofRect(0, 0, stageSize, stageSize);
-                }
-                ofPopMatrix();
-            }
-            
-            
-            if(bCalibrate){
-                if(numPlayers > 1){
-                    stageTwo.draw();
-                }
-                stageOne.draw();
-            }
-            playerOneSwitchMode.draw();
-            if(numPlayers > 1){
-                playerTwoSwitchMode.draw();
-            }
-            
-            
-            ofSetColor(255, 255, 255, 255);
-            for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
-                ofPushStyle();
-                bodyMap[iter->getBodyId()].draw();
-                ofPopStyle();
-            }
         }
-        ofPopStyle();
+        
+        
+        if(bCalibrate){
+            if(numPlayers > 1){
+                stageTwo.draw();
+            }
+            stageOne.draw();
+        }
+        playerOneSwitchMode.draw();
+        if(numPlayers > 1){
+            playerTwoSwitchMode.draw();
+        }
+        
+        
+        ofSetColor(255, 255, 255, 255);
+        for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+            ofPushStyle();
+            bodyMap[iter->getBodyId()].draw();
+            ofPopStyle();
+        }
     }
-    ofPopMatrix();
+    ofPopStyle();
+    
     camera.end();
     
 }
@@ -314,8 +312,8 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
         playerTwoSwitchMode.setRadius(stageSize/4/2+stageRightTriggerScale);
     }
     
-
-
+    
+    
 }
 
 

@@ -54,37 +54,7 @@ void FloorView::update(){
     }
     
     
-    ofEnableAlphaBlending();
-    projectionFbo.begin();
-    ofClear(0, 0, 0, 0);
     
-    if(bDrawCalibration){
-        drawProjectorCalibration();
-    }
-    
-    glPushMatrix();
-    glMultMatrixf( mat.getPtr() );
-    {
-        
-        if(!bDrawCalibration){
-            
-            //cout << p1Floor.getWidth()/2 << endl;
-            ofSetColor(255, 255, 255);
-            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
-            if(numPlayers > 1){
-                p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
-            }
-        }else{
-            drawStageCalibration();
-            ofSetColor(255, 0, 255);
-            font.drawString("FRONT OF STAGE", projectionFbo.getWidth()/2, 50);
-            font.drawString("FRONT OF STAGE", 0, 50);
-        }
-    }
-    glPopMatrix();
-    //    }
-    projectionFbo.end();
-    ofDisableAlphaBlending();
     
     if(bMainView){
         if(bShowWarp){
@@ -96,6 +66,8 @@ void FloorView::update(){
     }
 }
 void FloorView::draw(ofRectangle viewport){
+    
+    
     ofSetColor(255, 255, 255);
     projectionFbo.draw(viewport);
 }
@@ -235,6 +207,40 @@ void FloorView::drawProjectorCalibration(){
 }
 
 void FloorView::drawProjections(){
+    
+    ofEnableAlphaBlending();
+    projectionFbo.begin();
+    ofClear(0, 0, 0, 0);
+    
+    if(bDrawCalibration){
+        drawProjectorCalibration();
+    }
+    
+    glPushMatrix();
+    glMultMatrixf( mat.getPtr() );
+    {
+        
+        if(!bDrawCalibration){
+            
+            //cout << p1Floor.getWidth()/2 << endl;
+            ofSetColor(255, 255, 255);
+            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
+            if(numPlayers > 1){
+                p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
+            }
+        }else{
+            drawStageCalibration();
+            ofSetColor(255, 0, 255);
+            font.drawString("FRONT OF STAGE", projectionFbo.getWidth()/2, 50);
+            font.drawString("FRONT OF STAGE", 0, 50);
+        }
+    }
+    glPopMatrix();
+    //    }
+    projectionFbo.end();
+    ofDisableAlphaBlending();
+
+    
     projectionFbo.draw(projectionViewport);
     if(bDrawCalibration){
         
