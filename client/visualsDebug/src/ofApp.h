@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "FloorView.h"
+#include "ofxGui.h"
 class ofApp : public ofBaseApp{
     
 public:
@@ -19,8 +20,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    FloorView view;
+    FloorView floorView;
     ofRectangle mainScreen;
     ofRectangle projectionScreen;
-    
+    ofxPanel projectionGUI;
+    bool drawProjections;
 };

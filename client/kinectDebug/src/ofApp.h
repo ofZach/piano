@@ -1,7 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "skeletonView.h"
+#include "SkeletonView.h"
+#include "ofxGui.h"
 class ofApp : public ofBaseApp{
     
 public:
@@ -20,5 +21,9 @@ public:
     void gotMessage(ofMessage msg);
     
     
-    skeletonView skeleton;
+    SkeletonView skelView;
+    ofxPanel skeletonGUI;
+    ofxPanel stageGUI;
+    ofxPanel hiddenSettings;
+    
 };

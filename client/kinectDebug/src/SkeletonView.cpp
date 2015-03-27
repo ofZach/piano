@@ -134,9 +134,9 @@ void SkeletonView::update(){
         }
     }
     
-    if(!bMainView && bCalibrate){
-        bCalibrate = false;
-    }
+//    if(!bMainView && bCalibrate){
+//        bCalibrate = false;
+//    }
     
     
     stageOne.setPosition(stageLeftX, stageLeftY+stageSize/4, stageLeftZ);
@@ -261,6 +261,7 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
                 bodyMap[iter->getBodyId()].draw();
                 ofPopStyle();
             }
+            KB.drawDebug(false);
         }
         ofPopStyle();
     }
@@ -358,7 +359,7 @@ void SkeletonView::setupGUI(){
     
     
     hiddenSettings.setName("skeleton transform");
-    hiddenSettings.add(rotationX.set("rotationX", 0,-180,180));
+    hiddenSettings.add(rotationX.set("rotationX", 180,-180,180));
     hiddenSettings.add(rotationY.set("rotationY", 0,-180,180));
     hiddenSettings.add(rotationZ.set("rotationZ", 0,-180,180));
     hiddenSettings.add(scaleX.set("scaleX", 1.0,0.01, 20));

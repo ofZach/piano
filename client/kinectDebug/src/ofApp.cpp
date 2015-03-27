@@ -2,17 +2,26 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    skeleton.setup();
+    skelView.setup(1, ofRectangle(0, 0, ofGetWidth(), ofGetHeight()));
+    skeletonGUI.setup(skelView.skeletonTransform);
+    stageGUI.setup(skelView.stageParams);
+    hiddenSettings.setup(skelView.hiddenSettings);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    skeleton.update();
+    skelView.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    skeleton.draw();
+    ofBackground(0, 0, 0);
+    skelView.draw(ofGetCurrentViewport());
+
+    skeletonGUI.draw();
+    stageGUI.draw();
+    hiddenSettings.draw();
+    
 }
 
 //--------------------------------------------------------------

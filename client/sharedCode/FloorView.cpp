@@ -23,6 +23,7 @@ void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     }
     projectionViewport = projector;
     mainViewport = main;
+    numPlayers = num;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
     setupGUI();
 
@@ -35,7 +36,7 @@ void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     
     setupQuadWarp();
     
-    numPlayers = num;
+
     
     font.loadFont(OF_TTF_MONO, 35);
 }
@@ -281,8 +282,12 @@ void FloorView::setupQuadWarp(){
     warpFloor.setTopRightCornerPosition( ofPoint( x + w, y ) );        // this is position of the quad warp corners, centering the image on the screen.
     warpFloor.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
     warpFloor.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
-    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, 8*projectionFbo.getWidth()/10, 8*projectionFbo.getHeight()/10));
+    if(numPlayers == 2){
+    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, p1Floor.getWidth()+floorOffset, p1Floor.getHeight()/2));
+    }else{
+            warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, p1Floor.getWidth()/2,p1Floor.getHeight()/2));
+    }
     warpFloor.setup();
-    
-    warpFloor.load("warp-settings.xml");
+    warpFloor.load("warp-settings"+ofToString(numPlayers)+".xml");
+ 
 }

@@ -10,13 +10,15 @@
 		<Calibration_View>0</Calibration_View>
 	<overRideLeftTrigger>0</overRideLeftTrigger>
 		<overRideRightTrigger>0</overRideRightTrigger>
-		<stageLeftTriggerX>0</stageLeftTriggerX>
-		<stageLeftTriggerY>0</stageLeftTriggerY>
+		<stageLeftTriggerX>-4</stageLeftTriggerX>
+		<stageLeftTriggerY>20</stageLeftTriggerY>
 		<stageLeftTriggerZ>0</stageLeftTriggerZ>
-		<stageLeftTriggerScale>0</stageLeftTriggerScale>
+		<stageLeftTriggerScale>42</stageLeftTriggerScale>
 		<stageRightTriggerX>0</stageRightTriggerX>
 		<stageRightTriggerY>0</stageRightTriggerY>
 		<stageRightTriggerZ>4</stageRightTriggerZ>
 		<stageRightTriggerScale>0</stageRightTriggerScale>
+	<presencesZoneSizeP1>100</presencesZoneSizeP1>
+		<presencesZoneSizeP2>100</presencesZoneSizeP2>
 	</Stage_Settings>
 </group>
