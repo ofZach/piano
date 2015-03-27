@@ -1,14 +1,14 @@
 <Floor>
-	<bShowWarp>0</bShowWarp>
+	<bShowWarp>1</bShowWarp>
 	<bSaveWarp>0</bSaveWarp>
-	<bDrawCalibration>0</bDrawCalibration>
+	<bDrawCalibration>1</bDrawCalibration>
 	<Stage_Offset>39.2</Stage_Offset>
 	<Floor_Controls_0>
 		<bShowDots>0</bShowDots>
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
 		<bPersonPresent>0</bPersonPresent>
-		<bFadeLines>1</bFadeLines>
+		<bFadeLines>0</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
 		<buttonPos>0</buttonPos>
 		<lineWeight>14.4939</lineWeight>
@@ -21,7 +21,7 @@
 		<bShowGrid>0</bShowGrid>
 		<bShowButton>1</bShowButton>
 		<bPersonPresent>0</bPersonPresent>
-		<bFadeLines>1</bFadeLines>
+		<bFadeLines>0</bFadeLines>
 		<bSpawnLines>0</bSpawnLines>
 		<buttonPos>8</buttonPos>
 		<lineWeight>11.0612</lineWeight>

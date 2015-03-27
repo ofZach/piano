@@ -283,9 +283,9 @@ void FloorView::setupQuadWarp(){
     warpFloor.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
     warpFloor.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
     if(numPlayers == 2){
-    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, p1Floor.getWidth()+floorOffset, p1Floor.getHeight()/2));
+    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getHeight() - projectionFbo.getHeight()/10, -p1Floor.getWidth()+floorOffset, -p1Floor.getHeight()/2));
     }else{
-            warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth()/10, projectionFbo.getHeight()/10, p1Floor.getWidth()/2,p1Floor.getHeight()/2));
+            warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getWidth()- projectionFbo.getHeight()/10, -p1Floor.getWidth()/2, -p1Floor.getHeight()/2));
     }
     warpFloor.setup();
     warpFloor.load("warp-settings"+ofToString(numPlayers)+".xml");
