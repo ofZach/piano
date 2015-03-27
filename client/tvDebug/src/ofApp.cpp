@@ -4,17 +4,17 @@
 void ofApp::setup(){
     ofRectangle tv(ofGetScreenWidth(), 0, 1920, 1080);
     ofRectangle main(0, 0, ofGetScreenHeight(), ofGetScreenWidth());
-    tvView.setup(tv, main);
+    tvView.setup(1, tv, main);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    tvView.update();
+//    tvView.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    tvView.draw();
+    tvView.draw(ofGetCurrentViewport());
 }
 
 //--------------------------------------------------------------
