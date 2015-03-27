@@ -116,6 +116,8 @@ private:
     ofParameter<float> stageRightTriggerScale;
 
     
+    ofParameter<float> presencesZoneSizeP1;
+    ofParameter<float> presencesZoneSizeP2;
     
     
     ofRectangle viewPort;

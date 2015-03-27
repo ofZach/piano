@@ -141,8 +141,8 @@ void SkeletonView::update(){
     
     stageOne.setPosition(stageLeftX, stageLeftY+stageSize/4, stageLeftZ);
     stageTwo.setPosition(stageRightX, stageRightY+stageSize/4, stageRightZ);
-    stageOne.setRadius(stageSize);
-    stageTwo.setRadius(stageSize);
+    stageOne.setRadius(stageSize+presencesZoneSizeP1);
+    stageTwo.setRadius(stageSize+presencesZoneSizeP2);
     stageOne.setApproachScale(1);
     stageTwo.setApproachScale(1);
     stageOne.setTriggerScale(0.8);
@@ -353,6 +353,8 @@ void SkeletonView::setupGUI(){
     stageParams.add(stageRightTriggerZ.set("stageRightTriggerZ", 0, -500, 500));
     stageParams.add(stageRightTriggerScale.set("stageRightTriggerScale", 0, 0, 500));
     
+    stageParams.add(presencesZoneSizeP1.set("presencesZoneSizeP1", 0, 0, 200));
+    stageParams.add(presencesZoneSizeP2.set("presencesZoneSizeP2", 0, 0, 200));
     
     
     hiddenSettings.setName("skeleton transform");
