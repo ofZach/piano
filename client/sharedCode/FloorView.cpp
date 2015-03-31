@@ -126,7 +126,7 @@ void FloorView::setPlayerOne(bool populated){
     floors[0]->bPersonPresent = populated;
 }
 void FloorView::setPlayerTwo(bool populated){
-    floors[01]->bPersonPresent = populated;
+    floors[1]->bPersonPresent = populated;
 }
 ofPoint FloorView::getPlayerOneButtonPos(){
     return floors[0]->getButtonPos();
