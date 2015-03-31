@@ -6,13 +6,13 @@ void ofApp::setup(){
     
     //void FloorView::setup(ofRectangle projector, ofRectangle main){
     
-    mainScreen.set(0,0, ofGetScreenWidth(), ofGetScreenHeight());
+    mainScreen.set(0,0, ofGetWindowWidth(), ofGetWindowHeight());
     projectionScreen.set(mainScreen.width,0, 1280, 768);
     
     floorView.setup(2,projectionScreen, mainScreen);
     floorView.setMainView(true);
     
-    projectionGUI.setup(floorView.squareOptions);
+    
     drawProjections = false;
 }
 
@@ -26,18 +26,16 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(0, 0, 0);
-    if(drawProjections){
-        floorView.draw(ofGetCurrentViewport());
-    }else{
-        floorView.drawDebug();
-    }
+
+    floorView.drawDebug();
     
-    projectionGUI.draw();
+    floorView.drawProjections();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    floorView.addLineTrace(0);
+    floorView.addLineTrace(1);
 }
 
 //--------------------------------------------------------------

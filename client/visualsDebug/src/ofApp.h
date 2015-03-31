@@ -23,6 +23,5 @@ public:
     FloorView floorView;
     ofRectangle mainScreen;
     ofRectangle projectionScreen;
-    ofxPanel projectionGUI;
     bool drawProjections;
 };

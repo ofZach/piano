@@ -74,7 +74,6 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
-		FD3D20F31AB6ECA2005B2C17 /* ofxCalibrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20EE1AB6ECA2005B2C17 /* ofxCalibrate.cpp */; };
 		FD3D20FD1AB6F096005B2C17 /* gridInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20F91AB6F096005B2C17 /* gridInfo.cpp */; };
 		FD3D20FE1AB6F096005B2C17 /* traveler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D20FB1AB6F096005B2C17 /* traveler.cpp */; };
 		FD3D21141AB7CFC8005B2C17 /* ofxBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD3D21101AB7CFC8005B2C17 /* ofxBlur.cpp */; };
@@ -316,8 +315,6 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		FD3D20EE1AB6ECA2005B2C17 /* ofxCalibrate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCalibrate.cpp; sourceTree = "<group>"; };
-		FD3D20EF1AB6ECA2005B2C17 /* ofxCalibrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCalibrate.h; sourceTree = "<group>"; };
 		FD3D20F91AB6F096005B2C17 /* gridInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gridInfo.cpp; path = ../../skeletonReceiver/src/visuals/gridInfo.cpp; sourceTree = "<group>"; };
 		FD3D20FA1AB6F096005B2C17 /* gridInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gridInfo.h; path = ../../skeletonReceiver/src/visuals/gridInfo.h; sourceTree = "<group>"; };
 		FD3D20FB1AB6F096005B2C17 /* traveler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = traveler.cpp; path = ../../skeletonReceiver/src/visuals/traveler.cpp; sourceTree = "<group>"; };
@@ -358,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				FD3D21011AB7CFC8005B2C17 /* ofxBlur */,
-				FD3D20D91AB6ECA1005B2C17 /* ofxCalibrate */,
 				C83C45D01AB5172500879893 /* ofxQuadWarp */,
 				C83C454E1AB5171500879893 /* ofxOpenCv */,
 				C83C45411AB50DE400879893 /* ofxXmlSettings */,
@@ -882,24 +878,6 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
-		FD3D20D91AB6ECA1005B2C17 /* ofxCalibrate */ = {
-			isa = PBXGroup;
-			children = (
-				FD3D20ED1AB6ECA2005B2C17 /* src */,
-			);
-			name = ofxCalibrate;
-			path = ../../../addons/ofxCalibrate;
-			sourceTree = "<group>";
-		};
-		FD3D20ED1AB6ECA2005B2C17 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				FD3D20EE1AB6ECA2005B2C17 /* ofxCalibrate.cpp */,
-				FD3D20EF1AB6ECA2005B2C17 /* ofxCalibrate.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		FD3D21011AB7CFC8005B2C17 /* ofxBlur */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,7 +989,6 @@
 				C83C45CA1AB5171500879893 /* ofxCvFloatImage.cpp in Sources */,
 				C83C45311AB50DE100879893 /* guiTypeFileLister.cpp in Sources */,
 				C83C45341AB50DE100879893 /* guiTypeMultiToggle.cpp in Sources */,
-				FD3D20F31AB6ECA2005B2C17 /* ofxCalibrate.cpp in Sources */,
 				C83C452F1AB50DE100879893 /* guiTypeCustom.cpp in Sources */,
 				C83C45371AB50DE100879893 /* guiTypeText.cpp in Sources */,
 				C83C453C1AB50DE100879893 /* guiValue.cpp in Sources */,
