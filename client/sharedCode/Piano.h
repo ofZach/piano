@@ -1,5 +1,5 @@
 //
-//  ViewRenderer.h
+//  Piano.h
 //  sceneView
 //
 //  Created by dantheman on 3/14/15.
@@ -21,10 +21,10 @@
 // change view to viewport
 
 
-class ViewRenderer{
+class Piano{
 public:
-    ViewRenderer();
-    virtual ~ViewRenderer();
+    Piano();
+    virtual ~Piano();
     void setup();
     void update();
     void draw();
@@ -67,7 +67,7 @@ private:
     ofxPanel hiddenSettings;
     ofxPanel skeletonGUI;
     ofxPanel stageGUI;
-    ofxPanel projectionGUI;
+
     ofxPanel tvGUI;
     ofxPanel midiGUI;
     ofxPanel appGUI;

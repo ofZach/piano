@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ViewRenderer.h"
+#include "Piano.h"
 
 
 class ofApp : public ofBaseApp{
@@ -22,7 +22,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    ViewRenderer views;
+    Piano views;
     
     void addLineTracePlayerOne();
     void triggerTrianglePlayerOne();

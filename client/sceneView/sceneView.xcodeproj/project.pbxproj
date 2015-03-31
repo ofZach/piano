@@ -63,7 +63,7 @@
 		C83C44DD1AB4F3DB00879893 /* opencv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C83C44D51AB4F3DB00879893 /* opencv.a */; };
 		C83C44E71AB4FD7900879893 /* MidiView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E11AB4FD7900879893 /* MidiView.cpp */; };
 		C83C44E81AB4FD7900879893 /* SkeletonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E31AB4FD7900879893 /* SkeletonView.cpp */; };
-		C83C44E91AB4FD7900879893 /* ViewRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E51AB4FD7900879893 /* ViewRenderer.cpp */; };
+		C83C44E91AB4FD7900879893 /* Piano.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C44E51AB4FD7900879893 /* Piano.cpp */; };
 		C83C45DA1AB52DBE00879893 /* FloorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45D81AB52DBE00879893 /* FloorView.cpp */; };
 		C83C45E21AB52DDE00879893 /* Floor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45DC1AB52DDE00879893 /* Floor.cpp */; };
 		C83C45FA1AB7180D00879893 /* gridInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C45F51AB7180D00879893 /* gridInfo.cpp */; };
@@ -339,8 +339,8 @@
 		C83C44E21AB4FD7900879893 /* MidiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiView.h; path = ../../sharedCode/MidiView.h; sourceTree = "<group>"; };
 		C83C44E31AB4FD7900879893 /* SkeletonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SkeletonView.cpp; path = ../../sharedCode/SkeletonView.cpp; sourceTree = "<group>"; };
 		C83C44E41AB4FD7900879893 /* SkeletonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkeletonView.h; path = ../../sharedCode/SkeletonView.h; sourceTree = "<group>"; };
-		C83C44E51AB4FD7900879893 /* ViewRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewRenderer.cpp; path = ../../sharedCode/ViewRenderer.cpp; sourceTree = "<group>"; };
-		C83C44E61AB4FD7900879893 /* ViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewRenderer.h; path = ../../sharedCode/ViewRenderer.h; sourceTree = "<group>"; };
+		C83C44E51AB4FD7900879893 /* Piano.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Piano.cpp; path = ../../sharedCode/Piano.cpp; sourceTree = "<group>"; };
+		C83C44E61AB4FD7900879893 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = ../../sharedCode/Piano.h; sourceTree = "<group>"; };
 		C83C45D81AB52DBE00879893 /* FloorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FloorView.cpp; path = ../../sharedCode/FloorView.cpp; sourceTree = "<group>"; };
 		C83C45D91AB52DBE00879893 /* FloorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorView.h; path = ../../sharedCode/FloorView.h; sourceTree = "<group>"; };
 		C83C45DC1AB52DDE00879893 /* Floor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Floor.cpp; sourceTree = "<group>"; };
@@ -486,8 +486,8 @@
 				C83C44E21AB4FD7900879893 /* MidiView.h */,
 				C83C44E31AB4FD7900879893 /* SkeletonView.cpp */,
 				C83C44E41AB4FD7900879893 /* SkeletonView.h */,
-				C83C44E51AB4FD7900879893 /* ViewRenderer.cpp */,
-				C83C44E61AB4FD7900879893 /* ViewRenderer.h */,
+				C83C44E51AB4FD7900879893 /* Piano.cpp */,
+				C83C44E61AB4FD7900879893 /* Piano.h */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -1330,7 +1330,7 @@
 				C83C42971AB4AB8900879893 /* tinyxmlparser.cpp in Sources */,
 				C83C42101AB4AB7400879893 /* ofxOscParameterSync.cpp in Sources */,
 				C83C440B1AB4C39800879893 /* ofxRtMidiOut.cpp in Sources */,
-				C83C44E91AB4FD7900879893 /* ViewRenderer.cpp in Sources */,
+				C83C44E91AB4FD7900879893 /* Piano.cpp in Sources */,
 				C83C42371AB4AB7A00879893 /* Mapper.cpp in Sources */,
 				C83C440A1AB4C39800879893 /* ofxRtMidiIn.cpp in Sources */,
 				C83C42111AB4AB7400879893 /* ofxOscReceiver.cpp in Sources */,

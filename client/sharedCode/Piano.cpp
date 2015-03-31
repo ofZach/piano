@@ -1,22 +1,22 @@
 //
-//  ViewRenderer.cpp
+//  Piano.cpp
 //  sceneView
 //
 //  Created by dantheman on 3/14/15.
 //
 //
 
-#include "ViewRenderer.h"
+#include "Piano.h"
 
 
-ViewRenderer::ViewRenderer(){
+Piano::Piano(){
     
 }
-ViewRenderer::~ViewRenderer(){
+Piano::~Piano(){
     
 }
 
-void ViewRenderer::setupViewports(){
+void Piano::setupViewports(){
     int xOffset = viewMain.width / 2;
     int yOffset = viewMain.height / 2;
     int x = 0;
@@ -42,7 +42,7 @@ void ViewRenderer::setupViewports(){
         }
     }
 }
-void ViewRenderer::setup(){
+void Piano::setup(){
     viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
     
     
@@ -89,15 +89,12 @@ void ViewRenderer::setup(){
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
     hiddenSettings.setup(skelView.hiddenSettings);
-    projectionGUI.setup(floorView.squareOptions);
+//    projectionGUI.setup(floorView.squareOptions);
     tvGUI.setup(tvView.tvParameters);
     midiGUI.setup(midiView.midiGroup);
     
     midiGUI.setSize(250, 400);
-    projectionGUI.setSize(250, 400);
-    projectionGUI.setWidthElements(250);
-    projectionGUI.setPosition(ofGetScreenWidth()-250, 0);
-    
+
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
     skeletonGUI.setPosition(ofGetScreenWidth()-250, 0);
@@ -110,14 +107,14 @@ void ViewRenderer::setup(){
     stageGUI.loadFromFile("stage.xml");
     skeletonGUI.loadFromFile("skeleton.xml");
     hiddenSettings.loadFromFile("hiddensettings.xml");
-    projectionGUI.loadFromFile("projection.xml");
+ 
     tvGUI.loadFromFile("tvView.xml");
     midiGUI.loadFromFile("midi.xml");
     
     midiGUI.setWidthElements(250);
     
 }
-void ViewRenderer::update(){
+void Piano::update(){
     
     skelView.update();
     floorView.update();
@@ -180,10 +177,10 @@ void ViewRenderer::update(){
     
 }
 
-void ViewRenderer::exit(){
+void Piano::exit(){
     skeletonGUI.saveToFile("skeleton.xml");
     stageGUI.saveToFile("stage.xml");
-    projectionGUI.saveToFile("projection.xml");
+//    projectionGUI.saveToFile("projection.xml");
     tvGUI.saveToFile("tvView.xml");
     midiGUI.saveToFile("midi.xml");
     appGUI.saveToFile("app-settings.xml");
@@ -191,7 +188,7 @@ void ViewRenderer::exit(){
 }
 
 
-void ViewRenderer::draw(){
+void Piano::draw(){
     ofBackground(0, 0, 0);
     ofEnableAlphaBlending();
     
@@ -215,7 +212,6 @@ void ViewRenderer::draw(){
         midiGUI.draw();
     }else if(floorView.isMain()){
         floorView.drawDebug();
-        projectionGUI.draw();
     }else if(tvView.isMain()){
         tvView.draw(viewMain);
         tvGUI.draw();
@@ -247,29 +243,29 @@ void ViewRenderer::draw(){
     
 }
 
-void ViewRenderer::addLineTracePlayerOne(){
-    floorView.p1Floor.addLineTrace();
+void Piano::addLineTracePlayerOne(){
+    floorView.addLineTrace(0);
 }
-void ViewRenderer::triggerTrianglePlayerOne(){
-    floorView.p1Floor.triggerTriangles();
+void Piano::triggerTrianglePlayerOne(){
+//    floorView.floors[0].triggerTriangles();
 }
-void ViewRenderer::addImpulsePlayerOne(){
+void Piano::addImpulsePlayerOne(){
     tvView.addPulsePlayerOne();
 }
 
-void ViewRenderer::addLineTracePlayerTwo(){
-    floorView.p2Floor.addLineTrace();
+void Piano::addLineTracePlayerTwo(){
+    floorView.addLineTrace(1);
 }
-void ViewRenderer::triggerTrianglePlayerTwo(){
-    floorView.p2Floor.triggerTriangles();
+void Piano::triggerTrianglePlayerTwo(){
+//    floorView.p2Floor.triggerTriangles();
     
 }
-void ViewRenderer::addImpulsePlayerTwo(){
+void Piano::addImpulsePlayerTwo(){
     tvView.addPlusePlayerTwo();
 }
 
 
-void ViewRenderer::setMainView(int i){
+void Piano::setMainView(int i){
     iMainView = i;
     if(iMainView == 0){
         skelView.setMainView(true);
@@ -292,6 +288,6 @@ void ViewRenderer::setMainView(int i){
         tvView.setMainView(false);
     }
 }
-ofRectangle* ViewRenderer::getViews(){
+ofRectangle* Piano::getViews(){
     return &viewGrid[0];
 }

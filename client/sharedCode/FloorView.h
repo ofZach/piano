@@ -10,6 +10,7 @@
 #include "ofMain.h"
 #include "Floor.h"
 #include "ofxQuadWarp.h"
+#include "ofxGui.h"
 class FloorView{
 public:
     FloorView();
@@ -24,9 +25,9 @@ public:
     void setupGUI();
     void setMainView(bool view);
     bool isMain();
-    void drawStageCalibration();
+    void drawGrid();
     void drawProjectorCalibration();
-    
+    void addLineTrace(int playerID);
     void setPlayerOne(bool populated);
     void setPlayerTwo(bool populated);
     
@@ -34,11 +35,13 @@ public:
     ofPoint getPlayerTwoButtonPos();
     
     int numPlayers;
-    Floor p1Floor;
-    Floor p2Floor;
+    
+    vector<Floor*> floors;
     
 //    ofPoint playerOneButton;
 //    ofPoing playerTwoButton;
+    
+    ofxPanel floorGUI;
     
     ofFbo projectionFbo;
     ofRectangle projectionViewport;
@@ -65,4 +68,5 @@ public:
     ofMatrix4x4 mat, mat1, mat2;
     
     ofParameter <bool> bSaveWarp;
+
 };

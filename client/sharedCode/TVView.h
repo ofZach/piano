@@ -9,6 +9,7 @@
 #pragma once
 #include "ofMain.h"
 #include "tvScreen.h"
+#include "ofxGui.h"
 class TVView {
 public:
     TVView();
@@ -36,4 +37,5 @@ public:
     bool                bMainView;
     tvScreen            TV;
     int numplayers;
+ 
 };

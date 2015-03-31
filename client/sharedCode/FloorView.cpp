@@ -16,35 +16,35 @@ FloorView::~FloorView(){
     
 }
 
+
+void FloorView::addLineTrace(int index){
+    floors[index]->addLineTrace();
+}
+
 void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
-    p1Floor.setup(0);
+    floors.push_back(new Floor());
+    floors[0]->setup(0);
     if(num > 1){
-        p2Floor.setup(1);
+        floors.push_back(new Floor());
+        floors[1]->setup(1);
     }
     projectionViewport = projector;
     mainViewport = main;
     numPlayers = num;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
     setupGUI();
-
-    
-    p1Floor.idNum = 0;
-    p2Floor.idNum = 1;
-    
-    
+        
     bMainView = false;
     
     setupQuadWarp();
-    
 
-    
     font.loadFont(OF_TTF_MONO, 35);
 }
 void FloorView::update(){
-    p1Floor.update();
-    if(numPlayers > 1){
-        p2Floor.update();
+    for(int i = 0; i < floors.size(); i++){
+        floors[i]->update();
     }
+
     mat = warpFloor.getMatrix();
     warpFloor.update();
     
@@ -52,10 +52,7 @@ void FloorView::update(){
         bSaveWarp = !bSaveWarp;
         warpFloor.save("warp-settings.xml");
     }
-    
-    
-    
-    
+
     if(bMainView){
         if(bShowWarp){
             warpFloor.show();
@@ -72,9 +69,9 @@ void FloorView::draw(ofRectangle viewport){
     projectionFbo.draw(viewport);
 }
 
-void FloorView::drawStageCalibration(){
-    int width=p1Floor.getWidth()+floorOffset;
-    int height=p1Floor.getHeight()/2;
+void FloorView::drawGrid(){
+    int width=floors[0]->getWidth()+floorOffset;
+    int height=floors[0]->getHeight()/2;
     int squareSize = 10;
     int counter=0;
     
@@ -121,16 +118,16 @@ void FloorView::drawStageCalibration(){
 
 
 void FloorView::setPlayerOne(bool populated){
-    p1Floor.bPersonPresent = populated;
+    floors[0]->bPersonPresent = populated;
 }
 void FloorView::setPlayerTwo(bool populated){
-    p2Floor.bPersonPresent = populated;
+    floors[01]->bPersonPresent = populated;
 }
 ofPoint FloorView::getPlayerOneButtonPos(){
-    return p1Floor.getButtonPos();
+    return floors[0]->getButtonPos();
 }
 ofPoint FloorView::getPlayerTwoButtonPos(){
-    return p2Floor.getButtonPos();
+    return floors[1]->getButtonPos();
 }
 void FloorView::drawDebug(){
     
@@ -149,6 +146,8 @@ void FloorView::drawDebug(){
     ofFill();
     ofSetColor(255, 255, 255);
     ofPopStyle();
+    
+    floorGUI.draw();
 }
 
 void FloorView::drawProjectorCalibration(){
@@ -220,26 +219,27 @@ void FloorView::drawProjections(){
     glMultMatrixf( mat.getPtr() );
     {
         
-        if(!bDrawCalibration){
+        if(bDrawCalibration){
             
-            //cout << p1Floor.getWidth()/2 << endl;
-            ofSetColor(255, 255, 255);
-            p1Floor.draw(0, 0, p1Floor.getWidth()/2, p1Floor.getHeight()/2);
-            if(numPlayers > 1){
-                p2Floor.draw(p2Floor.getWidth()/2+floorOffset, 0, p2Floor.getWidth()/2, p2Floor.getHeight()/2);
-            }
-        }else{
-            drawStageCalibration();
+            drawGrid();
             ofSetColor(255, 0, 255);
             font.drawString("FRONT OF STAGE", projectionFbo.getWidth()/2, 50);
             font.drawString("FRONT OF STAGE", 0, 50);
+        }else{
+            int x = 0;
+            int y = 0;
+            for(int i = 0; i < floors.size(); i++){
+                floors[i]->draw(x, y, floors[i]->getWidth()/2, floors[i]->getHeight()/2);
+                x+=floors[i]->getWidth()/2+floorOffset;
+                
+            }
         }
     }
     glPopMatrix();
     //    }
     projectionFbo.end();
     ofDisableAlphaBlending();
-
+    
     
     projectionFbo.draw(projectionViewport);
     if(bDrawCalibration){
@@ -260,9 +260,20 @@ void FloorView::setupGUI(){
     squareOptions.add(bSaveWarp.set("bSaveWarp", true));
     squareOptions.add(bDrawCalibration.set("bDrawCalibration", true));
     squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));
+
+    for(int i = 0; i < floors.size(); i++){
+        squareOptions.add(floors[i]->squareOptions);
+    }
     
-    squareOptions.add(p1Floor.squareOptions);
-    squareOptions.add(p2Floor.squareOptions);
+    
+    floorGUI.setup(squareOptions);
+    
+    floorGUI.setSize(250, 400);
+    floorGUI.setWidthElements(250);
+    floorGUI.setPosition(ofGetScreenWidth()-250, 0);
+    
+    
+    floorGUI.loadFromFile("projection.xml");
 }
 
 void FloorView::setMainView(bool view){
@@ -274,12 +285,12 @@ bool FloorView::isMain(){
 
 void FloorView::setupQuadWarp(){
     
-
-    float w = p1Floor.getWidth()+floorOffset;
+    
+    float w = floors[0]->getWidth()+floorOffset;
     if(numPlayers == 1){
-        w = p1Floor.getWidth()/2;
+        w = floors[0]->getWidth()/2;
     }
-    float h = p1Floor.getHeight()/2;
+    float h = floors[0]->getHeight()/2;
     float x = 0;
     float y = 0;
     
@@ -289,11 +300,11 @@ void FloorView::setupQuadWarp(){
     warpFloor.setBottomLeftCornerPosition( ofPoint( x, y + h ) );      // this is position of the quad warp corners, centering the image on the screen.
     warpFloor.setBottomRightCornerPosition( ofPoint( x + w, y + h ) ); // this is position of the quad warp corners, centering the image on the screen.
     if(numPlayers == 2){
-    warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getHeight() - projectionFbo.getHeight()/10, -p1Floor.getWidth()+floorOffset, -p1Floor.getHeight()/2));
+        warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getHeight() - projectionFbo.getHeight()/10, -floors[0]->getWidth()+floorOffset, -floors[0]->getHeight()/2));
     }else{
-            warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getWidth()- projectionFbo.getHeight()/10, -p1Floor.getWidth()/2, -p1Floor.getHeight()/2));
+        warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getWidth()- projectionFbo.getHeight()/10, -floors[0]->getWidth()/2, -floors[0]->getHeight()/2));
     }
     warpFloor.setup();
     warpFloor.load("warp-settings"+ofToString(numPlayers)+".xml");
- 
+    
 }
