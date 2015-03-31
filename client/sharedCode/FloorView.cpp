@@ -32,6 +32,11 @@ void FloorView::setup(int num, ofRectangle projector, ofRectangle main){
     mainViewport = main;
     numPlayers = num;
     projectionFbo.allocate(projectionViewport.width, projectionViewport.height, GL_RGBA, 4);
+    projectionFbo.begin();
+    ofClear(0, 0, 0, 0);
+    projectionFbo.end();
+    
+    
     setupGUI();
         
     bMainView = false;
@@ -220,12 +225,15 @@ void FloorView::drawProjections(){
     {
         
         if(bDrawCalibration){
-            
+    
             drawGrid();
+            ofPushStyle();
             ofSetColor(255, 0, 255);
             font.drawString("FRONT OF STAGE", projectionFbo.getWidth()/2, 50);
             font.drawString("FRONT OF STAGE", 0, 50);
+            ofPopStyle();
         }else{
+            ofSetColor(255, 255, 255);
             int x = 0;
             int y = 0;
             for(int i = 0; i < floors.size(); i++){
