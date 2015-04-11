@@ -52,7 +52,11 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
         lastBodyPlayerOne = ofGetElapsedTimef();
         musicMakerP1.analyze(*p1);
         clearOne = true;
-        
+          if(playerOne.getInt("Output Mode") == 1){
+        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
+    }else{
+        lastTriggerP1 = musicMakerP1.lastPianoTriggeredNote();
+    }
     }else if(ofGetElapsedTimef() - lastBodyPlayerOne > playerOne.getFloat("Body Drop Time") && clearOne){
         musicMakerP1.clearBodies();
         clearOne = false;
@@ -63,6 +67,11 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
         lastBodyPlayerTwo = ofGetElapsedTimef();
         musicMakerP2.analyze(*p2);
         clearTwo = true;
+		    if(numPlayers == 2 && playerTwo.getInt("Output Mode") == 1){
+        lastTriggerP2 = musicMakerP2.lastDrumTriggeredNote();
+    }else{
+        lastTriggerP2 = musicMakerP2.lastPianoTriggeredNote();
+    }
     }else if(ofGetElapsedTimef() - lastBodyPlayerTwo > playerOne.getFloat("Body Drop Time") && clearTwo){
         musicMakerP2.clearBodies();
         clearTwo = false;
@@ -70,16 +79,8 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
     }
   
     
-    if(playerOne.getInt("Output Mode") == 1){
-        lastTriggerP1 = musicMakerP1.lastDrumTriggeredNote();
-    }else{
-        lastTriggerP1 = musicMakerP1.lastPianoTriggeredNote();
-    }
-    if(numPlayers == 2 && playerTwo.getInt("Output Mode") == 1){
-        lastTriggerP2 = musicMakerP2.lastDrumTriggeredNote();
-    }else{
-        lastTriggerP2 = musicMakerP2.lastPianoTriggeredNote();
-    }
+  
+
 }
 void MidiView::draw(ofRectangle viewport){
     if(isMain()){
