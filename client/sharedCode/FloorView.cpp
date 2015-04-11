@@ -68,8 +68,6 @@ void FloorView::update(){
     }
 }
 void FloorView::draw(ofRectangle viewport){
-    
-    
     ofSetColor(255, 255, 255);
     projectionFbo.draw(viewport);
 }
