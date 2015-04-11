@@ -77,7 +77,7 @@ void Piano::setup(){
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-	midiOut->openVirtualPort("PIANO");
+	midiOut->openPort(1);
     
     
     skelView.setup(numPlayers, viewMain);
@@ -198,7 +198,6 @@ void Piano::draw(){
         midiView.draw(viewGrid[1]);
         floorView.draw(viewGrid[2]);
         tvView.draw(viewGrid[3]);
-        
         ofSetColor(255, 255, 255);
         ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetScreenWidth()-50, ofGetScreenHeight()-50);
     }
@@ -233,12 +232,10 @@ void Piano::draw(){
         ofSetColor(255, 255, 255);
         ofLine(viewMain.x, viewMain.y, viewMain.x+viewMain.width, viewMain.y+viewMain.height);
         ofLine(viewMain.x+viewMain.width, viewMain.y, viewMain.x, viewMain.y+viewMain.height);
-        
-        ofLine(tvRect.x, tvRect.y, tvRect.x+tvRect.width, tvRect.y+tvRect.height);
-        ofLine(tvRect.x+tvRect.width, tvRect.y, tvRect.x, tvRect.y+tvRect.height);
-        
         ofLine(projectorRect.x, projectorRect.y, projectorRect.x+projectorRect.width, projectorRect.y+projectorRect.height);
         ofLine(projectorRect.x+projectorRect.width, projectorRect.y, projectorRect.x, projectorRect.y+projectorRect.height);
+		ofLine(tvRect.x, tvRect.y, tvRect.x+tvRect.width, tvRect.y+tvRect.height);
+        ofLine(tvRect.x+tvRect.width, tvRect.y, tvRect.x, tvRect.y+tvRect.height);
     }
     
 }

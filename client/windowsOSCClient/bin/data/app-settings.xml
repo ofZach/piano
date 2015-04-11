@@ -4,11 +4,11 @@
 	<TV_Size_and_Postition>3200, 0, 0, 1920, 1080</TV_Size_and_Postition>
 <Microsoft_Music_Box/>
 	<Projector_X_Pos>1920</Projector_X_Pos>
-	<Projector_Y_Pos>2</Projector_Y_Pos>
+	<Projector_Y_Pos>0</Projector_Y_Pos>
 	<Projector_Screen_Width_In_Pixels>1280</Projector_Screen_Width_In_Pixels>
 	<Projector_Screen_Height_In_Pixel>768</Projector_Screen_Height_In_Pixel>
-	<TV_X_Pos>1920</TV_X_Pos>
+	<TV_X_Pos>3200</TV_X_Pos>
 	<TV_Y_Pos>0</TV_Y_Pos>
 	<TV_Screen_Width_In_Pixels>1920</TV_Screen_Width_In_Pixels>
-	<TV_Screen_Height_In_Pixel>1080.69</TV_Screen_Height_In_Pixel>
+	<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
 </Microsoft_Music_Box>
