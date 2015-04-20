@@ -1,0 +1,13 @@
+<TV_Controls>
+	<cameraAngle>248.4</cameraAngle>
+	<cameraRadius>725</cameraRadius>
+	<cameraHeight>330</cameraHeight>
+	<View_Height>135</View_Height>
+	<swayCamera>1</swayCamera>
+	<swayRate>0.35965</swayRate>
+	<swayAmount>0.75</swayAmount>
+	<bDrawHairyMan_Player_Two>0</bDrawHairyMan_Player_Two>
+	<bDrawHairyMan_Player_One>0</bDrawHairyMan_Player_One>
+<TV_Controls/>
+<energyAdder>0.309</energyAdder>
+</TV_Controls>

@@ -7,12 +7,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp">
       <Filter>addons\ofxGui\src</Filter>
     </ClCompile>
@@ -70,48 +64,6 @@
     <ClCompile Include="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.cpp">
       <Filter>addons\ofxOpenCv\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\NetworkingUtils.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip\posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix\UdpSocket.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip\posix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtilsWin.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocketWin.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
       <Filter>addons\ofxXmlSettings\src</Filter>
     </ClCompile>
@@ -127,110 +79,8 @@
     <ClCompile Include="..\..\..\addons\ofxBlur\src\ofxBlur.cpp">
       <Filter>addons\ofxBlur\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiBaseObject.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiCallback.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiCallbackValue.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiColor.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTextBase.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiType2DSlider.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeChartPlotter.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeCustom.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeDrawable.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeFileLister.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeLabel.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeLogger.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeMultiToggle.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypePanel.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeSlider.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeText.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeTextDropDown.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeToggle.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeVairableLister.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiTypeVideo.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\guiValue.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\ofxControlPanel.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\simpleColor.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\simpleFileLister.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxControlPanel\src\simpleLogger.cpp">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxHistoryPlot\src\ofxHistoryPlot.cpp">
       <Filter>addons\ofxHistoryPlot\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Hand.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Interpreter.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Joint.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Skeleton.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Logger.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Mapper.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Parser.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\Draw\BodyRenderer.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src\Draw</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxKinectV2-OSC\src\ofxKinectV2OSC.cpp">
-      <Filter>addons\ofxKinectV2-OSC\src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiIn.cpp">
       <Filter>addons\ofxMidi\src\desktop</Filter>
@@ -259,71 +109,71 @@
     <ClCompile Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.cpp">
       <Filter>addons\ofxQuadWarp\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonAnalyser.cpp">
+      <Filter>src\kinect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonLayout.cpp">
+      <Filter>src\kinect</Filter>
+    </ClCompile>
     <ClCompile Include="..\sharedCode\kinect\kinectBody.cpp">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\kinect\kinectBodyAnalyser.cpp">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\kinect\kinectButton.cpp">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\kinect\kinectSkeleton.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonAnalyser.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sharedCode\midi\midiTrigger.cpp">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\midi\musicMaker.cpp">
-      <Filter>src</Filter>
+      <Filter>src\midi</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\midi\skeletonMidiController.cpp">
-      <Filter>src</Filter>
+      <Filter>src\midi</Filter>
     </ClCompile>
-    <ClCompile Include="..\sharedCode\playback\udpPacketReplayer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sharedCode\utils\AppSettings.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sharedCode\utils\Graph.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\midi\midiTrigger.cpp">
+      <Filter>src\midi</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\utils\OrthoCamera.cpp">
-      <Filter>src</Filter>
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\sharedCode\views\FloorView.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\utils\AppSettings.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\sharedCode\views\MidiView.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sharedCode\views\Piano.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\utils\Graph.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\views\SkeletonView.cpp">
-      <Filter>src</Filter>
+      <Filter>src\views</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\views\TVView.cpp">
-      <Filter>src</Filter>
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="..\sharedCode\visuals\Floor.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\debugView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="..\sharedCode\visuals\gridInfo.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\FloorView.cpp">
+      <Filter>src\views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sharedCode\views\MidiView.cpp">
+      <Filter>src\views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sharedCode\views\Piano.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\visuals\traveler.cpp">
-      <Filter>src</Filter>
+      <Filter>src\visuals</Filter>
     </ClCompile>
     <ClCompile Include="..\sharedCode\visuals\tvScreen.cpp">
-      <Filter>src</Filter>
+      <Filter>src\visuals</Filter>
     </ClCompile>
-    <ClCompile Include="kinectSkeletonLayout.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\visuals\Floor.cpp">
+      <Filter>src\visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sharedCode\visuals\gridInfo.cpp">
+      <Filter>src\visuals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -405,33 +255,6 @@
     <Filter Include="addons\ofxOpenCv\libs\opencv\include\opencv2\video">
       <UniqueIdentifier>{61E04F54-C77F-B674-C2AB-FEC2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="addons\ofxOsc">
-      <UniqueIdentifier>{D91DCA33-6E5D-4481-2AEC-9FBB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\src">
-      <UniqueIdentifier>{B9DD339A-D93D-92A1-0A2F-4B41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs">
-      <UniqueIdentifier>{99ECA1D9-873F-4622-8FC0-FC7B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack">
-      <UniqueIdentifier>{D3A98534-1602-4FEF-57A6-6593}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack\src">
-      <UniqueIdentifier>{BFB5BB47-98C8-BBCB-3066-1046}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip">
-      <UniqueIdentifier>{5A029128-EB41-95C5-CBC0-CDED}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip\posix">
-      <UniqueIdentifier>{354C95CF-A234-0360-C6BC-AF41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack\src\ip\win32">
-      <UniqueIdentifier>{79DFDFE2-400B-8654-3675-01A3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxOsc\libs\oscpack\src\osc">
-      <UniqueIdentifier>{EDACB89C-9768-9551-4D41-B590}</UniqueIdentifier>
-    </Filter>
     <Filter Include="addons\ofxXmlSettings">
       <UniqueIdentifier>{877F005D-13E6-0592-1D97-F2E3}</UniqueIdentifier>
     </Filter>
@@ -447,32 +270,11 @@
     <Filter Include="addons\ofxBlur\src">
       <UniqueIdentifier>{FBDBDAE4-4B3B-DB8A-7F78-65B9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="addons\ofxControlPanel">
-      <UniqueIdentifier>{03749F6C-8FD5-97A9-12FA-65FC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxControlPanel\src">
-      <UniqueIdentifier>{BD058F6B-5ECD-B760-76A9-43AC}</UniqueIdentifier>
-    </Filter>
     <Filter Include="addons\ofxHistoryPlot">
       <UniqueIdentifier>{2F9DDC8E-FFFC-BC37-20D9-E083}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxHistoryPlot\src">
       <UniqueIdentifier>{4632D338-E39F-58E9-A200-A17B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxKinectV2-OSC">
-      <UniqueIdentifier>{F0D87036-4F02-FB7C-230B-2412}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxKinectV2-OSC\src">
-      <UniqueIdentifier>{E56E661B-BEA5-681A-A22E-55C4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxKinectV2-OSC\src\Body">
-      <UniqueIdentifier>{C7AFF248-8116-11EB-C3A1-6061}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxKinectV2-OSC\src\DataTransform">
-      <UniqueIdentifier>{7747AD9E-7338-37A4-6E0E-244B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxKinectV2-OSC\src\Draw">
-      <UniqueIdentifier>{326DB2CF-57B9-0216-50F7-DF70}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxMidi">
       <UniqueIdentifier>{4DF4D977-A753-531B-5057-9AC1}</UniqueIdentifier>
@@ -495,11 +297,23 @@
     <Filter Include="addons\ofxQuadWarp\src">
       <UniqueIdentifier>{34D69083-73CD-9EEB-CB0A-6F23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\visuals">
+      <UniqueIdentifier>{9b9bebe1-0198-43a7-a9bf-e1ae9e7e1134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\views">
+      <UniqueIdentifier>{f5402bc7-2cb5-4b56-a786-9961046b9d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kinect">
+      <UniqueIdentifier>{3570e644-a5a6-434f-8864-97c883a0d20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{1a26fd9d-30b7-4a05-ab1e-6b6406d882bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\midi">
+      <UniqueIdentifier>{d11fee63-5a3a-4da2-9e02-0dea6cdaf57e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -824,66 +638,6 @@
     <ClInclude Include="..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video\video.hpp">
       <Filter>addons\ofxOpenCv\libs\opencv\include\opencv2\video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h">
-      <Filter>addons\ofxOsc\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h">
-      <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
       <Filter>addons\ofxXmlSettings\src</Filter>
     </ClInclude>
@@ -893,122 +647,8 @@
     <ClInclude Include="..\..\..\addons\ofxBlur\src\ofxBlur.h">
       <Filter>addons\ofxBlur\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiBaseObject.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiCallback.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiCallbackValue.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiColor.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiCustomImpl.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiIncludes.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTextBase.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiType2DSlider.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeChartPlotter.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeCustom.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeDrawable.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeFileLister.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeLabel.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeLogger.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeMultiToggle.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypePanel.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeSlider.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeText.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeTextDropDown.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeToggle.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeVairableLister.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiTypeVideo.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiValue.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\guiVariablePointer.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\ofxControlPanel.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\simpleColor.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\simpleFileLister.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxControlPanel\src\simpleLogger.h">
-      <Filter>addons\ofxControlPanel\src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxHistoryPlot\src\ofxHistoryPlot.h">
       <Filter>addons\ofxHistoryPlot\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Hand.h">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Interpreter.h">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Joint.h">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\Body\Skeleton.h">
-      <Filter>addons\ofxKinectV2-OSC\src\Body</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Gesture.h">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Logger.h">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Mapper.h">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\DataTransform\Parser.h">
-      <Filter>addons\ofxKinectV2-OSC\src\DataTransform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\Draw\BodyRenderer.h">
-      <Filter>addons\ofxKinectV2-OSC\src\Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxKinectV2-OSC\src\ofxKinectV2OSC.h">
-      <Filter>addons\ofxKinectV2-OSC\src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxMidi\src\desktop\ofxRtMidiIn.h">
       <Filter>addons\ofxMidi\src\desktop</Filter>
@@ -1043,86 +683,91 @@
     <ClInclude Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.h">
       <Filter>addons\ofxQuadWarp\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\kinect\kinectBody.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\kinect\kinectBodyAnalyser.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\kinect\kinectButton.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\kinect\kinectSkeleton.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\sharedCode\kinect\kinectSkeletonAnalyser.h">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\kinect\kinectSkeletonLayout.h">
-      <Filter>src</Filter>
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\midi\midiTrigger.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectBody.h">
+      <Filter>src\kinect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\kinect\kinectBodyAnalyser.h">
+      <Filter>src\kinect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\kinect\kinectButton.h">
+      <Filter>src\kinect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeleton.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\midi\musicMaker.h">
-      <Filter>src</Filter>
+      <Filter>src\midi</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\midi\skeletonMidiController.h">
-      <Filter>src</Filter>
+      <Filter>src\midi</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\playback\udpPacketReplayer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\utils\AppSettings.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\utils\fixed_deque.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\utils\Graph.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sharedCode\utils\LocalAddressGrabber.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\midi\midiTrigger.h">
+      <Filter>src\midi</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\utils\OrthoCamera.h">
-      <Filter>src</Filter>
+      <Filter>src\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\utils\singleton.h">
-      <Filter>src</Filter>
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\views\FloorView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\AppSettings.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\views\MidiView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\fixed_deque.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\utils\Graph.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\utils\LocalAddressGrabber.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\views\Piano.h">
-      <Filter>src</Filter>
+      <Filter>src\views</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\views\SkeletonView.h">
-      <Filter>src</Filter>
+      <Filter>src\views</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\views\TVView.h">
-      <Filter>src</Filter>
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\visuals\Floor.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\debugView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\visuals\Grid.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\FloorView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="..\sharedCode\visuals\gridInfo.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\MidiView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\visuals\traveler.h">
-      <Filter>src</Filter>
+      <Filter>src\visuals</Filter>
     </ClInclude>
     <ClInclude Include="..\sharedCode\visuals\tvScreen.h">
-      <Filter>src</Filter>
+      <Filter>src\visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\visuals\Floor.h">
+      <Filter>src\visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\visuals\Grid.h">
+      <Filter>src\visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\visuals\gridInfo.h">
+      <Filter>src\visuals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\sharedCode\visuals\prng_engine.hh">
+      <Filter>src\visuals</Filter>
+    </None>
   </ItemGroup>
 </Project>

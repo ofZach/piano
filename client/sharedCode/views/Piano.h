@@ -53,8 +53,7 @@ public:
     void addLineTracePlayerTwo(int & i);
     void triggerTrianglePlayerTwo(int & i);
     void addImpulsePlayerTwo(int & i);
-    
-private:    
+        
     vector<ofFbo*> views;
     
     AppSettings settings;

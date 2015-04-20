@@ -9,8 +9,7 @@
 #define SKELETONVIEW_H
 #pragma once
 #include "ofMain.h"
-#include "Skeleton.h"
-#include "ofxKinectV2OSC.h"
+#include "ofxKinectForWindows2.h"
 #include "kinectBody.h"
 #include "kinectSkeleton.h"
 #include "kinectBodyAnalyser.h"
@@ -44,8 +43,7 @@ public:
     ofParameterGroup stageParams;
 private:
     //Kinect
-    ofxKinectV2OSC kinect;
-
+    ofxKFW2::Device kinect;
     int playerOneMode;
     int playerTwoMode;
     
@@ -53,7 +51,7 @@ private:
     ofMatrix4x4 mat;
     
     //Data Holders
-    Skeleton* skeleton;
+    ofxKFW2::Data::Body* skeleton;
     kinectSkeleton KS;
     kinectBody KB;
     
@@ -64,9 +62,9 @@ private:
     ofPoint p1SwitchMode, p2SwitchMode;
     
     //Collections
-    vector<Skeleton>* skeletons;
-    map<string, kinectSkeleton> ksMap;
-    map<string, kinectBody> bodyMap;
+    vector<ofxKFW2::Data::Body> skeletons;
+    map<int, kinectSkeleton> ksMap;
+    map<int, kinectBody> bodyMap;
 
     int numPlayers;
     //3D Drawing

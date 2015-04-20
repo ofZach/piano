@@ -17,7 +17,7 @@ public:
     vector<string> gestureNames;
     map < string, ofxHistoryPlot * > nameToHistoryPlot;
     
-    vector < map<string, Gesture > >  gestureHistory;
+    //vector < map<string, Gesture > >  gestureHistory;
     vector < kinectSkeleton > history;
     vector < ofPoint > velocity;
     vector < float > velLen;

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxKinectV2OSC.h"
+#include "ofxKinectForWindows2.h"
 #include "kinectSkeletonLayout.h"
 
 
@@ -16,7 +16,7 @@ public:
     ofPoint getLeftPoint ( int name );  
     ofPoint getRightPoint ( int name);   
     ofPoint getPoint(int name, int side);
-    void setFromSkeleton( Skeleton & sk, ofMatrix4x4 transform = ofMatrix4x4());
+    void setFromSkeleton(ofxKFW2::Data::Body& sk, ofMatrix4x4 transform = ofMatrix4x4());
     void draw();
     void drawDebug(bool boundingbox);
     void drawBones();
@@ -26,7 +26,7 @@ public:
     vector < ofPoint > pts;
     vector < ofPoint > pts2d;           // normalized 2d points for this body
     vector < int > trackingStates;
-    map<string, Gesture> gestures;   
+//    map<string, Gesture> gestures;   
     float shouldersWidth;
     float armLeftExtendedPct;
     float armRightExtendedPct;

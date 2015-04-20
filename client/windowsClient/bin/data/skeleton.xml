@@ -1,0 +1,20 @@
+<skeleton_transform>
+	<scaleX>1</scaleX>
+	<scaleY>1</scaleY>
+	<scaleZ>14.569</scaleZ>
+    <offsetX>-1184</offsetX>
+    <offsetY>208</offsetY>
+    <offsetZ>2000</offsetZ>
+<Stage_Settings>
+		<Left_Stage_X>-128.571</Left_Stage_X>
+		<Left_Stage_Y>-148.98</Left_Stage_Y>
+		<Left_Stage_Z>2.0408</Left_Stage_Z>
+		<Right_Stage_X>132.653</Right_Stage_X>
+		<Right_Stage_Y>-185.714</Right_Stage_Y>
+		<Right_Stage_Z>2.0408</Right_Stage_Z>
+		<Stage_Size>214.857</Stage_Size>
+	<Calibration_View>0</Calibration_View>
+	</Stage_Settings>
+<Calibration_View>0</Calibration_View>
+<skeleton_transform/>
+</skeleton_transform>

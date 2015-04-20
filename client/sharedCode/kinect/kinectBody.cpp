@@ -180,10 +180,10 @@ bool kinectBody::addSkeleton( kinectSkeleton & KS){
         history.erase(history.begin());
     }
     
-    gestureHistory.push_back(KS.gestures);
-    if(gestureHistory.size() > nFramesHistory){
-        gestureHistory.erase((gestureHistory.begin()));
-    }
+    //gestureHistory.push_back(KS.gestures);
+    //if(gestureHistory.size() > nFramesHistory){
+    //    gestureHistory.erase((gestureHistory.begin()));
+    //}
     
     return true;
     
@@ -217,12 +217,12 @@ void kinectBody::update(){
     
     
     
-    for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
-        if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
-            gesturePlots[iter->first]->update(iter->second.value);
-        }
-    }
-    
+    //for(map<string, Gesture>::iterator iter = gestureHistory.back().begin(); iter != gestureHistory.back().end(); ++iter){
+    //    if(find(gestureNames.begin(), gestureNames.end(), iter->first) != gestureNames.end()){
+    //        gesturePlots[iter->first]->update(iter->second.value);
+    //    }
+    //}
+    //
     
     
     

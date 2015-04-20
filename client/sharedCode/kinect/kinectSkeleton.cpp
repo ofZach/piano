@@ -53,62 +53,62 @@ ofPoint kinectSkeleton::getPoint(int name, int side){
 
 
 
-void kinectSkeleton::setFromSkeleton( Skeleton & sk, ofMatrix4x4 transform){
-	pts[SKELETOR::Instance()->nameToIndex["ThumbRight"]].set(sk.getThumbRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["SpineBase"]].set(sk.getSpineBase().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["SpineMid"]].set(sk.getSpineMid().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["Neck"]].set(sk.getNeck().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["Head"]].set(sk.getHead().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["ShoulderLeft"]].set(sk.getShoulderLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["ElbowLeft"]].set(sk.getElbowLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["WristLeft"]].set(sk.getWristLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HandLeft"]].set(sk.getHandLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["ShoulderRight"]].set(sk.getShoulderRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["ElbowRight"]].set(sk.getElbowRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["WristRight"]].set(sk.getWristRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HandRight"]].set(sk.getHandRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HipLeft"]].set(sk.getHipLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["KneeLeft"]].set(sk.getKneeLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["AnkleLeft"]].set(sk.getAnkleLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["FootLeft"]].set(sk.getFootLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HipRight"]].set(sk.getHipRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["KneeRight"]].set(sk.getKneeRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["AnkleRight"]].set(sk.getAnkleRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["FootRight"]].set(sk.getFootRight().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["SpineShoulder"]].set(sk.getSpineShoulder().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HandTipLeft"]].set(sk.getHandTipLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["ThumbLeft"]].set(sk.getThumbLeft().getPoint() * transform);
-	pts[SKELETOR::Instance()->nameToIndex["HandTipRight"]].set(sk.getHandTipRight().getPoint() * transform);
+void kinectSkeleton::setFromSkeleton( ofxKFW2::Data::Body& sk, ofMatrix4x4 transform){
+
+	pts[SKELETOR::Instance()->nameToIndex["ThumbRight"]].set(sk.joints[JointType_ThumbRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["SpineBase"]].set(sk.joints[JointType_SpineBase].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["SpineMid"]].set(sk.joints[JointType_SpineMid].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["Neck"]].set(sk.joints[JointType_Neck].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["Head"]].set(sk.joints[JointType_Head].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["ShoulderLeft"]].set(sk.joints[JointType_ShoulderLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["ElbowLeft"]].set(sk.joints[JointType_ElbowLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["WristLeft"]].set(sk.joints[JointType_WristLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HandLeft"]].set(sk.joints[JointType_HandLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["ShoulderRight"]].set(sk.joints[JointType_ShoulderRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["ElbowRight"]].set(sk.joints[JointType_ElbowRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["WristRight"]].set(sk.joints[JointType_WristRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HandRight"]].set(sk.joints[JointType_HandRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HipLeft"]].set(sk.joints[JointType_HipLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["KneeLeft"]].set(sk.joints[JointType_KneeLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["AnkleLeft"]].set(sk.joints[JointType_AnkleLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["FootLeft"]].set(sk.joints[JointType_FootLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HipRight"]].set(sk.joints[JointType_HipRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["KneeRight"]].set(sk.joints[JointType_KneeRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["AnkleRight"]].set(sk.joints[JointType_AnkleRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["FootRight"]].set(sk.joints[JointType_FootRight].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["SpineShoulder"]].set(sk.joints[JointType_SpineShoulder].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HandTipLeft"]].set(sk.joints[JointType_HandTipLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["ThumbLeft"]].set(sk.joints[JointType_ThumbLeft].getPosition() * transform);
+	pts[SKELETOR::Instance()->nameToIndex["HandTipRight"]].set(sk.joints[JointType_HandTipRight].getPosition() * transform);
 
 
-	trackingStates[SKELETOR::Instance()->nameToIndex["ThumbRight"]] = sk.getThumbRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["SpineBase"]] = sk.getSpineBase().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["SpineMid"]] = sk.getSpineMid().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["Neck"]] = sk.getNeck().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["Head"]] = sk.getHead().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["ShoulderLeft"]] = sk.getShoulderLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["ElbowLeft"]] = sk.getElbowLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["WristLeft"]] = sk.getWristLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HandLeft"]] = sk.getHandLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["ShoulderRight"]] = sk.getShoulderRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["ElbowRight"]] = sk.getElbowRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["WristRight"]] = sk.getWristRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HandRight"]] = sk.getHandRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HipLeft"]] = sk.getHipLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["KneeLeft"]] = sk.getKneeLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["AnkleLeft"]] = sk.getAnkleLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["FootLeft"]] = sk.getFootLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HipRight"]] = sk.getHipRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["KneeRight"]] = sk.getKneeRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["AnkleRight"]] = sk.getAnkleRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["FootRight"]] = sk.getFootRight().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["SpineShoulder"]] = sk.getSpineShoulder().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HandTipLeft"]] = sk.getHandTipLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["ThumbLeft"]] = sk.getThumbLeft().getTrackingState();
-	trackingStates[SKELETOR::Instance()->nameToIndex["HandTipRight"]] = sk.getHandTipRight().getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["SpineBase"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["SpineMid"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["Neck"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["Head"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["ShoulderLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["ElbowLeft"]] =sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["WristLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HandLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["ShoulderRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["ElbowRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["WristRight"]] =sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HandRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HipLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["KneeLeft"]] =sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["AnkleLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["FootLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HipRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["KneeRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["AnkleRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["FootRight"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["SpineShoulder"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HandTipLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["ThumbLeft"]] = sk.joints[JointType_ThumbRight].getTrackingState();
+	trackingStates[SKELETOR::Instance()->nameToIndex["HandTipRight"]] =sk.joints[JointType_ThumbRight].getTrackingState();
 
 
-	gestures = sk.gestures;
+	//gestures = sk.gestures;
 }
 
 void kinectSkeleton::draw(){
@@ -121,8 +121,8 @@ void kinectSkeleton::draw(){
 			continue;
 		}
 
-		if (trackingStates[i] == TRACKED) ofSetColor(255,255,255, 255);
-		else if (trackingStates[i] == INFERRED) ofSetColor(127,127,127, 255);
+		if (trackingStates[i] == TrackingState_Tracked) ofSetColor(255,255,255, 255);
+		else if (trackingStates[i] == TrackingState_Inferred) ofSetColor(127,127,127, 255);
 
 		else ofSetColor(255,0,0, 100);
 		ofPushMatrix();
@@ -311,23 +311,23 @@ void kinectSkeleton::drawBone(int indexA, int indexB){
 
 	int trackingState;
 
-	trackingState = TRACKED;
+	trackingState = TrackingState_Tracked;
 
-	if (trackingStates[indexA] == INFERRED ||
-		trackingStates[indexB] == INFERRED){
-			trackingState = INFERRED;
+	if (trackingStates[indexA] == TrackingState_Inferred ||
+		trackingStates[indexB] == TrackingState_Inferred){
+			trackingState = TrackingState_Inferred;
 	}
 
-	if (trackingStates[indexA] == NOT_TRACKED ||
-		trackingStates[indexB] == NOT_TRACKED){
-			trackingState = NOT_TRACKED;
+	if (trackingStates[indexA] == TrackingState_NotTracked ||
+		trackingStates[indexB] == TrackingState_NotTracked){
+			trackingState = TrackingState_Inferred;
 	}
 
-	if(trackingState == TRACKED) {
+	if(trackingState == TrackingState_Tracked) {
 		ofSetLineWidth(2);
 		ofSetColor(ofColor::white, 100);
 		ofLine( pts[indexA], pts[indexB] );
-	} else if(trackingState == INFERRED) {
+	} else if(trackingState == TrackingState_Inferred) {
 		ofSetLineWidth(2);
 		ofSetColor(ofColor::white, 100);
 		ofLine( pts[indexA], pts[indexB] );

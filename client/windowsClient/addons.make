@@ -1,11 +1,8 @@
 ofxGui
 ofxNetwork
 ofxOpenCv
-ofxOsc
 ofxXmlSettings
 ofxBlur
-ofxControlPanel
 ofxHistoryPlot
-ofxKinectV2-OSC
 ofxMidi
 ofxQuadWarp

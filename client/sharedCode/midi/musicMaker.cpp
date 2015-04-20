@@ -147,7 +147,7 @@ void musicMaker::setupMidiTriggers() {
 	skeletonMidi.setup(midiOut, channelOffset);
 }
 
-void musicMaker::addToDebugParamGroup ( ofParameterGroup & debugView){
+void musicMaker::addToDebugParamGroup( ofParameterGroup & debugView){
 	debugView.add(startNote.set("Start Note", 36, 0, 127));
 	debugView.add(numNotes.set("Num Note", 16, 0, 127));
 	debugView.add(smoothUpHistory.set("Smooth Up History", 0, 0, 1));
@@ -387,73 +387,73 @@ void musicMaker::updateGraphs(kinectBody &body) {
 		}
 	}
 
-	if(body.gestureHistory.size() > 0){
-		graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
-		graphs[1].addSample(body.gestureHistory.back()["kick_Right"].value);
-		graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
-		graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
+	//if(body.gestureHistory.size() > 0){
+	//	graphs[0].addSample(body.gestureHistory.back()["kick_Left"].value);
+	//	graphs[1].addSample(body.gestureHistory.back()["kick_Right"].value);
+	//	graphs[2].addSample(body.gestureHistory.back()["punch_Left"].value);
+	//	graphs[3].addSample(body.gestureHistory.back()["punch_Right"].value);
 
-		int foobarInt = 1;
+	//	int foobarInt = 1;
 
-		if(graphs[0].getTriggered()  && !triggers["kick_Left"]){
-			skeletonMidi.triggerKick(60, graphs[0].getNormalized()*127);
-			if(playerID == 0){
-				ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
-			}
-			if(playerID == 1){
-				ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
-			}
-			lastTrigger.time = ofGetElapsedTimef();
-			triggers["kick_Left"] = true;
-		}else if(!graphs[0].getTriggered()  && triggers["kick_Left"]){
-			triggers["kick_Left"] = false;
-		}
-		if(graphs[1].getTriggered()  && !triggers["kick_Right"]){
-			skeletonMidi.triggerKick(61, graphs[1].getNormalized()*127);
-			if(playerID == 0){
-				ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
-			}
-			if(playerID == 1){
-				ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
-			}
-			lastTrigger.time = ofGetElapsedTimef();
-		}else if(!graphs[1].getTriggered()  && triggers["kick_Right"]){
-			triggers["kick_Right"] = false;
-		}
-		if(graphs[2].getTriggered()&& !triggers["punch_Left"]){
-			skeletonMidi.triggerPunch(62, graphs[2].getNormalized()*127);
-			if(playerID == 0){
-				ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
-			}
-			if(playerID == 1){
-				ofNotifyEvent(triggerLinesPlayerTwo,foobarInt,this);
-			}
-			lastTrigger.time = ofGetElapsedTimef();
-		}else if(!graphs[2].getTriggered()  && triggers["punch_Left"]){
-			triggers["punch_Left"] = false;
-		}
-		if(graphs[3].getTriggered() && !triggers["punch_Right"]){
-			skeletonMidi.triggerPunch(63, graphs[3].getNormalized()*127);
-			if(playerID == 0){
-				ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
-			}
-			if(playerID == 1){
-				ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
-			}
-			lastTrigger.time = ofGetElapsedTimef();
-		}else if(!graphs[3].getTriggered() && triggers["punch_Right"]){
-			triggers["punch_Right"] = false;
-		}
+	//	if(graphs[0].getTriggered()  && !triggers["kick_Left"]){
+	//		skeletonMidi.triggerKick(60, graphs[0].getNormalized()*127);
+	//		if(playerID == 0){
+	//			ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
+	//		}
+	//		if(playerID == 1){
+	//			ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
+	//		}
+	//		lastTrigger.time = ofGetElapsedTimef();
+	//		triggers["kick_Left"] = true;
+	//	}else if(!graphs[0].getTriggered()  && triggers["kick_Left"]){
+	//		triggers["kick_Left"] = false;
+	//	}
+	//	if(graphs[1].getTriggered()  && !triggers["kick_Right"]){
+	//		skeletonMidi.triggerKick(61, graphs[1].getNormalized()*127);
+	//		if(playerID == 0){
+	//			ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
+	//		}
+	//		if(playerID == 1){
+	//			ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
+	//		}
+	//		lastTrigger.time = ofGetElapsedTimef();
+	//	}else if(!graphs[1].getTriggered()  && triggers["kick_Right"]){
+	//		triggers["kick_Right"] = false;
+	//	}
+	//	if(graphs[2].getTriggered()&& !triggers["punch_Left"]){
+	//		skeletonMidi.triggerPunch(62, graphs[2].getNormalized()*127);
+	//		if(playerID == 0){
+	//			ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
+	//		}
+	//		if(playerID == 1){
+	//			ofNotifyEvent(triggerLinesPlayerTwo,foobarInt,this);
+	//		}
+	//		lastTrigger.time = ofGetElapsedTimef();
+	//	}else if(!graphs[2].getTriggered()  && triggers["punch_Left"]){
+	//		triggers["punch_Left"] = false;
+	//	}
+	//	if(graphs[3].getTriggered() && !triggers["punch_Right"]){
+	//		skeletonMidi.triggerPunch(63, graphs[3].getNormalized()*127);
+	//		if(playerID == 0){
+	//			ofNotifyEvent(triggerLinesPlayerOne,foobarInt,  this);
+	//		}
+	//		if(playerID == 1){
+	//			ofNotifyEvent(triggerLinesPlayerTwo,foobarInt, this);
+	//		}
+	//		lastTrigger.time = ofGetElapsedTimef();
+	//	}else if(!graphs[3].getTriggered() && triggers["punch_Right"]){
+	//		triggers["punch_Right"] = false;
+	//	}
 
-		graphs[0].setSmoothing(smoothDownHistory, smoothUpHistory);
-		graphs[1].setSmoothing(smoothDownHistory, smoothUpHistory);
-		graphs[2].setSmoothing(smoothDownHistory, smoothUpHistory);
-		graphs[3].setSmoothing(smoothDownHistory, smoothUpHistory);
-		graphs[0].percentile = percentile;
-		graphs[1].thresholdSmoothing = thresholdSmoothing;
-		graphs[2].percentile = percentile;
-		graphs[3].thresholdSmoothing = thresholdSmoothing;
-	}
+	//	graphs[0].setSmoothing(smoothDownHistory, smoothUpHistory);
+	//	graphs[1].setSmoothing(smoothDownHistory, smoothUpHistory);
+	//	graphs[2].setSmoothing(smoothDownHistory, smoothUpHistory);
+	//	graphs[3].setSmoothing(smoothDownHistory, smoothUpHistory);
+	//	graphs[0].percentile = percentile;
+	//	graphs[1].thresholdSmoothing = thresholdSmoothing;
+	//	graphs[2].percentile = percentile;
+	//	graphs[3].thresholdSmoothing = thresholdSmoothing;
+	//}
 }
 
 void musicMaker::clearBodies(){
