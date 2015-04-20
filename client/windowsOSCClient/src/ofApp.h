@@ -25,13 +25,5 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     Piano views;
-    
-    void addLineTracePlayerOne();
-    void triggerTrianglePlayerOne();
-    void addImpulsePlayerOne();
-    
-    void addLineTracePlayerTwo();
-    void triggerTrianglePlayerTwo();
-    void addImpulsePlayerTwo();
 };
 #endif

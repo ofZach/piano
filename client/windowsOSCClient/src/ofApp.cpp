@@ -30,27 +30,6 @@ void ofApp::exit(){
     views.exit();
 }
 
-
-void ofApp::addLineTracePlayerOne(){
-    views.addLineTracePlayerOne();
-}
-void ofApp::triggerTrianglePlayerOne(){
-
-}
-void ofApp::addImpulsePlayerOne(){
-    views.addImpulsePlayerOne();
-}
-
-void ofApp::addLineTracePlayerTwo(){
-    views.addLineTracePlayerTwo();
-}
-void ofApp::triggerTrianglePlayerTwo(){
-    
-}
-void ofApp::addImpulsePlayerTwo(){
-    views.addImpulsePlayerTwo();
-}
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key == OF_KEY_LEFT){

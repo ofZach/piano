@@ -1,0 +1,10 @@
+ofxGui
+ofxNetwork
+ofxOpenCv
+ofxOsc
+ofxXmlSettings
+ofxBlur
+ofxHistoryPlot
+ofxKinectForWindows2
+ofxMidi
+ofxQuadWarp

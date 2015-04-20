@@ -58,7 +58,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxGui\libs;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxOpenCv\libs;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\contrib;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\core;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\features2d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\flann;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\gpu;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\highgui;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\legacy;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ml;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ts;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video;..\..\..\addons\ofxOpenCv\libs\opencv\lib;..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxBlur\libs;..\..\..\addons\ofxBlur\src;..\..\..\addons\ofxControlPanel\libs;..\..\..\addons\ofxControlPanel\src;..\..\..\addons\ofxHistoryPlot\libs;..\..\..\addons\ofxHistoryPlot\src;..\..\..\addons\ofxKinectV2-OSC\libs;..\..\..\addons\ofxKinectV2-OSC\src;..\..\..\addons\ofxKinectV2-OSC\src\Body;..\..\..\addons\ofxKinectV2-OSC\src\DataTransform;..\..\..\addons\ofxKinectV2-OSC\src\Draw;..\..\..\addons\ofxMidi\libs;..\..\..\addons\ofxMidi\src;..\..\..\addons\ofxMidi\libs\pgmidi;..\..\..\addons\ofxMidi\libs\rtmidi;..\..\..\addons\ofxMidi\src\desktop;..\..\..\addons\ofxMidi\src\ios;..\..\..\addons\ofxQuadWarp\libs;..\..\..\addons\ofxQuadWarp\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sharedCode\views;..\sharedCode\utils;..\sharedCode\playback;..\sharedCode\midi;..\sharedCode\visuals;..\sharedCode\kinect;%(AdditionalIncludeDirectories);..\..\..\addons\ofxGui\libs;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxOpenCv\libs;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\contrib;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\core;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\features2d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\flann;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\gpu;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\highgui;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\legacy;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ml;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ts;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video;..\..\..\addons\ofxOpenCv\libs\opencv\lib;..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxBlur\libs;..\..\..\addons\ofxBlur\src;..\..\..\addons\ofxControlPanel\libs;..\..\..\addons\ofxControlPanel\src;..\..\..\addons\ofxHistoryPlot\libs;..\..\..\addons\ofxHistoryPlot\src;..\..\..\addons\ofxKinectV2-OSC\libs;..\..\..\addons\ofxKinectV2-OSC\src;..\..\..\addons\ofxKinectV2-OSC\src\Body;..\..\..\addons\ofxKinectV2-OSC\src\DataTransform;..\..\..\addons\ofxKinectV2-OSC\src\Draw;..\..\..\addons\ofxMidi\libs;..\..\..\addons\ofxMidi\src;..\..\..\addons\ofxMidi\libs\pgmidi;..\..\..\addons\ofxMidi\libs\rtmidi;..\..\..\addons\ofxMidi\src\desktop;..\..\..\addons\ofxMidi\src\ios;..\..\..\addons\ofxQuadWarp\libs;..\..\..\addons\ofxQuadWarp\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -75,7 +75,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxGui\libs;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxOpenCv\libs;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\contrib;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\core;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\features2d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\flann;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\gpu;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\highgui;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\legacy;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ml;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ts;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video;..\..\..\addons\ofxOpenCv\libs\opencv\lib;..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxBlur\libs;..\..\..\addons\ofxBlur\src;..\..\..\addons\ofxControlPanel\libs;..\..\..\addons\ofxControlPanel\src;..\..\..\addons\ofxHistoryPlot\libs;..\..\..\addons\ofxHistoryPlot\src;..\..\..\addons\ofxKinectV2-OSC\libs;..\..\..\addons\ofxKinectV2-OSC\src;..\..\..\addons\ofxKinectV2-OSC\src\Body;..\..\..\addons\ofxKinectV2-OSC\src\DataTransform;..\..\..\addons\ofxKinectV2-OSC\src\Draw;..\..\..\addons\ofxMidi\libs;..\..\..\addons\ofxMidi\src;..\..\..\addons\ofxMidi\libs\pgmidi;..\..\..\addons\ofxMidi\libs\rtmidi;..\..\..\addons\ofxMidi\src\desktop;..\..\..\addons\ofxMidi\src\ios;..\..\..\addons\ofxQuadWarp\libs;..\..\..\addons\ofxQuadWarp\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sharedCode\playback;..\sharedCode\midi;..\sharedCode\visuals;..\sharedCode\views;..\sharedCode\utils;..\sharedCode\kinect;%(AdditionalIncludeDirectories);..\..\..\addons\ofxGui\libs;..\..\..\addons\ofxGui\src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxOpenCv\libs;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\calib3d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\contrib;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\core;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\features2d;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\flann;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\gpu;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\highgui;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\imgproc;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\legacy;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ml;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\objdetect;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\ts;..\..\..\addons\ofxOpenCv\libs\opencv\include\opencv2\video;..\..\..\addons\ofxOpenCv\libs\opencv\lib;..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxBlur\libs;..\..\..\addons\ofxBlur\src;..\..\..\addons\ofxControlPanel\libs;..\..\..\addons\ofxControlPanel\src;..\..\..\addons\ofxHistoryPlot\libs;..\..\..\addons\ofxHistoryPlot\src;..\..\..\addons\ofxKinectV2-OSC\libs;..\..\..\addons\ofxKinectV2-OSC\src;..\..\..\addons\ofxKinectV2-OSC\src\Body;..\..\..\addons\ofxKinectV2-OSC\src\DataTransform;..\..\..\addons\ofxKinectV2-OSC\src\Draw;..\..\..\addons\ofxMidi\libs;..\..\..\addons\ofxMidi\src;..\..\..\addons\ofxMidi\libs\pgmidi;..\..\..\addons\ofxMidi\libs\rtmidi;..\..\..\addons\ofxMidi\src\desktop;..\..\..\addons\ofxMidi\src\ios;..\..\..\addons\ofxQuadWarp\libs;..\..\..\addons\ofxQuadWarp\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
@@ -90,21 +90,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\AppSettings.cpp" />
-    <ClCompile Include="src\Floor.cpp" />
-    <ClCompile Include="src\FloorView.cpp" />
-    <ClCompile Include="src\Graph.cpp" />
-    <ClCompile Include="src\gridInfo.cpp" />
-    <ClCompile Include="src\kinectBody.cpp" />
-    <ClCompile Include="src\kinectBodyAnalyser.cpp" />
-    <ClCompile Include="src\kinectButton.cpp" />
-    <ClCompile Include="src\kinectSkeleton.cpp" />
-    <ClCompile Include="src\kinectSkeletonAnalyser.cpp" />
-    <ClCompile Include="src\kinectSkeletonLayout.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectBody.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectBodyAnalyser.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectButton.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeleton.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonAnalyser.cpp" />
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonLayout.cpp" />
+    <ClCompile Include="..\sharedCode\midi\midiTrigger.cpp" />
+    <ClCompile Include="..\sharedCode\midi\musicMaker.cpp" />
+    <ClCompile Include="..\sharedCode\midi\skeletonMidiController.cpp" />
+    <ClCompile Include="..\sharedCode\playback\udpPacketReplayer.cpp" />
+    <ClCompile Include="..\sharedCode\utils\AppSettings.cpp" />
+    <ClCompile Include="..\sharedCode\utils\Graph.cpp" />
+    <ClCompile Include="..\sharedCode\utils\OrthoCamera.cpp" />
+    <ClCompile Include="..\sharedCode\views\debugView.cpp" />
+    <ClCompile Include="..\sharedCode\views\FloorView.cpp" />
+    <ClCompile Include="..\sharedCode\views\MidiView.cpp" />
+    <ClCompile Include="..\sharedCode\views\Piano.cpp" />
+    <ClCompile Include="..\sharedCode\views\SkeletonView.cpp" />
+    <ClCompile Include="..\sharedCode\views\TVView.cpp" />
+    <ClCompile Include="..\sharedCode\visuals\Floor.cpp" />
+    <ClCompile Include="..\sharedCode\visuals\gridInfo.cpp" />
+    <ClCompile Include="..\sharedCode\visuals\traveler.cpp" />
+    <ClCompile Include="..\sharedCode\visuals\tvScreen.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\midiTrigger.cpp" />
-    <ClCompile Include="src\MidiView.cpp" />
-    <ClCompile Include="src\musicMaker.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp" />
@@ -188,32 +197,35 @@
     <ClCompile Include="..\..\..\addons\ofxMidi\src\ofxMidiOut.cpp" />
     <ClCompile Include="..\..\..\addons\ofxMidi\libs\rtmidi\RtMidi.cpp" />
     <ClCompile Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.cpp" />
-    <ClCompile Include="src\OrthoCamera.cpp" />
-    <ClCompile Include="src\Piano.cpp" />
-    <ClCompile Include="src\skeletonMidiController.cpp" />
-    <ClCompile Include="src\SkeletonView.cpp" />
-    <ClCompile Include="src\traveler.cpp" />
-    <ClCompile Include="src\tvScreen.cpp" />
-    <ClCompile Include="src\TVView.cpp" />
-    <ClCompile Include="src\udpPacketReplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AppSettings.h" />
-    <ClInclude Include="src\fixed_deque.h" />
-    <ClInclude Include="src\Floor.h" />
-    <ClInclude Include="src\FloorView.h" />
-    <ClInclude Include="src\Graph.h" />
-    <ClInclude Include="src\Grid.h" />
-    <ClInclude Include="src\gridInfo.h" />
-    <ClInclude Include="src\kinectBody.h" />
-    <ClInclude Include="src\kinectBodyAnalyser.h" />
-    <ClInclude Include="src\kinectButton.h" />
-    <ClInclude Include="src\kinectSkeleton.h" />
-    <ClInclude Include="src\kinectSkeletonAnalyser.h" />
-    <ClInclude Include="src\kinectSkeletonLayout.h" />
-    <ClInclude Include="src\midiTrigger.h" />
-    <ClInclude Include="src\MidiView.h" />
-    <ClInclude Include="src\musicMaker.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectBody.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectBodyAnalyser.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectButton.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeleton.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeletonAnalyser.h" />
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeletonLayout.h" />
+    <ClInclude Include="..\sharedCode\midi\midiTrigger.h" />
+    <ClInclude Include="..\sharedCode\midi\musicMaker.h" />
+    <ClInclude Include="..\sharedCode\midi\skeletonMidiController.h" />
+    <ClInclude Include="..\sharedCode\playback\udpPacketReplayer.h" />
+    <ClInclude Include="..\sharedCode\utils\AppSettings.h" />
+    <ClInclude Include="..\sharedCode\utils\fixed_deque.h" />
+    <ClInclude Include="..\sharedCode\utils\Graph.h" />
+    <ClInclude Include="..\sharedCode\utils\LocalAddressGrabber.h" />
+    <ClInclude Include="..\sharedCode\utils\OrthoCamera.h" />
+    <ClInclude Include="..\sharedCode\utils\singleton.h" />
+    <ClInclude Include="..\sharedCode\views\debugView.h" />
+    <ClInclude Include="..\sharedCode\views\FloorView.h" />
+    <ClInclude Include="..\sharedCode\views\MidiView.h" />
+    <ClInclude Include="..\sharedCode\views\Piano.h" />
+    <ClInclude Include="..\sharedCode\views\SkeletonView.h" />
+    <ClInclude Include="..\sharedCode\views\TVView.h" />
+    <ClInclude Include="..\sharedCode\visuals\Floor.h" />
+    <ClInclude Include="..\sharedCode\visuals\Grid.h" />
+    <ClInclude Include="..\sharedCode\visuals\gridInfo.h" />
+    <ClInclude Include="..\sharedCode\visuals\traveler.h" />
+    <ClInclude Include="..\sharedCode\visuals\tvScreen.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
@@ -395,15 +407,6 @@
     <ClInclude Include="..\..\..\addons\ofxMidi\src\ofxMidiTypes.h" />
     <ClInclude Include="..\..\..\addons\ofxMidi\libs\rtmidi\RtMidi.h" />
     <ClInclude Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.h" />
-    <ClInclude Include="src\OrthoCamera.h" />
-    <ClInclude Include="src\Piano.h" />
-    <ClInclude Include="src\singleton.h" />
-    <ClInclude Include="src\skeletonMidiController.h" />
-    <ClInclude Include="src\SkeletonView.h" />
-    <ClInclude Include="src\traveler.h" />
-    <ClInclude Include="src\tvScreen.h" />
-    <ClInclude Include="src\TVView.h" />
-    <ClInclude Include="src\udpPacketReplayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
@@ -414,9 +417,6 @@
     <ResourceCompile Include="icon.rc">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\prng_engine.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

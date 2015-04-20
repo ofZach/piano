@@ -253,71 +253,74 @@
     <ClCompile Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.cpp">
       <Filter>addons\ofxQuadWarp\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\AppSettings.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\midi\midiTrigger.cpp">
+      <Filter>src\midi</Filter>
     </ClCompile>
-    <ClCompile Include="src\Floor.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\midi\musicMaker.cpp">
+      <Filter>src\midi</Filter>
     </ClCompile>
-    <ClCompile Include="src\FloorView.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\midi\skeletonMidiController.cpp">
+      <Filter>src\midi</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graph.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectBody.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\gridInfo.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectBodyAnalyser.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectBody.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectButton.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectBodyAnalyser.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeleton.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectButton.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonAnalyser.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectSkeleton.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\kinect\kinectSkeletonLayout.cpp">
+      <Filter>src\kinect</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectSkeletonAnalyser.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\utils\AppSettings.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\musicMaker.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\utils\Graph.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\midiTrigger.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\utils\OrthoCamera.cpp">
+      <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\MidiView.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\playback\udpPacketReplayer.cpp">
+      <Filter>src\playback</Filter>
     </ClCompile>
-    <ClCompile Include="src\skeletonMidiController.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\debugView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\SkeletonView.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\FloorView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\traveler.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\MidiView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\tvScreen.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\Piano.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\TVView.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\SkeletonView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\udpPacketReplayer.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\views\TVView.cpp">
+      <Filter>src\views</Filter>
     </ClCompile>
-    <ClCompile Include="src\OrthoCamera.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\visuals\Floor.cpp">
+      <Filter>src\visuals</Filter>
     </ClCompile>
-    <ClCompile Include="src\Piano.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\visuals\gridInfo.cpp">
+      <Filter>src\visuals</Filter>
     </ClCompile>
-    <ClCompile Include="src\kinectSkeletonLayout.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\sharedCode\visuals\traveler.cpp">
+      <Filter>src\visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sharedCode\visuals\tvScreen.cpp">
+      <Filter>src\visuals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -488,6 +491,24 @@
     </Filter>
     <Filter Include="addons\ofxQuadWarp\src">
       <UniqueIdentifier>{34D69083-73CD-9EEB-CB0A-6F23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\visuals">
+      <UniqueIdentifier>{f47378ca-6fe8-4150-9b98-418b56da57cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\views">
+      <UniqueIdentifier>{9ea0476c-38e6-4c46-a987-6b368eefed7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\playback">
+      <UniqueIdentifier>{0f5b1aad-499f-452e-8644-d02542fbc04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{14190088-5b5c-4aee-b9d2-ad10195a32ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\midi">
+      <UniqueIdentifier>{a016557a-f987-4d71-89ad-5c577856e379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\kinect">
+      <UniqueIdentifier>{6e7e8324-35f0-4422-a619-206e3f5a2f63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1034,88 +1055,89 @@
     <ClInclude Include="..\..\..\addons\ofxQuadWarp\src\ofxQuadWarp.h">
       <Filter>addons\ofxQuadWarp\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\AppSettings.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\midi\midiTrigger.h">
+      <Filter>src\midi</Filter>
     </ClInclude>
-    <ClInclude Include="src\fixed_deque.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\midi\musicMaker.h">
+      <Filter>src\midi</Filter>
     </ClInclude>
-    <ClInclude Include="src\Floor.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\midi\skeletonMidiController.h">
+      <Filter>src\midi</Filter>
     </ClInclude>
-    <ClInclude Include="src\FloorView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectBody.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graph.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectBodyAnalyser.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\Grid.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectButton.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\gridInfo.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeleton.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectBody.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeletonAnalyser.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectBodyAnalyser.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\kinect\kinectSkeletonLayout.h">
+      <Filter>src\kinect</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectButton.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\AppSettings.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectSkeleton.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\fixed_deque.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectSkeletonAnalyser.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\Graph.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\kinectSkeletonLayout.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\LocalAddressGrabber.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\MidiView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\OrthoCamera.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\musicMaker.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\utils\singleton.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\midiTrigger.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\playback\udpPacketReplayer.h">
+      <Filter>src\playback</Filter>
     </ClInclude>
-    <ClInclude Include="src\skeletonMidiController.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\debugView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\SkeletonView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\FloorView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\traveler.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\MidiView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\tvScreen.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\Piano.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\TVView.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\SkeletonView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\udpPacketReplayer.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\views\TVView.h">
+      <Filter>src\views</Filter>
     </ClInclude>
-    <ClInclude Include="src\OrthoCamera.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\visuals\Floor.h">
+      <Filter>src\visuals</Filter>
     </ClInclude>
-    <ClInclude Include="src\Piano.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\visuals\Grid.h">
+      <Filter>src\visuals</Filter>
     </ClInclude>
-    <ClInclude Include="src\singleton.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\sharedCode\visuals\gridInfo.h">
+      <Filter>src\visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\visuals\traveler.h">
+      <Filter>src\visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sharedCode\visuals\tvScreen.h">
+      <Filter>src\visuals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\prng_engine.hh">
-      <Filter>src</Filter>
-    </None>
   </ItemGroup>
 </Project>
