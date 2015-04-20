@@ -28,3 +28,5 @@ Skeleton Recordings are not in the repo, some are [here](https://dl.dropboxuserc
 Windows [KinectV2-OSC Server](https://github.com/danthemellowman/KinectV2-OSC.git)
 
 
+auto login windows setup guide http://www.pcworld.com/article/2015587/how-to-bypass-the-windows-8-password-screen.html
+
