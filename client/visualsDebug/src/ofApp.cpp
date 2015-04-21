@@ -27,8 +27,9 @@ void ofApp::draw(){
     
     ofBackground(0, 0, 0);
 
-    floorView.drawDebug();
+    floorView.draw(ofGetCurrentViewport());
     
+    floorView.drawDebug();
     floorView.drawProjections();
 }
 

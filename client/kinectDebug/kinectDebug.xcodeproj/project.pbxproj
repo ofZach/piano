@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
-		C834315B1AC5E15800FD5980 /* SkeletonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83431591AC5E15800FD5980 /* SkeletonView.cpp */; };
 		C83C412F1AB4A51100879893 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41281AB4A51100879893 /* ofxXmlSettings.cpp */; };
 		C83C41301AB4A51100879893 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C412B1AB4A51100879893 /* tinyxml.cpp */; };
 		C83C41311AB4A51100879893 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C412D1AB4A51100879893 /* tinyxmlerror.cpp */; };
@@ -22,11 +21,6 @@
 		C83C41511AB4A51A00879893 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41441AB4A51A00879893 /* Parser.cpp */; };
 		C83C41521AB4A51A00879893 /* BodyRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41471AB4A51A00879893 /* BodyRenderer.cpp */; };
 		C83C41531AB4A51A00879893 /* ofxKinectV2OSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41491AB4A51A00879893 /* ofxKinectV2OSC.cpp */; };
-		C83C41601AB4A53100879893 /* kinectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41551AB4A53100879893 /* kinectBody.cpp */; };
-		C83C41611AB4A53100879893 /* kinectBodyAnalyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41571AB4A53100879893 /* kinectBodyAnalyser.cpp */; };
-		C83C41621AB4A53100879893 /* kinectButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41591AB4A53100879893 /* kinectButton.cpp */; };
-		C83C41631AB4A53100879893 /* kinectSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C415B1AB4A53100879893 /* kinectSkeleton.cpp */; };
-		C83C41641AB4A53100879893 /* kinectSkeletonAnalyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C415D1AB4A53100879893 /* kinectSkeletonAnalyser.cpp */; };
 		C83C41961AB4A54D00879893 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C416F1AB4A54D00879893 /* ofxOscBundle.cpp */; };
 		C83C41971AB4A54D00879893 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41711AB4A54D00879893 /* ofxOscMessage.cpp */; };
 		C83C41981AB4A54D00879893 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41731AB4A54D00879893 /* ofxOscParameterSync.cpp */; };
@@ -40,6 +34,21 @@
 		C83C41A01AB4A54D00879893 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41921AB4A54D00879893 /* OscReceivedElements.cpp */; };
 		C83C41A11AB4A54D00879893 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41941AB4A54D00879893 /* OscTypes.cpp */; };
 		C83C41A61AB4A55600879893 /* ofxHistoryPlot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C83C41A41AB4A55600879893 /* ofxHistoryPlot.cpp */; };
+		C847E13D1AE5EB4B0053F5C4 /* kinectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1311AE5EB4B0053F5C4 /* kinectBody.cpp */; };
+		C847E13E1AE5EB4B0053F5C4 /* kinectBodyAnalyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1331AE5EB4B0053F5C4 /* kinectBodyAnalyser.cpp */; };
+		C847E13F1AE5EB4B0053F5C4 /* kinectButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1351AE5EB4B0053F5C4 /* kinectButton.cpp */; };
+		C847E1401AE5EB4B0053F5C4 /* kinectSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1371AE5EB4B0053F5C4 /* kinectSkeleton.cpp */; };
+		C847E1411AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1391AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.cpp */; };
+		C847E1421AE5EB4B0053F5C4 /* kinectSkeletonLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E13B1AE5EB4B0053F5C4 /* kinectSkeletonLayout.cpp */; };
+		C847E1471AE5EB630053F5C4 /* SkeletonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1451AE5EB630053F5C4 /* SkeletonView.cpp */; };
+		C847E14B1AE5EB730053F5C4 /* udpPacketReplayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1491AE5EB730053F5C4 /* udpPacketReplayer.cpp */; };
+		C847E1561AE5EB870053F5C4 /* AppSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E14D1AE5EB870053F5C4 /* AppSettings.cpp */; };
+		C847E1571AE5EB870053F5C4 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1501AE5EB870053F5C4 /* Graph.cpp */; };
+		C847E1581AE5EB870053F5C4 /* OrthoCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1531AE5EB870053F5C4 /* OrthoCamera.cpp */; };
+		C847E1651AE5EB980053F5C4 /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E15D1AE5EB980053F5C4 /* ofxTCPClient.cpp */; };
+		C847E1661AE5EB980053F5C4 /* ofxTCPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E15F1AE5EB980053F5C4 /* ofxTCPManager.cpp */; };
+		C847E1671AE5EB980053F5C4 /* ofxTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1611AE5EB980053F5C4 /* ofxTCPServer.cpp */; };
+		C847E1681AE5EB980053F5C4 /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C847E1631AE5EB980053F5C4 /* ofxUDPManager.cpp */; };
 		C85BEEA31AC5C1A700EA833B /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C85BEE921AC5C1A700EA833B /* ofxBaseGui.cpp */; };
 		C85BEEA41AC5C1A700EA833B /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C85BEE941AC5C1A700EA833B /* ofxButton.cpp */; };
 		C85BEEA51AC5C1A700EA833B /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C85BEE971AC5C1A700EA833B /* ofxGuiGroup.cpp */; };
@@ -100,8 +109,6 @@
 
 /* Begin PBXFileReference section */
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
-		C83431591AC5E15800FD5980 /* SkeletonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SkeletonView.cpp; path = ../../sharedCode/SkeletonView.cpp; sourceTree = "<group>"; };
-		C834315A1AC5E15800FD5980 /* SkeletonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkeletonView.h; path = ../../sharedCode/SkeletonView.h; sourceTree = "<group>"; };
 		C83C41281AB4A51100879893 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
 		C83C41291AB4A51100879893 /* ofxXmlSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		C83C412B1AB4A51100879893 /* tinyxml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
@@ -127,22 +134,6 @@
 		C83C41481AB4A51A00879893 /* BodyRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BodyRenderer.h; sourceTree = "<group>"; };
 		C83C41491AB4A51A00879893 /* ofxKinectV2OSC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxKinectV2OSC.cpp; sourceTree = "<group>"; };
 		C83C414A1AB4A51A00879893 /* ofxKinectV2OSC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxKinectV2OSC.h; sourceTree = "<group>"; };
-		C83C41551AB4A53100879893 /* kinectBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectBody.cpp; sourceTree = "<group>"; };
-		C83C41561AB4A53100879893 /* kinectBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectBody.h; sourceTree = "<group>"; };
-		C83C41571AB4A53100879893 /* kinectBodyAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectBodyAnalyser.cpp; sourceTree = "<group>"; };
-		C83C41581AB4A53100879893 /* kinectBodyAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectBodyAnalyser.h; sourceTree = "<group>"; };
-		C83C41591AB4A53100879893 /* kinectButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectButton.cpp; sourceTree = "<group>"; };
-		C83C415A1AB4A53100879893 /* kinectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectButton.h; sourceTree = "<group>"; };
-		C83C415B1AB4A53100879893 /* kinectSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeleton.cpp; sourceTree = "<group>"; };
-		C83C415C1AB4A53100879893 /* kinectSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeleton.h; sourceTree = "<group>"; };
-		C83C415D1AB4A53100879893 /* kinectSkeletonAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeletonAnalyser.cpp; sourceTree = "<group>"; };
-		C83C415E1AB4A53100879893 /* kinectSkeletonAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonAnalyser.h; sourceTree = "<group>"; };
-		C83C415F1AB4A53100879893 /* kinectSkeletonLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonLayout.h; sourceTree = "<group>"; };
-		C83C41661AB4A53F00879893 /* fixed_deque.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_deque.h; sourceTree = "<group>"; };
-		C83C41671AB4A53F00879893 /* Graph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
-		C83C41681AB4A53F00879893 /* Graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
-		C83C41691AB4A53F00879893 /* LocalAddressGrabber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalAddressGrabber.h; sourceTree = "<group>"; };
-		C83C416A1AB4A53F00879893 /* singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = singleton.h; sourceTree = "<group>"; };
 		C83C416D1AB4A54D00879893 /* ofxOsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOsc.h; sourceTree = "<group>"; };
 		C83C416E1AB4A54D00879893 /* ofxOscArg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscArg.h; sourceTree = "<group>"; };
 		C83C416F1AB4A54D00879893 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscBundle.cpp; sourceTree = "<group>"; };
@@ -177,6 +168,41 @@
 		C83C41951AB4A54D00879893 /* OscTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
 		C83C41A41AB4A55600879893 /* ofxHistoryPlot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxHistoryPlot.cpp; sourceTree = "<group>"; };
 		C83C41A51AB4A55600879893 /* ofxHistoryPlot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxHistoryPlot.h; sourceTree = "<group>"; };
+		C847E1311AE5EB4B0053F5C4 /* kinectBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectBody.cpp; sourceTree = "<group>"; };
+		C847E1321AE5EB4B0053F5C4 /* kinectBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectBody.h; sourceTree = "<group>"; };
+		C847E1331AE5EB4B0053F5C4 /* kinectBodyAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectBodyAnalyser.cpp; sourceTree = "<group>"; };
+		C847E1341AE5EB4B0053F5C4 /* kinectBodyAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectBodyAnalyser.h; sourceTree = "<group>"; };
+		C847E1351AE5EB4B0053F5C4 /* kinectButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectButton.cpp; sourceTree = "<group>"; };
+		C847E1361AE5EB4B0053F5C4 /* kinectButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectButton.h; sourceTree = "<group>"; };
+		C847E1371AE5EB4B0053F5C4 /* kinectSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeleton.cpp; sourceTree = "<group>"; };
+		C847E1381AE5EB4B0053F5C4 /* kinectSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeleton.h; sourceTree = "<group>"; };
+		C847E1391AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeletonAnalyser.cpp; sourceTree = "<group>"; };
+		C847E13A1AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonAnalyser.h; sourceTree = "<group>"; };
+		C847E13B1AE5EB4B0053F5C4 /* kinectSkeletonLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kinectSkeletonLayout.cpp; sourceTree = "<group>"; };
+		C847E13C1AE5EB4B0053F5C4 /* kinectSkeletonLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kinectSkeletonLayout.h; sourceTree = "<group>"; };
+		C847E1451AE5EB630053F5C4 /* SkeletonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SkeletonView.cpp; path = ../../sharedCode/views/SkeletonView.cpp; sourceTree = "<group>"; };
+		C847E1461AE5EB630053F5C4 /* SkeletonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkeletonView.h; path = ../../sharedCode/views/SkeletonView.h; sourceTree = "<group>"; };
+		C847E1491AE5EB730053F5C4 /* udpPacketReplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = udpPacketReplayer.cpp; sourceTree = "<group>"; };
+		C847E14A1AE5EB730053F5C4 /* udpPacketReplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udpPacketReplayer.h; sourceTree = "<group>"; };
+		C847E14D1AE5EB870053F5C4 /* AppSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppSettings.cpp; sourceTree = "<group>"; };
+		C847E14E1AE5EB870053F5C4 /* AppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettings.h; sourceTree = "<group>"; };
+		C847E14F1AE5EB870053F5C4 /* fixed_deque.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixed_deque.h; sourceTree = "<group>"; };
+		C847E1501AE5EB870053F5C4 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
+		C847E1511AE5EB870053F5C4 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		C847E1521AE5EB870053F5C4 /* LocalAddressGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalAddressGrabber.h; sourceTree = "<group>"; };
+		C847E1531AE5EB870053F5C4 /* OrthoCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrthoCamera.cpp; sourceTree = "<group>"; };
+		C847E1541AE5EB870053F5C4 /* OrthoCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrthoCamera.h; sourceTree = "<group>"; };
+		C847E1551AE5EB870053F5C4 /* singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleton.h; sourceTree = "<group>"; };
+		C847E15B1AE5EB980053F5C4 /* ofxNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxNetwork.h; sourceTree = "<group>"; };
+		C847E15C1AE5EB980053F5C4 /* ofxNetworkUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxNetworkUtils.h; sourceTree = "<group>"; };
+		C847E15D1AE5EB980053F5C4 /* ofxTCPClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPClient.cpp; sourceTree = "<group>"; };
+		C847E15E1AE5EB980053F5C4 /* ofxTCPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTCPClient.h; sourceTree = "<group>"; };
+		C847E15F1AE5EB980053F5C4 /* ofxTCPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPManager.cpp; sourceTree = "<group>"; };
+		C847E1601AE5EB980053F5C4 /* ofxTCPManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTCPManager.h; sourceTree = "<group>"; };
+		C847E1611AE5EB980053F5C4 /* ofxTCPServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTCPServer.cpp; sourceTree = "<group>"; };
+		C847E1621AE5EB980053F5C4 /* ofxTCPServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxTCPServer.h; sourceTree = "<group>"; };
+		C847E1631AE5EB980053F5C4 /* ofxUDPManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUDPManager.cpp; sourceTree = "<group>"; };
+		C847E1641AE5EB980053F5C4 /* ofxUDPManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUDPManager.h; sourceTree = "<group>"; };
 		C85BEE921AC5C1A700EA833B /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
 		C85BEE931AC5C1A700EA833B /* ofxBaseGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
 		C85BEE941AC5C1A700EA833B /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
@@ -253,6 +279,7 @@
 				C83C41331AB4A51A00879893 /* ofxKinectV2-OSC */,
 				C83C41261AB4A51100879893 /* ofxXmlSettings */,
 				C85BEE901AC5C1A700EA833B /* ofxGui */,
+				C847E1591AE5EB980053F5C4 /* ofxNetwork */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -376,38 +403,6 @@
 			path = Draw;
 			sourceTree = "<group>";
 		};
-		C83C41541AB4A53100879893 /* kinect */ = {
-			isa = PBXGroup;
-			children = (
-				C83C41551AB4A53100879893 /* kinectBody.cpp */,
-				C83C41561AB4A53100879893 /* kinectBody.h */,
-				C83C41571AB4A53100879893 /* kinectBodyAnalyser.cpp */,
-				C83C41581AB4A53100879893 /* kinectBodyAnalyser.h */,
-				C83C41591AB4A53100879893 /* kinectButton.cpp */,
-				C83C415A1AB4A53100879893 /* kinectButton.h */,
-				C83C415B1AB4A53100879893 /* kinectSkeleton.cpp */,
-				C83C415C1AB4A53100879893 /* kinectSkeleton.h */,
-				C83C415D1AB4A53100879893 /* kinectSkeletonAnalyser.cpp */,
-				C83C415E1AB4A53100879893 /* kinectSkeletonAnalyser.h */,
-				C83C415F1AB4A53100879893 /* kinectSkeletonLayout.h */,
-			);
-			name = kinect;
-			path = ../../skeletonReceiver/src/kinect;
-			sourceTree = "<group>";
-		};
-		C83C41651AB4A53F00879893 /* utils */ = {
-			isa = PBXGroup;
-			children = (
-				C83C41661AB4A53F00879893 /* fixed_deque.h */,
-				C83C41671AB4A53F00879893 /* Graph.cpp */,
-				C83C41681AB4A53F00879893 /* Graph.h */,
-				C83C41691AB4A53F00879893 /* LocalAddressGrabber.h */,
-				C83C416A1AB4A53F00879893 /* singleton.h */,
-			);
-			name = utils;
-			path = ../../skeletonReceiver/src/utils;
-			sourceTree = "<group>";
-		};
 		C83C416B1AB4A54D00879893 /* ofxOsc */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,6 +518,79 @@
 			path = ../../../addons/ofxHistoryPlot/src;
 			sourceTree = "<group>";
 		};
+		C847E1301AE5EB4B0053F5C4 /* kinect */ = {
+			isa = PBXGroup;
+			children = (
+				C847E1311AE5EB4B0053F5C4 /* kinectBody.cpp */,
+				C847E1321AE5EB4B0053F5C4 /* kinectBody.h */,
+				C847E1331AE5EB4B0053F5C4 /* kinectBodyAnalyser.cpp */,
+				C847E1341AE5EB4B0053F5C4 /* kinectBodyAnalyser.h */,
+				C847E1351AE5EB4B0053F5C4 /* kinectButton.cpp */,
+				C847E1361AE5EB4B0053F5C4 /* kinectButton.h */,
+				C847E1371AE5EB4B0053F5C4 /* kinectSkeleton.cpp */,
+				C847E1381AE5EB4B0053F5C4 /* kinectSkeleton.h */,
+				C847E1391AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.cpp */,
+				C847E13A1AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.h */,
+				C847E13B1AE5EB4B0053F5C4 /* kinectSkeletonLayout.cpp */,
+				C847E13C1AE5EB4B0053F5C4 /* kinectSkeletonLayout.h */,
+			);
+			name = kinect;
+			path = ../../sharedCode/kinect;
+			sourceTree = "<group>";
+		};
+		C847E1481AE5EB730053F5C4 /* playback */ = {
+			isa = PBXGroup;
+			children = (
+				C847E1491AE5EB730053F5C4 /* udpPacketReplayer.cpp */,
+				C847E14A1AE5EB730053F5C4 /* udpPacketReplayer.h */,
+			);
+			name = playback;
+			path = ../../sharedCode/playback;
+			sourceTree = "<group>";
+		};
+		C847E14C1AE5EB870053F5C4 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				C847E14D1AE5EB870053F5C4 /* AppSettings.cpp */,
+				C847E14E1AE5EB870053F5C4 /* AppSettings.h */,
+				C847E14F1AE5EB870053F5C4 /* fixed_deque.h */,
+				C847E1501AE5EB870053F5C4 /* Graph.cpp */,
+				C847E1511AE5EB870053F5C4 /* Graph.h */,
+				C847E1521AE5EB870053F5C4 /* LocalAddressGrabber.h */,
+				C847E1531AE5EB870053F5C4 /* OrthoCamera.cpp */,
+				C847E1541AE5EB870053F5C4 /* OrthoCamera.h */,
+				C847E1551AE5EB870053F5C4 /* singleton.h */,
+			);
+			name = utils;
+			path = ../../sharedCode/utils;
+			sourceTree = "<group>";
+		};
+		C847E1591AE5EB980053F5C4 /* ofxNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				C847E15A1AE5EB980053F5C4 /* src */,
+			);
+			name = ofxNetwork;
+			sourceTree = "<group>";
+		};
+		C847E15A1AE5EB980053F5C4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C847E15B1AE5EB980053F5C4 /* ofxNetwork.h */,
+				C847E15C1AE5EB980053F5C4 /* ofxNetworkUtils.h */,
+				C847E15D1AE5EB980053F5C4 /* ofxTCPClient.cpp */,
+				C847E15E1AE5EB980053F5C4 /* ofxTCPClient.h */,
+				C847E15F1AE5EB980053F5C4 /* ofxTCPManager.cpp */,
+				C847E1601AE5EB980053F5C4 /* ofxTCPManager.h */,
+				C847E1611AE5EB980053F5C4 /* ofxTCPServer.cpp */,
+				C847E1621AE5EB980053F5C4 /* ofxTCPServer.h */,
+				C847E1631AE5EB980053F5C4 /* ofxUDPManager.cpp */,
+				C847E1641AE5EB980053F5C4 /* ofxUDPManager.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxNetwork/src;
+			sourceTree = "<group>";
+		};
 		C85BEE901AC5C1A700EA833B /* ofxGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,10 +657,11 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C83431591AC5E15800FD5980 /* SkeletonView.cpp */,
-				C834315A1AC5E15800FD5980 /* SkeletonView.h */,
-				C83C41651AB4A53F00879893 /* utils */,
-				C83C41541AB4A53100879893 /* kinect */,
+				C847E14C1AE5EB870053F5C4 /* utils */,
+				C847E1481AE5EB730053F5C4 /* playback */,
+				C847E1451AE5EB630053F5C4 /* SkeletonView.cpp */,
+				C847E1461AE5EB630053F5C4 /* SkeletonView.h */,
+				C847E1301AE5EB4B0053F5C4 /* kinect */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -696,22 +765,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C847E1661AE5EB980053F5C4 /* ofxTCPManager.cpp in Sources */,
 				C83C419C1AB4A54D00879893 /* NetworkingUtils.cpp in Sources */,
 				C83C41501AB4A51A00879893 /* Mapper.cpp in Sources */,
-				C83C41641AB4A53100879893 /* kinectSkeletonAnalyser.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				C83C41301AB4A51100879893 /* tinyxml.cpp in Sources */,
 				C83C414B1AB4A51A00879893 /* Hand.cpp in Sources */,
+				C847E13F1AE5EB4B0053F5C4 /* kinectButton.cpp in Sources */,
+				C847E1561AE5EB870053F5C4 /* AppSettings.cpp in Sources */,
 				C83C419E1AB4A54D00879893 /* OscOutboundPacketStream.cpp in Sources */,
+				C847E14B1AE5EB730053F5C4 /* udpPacketReplayer.cpp in Sources */,
 				C85BEEA41AC5C1A700EA833B /* ofxButton.cpp in Sources */,
 				C85BEEA71AC5C1A700EA833B /* ofxPanel.cpp in Sources */,
 				C83C41991AB4A54D00879893 /* ofxOscReceiver.cpp in Sources */,
+				C847E1571AE5EB870053F5C4 /* Graph.cpp in Sources */,
+				C847E1671AE5EB980053F5C4 /* ofxTCPServer.cpp in Sources */,
 				C83C41321AB4A51100879893 /* tinyxmlparser.cpp in Sources */,
+				C847E13D1AE5EB4B0053F5C4 /* kinectBody.cpp in Sources */,
 				C83C414C1AB4A51A00879893 /* Interpreter.cpp in Sources */,
 				C83C41961AB4A54D00879893 /* ofxOscBundle.cpp in Sources */,
-				C83C41601AB4A53100879893 /* kinectBody.cpp in Sources */,
+				C847E1581AE5EB870053F5C4 /* OrthoCamera.cpp in Sources */,
 				C85BEEA31AC5C1A700EA833B /* ofxBaseGui.cpp in Sources */,
+				C847E1681AE5EB980053F5C4 /* ofxUDPManager.cpp in Sources */,
 				C83C419B1AB4A54D00879893 /* IpEndpointName.cpp in Sources */,
+				C847E1651AE5EB980053F5C4 /* ofxTCPClient.cpp in Sources */,
 				C83C41311AB4A51100879893 /* tinyxmlerror.cpp in Sources */,
 				C85BEEA91AC5C1A700EA833B /* ofxSliderGroup.cpp in Sources */,
 				C85BEEA51AC5C1A700EA833B /* ofxGuiGroup.cpp in Sources */,
@@ -720,21 +797,22 @@
 				C85BEEA61AC5C1A700EA833B /* ofxLabel.cpp in Sources */,
 				C85BEEA81AC5C1A700EA833B /* ofxSlider.cpp in Sources */,
 				C83C41A01AB4A54D00879893 /* OscReceivedElements.cpp in Sources */,
+				C847E1471AE5EB630053F5C4 /* SkeletonView.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				C834315B1AC5E15800FD5980 /* SkeletonView.cpp in Sources */,
-				C83C41631AB4A53100879893 /* kinectSkeleton.cpp in Sources */,
 				C83C419F1AB4A54D00879893 /* OscPrintReceivedElements.cpp in Sources */,
 				C83C419A1AB4A54D00879893 /* ofxOscSender.cpp in Sources */,
+				C847E13E1AE5EB4B0053F5C4 /* kinectBodyAnalyser.cpp in Sources */,
+				C847E1411AE5EB4B0053F5C4 /* kinectSkeletonAnalyser.cpp in Sources */,
 				C85BEEAA1AC5C1A700EA833B /* ofxToggle.cpp in Sources */,
 				C83C414E1AB4A51A00879893 /* Skeleton.cpp in Sources */,
+				C847E1401AE5EB4B0053F5C4 /* kinectSkeleton.cpp in Sources */,
 				C83C41971AB4A54D00879893 /* ofxOscMessage.cpp in Sources */,
 				C83C414F1AB4A51A00879893 /* Logger.cpp in Sources */,
+				C847E1421AE5EB4B0053F5C4 /* kinectSkeletonLayout.cpp in Sources */,
 				C83C412F1AB4A51100879893 /* ofxXmlSettings.cpp in Sources */,
-				C83C41611AB4A53100879893 /* kinectBodyAnalyser.cpp in Sources */,
 				C83C41511AB4A51A00879893 /* Parser.cpp in Sources */,
 				C83C41A61AB4A55600879893 /* ofxHistoryPlot.cpp in Sources */,
 				C83C41981AB4A54D00879893 /* ofxOscParameterSync.cpp in Sources */,
-				C83C41621AB4A53100879893 /* kinectButton.cpp in Sources */,
 				C83C41521AB4A51A00879893 /* BodyRenderer.cpp in Sources */,
 				C83C41A11AB4A54D00879893 /* OscTypes.cpp in Sources */,
 				C83C419D1AB4A54D00879893 /* UdpSocket.cpp in Sources */,
