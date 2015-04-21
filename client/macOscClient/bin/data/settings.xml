@@ -60,7 +60,7 @@
 		<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
 		<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
 		<Stage_Size>270.46</Stage_Size>
-		<Calibration_View>1</Calibration_View>
+		<Calibration_View>0</Calibration_View>
 		<overRideLeftTrigger>0</overRideLeftTrigger>
 		<overRideRightTrigger>0</overRideRightTrigger>
 		<stageLeftTriggerScale>40</stageLeftTriggerScale>
@@ -68,4 +68,19 @@
 		<presencesZoneSizeP1>137.6</presencesZoneSizeP1>
 		<presencesZoneSizeP2>137.6</presencesZoneSizeP2>
 	</Stage_Settings>
+<Microsoft_Music_Box>
+		<Number_of_Players>2</Number_of_Players>
+		<Projector_X_Pos>1920</Projector_X_Pos>
+		<Projector_Y_Pos>0</Projector_Y_Pos>
+		<Projector_Screen_Width>1280</Projector_Screen_Width>
+		<Projector_Screen_Height>768</Projector_Screen_Height>
+		<TV_X_Pos>3200</TV_X_Pos>
+		<TV_Y_Pos>0</TV_Y_Pos>
+		<TV_Screen_Width>1920</TV_Screen_Width>
+		<TV_Screen_Height>1080</TV_Screen_Height>
+		<skeleton_transform>
+			<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
+			<Skeleton_Scale>1, 1, 1</Skeleton_Scale>
+		</skeleton_transform>
+	</Microsoft_Music_Box>
 </MidiSettings>

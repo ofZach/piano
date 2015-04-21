@@ -52,10 +52,13 @@ void ofApp::keyPressed(int key){
         }
     }
     
-    if(key == OF_KEY_ESC){
+    if(key == ' '){
         views.setMainView(N_SCENE);
     }
     
+    if(key == 'e'){
+        views.bExpertMode = !views.bExpertMode;
+    }
     
     if (key == 'f'){
         ofToggleFullscreen();

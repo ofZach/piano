@@ -83,24 +83,11 @@ private:
     
     bool changeTriggeredOne, changeTriggeredTwo;
     
-    ofParameter <float> scaleX;
-    ofParameter <float> scaleY;
-    ofParameter <float> scaleZ;
-    ofParameter <float> rotationX;
-    ofParameter <float> rotationY;
-    ofParameter <float> rotationZ;
-    ofParameter <float> offsetX;
-    ofParameter <float> offsetY;
-    ofParameter <float> offsetZ;
+
     ofParameter<float> stageSize;
     
-    ofParameter<ofVec3f> playerOneStagePosition, playerTwoStagePosition, playerOneTriggerPosition, playerTwoTriggerPosition;
-    ofParameter<float> stageLeftX;
-    ofParameter<float> stageLeftY;
-    ofParameter<float> stageLeftZ;
-    ofParameter<float> stageRightX;
-    ofParameter<float> stageRightY;
-    ofParameter<float> stageRightZ;
+    ofParameter<ofVec3f> playerOneStagePosition, playerTwoStagePosition, playerOneTriggerPosition, playerTwoTriggerPosition, skeletonRotation, skeletonOffset, skeletonScale;
+
     
     ofParameter<bool> bCalibrate;
     
@@ -125,7 +112,6 @@ private:
     kinectButton playerOneSwitchMode;
     kinectButton playerTwoSwitchMode;
     
-
     kinectButton stageOne;
     kinectButton stageTwo;
     

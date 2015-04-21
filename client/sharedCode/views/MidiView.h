@@ -31,13 +31,15 @@ public:
     ofParameterGroup playerTwo;
     
 
+    vector<ofParameterGroup*> playerParameters;
+    
     int numPlayers;
     
     ofTrueTypeFont font;
     ofTrueTypeFont fontDebug;
     ofTrueTypeFont fontMain;
     
-    vector<musicMaker> musicMakers;
+    vector<musicMaker*> musicMakers;
 	musicMaker musicMakerP1;
     musicMaker musicMakerP2;
     shared_ptr<ofxMidiOut> midiOut;
@@ -48,9 +50,10 @@ public:
     Trigger lastTriggerP1;
     Trigger lastTriggerP2;
     
-    bool clearOne;
-    bool clearTwo;
-    
+    vector<Trigger> lastTriggers;
+    vector<bool> clear;
+    vector<float> lastBodyTime;
+
     float lastBodyPlayerOne;
     float lastBodyPlayerTwo;
 };

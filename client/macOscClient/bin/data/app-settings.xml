@@ -11,4 +11,12 @@
 	<TV_Y_Pos>0</TV_Y_Pos>
 	<TV_Screen_Width_In_Pixels>1920</TV_Screen_Width_In_Pixels>
 	<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
+<skeleton_transform>
+		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
+		<Skeleton_Scale>1, 1, 1</Skeleton_Scale>
+	</skeleton_transform>
+<Projector_Screen_Width>1280</Projector_Screen_Width>
+	<Projector_Screen_Height>768</Projector_Screen_Height>
+	<TV_Screen_Width>1920</TV_Screen_Width>
+	<TV_Screen_Height>1080</TV_Screen_Height>
 </Microsoft_Music_Box>

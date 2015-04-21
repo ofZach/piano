@@ -6,4 +6,25 @@
     <scaleY>1</scaleY>
     <scaleZ>14</scaleZ>
 <skeleton_transform/>
+<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
+	<Skeleton_Scale>1, 1, 11.2857</Skeleton_Scale>
+<Microsoft_Music_Box>
+		<Number_of_Players>2</Number_of_Players>
+		<Projector_X_Pos>1920</Projector_X_Pos>
+		<Projector_Y_Pos>0</Projector_Y_Pos>
+		<Projector_Screen_Width_In_Pixels>1280</Projector_Screen_Width_In_Pixels>
+		<Projector_Screen_Height_In_Pixel>768</Projector_Screen_Height_In_Pixel>
+		<TV_X_Pos>3200</TV_X_Pos>
+		<TV_Y_Pos>0</TV_Y_Pos>
+		<TV_Screen_Width_In_Pixels>1920</TV_Screen_Width_In_Pixels>
+		<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
+		<skeleton_transform>
+			<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
+			<Skeleton_Scale>1, 1, 1</Skeleton_Scale>
+		</skeleton_transform>
+	<Projector_Screen_Width>1280</Projector_Screen_Width>
+		<Projector_Screen_Height>768</Projector_Screen_Height>
+		<TV_Screen_Width>1920</TV_Screen_Width>
+		<TV_Screen_Height>1080</TV_Screen_Height>
+	</Microsoft_Music_Box>
 </skeleton_transform>

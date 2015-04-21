@@ -70,12 +70,12 @@ bool SkeletonView::isMain(){
 void SkeletonView::update(){
     kinect.update();
     mat.makeIdentityMatrix();
-    ofPoint offsetPt = ofPoint(offsetX, offsetY, offsetZ);
+    ofPoint offsetPt = ofPoint(skeletonOffset->x, skeletonOffset->y, skeletonOffset->z);
     mat.glTranslate(offsetPt);
-    mat.glRotate(rotationX, 1,0,0);
-    mat.glRotate(rotationZ, 0,0,1);
-    mat.glRotate(rotationY, 0,1,0);
-    ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
+    mat.glRotate(skeletonRotation->x, 1,0,0);
+    mat.glRotate(skeletonRotation->z, 0,0,1);
+    mat.glRotate(skeletonRotation->y, 0,1,0);
+    ofPoint scaleTemp = ofPoint(skeletonScale->x, skeletonScale->y, skeletonScale->z);
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
     
     ofQuaternion foo = kinect.getQuaternion();
@@ -199,6 +199,13 @@ kinectBody * SkeletonView::getBody(int stageID){
             return NULL;
         }
     }else{
+        vector<std::pair<ofPoint, float> > center;
+        center.push_back(make_pair(ofPoint(10000, 10000, 10000), 0.f));
+        center.push_back(make_pair(ofPoint(1000, 1000, 1000), 0.f));
+
+        stageOne.update(center);
+        stageTwo.update(center);
+        
         return NULL;
     }
 }
@@ -327,11 +334,10 @@ void SkeletonView::exit(){
 
 void SkeletonView::setupGUI(){
     skeletonTransform.setName("skeleton transform");
-    skeletonTransform.add(offsetX.set("offsetX", 0, -2000,2000));
-    skeletonTransform.add(offsetY.set("offsetY", 0, -2000,2000));
-    skeletonTransform.add(offsetZ.set("offsetZ", 0, -2000,2000));
+    skeletonTransform.add(skeletonOffset.set("Skeleton Offset", ofVec3f(0, 0, 0), ofVec3f(-2000, -2000, -2000), ofVec3f(2000, 2000, 2000)));
     
     stageParams.setName("Stage Settings");
+    stageParams.add(bCalibrate.set("Calibration View", true));
     stageParams.add(playerOneStagePosition.set("Stage One Position", ofVec3f(250, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
     stageParams.add(playerTwoStagePosition.set("Stage Two Position", ofVec3f(-250, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
@@ -340,29 +346,18 @@ void SkeletonView::setupGUI(){
     
     stageParams.add(playerTwoTriggerPosition.set("Stage Two Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
-    
-    
-    
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
-    stageParams.add(bCalibrate.set("Calibration View", true));
-    
     stageParams.add(overRideLeftTrigger.set("overRideLeftTrigger", true));
     stageParams.add(overRideRightTrigger.set("overRideRightTrigger", true));
-    
-    stageParams.add(stageLeftTriggerScale.set("stageLeftTriggerScale", 0, 0, 500));
-    
-    
-    stageParams.add(stageRightTriggerScale.set("stageRightTriggerScale", 0, 0, 500));
-    
-    stageParams.add(presencesZoneSizeP1.set("presencesZoneSizeP1", 0, 100, 300));
-    stageParams.add(presencesZoneSizeP2.set("presencesZoneSizeP2", 0, 100, 300));
+    stageParams.add(stageLeftTriggerScale.set("Stage One Trigger Size", 0, 0, 500));
+    stageParams.add(stageRightTriggerScale.set("Stage Two Trigger Size", 0, 0, 500));
+    stageParams.add(presencesZoneSizeP1.set("Activation Stage One Scale", 100, 100, 300));
+    stageParams.add(presencesZoneSizeP2.set("Activation Stage Two Scale", 100, 100, 300));
     
     
     hiddenSettings.setName("skeleton transform");
-    hiddenSettings.add(rotationX.set("rotationX", 0,-180,180));
-    hiddenSettings.add(rotationY.set("rotationY", 0,-180,180));
-    hiddenSettings.add(rotationZ.set("rotationZ", 0,-180,180));
-    hiddenSettings.add(scaleX.set("scaleX", 1.0,0.01, 20));
-    hiddenSettings.add(scaleY.set("scaleY", 1.0,0.01, 20));
-    hiddenSettings.add(scaleZ.set("scaleZ", 1.0,0.01, 140));
+
+    hiddenSettings.add(skeletonRotation.set("Skeleton Rotation", ofVec3f(0, 0, 0), ofVec3f(-180, -180, -180), ofVec3f(180, 180, 180)));
+    hiddenSettings.add(skeletonScale.set("Skeleton Scale", ofVec3f(1.0, 1.0, 1.0), ofVec3f(1.0, 1.0, 1.0), ofVec3f(25, 25, 25)));
+    
 }

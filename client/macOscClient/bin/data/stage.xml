@@ -6,7 +6,7 @@
 		<Right_Stage_X>148</Right_Stage_X>
 		<Right_Stage_Y>-4</Right_Stage_Y>
 		<Right_Stage_Z>-8</Right_Stage_Z>
-		<Stage_Size>270.46</Stage_Size>
+		<Stage_Size>304.392</Stage_Size>
 		<Calibration_View>0</Calibration_View>
 	<overRideLeftTrigger>0</overRideLeftTrigger>
 		<overRideRightTrigger>0</overRideRightTrigger>
@@ -24,5 +24,11 @@
 	<Stage_Two_Position>185.714, 0, 0</Stage_Two_Position>
 	<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
 	<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
+	<Stage_One_Trigger_Scale>50</Stage_One_Trigger_Scale>
+		<Stage_Two_Trigger_Scale>50</Stage_Two_Trigger_Scale>
+		<Activation_Stage_One_Scale>100</Activation_Stage_One_Scale>
+		<Activation_Stage_Two_Scale>100</Activation_Stage_Two_Scale>
+	<Stage_One_Trigger_Size>40</Stage_One_Trigger_Size>
+		<Stage_Two_Trigger_Size>40</Stage_Two_Trigger_Size>
 	</Stage_Settings>
 </group>

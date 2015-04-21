@@ -51,13 +51,13 @@ void Piano::setup(){
     
     settings.globalSettings.add(settings.projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
     settings.globalSettings.add(settings.projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.projectorViewWidth.set("Projector Screen Width In Pixels", 1280, 640, 1920));
-    settings.globalSettings.add(settings.projectorViewHeight.set("Projector Screen Height In Pixel", 768, 480, 1080));
+    settings.globalSettings.add(settings.projectorViewWidth.set("Projector Screen Width", 1280, 640, 1920));
+    settings.globalSettings.add(settings.projectorViewHeight.set("Projector Screen Height", 768, 480, 1080));
     
     settings.globalSettings.add(settings.tvViewX.set("TV X Pos", settings.projectorViewX+settings.projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
     settings.globalSettings.add(settings.tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width In Pixels", 1920, 1280, 1920));
-    settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height In Pixel", 1080, 720, 1200));
+    settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width", 1920, 1280, 1920));
+    settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height", 1080, 720, 1200));
     
     
     
@@ -88,7 +88,8 @@ void Piano::setup(){
     
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
-    hiddenSettings.setup(skelView.hiddenSettings);
+    hiddenSettings.setup(settings.globalSettings);
+    hiddenSettings.add(skelView.hiddenSettings);
 //    projectionGUI.setup(floorView.squareOptions);
     tvGUI.setup(tvView.tvParameters);
     midiGUI.setup(midiView.midiGroup);
@@ -130,6 +131,8 @@ void Piano::setup(){
 	ofAddListener(midiView.musicMakerP2.triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
 	ofAddListener(midiView.musicMakerP2.triggerLinesPlayerTwo, this, &Piano::addLineTracePlayerTwo);
 
+    
+    bExpertMode = false;
 }
 void Piano::update(){
     
@@ -259,6 +262,9 @@ void Piano::draw(){
         ofLine(tvRect.x+tvRect.width, tvRect.y, tvRect.x, tvRect.y+tvRect.height);
     }
     
+    if(bExpertMode){
+        hiddenSettings.draw();
+    }
 }
 
 void Piano::addLineTracePlayerOne(int & i){
