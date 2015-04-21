@@ -13,7 +13,7 @@
 	<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
 <skeleton_transform>
 		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
-		<Skeleton_Scale>1, 1, 1</Skeleton_Scale>
+		<Skeleton_Scale>1, 1, 10.506</Skeleton_Scale>
 	</skeleton_transform>
 <Projector_Screen_Width>1280</Projector_Screen_Width>
 	<Projector_Screen_Height>768</Projector_Screen_Height>

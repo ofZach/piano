@@ -59,7 +59,7 @@ void Piano::setup(){
     settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width", 1920, 1280, 1920));
     settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height", 1080, 720, 1200));
     
-    
+
     
     appGUI.setup(settings.globalSettings);
     appGUI.setSize(350, 250);
@@ -90,6 +90,8 @@ void Piano::setup(){
     stageGUI.setup(skelView.stageParams);
     hiddenSettings.setup(settings.globalSettings);
     hiddenSettings.add(skelView.hiddenSettings);
+    hiddenSettings.setSize(300, 500);
+    hiddenSettings.setWidthElements(300);
 //    projectionGUI.setup(floorView.squareOptions);
     tvGUI.setup(tvView.tvParameters);
     midiGUI.setup(midiView.midiGroup);
