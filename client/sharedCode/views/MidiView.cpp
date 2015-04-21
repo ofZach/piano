@@ -26,7 +26,7 @@ void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
     }else{
         musicMakerP1.setup(midiOut);
         musicMakerP1.playerID = 0;
-        musicMakerP2.setup(midiOut);
+        musicMakerP2.setup(midiOut, 8);
         musicMakerP2.playerID = 1;
         musicMakers.push_back(&musicMakerP1);
         musicMakers.push_back(&musicMakerP2);
