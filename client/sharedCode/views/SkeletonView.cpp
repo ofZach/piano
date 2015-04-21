@@ -144,8 +144,8 @@ void SkeletonView::update(){
     
     stageOne.setPosition(playerOneStagePosition->x, playerOneStagePosition->y+stageSize/4, playerOneStagePosition->z);
     stageTwo.setPosition(playerTwoStagePosition->x, playerTwoStagePosition->y+stageSize/4, playerTwoStagePosition->z);
-    stageOne.setRadius(stageSize+presencesZoneSizeP1);
-    stageTwo.setRadius(stageSize+presencesZoneSizeP2);
+    stageOne.setRadius(stageSize*presencesZoneSizeP1/100);
+    stageTwo.setRadius(stageSize*presencesZoneSizeP2/100);
     stageOne.setApproachScale(1);
     stageTwo.setApproachScale(1);
     stageOne.setTriggerScale(0.8);
@@ -299,19 +299,19 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     
     
     if(overRideLeftTrigger){
-        playerOneSwitchMode.setPosition(ofVec3f(stageLeftTriggerX, stageLeftTriggerY, stageLeftTriggerZ));
+        playerOneSwitchMode.setPosition(ofVec3f(playerOneTriggerPosition->x, playerOneTriggerPosition->y, playerOneTriggerPosition->z));
         playerOneSwitchMode.setRadius(stageLeftTriggerScale);
     }else{
-        p1SwitchMode+=ofVec3f(stageLeftTriggerX, stageLeftTriggerY, stageLeftTriggerZ);
+        p1SwitchMode+=ofVec3f(playerOneTriggerPosition->x, playerOneTriggerPosition->y, playerOneTriggerPosition->z);
         playerOneSwitchMode.setPosition(p1SwitchMode);
         playerOneSwitchMode.setRadius(stageSize/4/2+stageLeftTriggerScale);
     }
     
     if(overRideRightTrigger){
-        playerTwoSwitchMode.setPosition(ofVec3f(stageRightTriggerX, stageRightTriggerY, stageRightTriggerZ));
+        playerTwoSwitchMode.setPosition(ofVec3f(playerTwoTriggerPosition->x, playerTwoTriggerPosition->y, playerTwoTriggerPosition->z));
         playerTwoSwitchMode.setRadius(stageRightTriggerScale);
     }else{
-        p2SwitchMode+=ofVec3f(stageRightTriggerX, stageRightTriggerY, stageRightTriggerZ);
+        p2SwitchMode+=ofVec3f(playerTwoTriggerPosition->x, playerTwoTriggerPosition->y, playerTwoTriggerPosition->z);
         playerTwoSwitchMode.setPosition(p2SwitchMode);
         playerTwoSwitchMode.setRadius(stageSize/4/2+stageRightTriggerScale);
     }
@@ -336,25 +336,26 @@ void SkeletonView::setupGUI(){
     
     stageParams.add(playerTwoStagePosition.set("Stage Two Position", ofVec3f(-250, 250, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
     
+    stageParams.add(playerOneTriggerPosition.set("Stage One Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    
+    stageParams.add(playerTwoTriggerPosition.set("Stage Two Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    
+    
+    
+    
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
     stageParams.add(bCalibrate.set("Calibration View", true));
     
     stageParams.add(overRideLeftTrigger.set("overRideLeftTrigger", true));
     stageParams.add(overRideRightTrigger.set("overRideRightTrigger", true));
     
-    stageParams.add(stageLeftTriggerX.set("stageLeftTriggerX", 0, -500, 500));
-    stageParams.add(stageLeftTriggerY.set("stageLeftTriggerY", 0, -500, 500));
-    stageParams.add(stageLeftTriggerZ.set("stageLeftTriggerZ", 0, -500, 500));
     stageParams.add(stageLeftTriggerScale.set("stageLeftTriggerScale", 0, 0, 500));
     
     
-    stageParams.add(stageRightTriggerX.set("stageRightTriggerX", 0, -500, 500));
-    stageParams.add(stageRightTriggerY.set("stageRightTriggerY", 0, -500, 500));
-    stageParams.add(stageRightTriggerZ.set("stageRightTriggerZ", 0, -500, 500));
     stageParams.add(stageRightTriggerScale.set("stageRightTriggerScale", 0, 0, 500));
     
-    stageParams.add(presencesZoneSizeP1.set("presencesZoneSizeP1", 0, 0, 200));
-    stageParams.add(presencesZoneSizeP2.set("presencesZoneSizeP2", 0, 0, 200));
+    stageParams.add(presencesZoneSizeP1.set("presencesZoneSizeP1", 0, 100, 300));
+    stageParams.add(presencesZoneSizeP2.set("presencesZoneSizeP2", 0, 100, 300));
     
     
     hiddenSettings.setName("skeleton transform");

@@ -13,14 +13,16 @@
 		<stageLeftTriggerX>-4</stageLeftTriggerX>
 		<stageLeftTriggerY>24</stageLeftTriggerY>
 		<stageLeftTriggerZ>20</stageLeftTriggerZ>
-		<stageLeftTriggerScale>38</stageLeftTriggerScale>
+		<stageLeftTriggerScale>40</stageLeftTriggerScale>
 		<stageRightTriggerX>0</stageRightTriggerX>
 		<stageRightTriggerY>0</stageRightTriggerY>
 		<stageRightTriggerZ>4</stageRightTriggerZ>
-		<stageRightTriggerScale>24</stageRightTriggerScale>
-	<presencesZoneSizeP1>100</presencesZoneSizeP1>
-		<presencesZoneSizeP2>100</presencesZoneSizeP2>
+		<stageRightTriggerScale>40</stageRightTriggerScale>
+	<presencesZoneSizeP1>137.6</presencesZoneSizeP1>
+		<presencesZoneSizeP2>137.6</presencesZoneSizeP2>
 	<Stage_One_Position>-181.633, 0, 0</Stage_One_Position>
 	<Stage_Two_Position>185.714, 0, 0</Stage_Two_Position>
+	<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
+	<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
 	</Stage_Settings>
 </group>

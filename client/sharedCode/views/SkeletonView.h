@@ -94,7 +94,7 @@ private:
     ofParameter <float> offsetZ;
     ofParameter<float> stageSize;
     
-    ofParameter<ofVec3f> playerOneStagePosition, playerTwoStagePosition;
+    ofParameter<ofVec3f> playerOneStagePosition, playerTwoStagePosition, playerOneTriggerPosition, playerTwoTriggerPosition;
     ofParameter<float> stageLeftX;
     ofParameter<float> stageLeftY;
     ofParameter<float> stageLeftZ;
@@ -106,16 +106,10 @@ private:
     
     
     ofParameter<bool> overRideLeftTrigger;
-    ofParameter<float> stageLeftTriggerX;
-    ofParameter<float> stageLeftTriggerY;
-    ofParameter<float> stageLeftTriggerZ;
     ofParameter<float> stageLeftTriggerScale;
 
     
     ofParameter<bool> overRideRightTrigger;
-    ofParameter<float> stageRightTriggerX;
-    ofParameter<float> stageRightTriggerY;
-    ofParameter<float> stageRightTriggerZ;
     ofParameter<float> stageRightTriggerScale;
 
     

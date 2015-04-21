@@ -54,4 +54,18 @@
 			<Stage_Size>214.857</Stage_Size>
 		</Stage_Settings>
 	</skeleton_transform>
+<Stage_Settings>
+		<Stage_One_Position>-181.633, 0, 0</Stage_One_Position>
+		<Stage_Two_Position>185.714, 0, 0</Stage_Two_Position>
+		<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
+		<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
+		<Stage_Size>270.46</Stage_Size>
+		<Calibration_View>1</Calibration_View>
+		<overRideLeftTrigger>0</overRideLeftTrigger>
+		<overRideRightTrigger>0</overRideRightTrigger>
+		<stageLeftTriggerScale>40</stageLeftTriggerScale>
+		<stageRightTriggerScale>40</stageRightTriggerScale>
+		<presencesZoneSizeP1>137.6</presencesZoneSizeP1>
+		<presencesZoneSizeP2>137.6</presencesZoneSizeP2>
+	</Stage_Settings>
 </MidiSettings>
