@@ -332,13 +332,13 @@ void SkeletonView::setupGUI(){
     skeletonTransform.add(offsetZ.set("offsetZ", 0, -2000,2000));
     
     stageParams.setName("Stage Settings");
-    stageParams.add(playerOneStagePosition.set("Stage One Position", ofVec3f(250, 250, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    stageParams.add(playerOneStagePosition.set("Stage One Position", ofVec3f(250, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
-    stageParams.add(playerTwoStagePosition.set("Stage Two Position", ofVec3f(-250, 250, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    stageParams.add(playerTwoStagePosition.set("Stage Two Position", ofVec3f(-250, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
-    stageParams.add(playerOneTriggerPosition.set("Stage One Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    stageParams.add(playerOneTriggerPosition.set("Stage One Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
-    stageParams.add(playerTwoTriggerPosition.set("Stage Two Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    stageParams.add(playerTwoTriggerPosition.set("Stage Two Button Position", ofVec3f(0, 0, 0), ofVec3f(-500, 0, -500), ofVec3f(500, 0, 500)));
     
     
     
