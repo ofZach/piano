@@ -1,0 +1,8 @@
+ofxNetwork
+ofxOpenCv
+ofxOsc
+ofxXmlSettings
+ofxBlur
+ofxHistoryPlot
+ofxKinectV2-OSC
+ofxQuadWarp
