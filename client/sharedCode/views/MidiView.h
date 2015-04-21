@@ -37,7 +37,8 @@ public:
     ofTrueTypeFont fontDebug;
     ofTrueTypeFont fontMain;
     
-    musicMaker musicMakerP1;
+    vector<musicMaker> musicMakers;
+	musicMaker musicMakerP1;
     musicMaker musicMakerP2;
     shared_ptr<ofxMidiOut> midiOut;
 

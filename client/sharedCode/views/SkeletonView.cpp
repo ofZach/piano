@@ -57,6 +57,10 @@ void SkeletonView::setup(int numPlayer, ofRectangle viewport){
     
     playerTwoSwitchMode.setTriggerScale(1.0);
     playerTwoSwitchMode.setApproachScale(1.26154);
+
+
+	playerOneMode = 0;
+	playerTwoMode = 0;
 }
 
 bool SkeletonView::isMain(){

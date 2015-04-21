@@ -77,7 +77,7 @@ void Piano::setup(){
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-	midiOut->openPort(1);
+	midiOut->openPort("PIANO");
     
     
     skelView.setup(numPlayers, viewMain);
@@ -94,6 +94,7 @@ void Piano::setup(){
     midiGUI.setup(midiView.midiGroup);
     
     midiGUI.setSize(250, 400);
+	midiGUI.setWidthElements(250);
 
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
@@ -111,14 +112,14 @@ void Piano::setup(){
     tvGUI.loadFromFile("tvView.xml");
     midiGUI.loadFromFile("midi.xml");
     
-    midiGUI.setWidthElements(250);
+    
 
-	for(int i = 0; i = midiView.musicMakerP1.midiTriggers.size(); i++){
+	for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
 		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
 		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerLinePlayerOne, this, &Piano::addLineTracePlayerOne);
 	}
 
-	for(int i = 0; i = midiView.musicMakerP2.midiTriggers.size(); i++){
+	for(int i = 0; i < midiView.musicMakerP2.midiTriggers.size(); i++){
 		ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
 		ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerLinePlayerTwo, this, &Piano::addLineTracePlayerTwo);
 	}
@@ -126,8 +127,8 @@ void Piano::setup(){
 
 	ofAddListener(midiView.musicMakerP1.triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
 	ofAddListener(midiView.musicMakerP1.triggerLinesPlayerOne, this, &Piano::addLineTracePlayerOne);
-	ofAddListener(midiView.musicMakerP1.triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
-	ofAddListener(midiView.musicMakerP1.triggerLinesPlayerTwo, this, &Piano::addLineTracePlayerTwo);
+	ofAddListener(midiView.musicMakerP2.triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
+	ofAddListener(midiView.musicMakerP2.triggerLinesPlayerTwo, this, &Piano::addLineTracePlayerTwo);
 
 }
 void Piano::update(){
@@ -168,9 +169,11 @@ void Piano::update(){
         if (midiView.playerTwo.getBool("ableToChangeModeManually") == false){
             midiView.setPlayerTwoMode(skelView.getPlayerTwoMode());
         }
-        
-        tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
-        tvView.setPlayerTwoMode(midiView.playerTwo.getInt("Output Mode"));
+       
+
+		tvView.setPlayerOneMode(skelView.getPlayerOneMode());
+		tvView.setPlayerTwoMode(skelView.getPlayerTwoMode());
+
         
         if(kb1 != NULL){
             floorView.setPlayerOne(true);
@@ -201,6 +204,8 @@ void Piano::exit(){
     midiGUI.saveToFile("midi.xml");
     appGUI.saveToFile("app-settings.xml");
     hiddenSettings.saveToFile("hiddensettings.xml");
+	
+	midiView.exit();
 }
 
 

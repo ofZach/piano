@@ -7,7 +7,7 @@
 		<Right_Stage_Y>-4</Right_Stage_Y>
 		<Right_Stage_Z>-8</Right_Stage_Z>
 		<Stage_Size>270.46</Stage_Size>
-		<Calibration_View>0</Calibration_View>
+		<Calibration_View>1</Calibration_View>
 	<overRideLeftTrigger>0</overRideLeftTrigger>
 		<overRideRightTrigger>0</overRideRightTrigger>
 		<stageLeftTriggerX>-4</stageLeftTriggerX>
