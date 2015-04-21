@@ -20,5 +20,13 @@
 		<stageRightTriggerScale>24</stageRightTriggerScale>
 	<presencesZoneSizeP1>100</presencesZoneSizeP1>
 		<presencesZoneSizeP2>100</presencesZoneSizeP2>
+	<Stage_One_Position>-144.898, 0, -148.98</Stage_One_Position>
+		<Stage_Two_Position>140.816, 0, -148.98</Stage_Two_Position>
+		<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
+		<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
+		<Stage_One_Trigger_Size>0</Stage_One_Trigger_Size>
+		<Stage_Two_Trigger_Size>0</Stage_Two_Trigger_Size>
+		<Activation_Stage_One_Scale>100</Activation_Stage_One_Scale>
+		<Activation_Stage_Two_Scale>100</Activation_Stage_Two_Scale>
 	</Stage_Settings>
 </group>

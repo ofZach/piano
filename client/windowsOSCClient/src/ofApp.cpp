@@ -2,9 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofSetFrameRate(60);
+	ofSetFrameRate(30);
     ofSetVerticalSync(true);
-   	ofSetFrameRate(60);
+   	ofSetFrameRate(30);
 
 	ofSetLogLevel(OF_LOG_VERBOSE);
     //ofSetEscapeQuitsApp(false);

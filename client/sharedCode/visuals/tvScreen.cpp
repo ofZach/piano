@@ -432,8 +432,8 @@ void tvScreen::draw( ofRectangle drawRect){
 	ofPushStyle();
 	ofSetColor(255,255,255);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	tvGridView.draw(drawRect);
-	tvSkeletonView.draw(drawRect);
+	tvGridView.draw(ofRectangle(drawRect.x+drawRect.width, drawRect.y, -drawRect.width, drawRect.height));
+	tvSkeletonView.draw(ofRectangle(drawRect.x+drawRect.width, drawRect.y, -drawRect.width, drawRect.height));
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	ofPopStyle();
 

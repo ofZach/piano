@@ -3,17 +3,17 @@
 		<Start_Note>36</Start_Note>
 		<Num_Note>16</Num_Note>
 		<Smooth_Up_History>0.0918367</Smooth_Up_History>
-		<Smooth_Down_History>0.617347</Smooth_Down_History>
-		<Smooth_Down_Skeleton>0.622449</Smooth_Down_Skeleton>
+		<Smooth_Down_History>0.318367</Smooth_Down_History>
+		<Smooth_Down_Skeleton>0.306122</Smooth_Down_Skeleton>
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>1</Send_All_Triggers>
-		<Draw_Graphs>0</Draw_Graphs>
+		<Draw_Graphs>1</Draw_Graphs>
 		<Body_Drop_Time>1030</Body_Drop_Time>
 		<Output>1</Output>
-		<Percentile>0.934694</Percentile>
-		<ThresholdSmoothing>0.563265</ThresholdSmoothing>
-		<Velocity_Cutoff>2.16082</Velocity_Cutoff>
+		<Percentile>0.946939</Percentile>
+		<ThresholdSmoothing>0.314286</ThresholdSmoothing>
+		<Velocity_Cutoff>2.08</Velocity_Cutoff>
 	<Output_Mode>1</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>0</Draw_Buttons>
@@ -21,7 +21,7 @@
 			<Trigger_Scale>0.813411</Trigger_Scale>
 			<Approach_Scale>1.26281</Approach_Scale>
 		</button_control_1>
-	<ableToChangeModeManually>0</ableToChangeModeManually>
+	<ableToChangeModeManually>1</ableToChangeModeManually>
 	<group/>
 	</playerOne>
 	<playerTwo>
