@@ -326,13 +326,9 @@ void tvScreen::drawHairyMan( kinectSkeleton & SK, int playerID){
 }
 
 void tvScreen::setStageParameters(ofParameterGroup params){
-	stageLeftX = params.getFloat("Left Stage X");
-	stageLeftY = params.getFloat("Left Stage Y");
-	stageLeftZ = params.getFloat("Left Stage Z");
+    stageOne = params.getVec3f("Stage One Position");
+    stageTwo = params.getVec3f("Stage Two Position");
 
-	stageRightX = params.getFloat("Right Stage X");
-	stageRightY = params.getFloat("Right Stage Y");
-	stageRightZ = params.getFloat("Right Stage Z");
 
 	stageSize = params.getFloat("Stage Size");
 }
@@ -364,7 +360,7 @@ void tvScreen::drawIntoFbo(){
 	ofSetColor(100);
 	ofNoFill();
 	ofRotate(90,1,0,0);
-	ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
+	ofTranslate(stageOne->x - stageSize/2, stageOne->z - stageSize/2, -stageOne->y);
 	ofRect(0, 0, stageSize, stageSize);
 	ofPopMatrix();
 
@@ -373,7 +369,7 @@ void tvScreen::drawIntoFbo(){
 		ofSetColor(100);
 		ofNoFill();
 		ofRotate(90,1,0,0);
-		ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
+		ofTranslate(stageTwo->x- stageSize/2, stageTwo->z - stageSize/2, -stageTwo->y);
 		ofRect(0, 0, stageSize, stageSize);
 		ofPopMatrix();
 	}

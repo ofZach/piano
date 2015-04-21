@@ -93,6 +93,8 @@ private:
     ofParameter <float> offsetY;
     ofParameter <float> offsetZ;
     ofParameter<float> stageSize;
+    
+    ofParameter<ofVec3f> playerOneStagePosition, playerTwoStagePosition;
     ofParameter<float> stageLeftX;
     ofParameter<float> stageLeftY;
     ofParameter<float> stageLeftZ;

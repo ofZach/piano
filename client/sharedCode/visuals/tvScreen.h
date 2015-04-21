@@ -66,8 +66,8 @@ public:
     ofParameter<bool>   bDrawHairyManP1;
     
     ofParameter<float> stageSize;
-    ofParameter<float> stageLeftX;
-    ofParameter<float> stageLeftY;
+    ofParameter<ofVec3f> stageOne;
+    ofParameter<ofVec3f> stageTwo;
     ofParameter<float> stageLeftZ;
     ofParameter<float> stageRightX;
     ofParameter<float> stageRightY;

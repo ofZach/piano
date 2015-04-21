@@ -100,10 +100,10 @@ void kinectButton::setIsApproached(bool isApproached) {
 void kinectButton::customDraw() {
 	ofPushStyle();
 
-	ofSetColor(ofColor::green, 10);
+	ofSetColor(ofColor::red, 25);
 	ofDrawBox(0, 0, 0, _radius* _approachScale, _radius* _approachScale, _radius* _approachScale);
 
-	ofSetColor(_isTriggered ? ofColor::red : ofColor::green, 50);
+	ofSetColor(_isTriggered ? ofColor::green : ofColor::red, 50);
 	ofDrawBox(0, 0, 0, _radius* _triggerScale, _radius* _triggerScale, _radius* _triggerScale);
 
 	ofPopStyle();

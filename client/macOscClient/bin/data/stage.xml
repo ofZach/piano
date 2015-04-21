@@ -20,5 +20,7 @@
 		<stageRightTriggerScale>24</stageRightTriggerScale>
 	<presencesZoneSizeP1>100</presencesZoneSizeP1>
 		<presencesZoneSizeP2>100</presencesZoneSizeP2>
+	<Stage_One_Position>-181.633, 0, 0</Stage_One_Position>
+	<Stage_Two_Position>185.714, 0, 0</Stage_Two_Position>
 	</Stage_Settings>
 </group>

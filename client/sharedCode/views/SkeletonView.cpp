@@ -57,10 +57,10 @@ void SkeletonView::setup(int numPlayer, ofRectangle viewport){
     
     playerTwoSwitchMode.setTriggerScale(1.0);
     playerTwoSwitchMode.setApproachScale(1.26154);
-
-
-	playerOneMode = 0;
-	playerTwoMode = 0;
+    
+    
+    playerOneMode = 0;
+    playerTwoMode = 0;
 }
 
 bool SkeletonView::isMain(){
@@ -142,8 +142,8 @@ void SkeletonView::update(){
     }
     
     
-    stageOne.setPosition(stageLeftX, stageLeftY+stageSize/4, stageLeftZ);
-    stageTwo.setPosition(stageRightX, stageRightY+stageSize/4, stageRightZ);
+    stageOne.setPosition(playerOneStagePosition->x, playerOneStagePosition->y+stageSize/4, playerOneStagePosition->z);
+    stageTwo.setPosition(playerTwoStagePosition->x, playerTwoStagePosition->y+stageSize/4, playerTwoStagePosition->z);
     stageOne.setRadius(stageSize+presencesZoneSizeP1);
     stageTwo.setRadius(stageSize+presencesZoneSizeP2);
     stageOne.setApproachScale(1);
@@ -229,7 +229,7 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             
             ofRotate(90, 1, 0, 0);
             ofSetColor(ofColor::slateBlue, 200);
-            ofTranslate(stageLeftX - stageSize/2, stageLeftZ - stageSize/2, -stageLeftY);
+            ofTranslate(playerOneStagePosition->x - stageSize/2, playerOneStagePosition->z - stageSize/2, -playerOneStagePosition->y);
             ofRect(0, 0, stageSize, stageSize);
         }
         ofPopMatrix();
@@ -239,7 +239,7 @@ void SkeletonView::drawScene(ofRectangle view, ofCamera camera){
             {
                 ofRotate(90, 1, 0, 0);
                 ofSetColor(ofColor::slateGray, 200);
-                ofTranslate(stageRightX - stageSize/2, stageRightZ - stageSize/2, -stageRightY);
+                ofTranslate(playerTwoStagePosition->x - stageSize/2, playerTwoStagePosition->z - stageSize/2, -playerTwoStagePosition->y);
                 ofRect(0, 0, stageSize, stageSize);
             }
             ofPopMatrix();
@@ -293,9 +293,9 @@ void SkeletonView::setButtonPos(ofVec3f p1, ofVec3f p2){
     
     
     p1SwitchMode.set((p1.x-512)/1024*stageSize, 0, (p1.y-512)/1024*stageSize);
-    p1SwitchMode+=ofVec3f(stageLeftX, stageLeftY, stageLeftZ);
+    p1SwitchMode+=ofVec3f(playerOneStagePosition->x, playerOneStagePosition->y, playerOneStagePosition->z);
     p2SwitchMode.set((p2.x-512)/1024*stageSize, 0, (p2.y-512)/1024*stageSize);
-    p2SwitchMode+=ofVec3f(stageRightX, stageRightY, stageRightZ);
+    p2SwitchMode+=ofVec3f(playerTwoStagePosition->x, playerTwoStagePosition->y, playerTwoStagePosition->z);
     
     
     if(overRideLeftTrigger){
@@ -332,12 +332,10 @@ void SkeletonView::setupGUI(){
     skeletonTransform.add(offsetZ.set("offsetZ", 0, -2000,2000));
     
     stageParams.setName("Stage Settings");
-    stageParams.add(stageLeftX.set("Left Stage X", 0, -500, 500));
-    stageParams.add(stageLeftY.set("Left Stage Y", 0, -500, 500));
-    stageParams.add(stageLeftZ.set("Left Stage Z", 0, -500, 500));
-    stageParams.add(stageRightX.set("Right Stage X", 0, -500, 500));
-    stageParams.add(stageRightY.set("Right Stage Y", 0, -500, 500));
-    stageParams.add(stageRightZ.set("Right Stage Z", 0, -500, 500));
+    stageParams.add(playerOneStagePosition.set("Stage One Position", ofVec3f(250, 250, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    
+    stageParams.add(playerTwoStagePosition.set("Stage Two Position", ofVec3f(-250, 250, 0), ofVec3f(-500, -500, -500), ofVec3f(500, 500, 500)));
+    
     stageParams.add(stageSize.set("Stage Size", 300, 1, 500));
     stageParams.add(bCalibrate.set("Calibration View", true));
     
