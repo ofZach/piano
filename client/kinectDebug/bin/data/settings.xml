@@ -1,0 +1,34 @@
+<skeleton_transform>
+	<rotationX>180</rotationX>
+	<rotationY>0</rotationY>
+	<rotationZ>0</rotationZ>
+	<scaleX>1</scaleX>
+	<scaleY>1</scaleY>
+	<scaleZ>1</scaleZ>
+<Stage_Settings>
+		<Left_Stage_X>340</Left_Stage_X>
+		<Left_Stage_Y>0</Left_Stage_Y>
+		<Left_Stage_Z>0</Left_Stage_Z>
+		<Right_Stage_X>0</Right_Stage_X>
+		<Right_Stage_Y>0</Right_Stage_Y>
+		<Right_Stage_Z>0</Right_Stage_Z>
+		<Stage_Size>300</Stage_Size>
+		<Calibration_View>0</Calibration_View>
+		<overRideLeftTrigger>1</overRideLeftTrigger>
+		<overRideRightTrigger>1</overRideRightTrigger>
+		<stageLeftTriggerX>0</stageLeftTriggerX>
+		<stageLeftTriggerY>0</stageLeftTriggerY>
+		<stageLeftTriggerZ>0</stageLeftTriggerZ>
+		<stageLeftTriggerScale>0</stageLeftTriggerScale>
+		<stageRightTriggerX>0</stageRightTriggerX>
+		<stageRightTriggerY>0</stageRightTriggerY>
+		<stageRightTriggerZ>0</stageRightTriggerZ>
+		<stageRightTriggerScale>0</stageRightTriggerScale>
+		<presencesZoneSizeP1>0</presencesZoneSizeP1>
+		<presencesZoneSizeP2>0</presencesZoneSizeP2>
+	</Stage_Settings>
+<skeleton_transform/>
+	<offsetX>0</offsetX>
+	<offsetY>-20</offsetY>
+	<offsetZ>0</offsetZ>
+</skeleton_transform>

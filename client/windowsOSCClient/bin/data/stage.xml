@@ -1,0 +1,24 @@
+<group>
+	<Stage_Settings>
+		<Left_Stage_X>-160</Left_Stage_X>
+		<Left_Stage_Y>0</Left_Stage_Y>
+		<Left_Stage_Z>-16</Left_Stage_Z>
+		<Right_Stage_X>148</Right_Stage_X>
+		<Right_Stage_Y>-4</Right_Stage_Y>
+		<Right_Stage_Z>-8</Right_Stage_Z>
+		<Stage_Size>270.46</Stage_Size>
+		<Calibration_View>1</Calibration_View>
+	<overRideLeftTrigger>0</overRideLeftTrigger>
+		<overRideRightTrigger>0</overRideRightTrigger>
+		<stageLeftTriggerX>-4</stageLeftTriggerX>
+		<stageLeftTriggerY>24</stageLeftTriggerY>
+		<stageLeftTriggerZ>20</stageLeftTriggerZ>
+		<stageLeftTriggerScale>38</stageLeftTriggerScale>
+		<stageRightTriggerX>0</stageRightTriggerX>
+		<stageRightTriggerY>0</stageRightTriggerY>
+		<stageRightTriggerZ>4</stageRightTriggerZ>
+		<stageRightTriggerScale>24</stageRightTriggerScale>
+	<presencesZoneSizeP1>100</presencesZoneSizeP1>
+		<presencesZoneSizeP2>100</presencesZoneSizeP2>
+	</Stage_Settings>
+</group>

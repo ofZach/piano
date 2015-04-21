@@ -24,6 +24,11 @@ public:
     void update();
     void draw();
 	void exit();
+    
+    void setupGUI();
+    void updateGUI();
+    void oscWorkhorse();
+    void allocateFbos();
 
     void keyPressed(int key);
     void keyReleased(int key);
@@ -57,6 +62,15 @@ public:
     ofParameter <bool> drawSkeleton;
     ofParameter <bool> drawAnalyzer;
     ofParameter <bool> drawBoundingCube;
+    ofParameter<float> stageX;
+    ofParameter<float> stageY;
+    ofParameter<float> stageZ;
+    ofParameter<float> stageSize;
+    
+    
+    ofParameterGroup playerOne;
+    ofParameterGroup playerTwo;
+    
     
     ofParameterGroup dataPlayer;
     ofParameter <bool> bUseUdpPlayer;
@@ -85,16 +99,18 @@ public:
     ofParameter<float> buttonTriggerScale;
     ofParameter<float> buttonRadius;
     bool changeTriggered;
-    ofFbo fooFbo;
+    ofFbo debugFbo;
 
        
     musicMaker MM;
+    musicMaker MM2;
     
     unsigned long long bodyDropTimer;
 
     ofxControlPanel gui;
     
     ofCamera cam;
+    ofCamera debugCam;
 	
     ofMatrix4x4 mat;
     
@@ -116,5 +132,6 @@ public:
     tvScreen TV;
     Floor floorProjections;
     
+    shared_ptr<ofxMidiOut> midiOut;
 };
 

@@ -9,11 +9,12 @@ this is to help with organizing OF and non OF parts of this project.
 requires ofxHistoryPlot, ofxKinectV2-OSC:
 
 - [ofxHistoryPlot](https://github.com/danthemellowman/ofxHistoryPlot)<- Dan's Fork
-- [ofxKinectV2-OSC with Gesture Support](https://github.com/danthemellowman/ofxKinectV2-OSC)
+- [ofxKinectV2-OSC with Gesture Support](https://github.com/danthemellowman/ofxKinectV2-OSC/tree/gesture)
+   - git clone https://github.com/danthemellowman/ofxKinectV2-OSC.git
+   - cd ofxKinectV2-OSC
+   - git checkout -b gesture
 - [ofxMidi](https://github.com/danomatika/ofxMidi.git)
-- [ofxSequencer](https://github.com/genekogan/ofxSequencer.git)
-- [ofxBMP](https://github.com/mirrorboy714/ofxBpm)
-- [ofxSyphon](https://github.com/astellato/ofxSyphon)
+- [ofxQuadWarp](https://github.com/fakelove/ofxQuadWarp)
 
 also [ofxControlPanel](https://github.com/ofTheo/ofxControlPanel) -- with the ofParamter branch
 
@@ -26,4 +27,6 @@ Skeleton Recordings are not in the repo, some are [here](https://dl.dropboxuserc
 
 Windows [KinectV2-OSC Server](https://github.com/danthemellowman/KinectV2-OSC.git)
 
+
+auto login windows setup guide http://www.pcworld.com/article/2015587/how-to-bypass-the-windows-8-password-screen.html
 

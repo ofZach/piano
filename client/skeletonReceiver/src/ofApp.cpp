@@ -1,5 +1,5 @@
 #include "ofApp.h"
-
+#include "LocalAddressGrabber.h"
 
 void ofApp::exit(){
     MM.exit();
@@ -10,8 +10,14 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
+//    ofSetLogLevel(OF_LOG_SILENT);
+    
+
+    LocalAddressGrabber IP;
+    ofLog()<<IP.getIpAddress()<<endl;
     
     UDPR.setup();
+    setupGUI();
     
     ofTrueTypeFont smallFont, largeFont;
     
@@ -22,15 +28,38 @@ void ofApp::setup(){
     kinect.setup(12345, smallFont);
     kinect.setSmoothing(SIMPLE_MOVING_AVERAGE);
     skeletons = kinect.getSkeletons();
-    renderer.setup(skeletons, largeFont);
+//    renderer.setup(skeletons, largeFont);
     
-    gui.setup("panel");
+    
+    
+    ///Moving midiOut to the OF App because there can be only one midiOut!!
+    midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
+    midiOut->openVirtualPort("OF Kinect");
     
     KS.setup();
     TV.setup();
-    MM.setup();
-    MM.TV = &TV;
+    MM.setup(midiOut);
+    MM2.setup(midiOut, 8);
+
+    floorProjections.setup();
     
+    allocateFbos();
+    
+    
+    bodyDropTimer = ofGetElapsedTimeMillis();
+    
+    TV.setStagePos(stageX, stageY, stageZ, stageSize);
+    
+    
+    debugCam.setPosition(0, 500, -1000);
+    debugCam.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, 1, 0));
+    
+    
+}
+
+
+
+void ofApp::setupGUI(){
     skeletonTransform.setName("skeleton transform");
     skeletonTransform.add(scaleX.set("scaleX", 1.0,0.01, 20));
     skeletonTransform.add(scaleY.set("scaleY", 1.0,0.01, 20));
@@ -53,6 +82,8 @@ void ofApp::setup(){
     skeletonTransform.add(buttonTriggerScale.set("buttonTriggerScale", 0, 0.1,2.0));
     skeletonTransform.add(buttonRadius.set("buttonRadius", 10, 1,50));
     
+    
+    
     dataPlayer.setName("dataPlayer");
     dataPlayer.add(bUseUdpPlayer.set("use udp player", false));
     dataPlayer.add(bLoadNewUDP.set("load udp", false));
@@ -70,17 +101,25 @@ void ofApp::setup(){
     debugView.add(drawSkeleton.set("Draw Skeleton", true));
     debugView.add(drawAnalyzer.set("Draw Analyzer", true));
     debugView.add(drawBoundingCube.set("Draw Bounding Cube", true));
+    debugView.add(stageX.set("Stage X", 0, -1000, 1000));
+    debugView.add(stageY.set("Stage Y", 0, -1000, 1000));
+    debugView.add(stageZ.set("Stage Z", 0, -1000, 1000));
+    debugView.add(stageSize.set("Stage Size", 0, 0, 1000));
     
-    MM.addToDebugParamGroup(debugView);
+    playerOne.setName("playerOne");
+    playerTwo.setName("playerTwo");
+    MM.addToDebugParamGroup(playerOne);
+    MM2.addToDebugParamGroup(playerTwo);
     
     
-    gui.setup("controls", ofGetWidth()-300-10, 10, 300, 700);
-    gui.addPanel("main control", 4, false);
-    gui.addPanel("analysis", 4, false);
+    gui.setup("main control", ofGetWidth()-300-10, 10, 300, ofGetHeight());
     gui.addPanel("Debug Controls", 4, false);
-    gui.addPanel("Thresholds Skeletons", 4, false);
-    gui.addPanel("Thresholds History", 4, false);
-    gui.addPanel("Grid Control", 4, false);
+    gui.addPanel("Player 1 Controls", 4, false);
+    gui.addPanel("Thresholds Skeletons Player 1", 4, false);
+    gui.addPanel("Thresholds History Player 1", 4, false);
+    gui.addPanel("Player 2 Controls", 4, false);
+    gui.addPanel("Thresholds Skeletons Player 2", 4, false);
+    gui.addPanel("Thresholds History Player 2", 4, false);
     gui.setWhichPanel(0);
     gui.setWhichColumn(0);
     
@@ -88,27 +127,38 @@ void ofApp::setup(){
     gui.addGroup(dataPlayer);
     gui.addGroup(cameraControl);
     
-    
-    gui.setWhichPanel(4);
+    gui.setWhichPanel(1);
     gui.setWhichColumn(0);
-    gui.addGroup(MM.graphsControl1);
+    gui.addGroup(debugView);
     
-    gui.setWhichPanel(5);
+    gui.setWhichPanel(2);
     gui.setWhichColumn(0);
-    gui.addGroup(MM.graphsControl2);
+    gui.addGroup(playerOne);
     
     
     gui.setWhichPanel(3);
     gui.setWhichColumn(0);
+    gui.addGroup(MM.graphsControl1);
     
-    gui.addGroup(debugView);
-    
-    
-    gui.setWhichPanel(2);
+    gui.setWhichPanel(4);
     gui.setWhichColumn(0);
-    gui.addGroup(MM.buttonControl);
+    gui.addGroup(MM.graphsControl2);
     
-    gui.setWhichPanel(0);
+    gui.setWhichPanel(5);
+    gui.setWhichColumn(0);
+    gui.addGroup(playerTwo);
+    
+    gui.setWhichPanel(6);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM2.graphsControl2);
+    
+    gui.setWhichPanel(7);
+    gui.setWhichColumn(0);
+    gui.addGroup(MM2.graphsControl2);
+    
+    
+    
+    
     
     status = "first frame";
     gui.setStatusMessage(status);
@@ -119,44 +169,107 @@ void ofApp::setup(){
     
     gui.loadSettings("settings.xml");
     
-    
-    
-    //ofAddListener(kinect.newGesture, this, &ofApp::newGesture);
-    
-    
-    
-    fooFbo.allocate(1024, 728, GL_RGBA, 4);
-    fooFbo.begin();
-    ofClear(0, 0, 0, 0);
-    fooFbo.end();
-    
-    floorProjections.setup();
-    bodyDropTimer = ofGetElapsedTimeMillis();
 }
 
-
-
-
+void ofApp::allocateFbos(){
+    debugFbo.allocate(ofGetWindowWidth()/2, ofGetWindowHeight()/2, GL_RGBA);
+    debugFbo.begin();
+    ofClear(0, 0, 0, 0);
+    debugFbo.end();
+}
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    oscWorkhorse();
+    updateGUI();
+    
+    
+    
+    //update the camera
+    ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
+    
+    if(swayCamera) {
+        float t = ofGetElapsedTimef() * swayRate;
+        ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
+        position += swayDir * (swayAmount * 100.);
+    }
+    
+    cam.setPosition(position);
+    cam.lookAt( ofPoint(0,0,0));
+    
+    
+    kinect.update();
+    
+    
+    if (skeletons->size() > 0){
+        int index = 0;
+        float dist = FLT_MAX;
+        
+        //        for(int i = 0; i < skeletons->size(); i++){
+        //            if(((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length()) < dist){
+        //                index = i;
+        //                dist = ((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length());
+        //            }
+        //        }
+        for(int i = 0; i < skeletons->size(); i++){
+            KS.setFromSkeleton(skeletons->at(i), mat);
+            kinectBody & body = bodyMap[skeletons->at(i).getBodyId()];
+            bool bNewFrame = body.addSkeleton(KS);
+            
+            //            cout<<i<<endl;
+            if (bNewFrame){
+                KSA.analyze(body.getLastSkeleton());
+                KBA.analyze(body);
+                if(i == 0){
+                    //                    cout<<"update player one"<<endl;
+                    MM.analyze(body);
+                }else{
+                    //                    cout<<"update player two"<<endl;
+                    MM2.analyze(body);
+                }
+                TV.update(&body);
+                
+                //switch mode
+                //                int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
+                //                int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
+                //                vector<std::pair<ofPoint, float> > feet;
+                //                feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
+                //                feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
+                //                switchMode.update(feet);
+            }
+        }
+        
+    }else {
+        
+        TV.update(NULL);
+        
+        
+        if(ofGetElapsedTimeMillis() - bodyDropTimer > MM.bodyDropThreshold){
+            
+            
+            if(bodyMap.size() > 0){
+                bodyMap.clear();
+                MM.clearBodies();
+                MM2.clearBodies();
+            }
+            
+            bodyDropTimer = ofGetElapsedTimeMillis();
+        }
+    }
+    
+    
+    TV.drawIntoFbo(cam);
+    
+}
+
+void ofApp::updateGUI(){
     gui.update();
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
-    if (bLoadNewUDP == true){
-        string folder = ofSystemLoadDialog("", true).getPath();
-        if (folder != ""){
-            UDPR.parseFolder(folder);
-        }
-        bLoadNewUDP = false;
-    }
+    TV.setStagePos(stageX, stageY, stageZ, stageSize);
     
-    if (bUseUdpPlayer){
-        UDPR.update();
-        udpDuration.set(UDPR.pct);
-    }
     
     centerPoint.set(centerX, centerY, centerZ);
     centerButton.setPosition(centerX, centerY, centerZ);
@@ -175,153 +288,91 @@ void ofApp::update(){
     mat.glRotate(rotationZ, 0,0,1);
     ofPoint scaleTemp = ofPoint(scaleX, scaleY, scaleZ);;
     mat.glScale(scaleTemp.x, scaleTemp.y, scaleTemp.z);
-    
-    
-    //update the camera
-    ofPoint position (0 + cameraRadius * cos(cameraAngle), cameraHeight, 0 + cameraRadius * sin(cameraAngle));
-    
-    if(swayCamera) {
-        float t = ofGetElapsedTimef() * swayRate;
-        ofVec3f swayDir(ofNoise(t * 0.9), ofNoise(t * 0.89), ofNoise(t * 0.88));
-        position += swayDir * (swayAmount * 100.);
-    }
-    
-    cam.setPosition(position);
-    cam.lookAt( ofPoint(0,0,0));
-    
-    
-    
-    
-    kinect.update();
-    
-    if (skeletons->size() >= 1){
-        int index = 0;
-        float dist = FLT_MAX;
-        
-        for(int i = 0; i < skeletons->size(); i++){
-            if(((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length()) < dist){
-                index = i;
-                dist = ((centerPoint-skeletons->at(i).getSpineBase().getPoint()).length());
-            }
-        }
-        
-        KS.setFromSkeleton(skeletons->at(index), mat);
-        kinectBody & body = bodyMap[skeletons->at(0).getBodyId()];
-        bool bNewFrame = body.addSkeleton(KS);
-        
-        
-        if (bNewFrame){
-            KSA.analyze(body.getLastSkeleton());
-            KBA.analyze(body);
-            MM.analyze(body);
-            TV.update(&body);
-            
-            //switch mode
-            int whichLeft = SKELETOR::Instance()->getPointIndex(ankle, ::left);
-            int whichRight = SKELETOR::Instance()->getPointIndex(ankle, ::right);
-            vector<std::pair<ofPoint, float> > feet;
-            feet.push_back(make_pair(body.getLastSkeleton().pts[whichLeft], 0.f));
-            feet.push_back(make_pair(body.getLastSkeleton().pts[whichRight], 0.f));
-            switchMode.update(feet);
-            if(switchMode.isTriggered() && ! changeTriggered){
-                changeTriggered = true;
-                MM.outputMode.set((MM.outputMode+1)%2);
-                
-            }else if(!switchMode.isTriggered()){
-                changeTriggered = false;
-            }
-        }
-    }else {
-        
-        TV.update(NULL);
-        
-        
-        if(ofGetElapsedTimeMillis() - bodyDropTimer > MM.bodyDropThreshold){
-            
-            
-            if(bodyMap.size() > 0){
-                bodyMap.clear();
-                MM.clearBodies();
-            }
-            
-            bodyDropTimer = ofGetElapsedTimeMillis();
-        }
-    }
-    
-    
-    TV.drawIntoFbo(cam);
-    
 }
 
-
+void ofApp::oscWorkhorse(){
+    if (bLoadNewUDP == true){
+        string folder = ofSystemLoadDialog("", true).getPath();
+        if (folder != ""){
+            UDPR.parseFolder(folder);
+        }
+        bLoadNewUDP = false;
+    }
+    
+    if (bUseUdpPlayer){
+        UDPR.update();
+        udpDuration.set(UDPR.pct);
+    }
+}
 
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofBackground(ofColor::darkGray);
+    ofBackground(0, 0, 0);
     
-    
-    
-    
-    
-    fooFbo.begin();
-    ofBackground(ofColor::darkGray);
-    //ofClear(0, 0, 0);
-    cam.begin(ofRectangle(ofVec2f(0, 0), fooFbo.getWidth(), fooFbo.getHeight()));
+    ofEnableAlphaBlending();
+    debugFbo.begin();
+    ofClear(0, 0, 0);
+    ofBackground(0, 0, 0);
+    debugCam.begin(ofRectangle(ofVec2f(0, 0), debugFbo.getWidth(), debugFbo.getHeight()));
+    ofPushStyle();
     ofSetColor(255,255,255,127);
     ofSetLineWidth(3);
     ofPushMatrix();
     ofRotate(90,0,0,1);
     ofDrawGridPlane(1000);
     ofPopMatrix();
-    //    ofPushMatrix();
-    //    ofTranslate(centerPoint);
+    
+    
+    ofPushMatrix();
+    ofRotate(90, 1, 0, 0);
+    ofSetColor(0, 100, 100, 200);
+    ofTranslate(stageX-stageSize/2.0, stageY-stageSize/2.0, stageZ);
+    ofRect(0, 0, stageSize, stageSize);
+    ofPopMatrix();
+    ofSetColor(255,255,255,127);
     ofDrawAxis(50);
-    //    ofPopMatrix();
-    ofLine( ofPoint(0,0), ofPoint(800,0));
     
     
     for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
-        if(drawSkeleton){
-            bodyMap[iter->getBodyId()].draw();
-        }
-        if(drawAnalyzer){
-            bodyMap[iter->getBodyId()].drawDebug(drawBoundingCube);
-        }
+        ofPushStyle();
+        bodyMap[iter->getBodyId()].draw();
+        ofPopStyle();
     }
     
-    centerButton.draw();
-    
-    
-    MM.drawInScene();
-    
-    switchMode.draw();
-    
-    cam.end();
+    ofPopStyle();
+    debugCam.end();
     
     
     
     ofClearAlpha();
-    fooFbo.end();
+    debugFbo.end();
     ofSetLineWidth(1);
     
     ofSetColor(255,255,255);
-    fooFbo.draw((ofGetWidth()-fooFbo.getWidth())/2.0, (ofGetHeight()-fooFbo.getHeight())/2.0);
-    for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
-        bodyMap[iter->getBodyId()].drawHistory();
-    }
+    debugFbo.draw(0, 0, debugFbo.getWidth(), debugFbo.getHeight());
+    
+    
+    TV.draw(ofRectangle(ofGetWindowWidth()/2,0,TV.tvSkeletonView.getWidth()/2, TV.tvSkeletonView.getHeight()/2));
+    floorProjections.floor.draw(0, ofGetWindowHeight()/2, floorProjections.floor.getWidth()/2, floorProjections.floor.getHeight()/2);
+    
+    
+    
+    
+        for( vector<Skeleton>::iterator iter = skeletons->begin(); iter != skeletons->end(); ++iter){
+            bodyMap[iter->getBodyId()].drawHistory();
+        }
+    
+    MM.drawOverScene();
+    MM2.drawOverScene();
     
     gui.draw();
     
-    MM.drawOverScene();
     
+    ofDisableAlphaBlending();
     
-    TV.draw(ofRectangle(0,0,1920/2, 1080/2));
-    
-    
-    //    UDPR.draw(ofRectangle(2*ofGetWidth()/3,0, 400, 100));
 }
 
 
@@ -338,6 +389,20 @@ void ofApp::keyPressed(int key){
     if (key == ' '){
         TV.addImpluse();
     }
+    
+    if(key == '1'){
+        MM.outputMode.set(0);
+    }
+    if(key == '2'){
+        MM.outputMode.set(1);
+    }
+    if(key == '3'){
+        MM2.outputMode.set(0);
+    }
+    if(key == '4'){
+        MM2.outputMode.set(1);
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -367,7 +432,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    
+    allocateFbos();
 }
 
 //--------------------------------------------------------------
