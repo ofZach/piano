@@ -33,7 +33,7 @@
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>1</Send_All_Triggers>
-		<Draw_Graphs>1</Draw_Graphs>
+		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>1069</Body_Drop_Time>
 		<Output>1</Output>
 		<Percentile>0.963265</Percentile>

@@ -171,8 +171,8 @@ void Piano::update(){
         }
        
 
-		tvView.setPlayerOneMode(skelView.getPlayerOneMode());
-		tvView.setPlayerTwoMode(skelView.getPlayerTwoMode());
+		tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
+		tvView.setPlayerTwoMode(midiView.playerTwo.getInt("Output Mode"));
 
         
         if(kb1 != NULL){
