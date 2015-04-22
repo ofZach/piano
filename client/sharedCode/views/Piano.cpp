@@ -46,35 +46,34 @@ void Piano::setup(){
     viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
     
     
-    settings.globalSettings.setName("Microsoft Music Box");
-    settings.globalSettings.add(settings.numPlayers.set("Number of Players", 2, 1, 2));
+    globalSettings.setName("Microsoft Music Box");
+    globalSettings.add(numPlayers.set("Number of Players", 2, 1, 2));
+    renderSettings.setName("Render Settings");
+    renderSettings.add(bDrawProjections.set("Draw Projections", true));
+    renderSettings.add(projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
+    renderSettings.add(projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
+    renderSettings.add(projectorViewWidth.set("Projector Screen Width", 1280, 0, 2560));
+    renderSettings.add(projectorViewHeight.set("Projector Screen Height", 768, 0, 1440));
     
-    settings.globalSettings.add(settings.projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
-    settings.globalSettings.add(settings.projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.projectorViewWidth.set("Projector Screen Width", 1280, 640, 1920));
-    settings.globalSettings.add(settings.projectorViewHeight.set("Projector Screen Height", 768, 480, 1080));
+    renderSettings.add(tvViewX.set("TV X Pos", projectorViewX+projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
+    renderSettings.add(tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
+    renderSettings.add(tvViewWidth.set("TV Screen Width", 1920, 0, 3840));
+    renderSettings.add(tvViewHeight.set("TV Screen Height", 1080, 0, 2160));
     
-    settings.globalSettings.add(settings.tvViewX.set("TV X Pos", settings.projectorViewX+settings.projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
-    settings.globalSettings.add(settings.tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width", 1920, 1280, 1920));
-    settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height", 1080, 720, 1200));
+    globalSettings.add(renderSettings);
+
     
 
     
-    appGUI.setup(settings.globalSettings);
-    appGUI.setSize(350, 250);
-    appGUI.setWidthElements(350);
     
-    
-    projectorRect = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
-    tvRect = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
+    projectorRect = ofRectangle(projectorViewX, projectorViewY, projectorViewWidth, projectorViewHeight);
+    tvRect = ofRectangle(tvViewX, tvViewY, tvViewWidth, tvViewHeight);
     
     setupViewports();
     iMainView = 4;
     
-    numPlayers = settings.numPlayers;
-    
-    
+
+
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
 	midiOut->openPort("PIANO");
@@ -89,11 +88,10 @@ void Piano::setup(){
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
 
-    appGUI.add(skelView.hiddenSettings);
-    appGUI.add(tvView.tvParameters);
-    appGUI.add(midiView.midiGroup);
+    globalSettings.add(skelView.hiddenSettings);
+    globalSettings.add(tvView.tvParameters);
+    globalSettings.add(midiView.midiGroup);
 
-    appGUI.setWidthElements(300);
 
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
@@ -103,11 +101,11 @@ void Piano::setup(){
     stageGUI.setWidthElements(250);
     stageGUI.setPosition(ofGetScreenWidth()-500, 0);
     
-    stageGUI.loadFromFile("stage.xml");
-    skeletonGUI.loadFromFile("skeleton.xml");
+    appGUI.setup(globalSettings);
+    appGUI.setSize(350, appGUI.getHeight());
+    appGUI.setWidthElements(350);
+    appGUI.minimizeAll();
     appGUI.loadFromFile("app-settings.xml");
-    
-    
 
 	for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
 		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
