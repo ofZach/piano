@@ -1,39 +1,26 @@
 <Microsoft_Music_Box>
 	<Number_of_Players>2</Number_of_Players>
-	<Projector_Size_and_Postition>1920, 0, 0, 1280, 768</Projector_Size_and_Postition>
-	<TV_Size_and_Postition>3200, 0, 0, 1920, 1080</TV_Size_and_Postition>
 <Microsoft_Music_Box/>
-	<Projector_X_Pos>1920</Projector_X_Pos>
-	<Projector_Y_Pos>0</Projector_Y_Pos>
-	<Projector_Screen_Width_In_Pixels>1280</Projector_Screen_Width_In_Pixels>
-	<Projector_Screen_Height_In_Pixel>768</Projector_Screen_Height_In_Pixel>
-	<TV_X_Pos>3200</TV_X_Pos>
-	<TV_Y_Pos>0</TV_Y_Pos>
-	<TV_Screen_Width_In_Pixels>1920</TV_Screen_Width_In_Pixels>
-	<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
-<Projector_Screen_Width>1280</Projector_Screen_Width>
-	<Projector_Screen_Height>768</Projector_Screen_Height>
-	<TV_Screen_Width>1920</TV_Screen_Width>
-	<TV_Screen_Height>1080</TV_Screen_Height>
 	<skeleton_transform>
 		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
-		<Skeleton_Scale>1, 1, 19.5737</Skeleton_Scale>
+		<Skeleton_Scale>1, 1, 13.005</Skeleton_Scale>
+	<Skeleton_Offset>-236.735, 432.653, 122.449</Skeleton_Offset>
 	</skeleton_transform>
 <Render_Settings>
-		<Draw_Projections>1</Draw_Projections>
+		<Draw_Projections>0</Draw_Projections>
 		<Projector_X_Pos>1920</Projector_X_Pos>
 		<Projector_Y_Pos>0</Projector_Y_Pos>
-		<Projector_Screen_Width>1280</Projector_Screen_Width>
-		<Projector_Screen_Height>768</Projector_Screen_Height>
-		<TV_X_Pos>3200</TV_X_Pos>
+		<Projector_Screen_Width>0</Projector_Screen_Width>
+		<Projector_Screen_Height>0</Projector_Screen_Height>
+		<TV_X_Pos>1920</TV_X_Pos>
 		<TV_Y_Pos>0</TV_Y_Pos>
-		<TV_Screen_Width>1920</TV_Screen_Width>
-		<TV_Screen_Height>1080</TV_Screen_Height>
+		<TV_Screen_Width>2160</TV_Screen_Width>
+		<TV_Screen_Height>3840</TV_Screen_Height>
 	</Render_Settings>
 	<TV_Controls>
-		<cameraAngle>104.956</cameraAngle>
-		<cameraRadius>903.79</cameraRadius>
-		<cameraHeight>355.685</cameraHeight>
+		<cameraAngle>305.423</cameraAngle>
+		<cameraRadius>1000</cameraRadius>
+		<cameraHeight>349.854</cameraHeight>
 		<View_Height>0</View_Height>
 		<swayCamera>1</swayCamera>
 		<swayRate>1.08764</swayRate>
@@ -43,62 +30,53 @@
 		<energyAdder>0.25</energyAdder>
 	</TV_Controls>
 	<MidiSettings>
-	<playerOne>
-		<Start_Note>36</Start_Note>
-		<Num_Note>16</Num_Note>
-		<Smooth_Up_History>0.0918367</Smooth_Up_History>
-		<Smooth_Down_History>0.318367</Smooth_Down_History>
-		<Smooth_Down_Skeleton>0.306122</Smooth_Down_Skeleton>
-		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
-		<JazzDrums>1</JazzDrums>
-		<Send_All_Triggers>1</Send_All_Triggers>
-		<Draw_Graphs>0</Draw_Graphs>
-		<Body_Drop_Time>1030</Body_Drop_Time>
-		<Output>1</Output>
-		<Percentile>0.946939</Percentile>
-		<ThresholdSmoothing>0.314286</ThresholdSmoothing>
-		<Velocity_Cutoff>2.08</Velocity_Cutoff>
-	<Output_Mode>0</Output_Mode>
-	<button_control_1>
-			<Draw_Buttons>0</Draw_Buttons>
-			<Radius>75.8226</Radius>
-			<Trigger_Scale>0.813411</Trigger_Scale>
-			<Approach_Scale>1.26281</Approach_Scale>
-		</button_control_1>
-	<ableToChangeModeManually>0</ableToChangeModeManually>
-	<group/>
-	</playerOne>
-	<playerTwo>
-		<Start_Note>36</Start_Note>
-		<Num_Note>16</Num_Note>
-		<Smooth_Up_History>0.0938776</Smooth_Up_History>
-		<Smooth_Down_History>0.596939</Smooth_Down_History>
-		<Smooth_Down_Skeleton>0.586735</Smooth_Down_Skeleton>
-		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
-		<JazzDrums>1</JazzDrums>
-		<Send_All_Triggers>1</Send_All_Triggers>
-		<Draw_Graphs>0</Draw_Graphs>
-		<Body_Drop_Time>1069</Body_Drop_Time>
-		<Output>1</Output>
-		<Percentile>0.963265</Percentile>
-		<ThresholdSmoothing>0.334694</ThresholdSmoothing>
-		<Velocity_Cutoff>3.13061</Velocity_Cutoff>
-	<Output_Mode>1</Output_Mode>
-	<button_control_1>
-			<Draw_Buttons>1</Draw_Buttons>
-			<Radius>75.2811</Radius>
-			<Trigger_Scale>0.801749</Trigger_Scale>
-			<Approach_Scale>1.25656</Approach_Scale>
-		</button_control_1>
-	<button_controls_2>
-			<Draw_Buttons>0</Draw_Buttons>
-			<Radius>75</Radius>
-			<Trigger_Scale>0.8</Trigger_Scale>
-			<Approach_Scale>1.2</Approach_Scale>
-		</button_controls_2>
-	<ableToChangeModeManually>0</ableToChangeModeManually>
-	</playerTwo>
-</MidiSettings>
+		<playerOne>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>0</Output_Mode>
+			<ableToChangeModeManually>0</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_control_1>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_control_1>
+		</playerOne>
+		<playerTwo>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>1</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>1</Output_Mode>
+			<ableToChangeModeManually>1</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_controls_2>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_controls_2>
+		</playerTwo>
+	</MidiSettings>
 <Expert_Floor_Mode>
 		<Floor_Controls_0>
 			<bShowDots>0</bShowDots>
@@ -108,10 +86,10 @@
 			<bFadeLines>1</bFadeLines>
 			<bSpawnLines>0</bSpawnLines>
 			<buttonPos>0</buttonPos>
-			<lineWeight>9.38062</lineWeight>
-			<lineSpeed>12.7495</lineSpeed>
-			<speed>11.9165</speed>
-			<lineDistnace>25.4864</lineDistnace>
+			<lineWeight>10</lineWeight>
+			<lineSpeed>10</lineSpeed>
+			<speed>10</speed>
+			<lineDistnace>10</lineDistnace>
 		</Floor_Controls_0>
 		<Floor_Controls_1>
 			<bShowDots>0</bShowDots>
@@ -121,10 +99,30 @@
 			<bFadeLines>1</bFadeLines>
 			<bSpawnLines>0</bSpawnLines>
 			<buttonPos>0</buttonPos>
-			<lineWeight>10</lineWeight>
-			<lineSpeed>12.8684</lineSpeed>
+			<lineWeight>9.38062</lineWeight>
+			<lineSpeed>10</lineSpeed>
 			<speed>10</speed>
 			<lineDistnace>10</lineDistnace>
 		</Floor_Controls_1>
 	</Expert_Floor_Mode>
+<Floor>
+		<bShowWarp>1</bShowWarp>
+		<bSaveWarp>0</bSaveWarp>
+		<bDrawCalibration>1</bDrawCalibration>
+		<Stage_Offset>50</Stage_Offset>
+	</Floor>
+	<Stage_Settings>
+		<Calibration_View>0</Calibration_View>
+		<Stage_One_Position>-144.898, 0, 38.7755</Stage_One_Position>
+		<Stage_Two_Position>153.061, 0, 42.8572</Stage_Two_Position>
+		<Stage_One_Button_Position>2.0408, 0, 0</Stage_One_Button_Position>
+		<Stage_Two_Button_Position>0, 0, -22.449</Stage_Two_Button_Position>
+		<Stage_Size>276.448</Stage_Size>
+		<overRideLeftTrigger>1</overRideLeftTrigger>
+		<overRideRightTrigger>1</overRideRightTrigger>
+		<Stage_One_Trigger_Size>0</Stage_One_Trigger_Size>
+		<Stage_Two_Trigger_Size>0</Stage_Two_Trigger_Size>
+		<Activation_Stage_One_Scale>117.6</Activation_Stage_One_Scale>
+		<Activation_Stage_Two_Scale>117.6</Activation_Stage_Two_Scale>
+	</Stage_Settings>
 </Microsoft_Music_Box>

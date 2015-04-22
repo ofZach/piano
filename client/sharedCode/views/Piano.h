@@ -70,6 +70,7 @@ public:
     ofxPanel stageGUI;
     ofxPanel appGUI;
 	ofxPanel floorGUI;
+	ofxPanel renderSettingsPanel;
     
     bool bExpertMode;
     
@@ -77,14 +78,14 @@ public:
     ofParameterGroup globalSettings;
     ofParameterGroup renderSettings;
     ofParameter<bool> bDrawProjections;
-    ofParameter<float> projectorViewWidth;
-    ofParameter<float> tvViewWidth;
-    ofParameter<float> projectorViewHeight;
-    ofParameter<float> tvViewHeight;
-    ofParameter<float> projectorViewX;
-    ofParameter<float> tvViewX;
-    ofParameter<float> projectorViewY;
-    ofParameter<float> tvViewY;
+    ofParameter<int> projectorViewWidth;
+    ofParameter<int> tvViewWidth;
+    ofParameter<int> projectorViewHeight;
+    ofParameter<int> tvViewHeight;
+    ofParameter<int> projectorViewX;
+    ofParameter<int> tvViewX;
+    ofParameter<int> projectorViewY;
+    ofParameter<int> tvViewY;
     ofParameter<int> numPlayers;
 
 };
