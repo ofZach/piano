@@ -68,7 +68,8 @@ public:
     ofxPanel hiddenSettings;
     ofxPanel skeletonGUI;
     ofxPanel stageGUI;
-
+	ofxPanel floorGUI;
+	ofxPanel expertFloorGUI;
     ofxPanel tvGUI;
     ofxPanel midiGUI;
     ofxPanel appGUI;

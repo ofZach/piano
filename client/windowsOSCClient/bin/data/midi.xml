@@ -8,20 +8,20 @@
 		<Smooth_Up_Skeleton>0.0979592</Smooth_Up_Skeleton>
 		<JazzDrums>1</JazzDrums>
 		<Send_All_Triggers>1</Send_All_Triggers>
-		<Draw_Graphs>1</Draw_Graphs>
+		<Draw_Graphs>0</Draw_Graphs>
 		<Body_Drop_Time>1030</Body_Drop_Time>
 		<Output>1</Output>
 		<Percentile>0.946939</Percentile>
 		<ThresholdSmoothing>0.314286</ThresholdSmoothing>
 		<Velocity_Cutoff>2.08</Velocity_Cutoff>
-	<Output_Mode>1</Output_Mode>
+	<Output_Mode>0</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>0</Draw_Buttons>
 			<Radius>75.8226</Radius>
 			<Trigger_Scale>0.813411</Trigger_Scale>
 			<Approach_Scale>1.26281</Approach_Scale>
 		</button_control_1>
-	<ableToChangeModeManually>1</ableToChangeModeManually>
+	<ableToChangeModeManually>0</ableToChangeModeManually>
 	<group/>
 	</playerOne>
 	<playerTwo>
@@ -39,7 +39,7 @@
 		<Percentile>0.963265</Percentile>
 		<ThresholdSmoothing>0.334694</ThresholdSmoothing>
 		<Velocity_Cutoff>3.13061</Velocity_Cutoff>
-	<Output_Mode>0</Output_Mode>
+	<Output_Mode>1</Output_Mode>
 	<button_control_1>
 			<Draw_Buttons>1</Draw_Buttons>
 			<Radius>75.2811</Radius>

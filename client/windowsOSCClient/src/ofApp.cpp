@@ -1,6 +1,7 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
+
+
 void ofApp::setup(){
 	ofSetFrameRate(30);
     ofSetVerticalSync(true);

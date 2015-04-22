@@ -260,26 +260,17 @@ void FloorView::drawProjections(){
 
 void FloorView::setupGUI(){
     
-    squareOptions.setName("Floor");
+    projectionParameters.setName("Floor");
     
-    squareOptions.add(bShowWarp.set("bShowWarp", true));
-    squareOptions.add(bSaveWarp.set("bSaveWarp", true));
-    squareOptions.add(bDrawCalibration.set("bDrawCalibration", true));
-    squareOptions.add(floorOffset.set("Stage Offset", 50, 0, 200));
+    projectionParameters.add(bShowWarp.set("bShowWarp", true));
+    projectionParameters.add(bSaveWarp.set("bSaveWarp", true));
+    projectionParameters.add(bDrawCalibration.set("bDrawCalibration", true));
+    projectionParameters.add(floorOffset.set("Stage Offset", 50, 0, 200));
 
+	floorControls.setName("Expert Floor Mode");
     for(int i = 0; i < floors.size(); i++){
-        squareOptions.add(floors[i]->squareOptions);
+        floorControls.add(floors[i]->squareOptions);
     }
-    
-    
-    floorGUI.setup(squareOptions);
-    
-    floorGUI.setSize(250, 400);
-    floorGUI.setWidthElements(250);
-    floorGUI.setPosition(ofGetScreenWidth()-250, 0);
-    
-    
-    floorGUI.loadFromFile("projection.xml");
 }
 
 void FloorView::setMainView(bool view){

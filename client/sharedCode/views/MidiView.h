@@ -30,6 +30,7 @@ public:
     ofParameterGroup playerOne;
     ofParameterGroup playerTwo;
     
+	
 
     vector<ofParameterGroup*> playerParameters;
     

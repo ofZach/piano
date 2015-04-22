@@ -48,8 +48,10 @@ public:
     ofFbo projectionFbo;
     ofRectangle projectionViewport;
     ofRectangle mainViewport;
-    ofParameterGroup        squareOptions;
-    bool bMainView;
+    ofParameterGroup        projectionParameters;
+	ofParameterGroup		floorControls;
+    
+	bool bMainView;
 
     ofParameter <float>     floorOffset;
     ofParameter <bool>      dualWarp;

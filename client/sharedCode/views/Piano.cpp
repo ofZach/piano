@@ -72,7 +72,7 @@ void Piano::setup(){
     setupViewports();
     iMainView = 4;
     
-    numPlayers = settings.numPlayers;
+    numPlayers = settings.globalSettings.getInt("Number of Players");
     
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
@@ -92,10 +92,25 @@ void Piano::setup(){
     hiddenSettings.add(skelView.hiddenSettings);
     hiddenSettings.setSize(300, 500);
     hiddenSettings.setWidthElements(300);
+
+
+	floorGUI.setup(floorView.projectionParameters);
+    floorGUI.setSize(250, 400);
+    floorGUI.setWidthElements(250);
+    floorGUI.setPosition(ofGetScreenWidth()-250, 0);
+    
+
+
+	expertFloorGUI.setup(floorView.floorControls);
+	expertFloorGUI.setSize(250, 400);
+	expertFloorGUI.setWidthElements(250);
+    expertFloorGUI.setPosition(ofGetScreenWidth()-500, 0);
+
+
 //    projectionGUI.setup(floorView.squareOptions);
     tvGUI.setup(tvView.tvParameters);
     midiGUI.setup(midiView.midiGroup);
-    
+	midiGUI.setPosition(ofGetScreenWidth()-250, 0);
     midiGUI.setSize(250, 400);
 	midiGUI.setWidthElements(250);
 
@@ -111,10 +126,10 @@ void Piano::setup(){
     stageGUI.loadFromFile("stage.xml");
     skeletonGUI.loadFromFile("skeleton.xml");
     hiddenSettings.loadFromFile("hiddensettings.xml");
- 
+	floorGUI.loadFromFile("projections.xml");
     tvGUI.loadFromFile("tvView.xml");
     midiGUI.loadFromFile("midi.xml");
-    
+    expertFloorGUI.loadFromFile("expert-projections.xml");
     
 
 	for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
@@ -202,14 +217,14 @@ void Piano::update(){
 }
 
 void Piano::exit(){
+	stageGUI.saveToFile("stage.xml");
     skeletonGUI.saveToFile("skeleton.xml");
-    stageGUI.saveToFile("stage.xml");
-//    projectionGUI.saveToFile("projection.xml");
+    hiddenSettings.saveToFile("hiddensettings.xml");
+	floorGUI.saveToFile("projections.xml");
     tvGUI.saveToFile("tvView.xml");
     midiGUI.saveToFile("midi.xml");
-    appGUI.saveToFile("app-settings.xml");
-    hiddenSettings.saveToFile("hiddensettings.xml");
-	
+    expertFloorGUI.saveToFile("expert-projections.xml");
+	appGUI.saveToFile("app-settings.h");
 	midiView.exit();
 }
 
@@ -234,9 +249,15 @@ void Piano::draw(){
         stageGUI.draw();
     }else if(midiView.isMain()){
         midiView.draw(viewMain);
-        midiGUI.draw();
+        if(bExpertMode){
+			midiGUI.draw();
+		}
     }else if(floorView.isMain()){
         floorView.drawDebug();
+		floorGUI.draw();
+		if(bExpertMode){
+			expertFloorGUI.draw();
+		}
     }else if(tvView.isMain()){
         tvView.draw(viewMain);
         tvGUI.draw();
@@ -266,7 +287,7 @@ void Piano::draw(){
     
     if(bExpertMode){
         hiddenSettings.draw();
-    }
+	}
 }
 
 void Piano::addLineTracePlayerOne(int & i){
