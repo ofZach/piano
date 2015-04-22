@@ -302,6 +302,6 @@ void FloorView::setupQuadWarp(){
         warpFloor.setTargetRect(ofRectangle(projectionFbo.getWidth() - projectionFbo.getWidth()/10, projectionFbo.getWidth()- projectionFbo.getHeight()/10, -floors[0]->getWidth()/2, -floors[0]->getHeight()/2));
     }
     warpFloor.setup();
-    warpFloor.load("warp-settings"+ofToString(numPlayers)+".xml");
+    warpFloor.load("warp-settings.xml");
     
 }

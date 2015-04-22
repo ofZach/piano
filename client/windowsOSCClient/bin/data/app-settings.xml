@@ -108,7 +108,7 @@
 <Floor>
 		<bShowWarp>1</bShowWarp>
 		<bSaveWarp>0</bSaveWarp>
-		<bDrawCalibration>1</bDrawCalibration>
+		<bDrawCalibration>0</bDrawCalibration>
 		<Stage_Offset>50</Stage_Offset>
 	</Floor>
 	<Stage_Settings>
