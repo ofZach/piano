@@ -68,13 +68,24 @@ public:
     ofxPanel hiddenSettings;
     ofxPanel skeletonGUI;
     ofxPanel stageGUI;
-	ofxPanel floorGUI;
-	ofxPanel expertFloorGUI;
-    ofxPanel tvGUI;
-    ofxPanel midiGUI;
     ofxPanel appGUI;
-    int numPlayers;
+	ofxPanel floorGUI;
     
     bool bExpertMode;
+    
+    
+    ofParameterGroup globalSettings;
+    ofParameterGroup renderSettings;
+    ofParameter<bool> bDrawProjections;
+    ofParameter<float> projectorViewWidth;
+    ofParameter<float> tvViewWidth;
+    ofParameter<float> projectorViewHeight;
+    ofParameter<float> tvViewHeight;
+    ofParameter<float> projectorViewX;
+    ofParameter<float> tvViewX;
+    ofParameter<float> projectorViewY;
+    ofParameter<float> tvViewY;
+    ofParameter<int> numPlayers;
+
 };
 #endif

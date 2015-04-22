@@ -15,22 +15,6 @@ public:
     AppSettings();
     ~AppSettings();
     
-    ofParameterGroup globalSettings;
-
-    
-    ofParameter<float> projectorViewWidth;
-    ofParameter<float> tvViewWidth;
-    
-    ofParameter<float> projectorViewHeight;
-    ofParameter<float> tvViewHeight;
-    
-    ofParameter<float> projectorViewX;
-    ofParameter<float> tvViewX;
-    
-    ofParameter<float> projectorViewY;
-    ofParameter<float> tvViewY;
-    
-    ofParameter<int> numPlayers;
-};
+    };
 
 #endif

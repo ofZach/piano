@@ -7,16 +7,87 @@
 	<Projector_Y_Pos>0</Projector_Y_Pos>
 	<Projector_Screen_Width_In_Pixels>1280</Projector_Screen_Width_In_Pixels>
 	<Projector_Screen_Height_In_Pixel>768</Projector_Screen_Height_In_Pixel>
-	<TV_X_Pos>3200</TV_X_Pos>
+	<TV_X_Pos>1920</TV_X_Pos>
 	<TV_Y_Pos>0</TV_Y_Pos>
 	<TV_Screen_Width_In_Pixels>1920</TV_Screen_Width_In_Pixels>
 	<TV_Screen_Height_In_Pixel>1080</TV_Screen_Height_In_Pixel>
 <skeleton_transform>
 		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
-		<Skeleton_Scale>1, 1, 10.506</Skeleton_Scale>
+		<Skeleton_Scale>1, 1, 13.9332</Skeleton_Scale>
 	</skeleton_transform>
-<Projector_Screen_Width>1280</Projector_Screen_Width>
-	<Projector_Screen_Height>768</Projector_Screen_Height>
-	<TV_Screen_Width>1920</TV_Screen_Width>
+<Projector_Screen_Width>0</Projector_Screen_Width>
+	<Projector_Screen_Height>0</Projector_Screen_Height>
+	<TV_Screen_Width>2391.77</TV_Screen_Width>
 	<TV_Screen_Height>1080</TV_Screen_Height>
+<TV_Controls>
+		<cameraAngle>255.044</cameraAngle>
+		<cameraRadius>696.793</cameraRadius>
+		<cameraHeight>212.828</cameraHeight>
+		<View_Height>34.9854</View_Height>
+		<swayCamera>1</swayCamera>
+		<swayRate>0.359504</swayRate>
+		<swayAmount>0.895044</swayAmount>
+		<bDrawHairyMan_Player_Two>0</bDrawHairyMan_Player_Two>
+		<bDrawHairyMan_Player_One>0</bDrawHairyMan_Player_One>
+		<energyAdder>0.194169</energyAdder>
+	</TV_Controls>
+	<MidiSettings>
+		<playerOne>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>0</Output_Mode>
+			<ableToChangeModeManually>0</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_control_1>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_control_1>
+		</playerOne>
+		<playerTwo>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>0</Output_Mode>
+			<ableToChangeModeManually>0</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_controls_2>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_controls_2>
+		</playerTwo>
+	</MidiSettings>
+<Render_Settings>
+		<Draw_Projections>1</Draw_Projections>
+		<Projector_X_Pos>1920</Projector_X_Pos>
+		<Projector_Y_Pos>0</Projector_Y_Pos>
+		<Projector_Screen_Width>1280</Projector_Screen_Width>
+		<Projector_Screen_Height>768</Projector_Screen_Height>
+		<TV_X_Pos>3200</TV_X_Pos>
+		<TV_Y_Pos>0</TV_Y_Pos>
+		<TV_Screen_Width>1920</TV_Screen_Width>
+		<TV_Screen_Height>1080</TV_Screen_Height>
+	</Render_Settings>
 </Microsoft_Music_Box>

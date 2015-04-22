@@ -46,34 +46,31 @@ void Piano::setup(){
     viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
     
     
-    settings.globalSettings.setName("Microsoft Music Box");
-    settings.globalSettings.add(settings.numPlayers.set("Number of Players", 2, 1, 2));
+    globalSettings.setName("Microsoft Music Box");
+    globalSettings.add(numPlayers.set("Number of Players", 2, 1, 2));
+    renderSettings.setName("Render Settings");
+    renderSettings.add(bDrawProjections.set("Draw Projections", true));
+    renderSettings.add(projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
+    renderSettings.add(projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
+    renderSettings.add(projectorViewWidth.set("Projector Screen Width", 1280, 0, 2560));
+    renderSettings.add(projectorViewHeight.set("Projector Screen Height", 768, 0, 1440));
     
-    settings.globalSettings.add(settings.projectorViewX.set("Projector X Pos", ofGetScreenWidth(), ofGetScreenWidth(), ofGetScreenWidth()*2));
-    settings.globalSettings.add(settings.projectorViewY.set("Projector Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.projectorViewWidth.set("Projector Screen Width", 1280, 640, 1920));
-    settings.globalSettings.add(settings.projectorViewHeight.set("Projector Screen Height", 768, 480, 1080));
+    renderSettings.add(tvViewX.set("TV X Pos", projectorViewX+projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
+    renderSettings.add(tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
+    renderSettings.add(tvViewWidth.set("TV Screen Width", 1920, 0, 3840));
+    renderSettings.add(tvViewHeight.set("TV Screen Height", 1080, 0, 2160));
     
-    settings.globalSettings.add(settings.tvViewX.set("TV X Pos", settings.projectorViewX+settings.projectorViewWidth, ofGetScreenWidth(), ofGetScreenWidth()*3));
-    settings.globalSettings.add(settings.tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
-    settings.globalSettings.add(settings.tvViewWidth.set("TV Screen Width", 1920, 1280, 1920));
-    settings.globalSettings.add(settings.tvViewHeight.set("TV Screen Height", 1080, 720, 1200));
+    globalSettings.add(renderSettings);
+
     
 
     
-    appGUI.setup(settings.globalSettings);
-    appGUI.setSize(350, 250);
-    appGUI.setWidthElements(350);
-    appGUI.loadFromFile("app-settings.xml");
     
-    projectorRect = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
-    tvRect = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
+    projectorRect = ofRectangle(projectorViewX, projectorViewY, projectorViewWidth, projectorViewHeight);
+    tvRect = ofRectangle(tvViewX, tvViewY, tvViewWidth, tvViewHeight);
     
     setupViewports();
     iMainView = 4;
-    
-    numPlayers = settings.globalSettings.getInt("Number of Players");
-    
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
@@ -88,31 +85,13 @@ void Piano::setup(){
     
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
-    hiddenSettings.setup(settings.globalSettings);
-    hiddenSettings.add(skelView.hiddenSettings);
-    hiddenSettings.setSize(300, 500);
-    hiddenSettings.setWidthElements(300);
-
-
 	floorGUI.setup(floorView.projectionParameters);
-    floorGUI.setSize(250, 400);
-    floorGUI.setWidthElements(250);
-    floorGUI.setPosition(ofGetScreenWidth()-250, 0);
-    
 
+    globalSettings.add(skelView.hiddenSettings);
+    globalSettings.add(tvView.tvParameters);
+    globalSettings.add(midiView.midiGroup);
+	globalSettings.add(floorView.floorControls);
 
-	expertFloorGUI.setup(floorView.floorControls);
-	expertFloorGUI.setSize(250, 400);
-	expertFloorGUI.setWidthElements(250);
-    expertFloorGUI.setPosition(ofGetScreenWidth()-500, 0);
-
-
-//    projectionGUI.setup(floorView.squareOptions);
-    tvGUI.setup(tvView.tvParameters);
-    midiGUI.setup(midiView.midiGroup);
-	midiGUI.setPosition(ofGetScreenWidth()-250, 0);
-    midiGUI.setSize(250, 400);
-	midiGUI.setWidthElements(250);
 
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
@@ -122,15 +101,16 @@ void Piano::setup(){
     stageGUI.setWidthElements(250);
     stageGUI.setPosition(ofGetScreenWidth()-500, 0);
     
-    
-    stageGUI.loadFromFile("stage.xml");
-    skeletonGUI.loadFromFile("skeleton.xml");
-    hiddenSettings.loadFromFile("hiddensettings.xml");
+
+    appGUI.setup(globalSettings);
+    appGUI.setSize(350, appGUI.getHeight());
+    appGUI.setWidthElements(350);
+    appGUI.minimizeAll();
+
 	floorGUI.loadFromFile("projections.xml");
-    tvGUI.loadFromFile("tvView.xml");
-    midiGUI.loadFromFile("midi.xml");
-    expertFloorGUI.loadFromFile("expert-projections.xml");
-    
+	stageGUI.loadFromFile("stage.xml");
+    skeletonGUI.loadFromFile("skeleton.xml");
+    appGUI.loadFromFile("app-settings.xml");
 
 	for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
 		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
@@ -219,12 +199,8 @@ void Piano::update(){
 void Piano::exit(){
 	stageGUI.saveToFile("stage.xml");
     skeletonGUI.saveToFile("skeleton.xml");
-    hiddenSettings.saveToFile("hiddensettings.xml");
+    appGUI.saveToFile("app-settings.xml");
 	floorGUI.saveToFile("projections.xml");
-    tvGUI.saveToFile("tvView.xml");
-    midiGUI.saveToFile("midi.xml");
-    expertFloorGUI.saveToFile("expert-projections.xml");
-	appGUI.saveToFile("app-settings.h");
 	midiView.exit();
 }
 
@@ -249,20 +225,11 @@ void Piano::draw(){
         stageGUI.draw();
     }else if(midiView.isMain()){
         midiView.draw(viewMain);
-        if(bExpertMode){
-			midiGUI.draw();
-		}
     }else if(floorView.isMain()){
         floorView.drawDebug();
 		floorGUI.draw();
-		if(bExpertMode){
-			expertFloorGUI.draw();
-		}
     }else if(tvView.isMain()){
         tvView.draw(viewMain);
-        tvGUI.draw();
-        skeletonGUI.draw();
-        stageGUI.draw();
     }
     
     floorView.drawProjections();
@@ -286,8 +253,8 @@ void Piano::draw(){
     }
     
     if(bExpertMode){
-        hiddenSettings.draw();
-	}
+        appGUI.draw();
+    }
 }
 
 void Piano::addLineTracePlayerOne(int & i){

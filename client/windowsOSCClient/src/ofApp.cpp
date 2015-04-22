@@ -11,6 +11,8 @@ void ofApp::setup(){
     //ofSetEscapeQuitsApp(false);
     views.setup();
     views.setMainView(5);
+    
+    
 }
 
 
@@ -54,7 +56,7 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == ' '){
-        views.setMainView(N_SCENE);
+        views.setMainView(N_SCENE-2);
     }
     
     if(key == 'e'){

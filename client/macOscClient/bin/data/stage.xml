@@ -6,10 +6,10 @@
 		<Right_Stage_X>148</Right_Stage_X>
 		<Right_Stage_Y>-4</Right_Stage_Y>
 		<Right_Stage_Z>-8</Right_Stage_Z>
-		<Stage_Size>304.392</Stage_Size>
+		<Stage_Size>300</Stage_Size>
 		<Calibration_View>0</Calibration_View>
-	<overRideLeftTrigger>0</overRideLeftTrigger>
-		<overRideRightTrigger>0</overRideRightTrigger>
+	<overRideLeftTrigger>1</overRideLeftTrigger>
+		<overRideRightTrigger>1</overRideRightTrigger>
 		<stageLeftTriggerX>-4</stageLeftTriggerX>
 		<stageLeftTriggerY>24</stageLeftTriggerY>
 		<stageLeftTriggerZ>20</stageLeftTriggerZ>
@@ -20,15 +20,15 @@
 		<stageRightTriggerScale>40</stageRightTriggerScale>
 	<presencesZoneSizeP1>137.6</presencesZoneSizeP1>
 		<presencesZoneSizeP2>137.6</presencesZoneSizeP2>
-	<Stage_One_Position>-181.633, 0, 0</Stage_One_Position>
-	<Stage_Two_Position>185.714, 0, 0</Stage_Two_Position>
+	<Stage_One_Position>250, 0, 0</Stage_One_Position>
+	<Stage_Two_Position>-250, 0, 0</Stage_Two_Position>
 	<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
 	<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
 	<Stage_One_Trigger_Scale>50</Stage_One_Trigger_Scale>
 		<Stage_Two_Trigger_Scale>50</Stage_Two_Trigger_Scale>
 		<Activation_Stage_One_Scale>100</Activation_Stage_One_Scale>
 		<Activation_Stage_Two_Scale>100</Activation_Stage_Two_Scale>
-	<Stage_One_Trigger_Size>40</Stage_One_Trigger_Size>
-		<Stage_Two_Trigger_Size>40</Stage_Two_Trigger_Size>
+	<Stage_One_Trigger_Size>0</Stage_One_Trigger_Size>
+		<Stage_Two_Trigger_Size>0</Stage_Two_Trigger_Size>
 	</Stage_Settings>
 </group>
