@@ -64,7 +64,7 @@ void Piano::setup(){
     appGUI.setup(settings.globalSettings);
     appGUI.setSize(350, 250);
     appGUI.setWidthElements(350);
-    appGUI.loadFromFile("app-settings.xml");
+    
     
     projectorRect = ofRectangle(settings.projectorViewX, settings.projectorViewY, settings.projectorViewWidth, settings.projectorViewHeight);
     tvRect = ofRectangle(settings.tvViewX, settings.tvViewY, settings.tvViewWidth, settings.tvViewHeight);
@@ -88,16 +88,12 @@ void Piano::setup(){
     
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
-    hiddenSettings.setup(settings.globalSettings);
-    hiddenSettings.add(skelView.hiddenSettings);
-    hiddenSettings.setSize(300, 500);
-    hiddenSettings.setWidthElements(300);
-//    projectionGUI.setup(floorView.squareOptions);
-    tvGUI.setup(tvView.tvParameters);
-    midiGUI.setup(midiView.midiGroup);
-    
-    midiGUI.setSize(250, 400);
-	midiGUI.setWidthElements(250);
+
+    appGUI.add(skelView.hiddenSettings);
+    appGUI.add(tvView.tvParameters);
+    appGUI.add(midiView.midiGroup);
+
+    appGUI.setWidthElements(300);
 
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
@@ -107,13 +103,9 @@ void Piano::setup(){
     stageGUI.setWidthElements(250);
     stageGUI.setPosition(ofGetScreenWidth()-500, 0);
     
-    
     stageGUI.loadFromFile("stage.xml");
     skeletonGUI.loadFromFile("skeleton.xml");
-    hiddenSettings.loadFromFile("hiddensettings.xml");
- 
-    tvGUI.loadFromFile("tvView.xml");
-    midiGUI.loadFromFile("midi.xml");
+    appGUI.loadFromFile("app-settings.xml");
     
     
 
@@ -204,11 +196,7 @@ void Piano::update(){
 void Piano::exit(){
     skeletonGUI.saveToFile("skeleton.xml");
     stageGUI.saveToFile("stage.xml");
-//    projectionGUI.saveToFile("projection.xml");
-    tvGUI.saveToFile("tvView.xml");
-    midiGUI.saveToFile("midi.xml");
     appGUI.saveToFile("app-settings.xml");
-    hiddenSettings.saveToFile("hiddensettings.xml");
 	
 	midiView.exit();
 }
@@ -234,14 +222,10 @@ void Piano::draw(){
         stageGUI.draw();
     }else if(midiView.isMain()){
         midiView.draw(viewMain);
-        midiGUI.draw();
     }else if(floorView.isMain()){
         floorView.drawDebug();
     }else if(tvView.isMain()){
         tvView.draw(viewMain);
-        tvGUI.draw();
-        skeletonGUI.draw();
-        stageGUI.draw();
     }
     
     floorView.drawProjections();
@@ -265,7 +249,7 @@ void Piano::draw(){
     }
     
     if(bExpertMode){
-        hiddenSettings.draw();
+        appGUI.draw();
     }
 }
 

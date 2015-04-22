@@ -19,4 +19,64 @@
 	<Projector_Screen_Height>768</Projector_Screen_Height>
 	<TV_Screen_Width>1920</TV_Screen_Width>
 	<TV_Screen_Height>1080</TV_Screen_Height>
+<TV_Controls>
+		<cameraAngle>79.3469</cameraAngle>
+		<cameraRadius>755.102</cameraRadius>
+		<cameraHeight>191.837</cameraHeight>
+		<View_Height>67.3469</View_Height>
+		<swayCamera>1</swayCamera>
+		<swayRate>0.580857</swayRate>
+		<swayAmount>0.314286</swayAmount>
+		<bDrawHairyMan_Player_Two>0</bDrawHairyMan_Player_Two>
+		<bDrawHairyMan_Player_One>0</bDrawHairyMan_Player_One>
+		<energyAdder>0.193061</energyAdder>
+	</TV_Controls>
+	<MidiSettings>
+		<playerOne>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>0</Output_Mode>
+			<ableToChangeModeManually>0</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_control_1>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_control_1>
+		</playerOne>
+		<playerTwo>
+			<Start_Note>36</Start_Note>
+			<Num_Note>16</Num_Note>
+			<Smooth_Up_History>0</Smooth_Up_History>
+			<Smooth_Down_History>0</Smooth_Down_History>
+			<Smooth_Down_Skeleton>0</Smooth_Down_Skeleton>
+			<Smooth_Up_Skeleton>0</Smooth_Up_Skeleton>
+			<JazzDrums>0</JazzDrums>
+			<Send_All_Triggers>0</Send_All_Triggers>
+			<Draw_Graphs>0</Draw_Graphs>
+			<Body_Drop_Time>500</Body_Drop_Time>
+			<Output_Mode>0</Output_Mode>
+			<ableToChangeModeManually>0</ableToChangeModeManually>
+			<Percentile>0.75</Percentile>
+			<ThresholdSmoothing>0.1</ThresholdSmoothing>
+			<Velocity_Cutoff>1</Velocity_Cutoff>
+			<button_controls_2>
+				<Draw_Buttons>0</Draw_Buttons>
+				<Radius>75</Radius>
+				<Trigger_Scale>0.8</Trigger_Scale>
+				<Approach_Scale>1.2</Approach_Scale>
+			</button_controls_2>
+		</playerTwo>
+	</MidiSettings>
 </Microsoft_Music_Box>

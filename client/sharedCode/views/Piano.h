@@ -68,9 +68,6 @@ public:
     ofxPanel hiddenSettings;
     ofxPanel skeletonGUI;
     ofxPanel stageGUI;
-
-    ofxPanel tvGUI;
-    ofxPanel midiGUI;
     ofxPanel appGUI;
     int numPlayers;
     
