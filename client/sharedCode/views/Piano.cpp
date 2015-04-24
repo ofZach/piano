@@ -45,7 +45,7 @@ void Piano::setupViewports(){
 void Piano::setup(){
     viewMain = ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight());
     
-
+    
     globalSettings.setName("Microsoft Music Box");
     globalSettings.add(numPlayers.set("Number of Players", 2, 1, 2));
     renderSettings.setName("Render Settings");
@@ -59,24 +59,29 @@ void Piano::setup(){
     renderSettings.add(tvViewY.set("TV Y Pos", 0, 0, ofGetScreenHeight()));
     renderSettings.add(tvViewWidth.set("TV Screen Width", 1920, 0, 3840));
     renderSettings.add(tvViewHeight.set("TV Screen Height", 1080, 0, 3840));
-   
+    
     renderSettingsPanel.setup(renderSettings);
-	renderSettingsPanel.setPosition(375, 0);
-	renderSettingsPanel.setSize(350, 400);
-	renderSettingsPanel.setWidthElements(350);
+    renderSettingsPanel.setPosition(375, 0);
+    renderSettingsPanel.setSize(350, 400);
+    renderSettingsPanel.setWidthElements(350);
     renderSettingsPanel.loadFromFile("rendersettings.xml");
-
     
-    
-    projectorRect = ofRectangle(projectorViewX, projectorViewY, projectorViewWidth, projectorViewHeight);
-    tvRect = ofRectangle(tvViewX, tvViewY, tvViewWidth, tvViewHeight);
+    if(!bDrawProjections){
+        projectorRect = ofRectangle(0, 0, 0, 0);
+        tvRect = ofRectangle(ofGetScreenWidth(), 0, tvViewWidth, tvViewHeight);
+    }else{
+        
+        
+        projectorRect = ofRectangle(projectorViewX, projectorViewY, projectorViewWidth, projectorViewHeight);
+        tvRect = ofRectangle(tvViewX, tvViewY, tvViewWidth, tvViewHeight);
+    }
     
     setupViewports();
     iMainView = 4;
     
     midiOut = shared_ptr<ofxMidiOut>(new ofxMidiOut);
     midiOut->listPorts();
-	midiOut->openPort("PIANO");
+    midiOut->openPort("PIANO");
     
     
     skelView.setup(numPlayers, viewMain);
@@ -87,18 +92,18 @@ void Piano::setup(){
     
     skeletonGUI.setup(skelView.skeletonTransform);
     stageGUI.setup(skelView.stageParams);
-	floorGUI.setup(floorView.projectionParameters);
-
-	globalSettings.add(skelView.stageParams);
-	globalSettings.add(skelView.skeletonTransform);
-	globalSettings.add(skelView.hiddenSettings);
+    floorGUI.setup(floorView.projectionParameters);
+    
+    globalSettings.add(skelView.stageParams);
+    globalSettings.add(skelView.skeletonTransform);
+    globalSettings.add(skelView.hiddenSettings);
     globalSettings.add(tvView.tvParameters);
-	globalSettings.add(floorView.projectionParameters);
-	globalSettings.add(floorView.floorControls);
+    globalSettings.add(floorView.projectionParameters);
+    globalSettings.add(floorView.floorControls);
     globalSettings.add(midiView.midiGroup);
-	
-
-
+    
+    
+    
     skeletonGUI.setSize(250, 400);
     skeletonGUI.setWidthElements(250);
     skeletonGUI.setPosition(ofGetScreenWidth()-250, 0);
@@ -107,29 +112,29 @@ void Piano::setup(){
     stageGUI.setWidthElements(250);
     stageGUI.setPosition(ofGetScreenWidth()-500, 0);
     
-
+    
     appGUI.setup(globalSettings);
     appGUI.loadFromFile("app-settings.xml");
     appGUI.setSize(350, appGUI.getHeight());
     appGUI.setWidthElements(350);
     appGUI.minimizeAll();
-
-	for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
-		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
-		ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerLinePlayerOne, this, &Piano::addLineTracePlayerOne);
-	}
-
-	for(int i = 0; i < midiView.musicMakerP2.midiTriggers.size(); i++){
-		ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
-		ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerLinePlayerTwo, this, &Piano::addLineTracePlayerTwo);
-	}
     
-
-	ofAddListener(midiView.musicMakerP1.triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
-	ofAddListener(midiView.musicMakerP1.triggerLinesPlayerOne, this, &Piano::addLineTracePlayerOne);
-	ofAddListener(midiView.musicMakerP2.triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
-	ofAddListener(midiView.musicMakerP2.triggerLinesPlayerTwo, this, &Piano::addLineTracePlayerTwo);
-
+    for(int i = 0; i < midiView.musicMakerP1.midiTriggers.size(); i++){
+        ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
+        ofAddListener( midiView.musicMakerP1.midiTriggers[i]->triggerLinePlayerOne, this, &Piano::addLineTracePlayerOne);
+    }
+    
+    for(int i = 0; i < midiView.musicMakerP2.midiTriggers.size(); i++){
+        ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
+        ofAddListener( midiView.musicMakerP2.midiTriggers[i]->triggerLinePlayerTwo, this, &Piano::addLineTracePlayerTwo);
+    }
+    
+    
+    ofAddListener(midiView.musicMakerP1.triggerImplusePlayerOne, this, &Piano::addImpulsePlayerOne);
+    ofAddListener(midiView.musicMakerP1.triggerLinesPlayerOne, this, &Piano::addLineTracePlayerOne);
+    ofAddListener(midiView.musicMakerP2.triggerImplusePlayerTwo, this, &Piano::addImpulsePlayerTwo);
+    ofAddListener(midiView.musicMakerP2.triggerLinesPlayerTwo, this, &Piano::addLineTracePlayerTwo);
+    
     
     bExpertMode = false;
 }
@@ -171,11 +176,11 @@ void Piano::update(){
         if (midiView.playerTwo.getBool("ableToChangeModeManually") == false){
             midiView.setPlayerTwoMode(skelView.getPlayerTwoMode());
         }
-       
-
-		tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
-		tvView.setPlayerTwoMode(midiView.playerTwo.getInt("Output Mode"));
-
+        
+        
+        tvView.setPlayerOneMode(midiView.playerOne.getInt("Output Mode"));
+        tvView.setPlayerTwoMode(midiView.playerTwo.getInt("Output Mode"));
+        
         
         if(kb1 != NULL){
             floorView.setPlayerOne(true);
@@ -199,13 +204,13 @@ void Piano::update(){
 }
 
 void Piano::exit(){
-	stageGUI.saveToFile("stage.xml");
+    stageGUI.saveToFile("stage.xml");
     skeletonGUI.saveToFile("skeleton.xml");
     appGUI.saveToFile("app-settings.xml");
-	floorGUI.saveToFile("projections.xml");
-	renderSettingsPanel.saveToFile("rendersettings.xml");
-
-	midiView.exit();
+    floorGUI.saveToFile("projections.xml");
+    renderSettingsPanel.saveToFile("rendersettings.xml");
+    
+    midiView.exit();
 }
 
 
@@ -217,8 +222,12 @@ void Piano::draw(){
         ofSetColor(255, 255, 255, 255);
         skelView.draw(viewGrid[0]);
         midiView.draw(viewGrid[1]);
-        floorView.draw(viewGrid[2]);
-        tvView.draw(viewGrid[3]);
+        if(bDrawProjections){
+            floorView.draw(viewGrid[2]);
+            tvView.draw(viewGrid[3]);
+        }else{
+            tvView.draw(viewGrid[2]);
+        }
         ofSetColor(255, 255, 255);
         ofDrawBitmapString(ofToString(ofGetFrameRate()), ofGetScreenWidth()-50, ofGetScreenHeight()-50);
     }
@@ -230,13 +239,18 @@ void Piano::draw(){
     }else if(midiView.isMain()){
         midiView.draw(viewMain);
     }else if(floorView.isMain()){
-        floorView.drawDebug();
-		floorGUI.draw();
+        if(bDrawProjections){
+            floorView.drawDebug();
+            floorGUI.draw();
+        }else{
+            tvView.draw(viewMain);
+        }
     }else if(tvView.isMain()){
         tvView.draw(viewMain);
     }
-    
-    floorView.drawProjections();
+    if(bDrawProjections){
+        floorView.drawProjections();
+    }
     tvView.drawTV();
     ofDisableAlphaBlending();
     
@@ -252,13 +266,13 @@ void Piano::draw(){
         ofLine(viewMain.x+viewMain.width, viewMain.y, viewMain.x, viewMain.y+viewMain.height);
         ofLine(projectorRect.x, projectorRect.y, projectorRect.x+projectorRect.width, projectorRect.y+projectorRect.height);
         ofLine(projectorRect.x+projectorRect.width, projectorRect.y, projectorRect.x, projectorRect.y+projectorRect.height);
-		ofLine(tvRect.x, tvRect.y, tvRect.x+tvRect.width, tvRect.y+tvRect.height);
+        ofLine(tvRect.x, tvRect.y, tvRect.x+tvRect.width, tvRect.y+tvRect.height);
         ofLine(tvRect.x+tvRect.width, tvRect.y, tvRect.x, tvRect.y+tvRect.height);
     }
     
     if(bExpertMode){
         appGUI.draw();
-		renderSettingsPanel.draw();
+        renderSettingsPanel.draw();
     }
 }
 
@@ -266,7 +280,7 @@ void Piano::addLineTracePlayerOne(int & i){
     floorView.addLineTrace(0);
 }
 void Piano::triggerTrianglePlayerOne(int & i){
-//    floorView.floors[0].triggerTriangles();
+    //    floorView.floors[0].triggerTriangles();
 }
 void Piano::addImpulsePlayerOne(int & i){
     tvView.addPulsePlayerOne();
@@ -276,7 +290,7 @@ void Piano::addLineTracePlayerTwo(int & i){
     floorView.addLineTrace(1);
 }
 void Piano::triggerTrianglePlayerTwo(int & i){
-//    floorView.p2Floor.triggerTriangles();
+    //    floorView.p2Floor.triggerTriangles();
     
 }
 void Piano::addImpulsePlayerTwo(int & i){

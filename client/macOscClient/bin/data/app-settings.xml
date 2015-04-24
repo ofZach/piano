@@ -14,6 +14,7 @@
 <skeleton_transform>
 		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
 		<Skeleton_Scale>1, 1, 13.9332</Skeleton_Scale>
+	<Skeleton_Offset>0, 0, 0</Skeleton_Offset>
 	</skeleton_transform>
 <Projector_Screen_Width>0</Projector_Screen_Width>
 	<Projector_Screen_Height>0</Projector_Screen_Height>
@@ -90,4 +91,52 @@
 		<TV_Screen_Width>1920</TV_Screen_Width>
 		<TV_Screen_Height>1080</TV_Screen_Height>
 	</Render_Settings>
+<Stage_Settings>
+		<Calibration_View>0</Calibration_View>
+		<Stage_One_Position>250, 0, 0</Stage_One_Position>
+		<Stage_Two_Position>-250, 0, 0</Stage_Two_Position>
+		<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
+		<Stage_Two_Button_Position>0, 0, 0</Stage_Two_Button_Position>
+		<Stage_Size>300</Stage_Size>
+		<overRideLeftTrigger>1</overRideLeftTrigger>
+		<overRideRightTrigger>1</overRideRightTrigger>
+		<Stage_One_Trigger_Size>0</Stage_One_Trigger_Size>
+		<Stage_Two_Trigger_Size>0</Stage_Two_Trigger_Size>
+		<Activation_Stage_One_Scale>100</Activation_Stage_One_Scale>
+		<Activation_Stage_Two_Scale>100</Activation_Stage_Two_Scale>
+	</Stage_Settings>
+	<Floor>
+		<bShowWarp>1</bShowWarp>
+		<bSaveWarp>0</bSaveWarp>
+		<bDrawCalibration>1</bDrawCalibration>
+		<Stage_Offset>50</Stage_Offset>
+	</Floor>
+	<Expert_Floor_Mode>
+		<Floor_Controls_0>
+			<bShowDots>1</bShowDots>
+			<bShowGrid>1</bShowGrid>
+			<bShowButton>1</bShowButton>
+			<bPersonPresent>0</bPersonPresent>
+			<bFadeLines>0</bFadeLines>
+			<bSpawnLines>0</bSpawnLines>
+			<buttonPos>0</buttonPos>
+			<lineWeight>10</lineWeight>
+			<lineSpeed>10</lineSpeed>
+			<speed>10</speed>
+			<lineDistnace>10</lineDistnace>
+		</Floor_Controls_0>
+		<Floor_Controls_1>
+			<bShowDots>1</bShowDots>
+			<bShowGrid>1</bShowGrid>
+			<bShowButton>1</bShowButton>
+			<bPersonPresent>0</bPersonPresent>
+			<bFadeLines>0</bFadeLines>
+			<bSpawnLines>0</bSpawnLines>
+			<buttonPos>0</buttonPos>
+			<lineWeight>10</lineWeight>
+			<lineSpeed>10</lineSpeed>
+			<speed>10</speed>
+			<lineDistnace>10</lineDistnace>
+		</Floor_Controls_1>
+	</Expert_Floor_Mode>
 </Microsoft_Music_Box>

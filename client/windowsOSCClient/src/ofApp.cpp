@@ -7,7 +7,7 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
    	ofSetFrameRate(30);
 
-	ofSetLogLevel(OF_LOG_VERBOSE);
+	ofSetLogLevel(OF_LOG_NOTICE);
     //ofSetEscapeQuitsApp(false);
     views.setup();
     views.setMainView(5);
