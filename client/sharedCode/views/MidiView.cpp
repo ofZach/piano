@@ -58,12 +58,19 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
     
     for(int i = 0; i < musicMakers.size(); i++){
         
-        lastBodyTime[i] = ofGetElapsedTimef();
+     
         if(p2 != NULL && i == 1){
             musicMakers[i]->analyze(*p2);
+            lastBodyTime[i] = ofGetElapsedTimef();
+        }else if(i == 1){
+            clear[i] = true;
         }
+        
         if(p1 != NULL && i == 0){
             musicMakers[i]->analyze(*p1);
+            lastBodyTime[i] = ofGetElapsedTimef();
+        }else if(i == 0){
+            clear[i] = true;
         }
         
         if(playerParameters[i]->getInt("Output Mode") == 1){
@@ -76,7 +83,7 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
             musicMakers[i]->clearBodies();
             lastBodyTime[i] = false;
         }
-        clear[i] = true;
+   
  
     }
 }
