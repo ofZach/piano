@@ -80,11 +80,10 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
         }
         
         if(ofGetElapsedTimef() - lastBodyTime[i] > playerParameters[i]->getFloat("Body Drop Time") && clear[i]){
+            clear[i] = false;
             musicMakers[i]->clearBodies();
             lastBodyTime[i] = false;
         }
-   
- 
     }
 }
 void MidiView::draw(ofRectangle viewport){

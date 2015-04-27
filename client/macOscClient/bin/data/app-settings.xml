@@ -14,7 +14,7 @@
 <skeleton_transform>
 		<Skeleton_Rotation>180, 0, 0</Skeleton_Rotation>
 		<Skeleton_Scale>1, 1, 13.9332</Skeleton_Scale>
-	<Skeleton_Offset>0, 0, 0</Skeleton_Offset>
+	<Skeleton_Offset>-187.755, 514.286, 0</Skeleton_Offset>
 	</skeleton_transform>
 <Projector_Screen_Width>0</Projector_Screen_Width>
 	<Projector_Screen_Height>0</Projector_Screen_Height>
@@ -92,7 +92,7 @@
 		<TV_Screen_Height>1080</TV_Screen_Height>
 	</Render_Settings>
 <Stage_Settings>
-		<Calibration_View>0</Calibration_View>
+		<Calibration_View>1</Calibration_View>
 		<Stage_One_Position>250, 0, 0</Stage_One_Position>
 		<Stage_Two_Position>-250, 0, 0</Stage_Two_Position>
 		<Stage_One_Button_Position>0, 0, 0</Stage_One_Button_Position>
