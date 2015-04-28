@@ -36,6 +36,8 @@ public:
     
     int numPlayers;
     
+    vector<float> lastClear;
+    
     ofTrueTypeFont font;
     ofTrueTypeFont fontDebug;
     ofTrueTypeFont fontMain;
@@ -53,6 +55,7 @@ public:
     
     vector<Trigger> lastTriggers;
     vector<bool> clear;
+    vector<bool> needsClear;
     vector<float> lastBodyTime;
 
     float lastBodyPlayerOne;

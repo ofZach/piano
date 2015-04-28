@@ -457,6 +457,7 @@ void musicMaker::updateGraphs(kinectBody &body) {
 }
 
 void musicMaker::clearBodies(){
+    
 	for(int i = 0; i < graphsForSkeleton.size(); i++){
 		graphsForSkeleton[i].clear();
 
@@ -472,7 +473,7 @@ void musicMaker::clearBodies(){
 
 	}
 
-
+    cout<<"clearBodies"<<endl;
 
 	for(int i = 0; i < midiTriggers.size(); i++) {
 		midiTriggers[i]->reset();

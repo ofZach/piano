@@ -14,7 +14,6 @@ shared_ptr<ofxMidiOut> midiTrigger::getMidiOut() {
 }
 
 void midiTrigger::reset() {
-    ofLog()<<"reset midi"<<endl;
     for(const auto& note : getSettings().notes) {
         getMidiOut()->sendNoteOff(getSettings().channel, note);
     }
@@ -293,7 +292,8 @@ dropDatNote::dropDatNote() : _primed(false), _ignoredFrameCount(0) {
 }
 
 void dropDatNote::reset() {
-    
+    _primed = false;
+    _ignoredFrameCount = 0;
 }
 
 void dropDatNote::update(kinectBody &body) {

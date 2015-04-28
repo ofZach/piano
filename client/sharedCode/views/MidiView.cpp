@@ -32,6 +32,7 @@ void MidiView::setup(int numPlayers, shared_ptr<ofxMidiOut> midiOut, ofRectangle
         musicMakers.push_back(&musicMakerP2);
     }
     
+    needsClear.assign(this->numPlayers, false);
     clear.assign(this->numPlayers, false);
     lastTriggers.assign(this->numPlayers, Trigger());
     lastBodyTime.assign(this->numPlayers, 0);
@@ -55,21 +56,22 @@ void MidiView::setPlayerTwoMode(int mode){
 }
 
 void MidiView::update(kinectBody * p1, kinectBody * p2){
-    
+    float time = ofGetElapsedTimef();
     for(int i = 0; i < musicMakers.size(); i++){
-        
-     
-        if(p2 != NULL && i == 1){
-            musicMakers[i]->analyze(*p2);
-            lastBodyTime[i] = ofGetElapsedTimef();
-        }else if(i == 1){
-            clear[i] = true;
-        }
         
         if(p1 != NULL && i == 0){
             musicMakers[i]->analyze(*p1);
-            lastBodyTime[i] = ofGetElapsedTimef();
-        }else if(i == 0){
+            lastBodyTime[i] = time;
+            needsClear[i] = true;
+        }else if(i == 0 && needsClear[i]){
+            clear[i] = true;
+        }
+        
+        if(p2 != NULL && i == 1){
+            musicMakers[i]->analyze(*p2);
+            lastBodyTime[i] = time;
+            needsClear[i] = true;
+        }else if(i == 1 && needsClear[i]){
             clear[i] = true;
         }
         
@@ -79,10 +81,11 @@ void MidiView::update(kinectBody * p1, kinectBody * p2){
             lastTriggers[i]  =  musicMakers[i]->lastPianoTriggeredNote();
         }
         
-        if(ofGetElapsedTimef() - lastBodyTime[i] > playerParameters[i]->getFloat("Body Drop Time") && clear[i]){
+        if(time - lastBodyTime[i] > playerParameters[i]->getFloat("Body Drop Time") && clear[i] && ofGetElapsedTimef() - lastTriggers[i].time > playerParameters[i]->getFloat("Body Drop Time")){
+            cout<<"Clear Bodies "<<i<<" "<<lastBodyTime[i]<<endl;
             clear[i] = false;
             musicMakers[i]->clearBodies();
-            lastBodyTime[i] = false;
+            needsClear[i] = false;
         }
     }
 }
